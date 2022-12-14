@@ -13,7 +13,7 @@ public class MusicLibrary {
 
     public static void loadData(ListView audioTracksListView) throws IOException {
         tracks = FXCollections.observableArrayList();
-        Path path = Paths.get("C:\\Users\\ianda\\IdeaProjects\\MusicPlayerJavaFx\\src\\main\\resources\\com\\iandw\\musicplayerjavafx\\DemoMusic");
+        Path path = Paths.get("C:\\dev\\DemoMusic");
         directory = path.toString();
         if (Files.exists(path)) {
             //System.out.printf("%n%s exists%n", path);
