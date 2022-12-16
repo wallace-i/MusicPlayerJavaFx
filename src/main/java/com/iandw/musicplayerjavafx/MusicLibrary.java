@@ -8,13 +8,17 @@ import java.nio.file.*;
 
 public class MusicLibrary {
 
-    private static String directory;
-    private static ObservableList<String> tracks;
+    private static String musicRootDirectory;
+    private static ObservableList<String> artistNameCollection;
 
-    public static void loadData(ListView audioTracksListView) throws IOException {
-        tracks = FXCollections.observableArrayList();
+
+    public static ObservableList<String> loadArtistNameCollection() throws IOException {
+        //tracks = FXCollections.observableArrayList();
+        artistNameCollection = FXCollections.observableArrayList();
+
         Path path = Paths.get("C:\\dev\\DemoMusic");
-        directory = path.toString();
+        musicRootDirectory = path.toString();
+
         if (Files.exists(path)) {
             //System.out.printf("%n%s exists%n", path);
             if (Files.isDirectory(path)) {
@@ -23,23 +27,27 @@ public class MusicLibrary {
                 DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);
 
                 for (Path p : directoryStream) {
-                    String trackName = p.toString();
-                    trackName = trackName.substring(trackName.lastIndexOf('\\') + 1, trackName.indexOf('.'));
-                    tracks.add(trackName);
-                    System.out.println(p);
+
+                    //String trackName = p.toString();
+                    //trackName = trackName.substring(trackName.lastIndexOf('\\') + 1, trackName.indexOf('.'));
+                    String artistNameStr = p.toString();
+                    artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf('\\') + 1);
+                    artistNameCollection.add(artistNameStr);
+                    //System.out.println(p);
+
 
                 }
             }
         } else {
             System.out.printf("%s does not exist%n", path);
         }
-        audioTracksListView.setItems(tracks);
 
+        return artistNameCollection;
     }
 
-    public static String getLibraryPath() {
-        return directory;
+    public static String getMusicRootDirectory() {
+        return musicRootDirectory;
     }
 
-    public static String getInitialFileName() { return tracks.get(0); }
+    public static String getInitialFileName() { return artistNameCollection.get(0); }
 }
