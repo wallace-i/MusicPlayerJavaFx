@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
@@ -12,10 +11,10 @@
                 <ListView fx:id="artistNameListView" onMouseClicked="#handleListViewMouseClick" prefHeight="214.0" prefWidth="130.0" />
                 <TableView fx:id="trackTableView" onMouseClicked="#handleTableViewMouseClick" prefHeight="187.0" prefWidth="470.0">
                     <columns>
-                        <TableColumn fx:id="colTrackTitle" prefWidth="200.0" text="Track Title" />
-                        <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="141.0" text="Album" />
-                        <TableColumn fx:id="colTrackLength" prefWidth="55.0" text="Length" />
-                        <TableColumn fx:id="colTrackGenre" prefWidth="73.0" text="Genre" />
+                        <TableColumn fx:id="colTrackTitle" prefWidth="177.0" text="Track Title" />
+                        <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="132.0" text="Album" />
+                        <TableColumn fx:id="colTrackLength" prefWidth="67.0" text="Length" />
+                        <TableColumn fx:id="colTrackGenre" prefWidth="93.0" text="Genre" />
                     </columns>
                 </TableView>
             </children>
@@ -30,7 +29,7 @@
                         <Insets right="5.0" />
                     </HBox.margin>
                 </Button>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="55.0" text="Play">
+                <Button fx:id="playPauseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#playPauseButtonPressed" prefWidth="55.0" text="Play">
                     <padding>
                         <Insets left="5.0" right="5.0" />
                     </padding>
@@ -38,7 +37,7 @@
                         <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Button>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="55.0" text="Pause">
+                <Button fx:id="stopButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#stopButtonPressed" prefWidth="55.0" text="Stop">
                     <padding>
                         <Insets left="5.0" right="5.0" />
                     </padding>
@@ -66,7 +65,6 @@
                 </CheckBox>
             </children>
         </HBox>
-        <ImageView fitHeight="74.0" fitWidth="120.0" layoutX="8.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" />
         <MenuBar layoutY="1.0" prefHeight="1.0" prefWidth="600.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -88,9 +86,14 @@
         </MenuBar>
       <Label layoutX="376.0" layoutY="32.0" text="Playing:" />
       <Label layoutX="400.0" layoutY="61.0" text="By:" />
-      <TextField fx:id="trackNameTextField" editable="false" layoutX="420.0" layoutY="29.0" prefHeight="25.0" prefWidth="168.0" />
-      <TextField fx:id="albumNameTextField" editable="false" layoutX="420.0" layoutY="58.0" prefHeight="25.0" prefWidth="168.0" />
-      <Slider layoutX="164.0" layoutY="315.0" prefHeight="14.0" prefWidth="293.0" />
-      <TextField layoutX="467.0" layoutY="309.0" prefHeight="25.0" prefWidth="92.0" />
+      <TextField fx:id="trackTitleTextField" editable="false" layoutX="420.0" layoutY="29.0" prefHeight="25.0" prefWidth="168.0" />
+      <TextField fx:id="artistNameTextField" editable="false" layoutX="420.0" layoutY="58.0" prefHeight="25.0" prefWidth="168.0" />
+      <Slider fx:id="trackDurationSlider" layoutX="202.0" layoutY="316.0" prefHeight="14.0" prefWidth="323.0" />
+      <Label layoutX="10.0" layoutY="70.0" text="Artists:" />
+      <Label layoutX="140.0" layoutY="70.0" text="Music:" />
+      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="10.0" layoutY="323.0" prefHeight="38.0" prefWidth="120.0" showTickLabels="true" showTickMarks="true" />
+      <Label layoutX="11.0" layoutY="306.0" text="Volume:" />
+      <Label fx:id="trackDurationLabel" layoutX="533.0" layoutY="314.0" text="Label" />
+      <Label fx:id="trackCurrentTimeLabel" layoutX="164.0" layoutY="314.0" text="Label" />
     </children>
 </AnchorPane>

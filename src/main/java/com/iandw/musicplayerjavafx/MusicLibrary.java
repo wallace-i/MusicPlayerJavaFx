@@ -1,3 +1,9 @@
+/**
+ *      Author: Ian Wallace copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: MusicLibrary
+ *      Notes: Initializes Root Directory for music files to be located
+ */
 package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
@@ -11,7 +17,12 @@ public class MusicLibrary {
     private static String musicRootDirectory;
     private static ObservableList<String> artistNameCollection;
 
-
+    /**
+     * Function: loadArtistNameCollection => ObservableList<String>
+     * @return artistNameCollection => List of strings of artist names in root directory,
+     *                                 taken from directory names.
+     * @throws IOException
+     */
     public static ObservableList<String> loadArtistNameCollection() throws IOException {
         //tracks = FXCollections.observableArrayList();
         artistNameCollection = FXCollections.observableArrayList();
@@ -20,24 +31,18 @@ public class MusicLibrary {
         musicRootDirectory = path.toString();
 
         if (Files.exists(path)) {
-            //System.out.printf("%n%s exists%n", path);
             if (Files.isDirectory(path)) {
-                //System.out.printf("%nDirectory contents:%n");
 
                 DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path);
 
-                for (Path p : directoryStream) {
-
-                    //String trackName = p.toString();
-                    //trackName = trackName.substring(trackName.lastIndexOf('\\') + 1, trackName.indexOf('.'));
-                    String artistNameStr = p.toString();
+                for (Path artistDir : directoryStream) {
+                    String artistNameStr = artistDir.toString();
                     artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf('\\') + 1);
                     artistNameCollection.add(artistNameStr);
-                    //System.out.println(p);
-
 
                 }
             }
+
         } else {
             System.out.printf("%s does not exist%n", path);
         }
@@ -45,6 +50,10 @@ public class MusicLibrary {
         return artistNameCollection;
     }
 
+    /**
+     * Function: getMusicRootDirectory => String
+     * @return musicRootDirectory => file path to root
+     */
     public static String getMusicRootDirectory() {
         return musicRootDirectory;
     }
