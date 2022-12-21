@@ -8,7 +8,11 @@ package com.iandw.musicplayerjavafx;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -33,8 +37,7 @@ public class MusicPlayerController {
     @FXML private Button playPauseButton;
     @FXML private Button stopButton;
     @FXML private Slider volumeSlider;
-
-    @FXML private Slider trackDurationSlider;
+    @FXML private Slider seekSlider;
     @FXML private TextField trackTitleTextField;
     @FXML private TextField artistNameTextField;
     @FXML private Label trackCurrentTimeLabel;
@@ -57,16 +60,20 @@ public class MusicPlayerController {
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
-                (observableValue, oldValue, newValue) -> mediaPlayer.setVolume(newValue.doubleValue())
+            (observableValue, oldValue, newValue) -> {
+                mediaPlayer.setVolume(newValue.doubleValue() / 100);
+            }
         );
 
         // listener for changes to trackDurationSlider's value
-        trackDurationSlider.valueProperty().addListener(
-                (observableValue, oldValue, newValue) -> {
-                    trackDurationLabel.setText(trackTableView.getSelectionModel().getSelectedItem().getTrackDurationStr());
-                    trackCurrentTimeLabel.setText(mediaPlayer.getCurrentTime().toString());
+        seekSlider.valueProperty().addListener(
+            (observableValue, oldValue, newValue) -> {
+                if (seekSlider.isPressed()) {
+                    mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(seekSlider.getValue() / 100));
                 }
+            }
         );
+
 
     }
 
@@ -102,7 +109,7 @@ public class MusicPlayerController {
             //String trackContainerType;
             String trackFileName;
 
-            if (mouseClick.getClickCount() == 1) {
+            if (mouseClick.getClickCount() == 1 && !mouseClick.isDragDetect()) {
                 trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
                 trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
                 //trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
@@ -112,6 +119,8 @@ public class MusicPlayerController {
 
 //                media = new Media(new File(currentPath).toURI().toString());
 //                mediaPlayer = new MediaPlayer(media);
+
+
 
             }
 
@@ -136,6 +145,9 @@ public class MusicPlayerController {
                 System.out.printf("currentPath: %s%n", currentPath);
                 media = new Media(new File(currentPath).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
+
+                mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
+
                 mediaPlayer.play();
                 playPauseButton.setText("Pause");
                 playing = true;
@@ -158,6 +170,9 @@ public class MusicPlayerController {
                 System.out.printf("currentPath: %s%n", currentPath);
                 media = new Media(new File(currentPath).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
+
+                mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
+
                 mediaPlayer.play();
                 playPauseButton.setText("Pause");
                 playing = true;
@@ -174,23 +189,29 @@ public class MusicPlayerController {
 
     @FXML
     private void stopButtonPressed(MouseEvent mouseClick) {
-        if (playing && (artistNameString == artistNameListView.getSelectionModel().getSelectedItem())) {
+        if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
             mediaPlayer.stop();
             playPauseButton.setText("Play");
             playing = false;
-        } else if (playing) {
+        } else if (playing){
             mediaPlayer.stop();
             mediaPlayer.dispose();
+            playPauseButton.setText("Play");
+            playing = false;
+            // TODO => pause function
+        } else {
+            mediaPlayer.stop();
             playPauseButton.setText("Play");
             playing = false;
         }
     }
 
-    @FXML
-    private void setVolumeSlider(MouseEvent mouseDrag) {
+    protected void seekValueUpdate() {
+        trackDurationLabel.setText(trackTableView.getSelectionModel().getSelectedItem().getTrackDurationStr());
+        trackCurrentTimeLabel.setText(Track.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
+        seekSlider.valueProperty().setValue(mediaPlayer.getCurrentTime().toMillis() / mediaPlayer.getTotalDuration().toMillis() * 100);
 
     }
-
 
 
 

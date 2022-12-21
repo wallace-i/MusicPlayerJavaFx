@@ -62,6 +62,9 @@ public class ArtistLibrary {
                         //System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
                         Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
                         MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
+                        String trackTitle;
+                        String trackAlbum;
+
                         mediaPlayer.setOnReady(() -> {
                             Track currentTrack = new Track(
                                 trackFileName,
@@ -69,7 +72,7 @@ public class ArtistLibrary {
                                 (String) mediaPlayer.getMedia().getMetadata().get("title"),
                                 albumDirectory,
                                 (String) mediaPlayer.getMedia().getMetadata().get("album"),
-                                (String) mediaPlayer.getMedia().getMetadata().get("track number"),
+                                (Integer) mediaPlayer.getMedia().getMetadata().get("track number"),
                                 (String) mediaPlayer.getMedia().getMetadata().get("genre"),
                                 mediaPlayer.getTotalDuration()
                             );
