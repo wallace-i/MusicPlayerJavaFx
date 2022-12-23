@@ -20,12 +20,9 @@ import java.beans.*;
 import javafx.util.Duration;
 
 public class ArtistLibrary {
-    private static String audioTrackPathStr;
-    private static String albumDirectoryPathStr;
-    private static String trackFileName;
-    private static Path currentPath;
 
     private static ObservableList<Track> trackData;
+    private static int tableSize;
 
 
     /**
@@ -37,7 +34,7 @@ public class ArtistLibrary {
     public static ObservableList<Track> loadArtistTableView(String artistDirectoryPathStr) throws IOException {
         trackData = FXCollections.observableArrayList();
 
-        currentPath = Paths.get(artistDirectoryPathStr);
+        Path currentPath = Paths.get(artistDirectoryPathStr);
 
         if (Files.exists(currentPath)) {
             //System.out.printf("%n%s exists%n", path);
@@ -46,9 +43,10 @@ public class ArtistLibrary {
 
                 DirectoryStream<Path> artistDir = Files.newDirectoryStream(currentPath);
 
-                for (Path albumFolder : artistDir) {
+                tableSize = 0;
 
-                    albumDirectoryPathStr = albumFolder.toString();
+                for (Path albumFolder : artistDir) {
+                    String albumDirectoryPathStr = albumFolder.toString();
                     String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf('\\') + 1);
                     currentPath = Paths.get(albumDirectoryPathStr);
                     DirectoryStream<Path> albumDir = Files.newDirectoryStream(currentPath);
@@ -56,7 +54,7 @@ public class ArtistLibrary {
 
                     for (Path trackPath : albumDir) {
 
-                        audioTrackPathStr = trackPath.toString();
+                        String audioTrackPathStr = trackPath.toString();
                         String trackFileName = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('\\') + 1);
                         String trackContainerType = audioTrackPathStr.substring('.' + 1);
                         //System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
@@ -79,6 +77,8 @@ public class ArtistLibrary {
                             trackData.add(currentTrack);
                         });
 
+                        tableSize++;
+
                     }
 
 
@@ -95,8 +95,6 @@ public class ArtistLibrary {
         return trackData;
     }
 
-    public static String getAudioTrackPath() { return audioTrackPathStr; }
-
-    public static String getInitialFileName() { return trackData.get(0).getTrackTitleStr(); }
+    public static int getTableSize() { return  tableSize; }
 
 }

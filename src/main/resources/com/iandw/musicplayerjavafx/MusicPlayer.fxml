@@ -2,7 +2,9 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
     <children>
@@ -19,9 +21,9 @@
                 </TableView>
             </children>
         </FlowPane>
-        <HBox alignment="CENTER" layoutX="129.0" layoutY="339.0" prefHeight="25.0" prefWidth="470.0">
+        <HBox alignment="CENTER" layoutX="133.0" layoutY="333.0" prefHeight="25.0" prefWidth="460.0">
             <children>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="55.0" text="Previous">
+                <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefWidth="55.0" text="Previous">
                     <padding>
                         <Insets left="5.0" right="5.0" />
                     </padding>
@@ -45,7 +47,7 @@
                         <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Button>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="55.0" text="Next">
+                <Button fx:id="nextButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#nextButtonPressed" prefHeight="17.0" prefWidth="62.0" text="Next">
                     <padding>
                         <Insets left="5.0" right="5.0" />
                     </padding>
@@ -53,16 +55,21 @@
                         <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Button>
-                <CheckBox mnemonicParsing="false" text="Auto Play">
-                    <padding>
-                        <Insets left="5.0" right="5.0" />
-                    </padding>
-                </CheckBox>
-                <CheckBox mnemonicParsing="false" text="Shuffle">
-                    <padding>
-                        <Insets left="5.0" right="5.0" />
-                    </padding>
-                </CheckBox>
+            <RadioButton fx:id="autoPlay" mnemonicParsing="false" text="Auto">
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton fx:id="shuffle" mnemonicParsing="false" text="Shuffle">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="repeat" mnemonicParsing="false" text="Repeat">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </RadioButton>
             </children>
         </HBox>
         <MenuBar layoutY="1.0" prefHeight="1.0" prefWidth="600.0">
@@ -84,16 +91,20 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <Label layoutX="376.0" layoutY="32.0" text="Playing:" />
-      <Label layoutX="400.0" layoutY="61.0" text="By:" />
-      <TextField fx:id="trackTitleTextField" editable="false" layoutX="420.0" layoutY="29.0" prefHeight="25.0" prefWidth="168.0" />
-      <TextField fx:id="artistNameTextField" editable="false" layoutX="420.0" layoutY="58.0" prefHeight="25.0" prefWidth="168.0" />
-      <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="202.0" layoutY="316.0" prefHeight="14.0" prefWidth="323.0" showTickMarks="true" value="0"/>
+      <Label layoutX="10.0" layoutY="29.0" text="Playing:" />
+      <Label layoutX="10.0" layoutY="49.0" text="By:" />
+      <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="171.0" layoutY="313.0" prefHeight="24.0" prefWidth="387.0" showTickMarks="true" />
       <Label layoutX="10.0" layoutY="70.0" text="Artists:" />
-      <Label layoutX="140.0" layoutY="70.0" text="Music:" />
-      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="8.0" layoutY="328.0" prefHeight="38.0" prefWidth="120.0" showTickLabels="true" showTickMarks="true" value="100" />
-      <Label layoutX="11.0" layoutY="312.0" text="Volume:" />
-      <Label fx:id="trackDurationLabel" layoutX="533.0" layoutY="314.0" text="Label" />
-      <Label fx:id="trackCurrentTimeLabel" layoutX="164.0" layoutY="314.0" text="Label" />
+      <Label layoutX="140.0" layoutY="70.0" text="Track:" />
+      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="331.0" prefHeight="38.0" prefWidth="115.0" showTickMarks="true" value="100" />
+      <Label layoutX="11.0" layoutY="313.0" text="Vol:" />
+      <Label fx:id="trackDurationLabel" layoutX="559.0" layoutY="312.0" text="00:00" />
+      <Label fx:id="trackCurrentTimeLabel" layoutX="138.0" layoutY="312.0" text="00:00" />
+      <CheckBox fx:id="mute" layoutX="70.0" layoutY="313.0" mnemonicParsing="false" text="Mute" />
+      <Label fx:id="volumeLabel" layoutX="34.0" layoutY="313.0" text="100" />
+      <Label fx:id="trackTitleLabel" layoutX="55.0" layoutY="29.0" />
+      <Label fx:id="artistNameLabel" layoutX="29.0" layoutY="49.0" />
+      <ImageView fitHeight="54.0" fitWidth="57.0" layoutX="536.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="-12.0" endY="-103.0" layoutX="141.0" layoutY="420.0" opacity="0.3" startX="-12.0" startY="-68.0" />
     </children>
 </AnchorPane>

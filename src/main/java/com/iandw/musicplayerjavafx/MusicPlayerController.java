@@ -8,13 +8,8 @@ package com.iandw.musicplayerjavafx;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Objects;
-
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,8 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-
-
 
 public class MusicPlayerController {
     @FXML private MediaView mediaView;
@@ -36,20 +29,31 @@ public class MusicPlayerController {
     @FXML public TableColumn<Track, String> colTrackGenre;
     @FXML private Button playPauseButton;
     @FXML private Button stopButton;
+    @FXML private Button nextButton;
+    @FXML private Button previousButton;
     @FXML private Slider volumeSlider;
     @FXML private Slider seekSlider;
-    @FXML private TextField trackTitleTextField;
-    @FXML private TextField artistNameTextField;
+    @FXML private Label trackTitleLabel;
+    @FXML private Label artistNameLabel;
     @FXML private Label trackCurrentTimeLabel;
     @FXML private Label trackDurationLabel;
+    @FXML private Label volumeLabel;
+    @FXML private RadioButton autoPlay;
+    @FXML private RadioButton shuffle;
+    @FXML private RadioButton repeat;
+    @FXML private CheckBox mute;
     private MediaPlayer mediaPlayer;
-    private Media media;
     private String currentPath;
     private String rootMusicDirectory;
-
     private String trackTitleString;
     private String artistNameString;
-
+    String albumDirectoryString;
+    //String trackContainerType;
+    String trackFileName;
+    private int currentTrackIndex;
+    private int nextTrackIndex;
+    private int previousTrackIndex;
+    private int tableSize;
     private boolean playing = false;
 
 
@@ -61,8 +65,19 @@ public class MusicPlayerController {
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
             (observableValue, oldValue, newValue) -> {
-                mediaPlayer.setVolume(newValue.doubleValue() / 100);
+                int volumeInt = newValue.intValue();
+                volumeLabel.setText(Integer.toString(volumeInt));
+
+                if (mediaPlayer != null) {
+                    mediaPlayer.setVolume(newValue.doubleValue() / 100);
+                }
             }
+        );
+
+        mute.selectedProperty().addListener(
+                (observableValue, oldValue, newValue) -> {
+                    mediaPlayer.setMute(newValue);
+                }
         );
 
         // listener for changes to trackDurationSlider's value
@@ -74,6 +89,30 @@ public class MusicPlayerController {
             }
         );
 
+        // Toggle Group Listeners
+        final ToggleGroup autoToggleGroup = new ToggleGroup();
+        autoPlay.setToggleGroup(autoToggleGroup);
+        shuffle.setToggleGroup(autoToggleGroup);
+        repeat.setToggleGroup(autoToggleGroup);
+
+        // Toggle Radio Buttons ON
+        autoPlay.selectedProperty().addListener(
+            (observableValue, oldValue, newValue) -> {
+                autoPlay.setSelected(newValue);
+            }
+        );
+
+        shuffle.selectedProperty().addListener(
+            (observableValue, oldValue, newValue) -> {
+                shuffle.setSelected(newValue);
+            }
+        );
+
+        repeat.selectedProperty().addListener(
+            (observableValue, oldValue, newValue) -> {
+                repeat.setSelected(newValue);
+            }
+        );
 
     }
 
@@ -88,11 +127,12 @@ public class MusicPlayerController {
                 trackTableView.setEditable(true);
                 trackTableView.setItems(ArtistLibrary.loadArtistTableView(currentPath));
                 trackTableView.setVisible(true);
+                tableSize = ArtistLibrary.getTableSize();
 
-                colTrackTitle.setCellValueFactory(new PropertyValueFactory<Track, String>("trackTitleStr"));
-                colAlbumTitle.setCellValueFactory(new PropertyValueFactory<Track, String>("albumTitleStr"));
-                colTrackLength.setCellValueFactory(new PropertyValueFactory<Track, String>("trackDurationStr"));
-                colTrackGenre.setCellValueFactory(new PropertyValueFactory<Track, String>("trackGenreStr"));
+                colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
+                colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
+                colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
+                colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
 
                 System.out.printf("currentPath: %s%n", currentPath);
 
@@ -104,53 +144,18 @@ public class MusicPlayerController {
     private void handleTableViewMouseClick(MouseEvent mouseClick) {
 
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-
-            String albumDirectoryString;
-            //String trackContainerType;
-            String trackFileName;
-
             if (mouseClick.getClickCount() == 1 && !mouseClick.isDragDetect()) {
-                trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
-                trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
-                //trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
-                albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
-                currentPath = rootMusicDirectory + '\\' + artistNameString + '\\' + albumDirectoryString +
-                        '\\' + trackFileName;
-
-//                media = new Media(new File(currentPath).toURI().toString());
-//                mediaPlayer = new MediaPlayer(media);
-
-
-
+                filePath();
             }
 
             if (mouseClick.getClickCount() == 2) {
-
                 if (playing) {
                     mediaPlayer.stop();
                     mediaPlayer.dispose();
                     playing = false;
                 }
-
-                trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
-                trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
-                //trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
-                albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
-                currentPath = rootMusicDirectory + '\\' + artistNameString + '\\' + albumDirectoryString +
-                        '\\' + trackFileName;
-
-                trackTitleTextField.setText(trackTitleString);
-                artistNameTextField.setText(artistNameString);
-
-                System.out.printf("currentPath: %s%n", currentPath);
-                media = new Media(new File(currentPath).toURI().toString());
-                mediaPlayer = new MediaPlayer(media);
-
-                mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
-
-                mediaPlayer.play();
-                playPauseButton.setText("Pause");
-                playing = true;
+                // Load currentPath and associated variables
+                playMedia();
 
             }
         }
@@ -165,20 +170,9 @@ public class MusicPlayerController {
                 playPauseButton.setText("Play");
                 playing = false;
             } else if (this.mediaPlayer == null){
-                trackTitleTextField.setText(trackTitleString);
-                artistNameTextField.setText(artistNameString);
-                System.out.printf("currentPath: %s%n", currentPath);
-                media = new Media(new File(currentPath).toURI().toString());
-                mediaPlayer = new MediaPlayer(media);
-
-                mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
-
-                mediaPlayer.play();
-                playPauseButton.setText("Pause");
-                playing = true;
+                playMedia();
             } else {
-                trackTitleTextField.setText(trackTitleString);
-                artistNameTextField.setText(artistNameString);
+                setNowPlayingText();
                 mediaPlayer.play();
                 playPauseButton.setText("Pause");
                 playing = true;
@@ -189,16 +183,102 @@ public class MusicPlayerController {
 
     @FXML
     private void stopButtonPressed(MouseEvent mouseClick) {
-        if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
-            mediaPlayer.stop();
-            playPauseButton.setText("Play");
-            playing = false;
-        } else if (playing){
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
+                stopMedia(false);
+            } else if (playing){
+                stopMedia(true);
+                // TODO => pause function
+            } else {
+                stopMedia(false);
+            }
+        }
+    }
+
+    @FXML
+    private void nextButtonPressed(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
+            trackTableView.getSelectionModel().select(nextTrackIndex);
+            stopMedia(true);
+            playMedia();
+            System.out.println("play next song");
+        }
+    }
+
+    @FXML
+    private void previousButtonPressed(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
+            trackTableView.getSelectionModel().select(previousTrackIndex);
+            stopMedia(true);
+            playMedia();
+            System.out.println("play next song");
+
+        }
+    }
+
+    @FXML
+    private void autoPlayPressed(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            if (autoPlay.isSelected() && (mediaPlayer != null)) {
+                mediaPlayer.setAutoPlay(true);
+                autoPlay.setSelected(true);
+            } else {
+                if (mediaPlayer != null) {
+                    mediaPlayer.setAutoPlay(false);
+                    autoPlay.setSelected(false);
+                }
+            }
+        }
+    }
+
+    private void playMedia() {
+        // Update current path for media object
+        filePath();
+
+        // Set text to currently playing text fields
+        setNowPlayingText();
+
+        // Debugger
+        System.out.printf("currentPath: %s%n", currentPath);
+
+        // Create Media Object
+        Media media = new Media(new File(currentPath).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+
+        // Internal track tracking by index for prev, next and autoplay functions
+        trackIndexTracker();
+
+        System.out.printf("currentPath: %s%n", currentPath);
+
+        // Set Seeker slider
+        mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
+
+        // Play media
+        mediaPlayer.play();
+        playPauseButton.setText("Pause");
+        playing = true;
+
+        // Autoplay or stop media player after current track is finished
+        mediaPlayer.setOnEndOfMedia(() -> {
+            if (autoPlay.isSelected()) {
+                autoPlaySelected();
+            } else if (repeat.isSelected()) {
+                repeatSelected();
+            } else if (shuffle.isSelected()) {
+                shuffleSelected();
+            } else {
+                stopMedia(false);
+            }
+        });
+
+    }
+
+    private void stopMedia(boolean dispose) {
+        if (dispose) {
             mediaPlayer.stop();
             mediaPlayer.dispose();
             playPauseButton.setText("Play");
             playing = false;
-            // TODO => pause function
         } else {
             mediaPlayer.stop();
             playPauseButton.setText("Play");
@@ -206,13 +286,73 @@ public class MusicPlayerController {
         }
     }
 
-    protected void seekValueUpdate() {
+    private void filePath() {
+        trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
+        trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
+        //trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
+        albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
+        currentPath = rootMusicDirectory + '\\' + artistNameString + '\\' + albumDirectoryString + '\\' + trackFileName;
+    }
+
+    private void seekValueUpdate() {
+        //TODO => fix "javafx.scene.control.TableView$TableViewSelectionModel.getSelectedItem()" is null
+        if (mediaPlayer == null) {
+            trackDurationLabel.setText("");
+            trackCurrentTimeLabel.setText("");
+        }
         trackDurationLabel.setText(trackTableView.getSelectionModel().getSelectedItem().getTrackDurationStr());
         trackCurrentTimeLabel.setText(Track.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
         seekSlider.valueProperty().setValue(mediaPlayer.getCurrentTime().toMillis() / mediaPlayer.getTotalDuration().toMillis() * 100);
 
+
+    }
+
+    private void setNowPlayingText() {
+        trackTitleLabel.setText(trackTitleString);
+        artistNameLabel.setText(artistNameString);
     }
 
 
+    private void trackIndexTracker() {
+        currentTrackIndex = trackTableView.getItems().indexOf(trackTableView.getSelectionModel().getSelectedItem());
 
+        if (currentTrackIndex == tableSize - 1) {
+            nextTrackIndex = 0;
+        } else {
+            nextTrackIndex = currentTrackIndex + 1;
+        }
+
+        if (currentTrackIndex == 0) {
+            previousTrackIndex = tableSize - 1;
+        } else {
+            previousTrackIndex = currentTrackIndex - 1;
+        }
+
+        System.out.printf("curIndex:%d%n", currentTrackIndex);
+        System.out.printf("nextIndex:%d%n", nextTrackIndex);
+        System.out.printf("prevIndex:%d%n", previousTrackIndex);
+        System.out.printf("lastIndex:%d%n", tableSize - 1);
+    }
+
+    private void autoPlaySelected() {
+        trackTableView.getSelectionModel().select(nextTrackIndex);
+        stopMedia(true);
+        playMedia();
+        System.out.println("autoplay");
+    }
+
+    private void shuffleSelected() {
+        SecureRandom randNum = new SecureRandom();
+        trackTableView.getSelectionModel().select(randNum.nextInt(0, tableSize - 1));
+        stopMedia(true);
+        playMedia();
+        System.out.println("shuffle track");
+    }
+
+    private void repeatSelected() {
+        trackTableView.getSelectionModel().select(currentTrackIndex);
+        stopMedia(true);
+        playMedia();
+        System.out.println("repeat track");
+    }
 }
