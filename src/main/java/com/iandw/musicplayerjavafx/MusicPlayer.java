@@ -13,8 +13,10 @@ public class MusicPlayer extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MusicPlayer.fxml")));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Music Player");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

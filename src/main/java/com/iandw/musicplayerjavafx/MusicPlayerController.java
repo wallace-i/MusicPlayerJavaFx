@@ -9,6 +9,8 @@ package com.iandw.musicplayerjavafx;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+
+import static java.lang.Double.NaN;
 
 public class MusicPlayerController {
     @FXML private MediaView mediaView;
@@ -35,6 +39,7 @@ public class MusicPlayerController {
     @FXML private Slider seekSlider;
     @FXML private Label trackTitleLabel;
     @FXML private Label artistNameLabel;
+    @FXML private Label albumTitleLabel;
     @FXML private Label trackCurrentTimeLabel;
     @FXML private Label trackDurationLabel;
     @FXML private Label volumeLabel;
@@ -47,6 +52,8 @@ public class MusicPlayerController {
     private String rootMusicDirectory;
     private String trackTitleString;
     private String artistNameString;
+    private String albumTitleString;
+    private String previousArtistNameString;
     String albumDirectoryString;
     //String trackContainerType;
     String trackFileName;
@@ -54,13 +61,18 @@ public class MusicPlayerController {
     private int nextTrackIndex;
     private int previousTrackIndex;
     private int tableSize;
+    private double volumeDouble;
     private boolean playing = false;
+    List<Integer> shuffleArray = new ArrayList<>();
 
 
     public void initialize() throws IOException {
         // Load data from music folders into app
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection());
         rootMusicDirectory = MusicLibrary.getMusicRootDirectory();
+        previousTrackIndex = 0;
+        artistNameString = "";
+        volumeDouble = 1.0;
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -68,8 +80,11 @@ public class MusicPlayerController {
                 int volumeInt = newValue.intValue();
                 volumeLabel.setText(Integer.toString(volumeInt));
 
-                if (mediaPlayer != null) {
-                    mediaPlayer.setVolume(newValue.doubleValue() / 100);
+                try {
+                    volumeDouble = Math.pow(newValue.doubleValue(), 2) / 10000;
+                    mediaPlayer.setVolume(volumeDouble);
+                } catch (NullPointerException e) {
+                    System.out.println("mediaPlayer is null");
                 }
             }
         );
@@ -86,31 +101,71 @@ public class MusicPlayerController {
                 if (seekSlider.isPressed()) {
                     mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(seekSlider.getValue() / 100));
                 }
+
+                double percentage = 100.0 * newValue.doubleValue() / seekSlider.getMax();
+                if (Double.isNaN(percentage)) {
+                    percentage = 0.0;
+                }
+                String style = String.format(
+                        "-track-color: linear-gradient(to right, " +
+                                "-fx-accent 0%%, " +
+                                "-fx-accent %1$.1f%%, " +
+                                "-default-track-color %1$.1f%%, " +
+                                "-default-track-color 100%%);",
+                    percentage);
+                //System.out.println(percentage);
+                seekSlider.setStyle(style);
             }
         );
 
         // Toggle Group Listeners
-        final ToggleGroup autoToggleGroup = new ToggleGroup();
-        autoPlay.setToggleGroup(autoToggleGroup);
-        shuffle.setToggleGroup(autoToggleGroup);
-        repeat.setToggleGroup(autoToggleGroup);
-
-        // Toggle Radio Buttons ON
         autoPlay.selectedProperty().addListener(
             (observableValue, oldValue, newValue) -> {
-                autoPlay.setSelected(newValue);
+                if (newValue) {
+                    if (shuffle.isSelected() || repeat.isSelected()) {
+                        shuffle.setSelected(false);
+                        repeat.setSelected(false);
+                        autoPlay.setSelected(true);
+                    } else {
+                        autoPlay.setSelected(true);
+                    }
+                } else {
+                    autoPlay.setSelected(false);
+                    shuffleArray.clear();
+                }
             }
         );
 
         shuffle.selectedProperty().addListener(
             (observableValue, oldValue, newValue) -> {
-                shuffle.setSelected(newValue);
+                if (newValue) {
+                    if (autoPlay.isSelected() || repeat.isSelected()) {
+                        shuffle.setSelected(true);
+                        repeat.setSelected(false);
+                        autoPlay.setSelected(false);
+                    } else {
+                        shuffle.setSelected(true);
+                    }
+                } else {
+                    shuffle.setSelected(false);
+
+                }
             }
         );
 
         repeat.selectedProperty().addListener(
             (observableValue, oldValue, newValue) -> {
-                repeat.setSelected(newValue);
+                if (newValue) {
+                    if (shuffle.isSelected() || autoPlay.isSelected()) {
+                        shuffle.setSelected(false);
+                        repeat.setSelected(true);
+                        autoPlay.setSelected(false);
+                    } else {
+                        repeat.setSelected(true);
+                    }
+                } else {
+                    repeat.setSelected(false);
+                }
             }
         );
 
@@ -120,10 +175,10 @@ public class MusicPlayerController {
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseClick.getClickCount() == 2) {
-
+                previousArtistNameString = artistNameString;
                 artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
                 currentPath = rootMusicDirectory + '\\' + artistNameString;
-
+//                System.out.printf("prevArtist:%s, artistName:%s%n", previousArtistNameString, artistNameString);
                 trackTableView.setEditable(true);
                 trackTableView.setItems(ArtistLibrary.loadArtistTableView(currentPath));
                 trackTableView.setVisible(true);
@@ -165,32 +220,55 @@ public class MusicPlayerController {
     @FXML
     private void playPauseButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (playing) {
-                mediaPlayer.pause();
-                playPauseButton.setText("Play");
-                playing = false;
-            } else if (this.mediaPlayer == null){
-                playMedia();
-            } else {
-                setNowPlayingText();
-                mediaPlayer.play();
-                playPauseButton.setText("Pause");
-                playing = true;
+            try {
+                if (playing) {
+                    mediaPlayer.pause();
+                    playPauseButton.setText("Play");
+                    playing = false;
+                } else if (this.mediaPlayer == null) {
+                    playMedia();
+                } else {
+                    setNowPlayingText();
+                    mediaPlayer.play();
+                    playPauseButton.setText("Pause");
+                    playing = true;
 
+                }
+            } catch (NullPointerException e) {
+                System.out.println("No track selected.");
             }
         }
     }
 
     @FXML
+    private void seekSliderPressed(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            try {
+                if (!playing) {
+                    mediaPlayer.play();
+                    playPauseButton.setText("Pause");
+                    playing = true;
+                } else if (this.mediaPlayer == null) {
+                    playMedia();
+                }
+            } catch (NullPointerException e) {
+                System.out.println("No track selected.");
+            }
+        }
+
+    }
+
+    @FXML
     private void stopButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
-                stopMedia(false);
-            } else if (playing){
-                stopMedia(true);
-                // TODO => pause function
-            } else {
-                stopMedia(false);
+            try {
+                if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
+                    stopMedia(false);
+                } else {
+                    stopMedia(playing);
+                }
+            } catch (NullPointerException e) {
+                System.out.println("No track selected.");
             }
         }
     }
@@ -198,10 +276,16 @@ public class MusicPlayerController {
     @FXML
     private void nextButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
-            trackTableView.getSelectionModel().select(nextTrackIndex);
-            stopMedia(true);
-            playMedia();
-            System.out.println("play next song");
+            if (shuffle.isSelected()) {
+                shuffleSelected();
+            } else {
+                trackTableView.getSelectionModel().select(nextTrackIndex);
+                stopMedia(true);
+                playMedia();
+                System.out.println("play next song");
+
+            }
+
         }
     }
 
@@ -248,12 +332,11 @@ public class MusicPlayerController {
         // Internal track tracking by index for prev, next and autoplay functions
         trackIndexTracker();
 
-        System.out.printf("currentPath: %s%n", currentPath);
-
         // Set Seeker slider
         mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
 
         // Play media
+        mediaPlayer.setVolume(volumeDouble);
         mediaPlayer.play();
         playPauseButton.setText("Pause");
         playing = true;
@@ -289,6 +372,7 @@ public class MusicPlayerController {
     private void filePath() {
         trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
         trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
+        albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
         //trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
         albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
         currentPath = rootMusicDirectory + '\\' + artistNameString + '\\' + albumDirectoryString + '\\' + trackFileName;
@@ -300,32 +384,30 @@ public class MusicPlayerController {
             trackDurationLabel.setText("");
             trackCurrentTimeLabel.setText("");
         }
-        trackDurationLabel.setText(trackTableView.getSelectionModel().getSelectedItem().getTrackDurationStr());
+       // trackDurationLabel.setText(trackTableView.getSelectionModel().getSelectedItem().getTrackDurationStr());
+        trackDurationLabel.setText(Track.formatSeconds((int) mediaPlayer.getTotalDuration().toSeconds()));
         trackCurrentTimeLabel.setText(Track.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
         seekSlider.valueProperty().setValue(mediaPlayer.getCurrentTime().toMillis() / mediaPlayer.getTotalDuration().toMillis() * 100);
-
-
     }
+
+
+
 
     private void setNowPlayingText() {
         trackTitleLabel.setText(trackTitleString);
+        albumTitleLabel.setText(albumTitleString);
         artistNameLabel.setText(artistNameString);
     }
 
 
     private void trackIndexTracker() {
+        previousTrackIndex = currentTrackIndex;
         currentTrackIndex = trackTableView.getItems().indexOf(trackTableView.getSelectionModel().getSelectedItem());
 
         if (currentTrackIndex == tableSize - 1) {
             nextTrackIndex = 0;
         } else {
             nextTrackIndex = currentTrackIndex + 1;
-        }
-
-        if (currentTrackIndex == 0) {
-            previousTrackIndex = tableSize - 1;
-        } else {
-            previousTrackIndex = currentTrackIndex - 1;
         }
 
         System.out.printf("curIndex:%d%n", currentTrackIndex);
@@ -335,24 +417,63 @@ public class MusicPlayerController {
     }
 
     private void autoPlaySelected() {
+        System.out.println("autoplay");
         trackTableView.getSelectionModel().select(nextTrackIndex);
         stopMedia(true);
         playMedia();
-        System.out.println("autoplay");
+
     }
 
     private void shuffleSelected() {
+        System.out.println("shuffle track");
+        if (shuffleArray == null || shuffleArray.isEmpty()) {
+            assert false;
+            shuffleArray.add(currentTrackIndex);
+        }
+
+        if (!Objects.equals(previousArtistNameString, artistNameString)) {
+            shuffleArray.clear();
+            previousArtistNameString = artistNameString;
+        }
+
         SecureRandom randNum = new SecureRandom();
-        trackTableView.getSelectionModel().select(randNum.nextInt(0, tableSize - 1));
+        int randomIndex = randNum.nextInt(0, tableSize);
+
+        if (!shuffleArray.contains(randomIndex)) {
+            shuffleArray.add(randomIndex);
+        } else if (shuffleArray.size() >= tableSize){
+            shuffleArray.clear();
+            shuffleArray.add(randomIndex);
+        } else {
+            while (shuffleArray.contains(randomIndex)) {
+                randomIndex = randNum.nextInt(0, tableSize);
+//                System.out.println(randomIndex);
+                if (shuffleArray.size() == tableSize) {
+                    shuffleArray.clear();
+                    break;
+                }
+            }
+            shuffleArray.add(randomIndex);
+        }
+//        System.out.printf("arraysize:%d tablesize:%d%n", shuffleArray.size(), tableSize);
+//        for ( int i : shuffleArray) {
+//            System.out.printf("%d ", i);
+//        }
+        System.out.println();
+        trackTableView.getSelectionModel().select(randomIndex);
         stopMedia(true);
         playMedia();
-        System.out.println("shuffle track");
+
+
     }
 
     private void repeatSelected() {
+        System.out.println("repeat track");
         trackTableView.getSelectionModel().select(currentTrackIndex);
         stopMedia(true);
         playMedia();
-        System.out.println("repeat track");
+
     }
+
+
 }

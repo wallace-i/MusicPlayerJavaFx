@@ -53,10 +53,10 @@ public class ArtistLibrary {
                     //System.out.printf("currentPath: %s%nalbumDirectoryPathStr:%s%n", currentPath, albumDirectoryPathStr);
 
                     for (Path trackPath : albumDir) {
-
                         String audioTrackPathStr = trackPath.toString();
                         String trackFileName = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('\\') + 1);
-                        String trackContainerType = audioTrackPathStr.substring('.' + 1);
+                        //String trackContainerType = audioTrackPathStr.substring('.' + 1);
+                        String trackContainerType = "mp3";
                         //System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
                         Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
                         MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
