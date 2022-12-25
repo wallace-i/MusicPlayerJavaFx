@@ -15,8 +15,11 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.*;
 import java.beans.*;
+import java.util.Objects;
+
 import javafx.util.Duration;
 
 public class ArtistLibrary {
@@ -37,51 +40,96 @@ public class ArtistLibrary {
         Path currentPath = Paths.get(artistDirectoryPathStr);
 
         if (Files.exists(currentPath)) {
-            //System.out.printf("%n%s exists%n", path);
             if (Files.isDirectory(currentPath)) {
-                //System.out.printf("%nDirectory contents:%n");
-
                 DirectoryStream<Path> artistDir = Files.newDirectoryStream(currentPath);
 
                 tableSize = 0;
 
-                for (Path albumFolder : artistDir) {
-                    String albumDirectoryPathStr = albumFolder.toString();
-                    String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf('\\') + 1);
-                    currentPath = Paths.get(albumDirectoryPathStr);
-                    DirectoryStream<Path> albumDir = Files.newDirectoryStream(currentPath);
-                    //System.out.printf("currentPath: %s%nalbumDirectoryPathStr:%s%n", currentPath, albumDirectoryPathStr);
+                try {
+                    for (Path albumFolder : artistDir) {
+                        String albumDirectoryPathStr = albumFolder.toAbsolutePath().toString();
+                        String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf('\\') + 1);
+                        DirectoryStream<Path> albumDir = Files.newDirectoryStream(Paths.get(albumDirectoryPathStr));
 
-                    for (Path trackPath : albumDir) {
-                        String audioTrackPathStr = trackPath.toString();
-                        String trackFileName = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('\\') + 1);
-                        //String trackContainerType = audioTrackPathStr.substring('.' + 1);
-                        String trackContainerType = "mp3";
-                        //System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
-                        Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
-                        MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
-                        String trackTitle;
-                        String trackAlbum;
+                        for (Path trackPath : albumDir) {
+                            if (Files.exists(trackPath)) {
+                                String audioTrackPathStr = trackPath.toAbsolutePath().toString();
+                                String trackFileName = trackPath.getFileName().toString();
+                                String trackContainerType = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('.'));
+//                            Debugger
+//                            System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
+//                            System.out.printf("trackFileName: %s%n", trackFileName);
+//                            System.out.printf("trackContainerType: %s%n", trackContainerType);
 
-                        mediaPlayer.setOnReady(() -> {
-                            Track currentTrack = new Track(
-                                trackFileName,
-                                trackContainerType,
-                                (String) mediaPlayer.getMedia().getMetadata().get("title"),
-                                albumDirectory,
-                                (String) mediaPlayer.getMedia().getMetadata().get("album"),
-                                (Integer) mediaPlayer.getMedia().getMetadata().get("track number"),
-                                (String) mediaPlayer.getMedia().getMetadata().get("genre"),
-                                mediaPlayer.getTotalDuration()
-                            );
-                            trackData.add(currentTrack);
-                        });
+                                Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
+                                MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
 
-                        tableSize++;
+                                mediaPlayer.setOnReady(() -> {
+                                    String trackTitle = trackFileName;
+                                    String trackAlbum;
+                                    String trackGenre = (String) mediaPlayer.getMedia().getMetadata().get("genre");
 
+                                    // Check title metadate for null value, if true replace with file name substring
+                                    if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
+                                        trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
+
+                                    } else {
+                                        trackTitle = (String) mediaPlayer.getMedia().getMetadata().get("title");
+                                    }
+
+                                    // if still null replace with trackFileName
+                                    if (trackTitle == null) {
+                                        trackTitle = trackFileName;
+                                    }
+
+                                    // Check album metadata for null value, if true replace with directory name
+                                    if (mediaPlayer.getMedia().getMetadata().get("album") == null) {
+                                        trackAlbum = albumDirectory;
+                                    } else {
+                                        trackAlbum = (String) mediaPlayer.getMedia().getMetadata().get("album");
+                                    }
+
+                                    // Check genre metadata for null value, if true leave blank
+                                    if (trackGenre == null) {
+                                        trackGenre = "";
+                                    } else if (trackGenre.startsWith("(")) {
+                                        String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
+                                        trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
+                                    }
+
+                                    // Check for playable file container
+                                    if (Objects.equals(trackContainerType.toLowerCase(), ".aif") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".aiff") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
+                                        // Load Track constructor
+                                        Track currentTrack = new Track(
+                                                trackFileName,
+                                                trackContainerType,
+                                                trackTitle,
+                                                albumDirectory,
+                                                trackAlbum,
+                                                trackGenre,
+                                                mediaPlayer.getTotalDuration()
+                                        );
+
+                                        // Add track data to Observable List
+                                        trackData.add(currentTrack);
+
+                                    } else {
+                                        System.out.printf("%s is not compatible with media player.", trackFileName);
+                                    }
+                                });
+
+                                // Increment size to calculate table size for shuffle play
+                                tableSize++;
+                            }
+
+                        }
                     }
-
-
+                } catch (Exception e) {
+                    System.out.println("Directory cannot be loaded.");
                 }
             }
         } else {

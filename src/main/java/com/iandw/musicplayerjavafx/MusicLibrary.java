@@ -27,8 +27,8 @@ public class MusicLibrary {
         //tracks = FXCollections.observableArrayList();
         artistNameCollection = FXCollections.observableArrayList();
 
-        Path path = Paths.get("C:\\dev\\DemoMusic");
-        //Path path = Paths.get("E:\\Music");
+        //Path path = Paths.get("C:\\dev\\DemoMusic");
+        Path path = Paths.get("E:\\Music");
         musicRootDirectory = path.toString();
 
         if (Files.exists(path)) {

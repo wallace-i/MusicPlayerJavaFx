@@ -22,27 +22,19 @@ public class Track {
     private final SimpleStringProperty trackTitleStr;
     private final SimpleStringProperty albumDirectoryStr;
     private final SimpleStringProperty albumTitleStr;
-    private final SimpleIntegerProperty trackNumberInt;
-    private final SimpleStringProperty trackGenreStr;
 
     private final Duration trackDuration;
     private final SimpleStringProperty trackDurationStr;
+    private final SimpleStringProperty trackGenreStr;
 
     public Track(String trackFileName, String trackContainerType, String trackTitleStr, String albumDirectoryStr,
-                 String albumTitleStr, Integer trackNumberInteger, String trackGenreStr, Duration trackDuration)
+                 String albumTitleStr, String trackGenreStr, Duration trackDuration)
     {
         this.trackFileNameStr = new SimpleStringProperty(trackFileName);
         this.trackContainerTypeStr = new SimpleStringProperty(trackContainerType);
         this.trackTitleStr = new SimpleStringProperty(trackTitleStr);
         this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
         this.albumTitleStr = new SimpleStringProperty(albumTitleStr);
-
-        if (trackNumberInteger == null) {
-            this.trackNumberInt = new SimpleIntegerProperty(0);
-        } else {
-            this.trackNumberInt = new SimpleIntegerProperty(trackNumberInteger);
-        }
-
         this.trackGenreStr = new SimpleStringProperty(trackGenreStr);
         this.trackDuration = trackDuration;
         int trackDurationSeconds = (int) trackDuration.toSeconds();
@@ -59,18 +51,13 @@ public class Track {
 
     }
 
-
     public String getTrackFileNameStr() { return trackFileNameStr.get(); }
     public String getTrackContainerTypeStr() { return trackContainerTypeStr.get(); }
     public String getTrackTitleStr() { return trackTitleStr.get(); }
     public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
-    public int getTrackNumberStr() { return trackNumberInt.get(); }
-    public String getTrackGenreStr() { return trackGenreStr.get(); }
-    public Duration getTrackDuration() { return trackDuration; }
-
-    public String getTrackDurationStr() { return trackDurationStr.get(); }
-
+    public String getTrackDurationStr() {return trackDurationStr.get(); }
+    public String getTrackGenreStr() {return trackGenreStr.get(); }
 
 
 }
