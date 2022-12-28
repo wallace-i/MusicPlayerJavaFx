@@ -4,7 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorid" prefHeight="219.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.SettingsController">
+<AnchorPane fx:id="anchorPane" prefHeight="219.0" prefWidth="371.0"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.iandw.musicplayerjavafx.SettingsController">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="349.0">
         <columnConstraints>
@@ -20,7 +23,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="rootDirectoryPath" prefHeight="17.0" prefWidth="256.0" GridPane.columnIndex="1" text="Path not set.">
+            <Label fx:id="rootDirectoryLabel" prefHeight="17.0" prefWidth="256.0" GridPane.columnIndex="1">
                <padding>
                   <Insets left="10.0" />
                </padding>

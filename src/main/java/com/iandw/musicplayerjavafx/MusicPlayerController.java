@@ -8,23 +8,22 @@ package com.iandw.musicplayerjavafx;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.*;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import javafx.stage.Stage;
+
 
 public class MusicPlayerController {
     @FXML private ListView<String> artistNameListView;
@@ -64,59 +63,20 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing = false;
     List<Integer> shuffleArray = new ArrayList<>();
-    SettingsController settingsControllerObj;
+    URL jsonURL;
 
 
 
     public void initialize() throws IOException {
-        //TODO=>get setting info for rootdir, pass to musiclibrary
-        settingsControllerObj = new SettingsController();
-        Path path = Paths.get("C:\\Users\\ianda\\IdeaProjects\\MusicPlayerJavaFx\\src\\main\\resources\\com\\iandw\\musicplayerjavafx\\userSettings.json");
-       // URL userSettingsPath = MusicPlayer.class.getResource("userSettings.json");
-       // assert userSettingsPath != null;
-        // If file doesn't exist, initiailize it
-        if (false){//userSettingsPath.toExternalForm().isEmpty()) {
-            JSONObject userSettingJSONObj = new JSONObject();
-            userSettingJSONObj.put("musicLibrary", "C:\\dev\\DemoMusic" );
+        // Get JSON file URL
+        jsonURL = Objects.requireNonNull(SettingsController.class.getResource("Settings.json"));
 
-            try (FileWriter file = new FileWriter("userSettings.json")) {
-                file.write(userSettingJSONObj.toJSONString());
-                file.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            rootMusicDirectoryString = (String) userSettingJSONObj.get("musicLibrary");
-            rootMusicDirectoryPath = Paths.get(rootMusicDirectoryString);
-
-//            JSONObject userSettingsJSONObj = new JSONObject();
-//            settingsControllerObj.rootDirectoryInitialize();
-//            rootMusicDirectoryPath = settingsControllerObj.getRootDirectoryPath();
-//            rootMusicDirectoryString = rootMusicDirectoryPath.toString();
-//            userSettingsJSONObj.put("musicLibrary", rootMusicDirectoryString);
-
-        // Else read from JSON file
-        } else {
-            System.out.println("reading json");
-            JSONParser jsonParser = new JSONParser();
-
-            try (FileReader reader = new FileReader(path.toString())) {
-                Object obj = jsonParser.parse(reader);
-                JSONArray settingsList = (JSONArray) obj;
-                settingsList.forEach( settings -> parseSettingsObject( (JSONObject) settings));
-                System.out.println(rootMusicDirectoryString);
-
-
-            } catch (ParseException | IOException e) {
-                e.printStackTrace();
-            }
-
-
-        }
+        // Read file paths into controller
+        rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(jsonURL);
+        rootMusicDirectoryPath = Paths.get(rootMusicDirectoryString);
 
         // Load data from music folders into app
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryPath));
-        //rootMusicDirectoryString = rootMusicDirectoryPath.toString();
         previousTrackIndex = 0;
         artistNameString = "";
         volumeDouble = 1.0;
@@ -219,11 +179,7 @@ public class MusicPlayerController {
 
     }
 
-    private void parseSettingsObject(JSONObject setting) {
-        JSONObject settingObject = (JSONObject) setting.get("userSettings");
-        rootMusicDirectoryString = (String) settingObject.get("musicLibrary");
-        rootMusicDirectoryPath = Paths.get(rootMusicDirectoryString);
-    }
+
 
     @FXML
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
@@ -362,22 +318,6 @@ public class MusicPlayerController {
         }
     }
 
-    // TODO => is this function necessary?
-    @FXML
-    private void autoPlayPressed(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (autoPlay.isSelected() && (mediaPlayer != null)) {
-                mediaPlayer.setAutoPlay(true);
-                autoPlay.setSelected(true);
-            } else {
-                if (mediaPlayer != null) {
-                    mediaPlayer.setAutoPlay(false);
-                    autoPlay.setSelected(false);
-                }
-            }
-        }
-    }
-
     private void playMedia() {
         // Update current path for media object
         filePath();
@@ -435,7 +375,6 @@ public class MusicPlayerController {
         String trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
         trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
         albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
-        String trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
         String albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
         currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
                 File.separator + trackFileName;
@@ -530,7 +469,14 @@ public class MusicPlayerController {
 
     @FXML
     private void settingsClicked() throws IOException {
-        SettingsController.initialize();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(SettingsController.class.getResource("Settings.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Settings");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
     }
 
 
