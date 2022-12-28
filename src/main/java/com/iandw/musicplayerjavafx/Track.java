@@ -8,13 +8,9 @@
 
 package com.iandw.musicplayerjavafx;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import static java.lang.Math.floor;
 
 public class Track {
     private final SimpleStringProperty trackFileNameStr;

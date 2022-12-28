@@ -7,6 +7,7 @@ module com.iandw.musicplayerjavafx {
     requires org.kordamp.bootstrapfx.core;
     requires javafx.media;
     requires java.desktop;
+    requires json.simple;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;

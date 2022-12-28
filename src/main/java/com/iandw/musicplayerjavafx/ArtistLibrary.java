@@ -8,19 +8,13 @@
 package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.*;
-import java.beans.*;
 import java.util.Objects;
-
-import javafx.util.Duration;
 
 public class ArtistLibrary {
 
@@ -49,17 +43,17 @@ public class ArtistLibrary {
                     for (Path albumFolder : artistDir) {
                         String albumDirectoryPathStr = albumFolder.toAbsolutePath().toString();
                         String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf('\\') + 1);
-                        DirectoryStream<Path> albumDir = Files.newDirectoryStream(Paths.get(albumDirectoryPathStr));
+                        DirectoryStream<Path> albumDirPath = Files.newDirectoryStream(Paths.get(albumDirectoryPathStr));
 
-                        for (Path trackPath : albumDir) {
+                        for (Path trackPath : albumDirPath) {
                             if (Files.exists(trackPath)) {
                                 String audioTrackPathStr = trackPath.toAbsolutePath().toString();
                                 String trackFileName = trackPath.getFileName().toString();
                                 String trackContainerType = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('.'));
-//                            Debugger
-//                            System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
-//                            System.out.printf("trackFileName: %s%n", trackFileName);
-//                            System.out.printf("trackContainerType: %s%n", trackContainerType);
+    //                          Debugger:
+    //                          System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
+    //                          System.out.printf("trackFileName: %s%n", trackFileName);
+    //                          System.out.printf("trackContainerType: %s%n", trackContainerType);
 
                                 Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
                                 MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
@@ -72,7 +66,6 @@ public class ArtistLibrary {
                                     // Check title metadate for null value, if true replace with file name substring
                                     if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
                                         trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
-
                                     } else {
                                         trackTitle = (String) mediaPlayer.getMedia().getMetadata().get("title");
                                     }
@@ -99,11 +92,13 @@ public class ArtistLibrary {
 
                                     // Check for playable file container
                                     if (Objects.equals(trackContainerType.toLowerCase(), ".aif") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".aiff") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
-                                        // Load Track constructor
+                                        Objects.equals(trackContainerType.toLowerCase(), ".aiff")||
+                                        Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
+                                        Objects.equals(trackContainerType.toLowerCase(), ".mp4") ||
+                                        Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
+                                        Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
+
+                                        // Populate Track object
                                         Track currentTrack = new Track(
                                                 trackFileName,
                                                 trackContainerType,
@@ -118,7 +113,7 @@ public class ArtistLibrary {
                                         trackData.add(currentTrack);
 
                                     } else {
-                                        System.out.printf("%s is not compatible with media player.", trackFileName);
+                                        System.out.printf("%s is not a compatible file type.", trackFileName);
                                     }
                                 });
 
@@ -135,7 +130,7 @@ public class ArtistLibrary {
         } else {
             System.out.printf("%s does not exist%n", currentPath);
         }
-
+//        Debugger
 //        for (Track i : trackData) {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }

@@ -8,7 +8,6 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -23,12 +22,11 @@ public class MusicLibrary {
      *                                 taken from directory names.
      * @throws IOException
      */
-    public static ObservableList<String> loadArtistNameCollection() throws IOException {
-        //tracks = FXCollections.observableArrayList();
+    public static ObservableList<String> loadArtistNameCollection(Path path) throws IOException {
         artistNameCollection = FXCollections.observableArrayList();
 
         //Path path = Paths.get("C:\\dev\\DemoMusic");
-        Path path = Paths.get("E:\\Music");
+        //Path path = Paths.get("E:\\Music");
         musicRootDirectory = path.toString();
 
         if (Files.exists(path)) {
@@ -58,6 +56,4 @@ public class MusicLibrary {
     public static String getMusicRootDirectory() {
         return musicRootDirectory;
     }
-
-    public static String getInitialFileName() { return artistNameCollection.get(0); }
 }

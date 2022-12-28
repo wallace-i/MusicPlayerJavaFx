@@ -6,28 +6,25 @@
  */
 package com.iandw.musicplayerjavafx;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import javafx.fxml.FXML;
-import javafx.geometry.Side;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.stage.WindowEvent;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class MusicPlayerController {
     @FXML private ListView<String> artistNameListView;
@@ -54,14 +51,12 @@ public class MusicPlayerController {
     @FXML private CheckBox mute;
     private MediaPlayer mediaPlayer;
     private String currentPath;
-    private String rootMusicDirectory;
     private String trackTitleString;
     private String artistNameString;
     private String albumTitleString;
     private String previousArtistNameString;
-    String albumDirectoryString;
-    String trackContainerType;
-    String trackFileName;
+    private String rootMusicDirectoryString;
+    private  Path rootMusicDirectoryPath;
     private int currentTrackIndex;
     private int nextTrackIndex;
     private int previousTrackIndex;
@@ -69,12 +64,59 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing = false;
     List<Integer> shuffleArray = new ArrayList<>();
+    SettingsController settingsControllerObj;
+
 
 
     public void initialize() throws IOException {
+        //TODO=>get setting info for rootdir, pass to musiclibrary
+        settingsControllerObj = new SettingsController();
+        Path path = Paths.get("C:\\Users\\ianda\\IdeaProjects\\MusicPlayerJavaFx\\src\\main\\resources\\com\\iandw\\musicplayerjavafx\\userSettings.json");
+       // URL userSettingsPath = MusicPlayer.class.getResource("userSettings.json");
+       // assert userSettingsPath != null;
+        // If file doesn't exist, initiailize it
+        if (false){//userSettingsPath.toExternalForm().isEmpty()) {
+            JSONObject userSettingJSONObj = new JSONObject();
+            userSettingJSONObj.put("musicLibrary", "C:\\dev\\DemoMusic" );
+
+            try (FileWriter file = new FileWriter("userSettings.json")) {
+                file.write(userSettingJSONObj.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            rootMusicDirectoryString = (String) userSettingJSONObj.get("musicLibrary");
+            rootMusicDirectoryPath = Paths.get(rootMusicDirectoryString);
+
+//            JSONObject userSettingsJSONObj = new JSONObject();
+//            settingsControllerObj.rootDirectoryInitialize();
+//            rootMusicDirectoryPath = settingsControllerObj.getRootDirectoryPath();
+//            rootMusicDirectoryString = rootMusicDirectoryPath.toString();
+//            userSettingsJSONObj.put("musicLibrary", rootMusicDirectoryString);
+
+        // Else read from JSON file
+        } else {
+            System.out.println("reading json");
+            JSONParser jsonParser = new JSONParser();
+
+            try (FileReader reader = new FileReader(path.toString())) {
+                Object obj = jsonParser.parse(reader);
+                JSONArray settingsList = (JSONArray) obj;
+                settingsList.forEach( settings -> parseSettingsObject( (JSONObject) settings));
+                System.out.println(rootMusicDirectoryString);
+
+
+            } catch (ParseException | IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
         // Load data from music folders into app
-        artistNameListView.setItems(MusicLibrary.loadArtistNameCollection());
-        rootMusicDirectory = MusicLibrary.getMusicRootDirectory();
+        artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryPath));
+        //rootMusicDirectoryString = rootMusicDirectoryPath.toString();
         previousTrackIndex = 0;
         artistNameString = "";
         volumeDouble = 1.0;
@@ -94,13 +136,14 @@ public class MusicPlayerController {
             }
         );
 
+        // Mute checkbox
         mute.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     mediaPlayer.setMute(newValue);
                 }
         );
 
-        // listener for changes to trackDurationSlider's value
+        // Seek time during track duration, and updating current duration on seekSlider
         seekSlider.valueProperty().addListener(
             (observableValue, oldValue, newValue) -> {
                 if (seekSlider.isPressed()) {
@@ -123,7 +166,7 @@ public class MusicPlayerController {
             }
         );
 
-        // Toggle Group Listeners
+        // Toggle Group Listeners Logic
         autoPlay.selectedProperty().addListener(
             (observableValue, oldValue, newValue) -> {
                 if (newValue) {
@@ -176,13 +219,19 @@ public class MusicPlayerController {
 
     }
 
+    private void parseSettingsObject(JSONObject setting) {
+        JSONObject settingObject = (JSONObject) setting.get("userSettings");
+        rootMusicDirectoryString = (String) settingObject.get("musicLibrary");
+        rootMusicDirectoryPath = Paths.get(rootMusicDirectoryString);
+    }
+
     @FXML
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseClick.getClickCount() == 2) {
                 previousArtistNameString = artistNameString;
                 artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
-                currentPath = rootMusicDirectory + '\\' + artistNameString;
+                currentPath = rootMusicDirectoryString + File.separator + artistNameString;
                 trackTableView.setEditable(true);
                 trackTableView.setItems(ArtistLibrary.loadArtistTableView(currentPath));
                 trackTableView.setVisible(true);
@@ -313,6 +362,7 @@ public class MusicPlayerController {
         }
     }
 
+    // TODO => is this function necessary?
     @FXML
     private void autoPlayPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
@@ -382,13 +432,13 @@ public class MusicPlayerController {
     }
 
     private void filePath() {
-        trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
+        String trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
         trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
         albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
-        trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
-        albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
-        currentPath = rootMusicDirectory + '\\' + artistNameString + '\\' + albumDirectoryString +
-                '\\' + trackFileName;
+        String trackContainerType = trackTableView.getSelectionModel().getSelectedItem().getTrackContainerTypeStr();
+        String albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
+        currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
+                File.separator + trackFileName;
     }
 
     private void seekValueUpdate() {
@@ -408,7 +458,6 @@ public class MusicPlayerController {
         albumTitleLabel.setText(albumTitleString);
         artistNameLabel.setText(artistNameString);
     }
-
 
     private void trackIndexTracker() {
         previousTrackIndex = currentTrackIndex;
@@ -446,8 +495,7 @@ public class MusicPlayerController {
         SecureRandom randNum = new SecureRandom();
         int randomIndex = randNum.nextInt(0, tableSize);
 
-
-        if (!shuffleArray.contains(randomIndex)) { // If index is not present play it next
+        if (!shuffleArray.contains(randomIndex)) { // If index is not present play next
             shuffleArray.add(randomIndex);
         } else if (shuffleArray.size() >= tableSize){ // reset table if array is larger than table size
             shuffleArray.clear();
@@ -463,12 +511,9 @@ public class MusicPlayerController {
             shuffleArray.add(randomIndex);
         }
 
-        System.out.println();
         trackTableView.getSelectionModel().select(randomIndex);
         stopMedia(true);
         playMedia();
-
-
     }
 
     private void repeatSelected() {
@@ -477,6 +522,21 @@ public class MusicPlayerController {
         playMedia();
 
     }
+
+    @FXML
+    private void closeClicked() {
+        System.exit(0);
+    }
+
+    @FXML
+    private void settingsClicked() throws IOException {
+        SettingsController.initialize();
+    }
+
+
+
+
+
 
 
 }
