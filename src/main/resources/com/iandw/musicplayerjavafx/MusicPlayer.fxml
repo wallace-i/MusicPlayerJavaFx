@@ -91,19 +91,16 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <Label layoutX="10.0" layoutY="29.0" text="Playing:" />
-      <Label layoutX="10.0" layoutY="48.0" text="Album:" />
-      <Label layoutX="10.0" layoutY="67.0" text="By:" />
+      <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="Playing: -"/>
+      <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0" />
+      <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0" />
       <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="209.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="397.0" showTickMarks="true" />
-      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="100" />
+      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" />
       <Label layoutX="86.0" layoutY="399.0" text="Vol:" />
       <Label fx:id="trackDurationLabel" layoutX="613.0" layoutY="399.0" text="00:00" />
       <Label fx:id="trackCurrentTimeLabel" layoutX="173.0" layoutY="399.0" text="00:00" />
       <CheckBox fx:id="mute" layoutX="12.0" layoutY="398.0" mnemonicParsing="false" text="Mute" />
-      <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="100" />
-      <Label fx:id="trackTitleLabel" layoutX="55.0" layoutY="29.0" />
-      <Label fx:id="albumTitleLabel" layoutX="52.0" layoutY="48.0" />
-      <Label fx:id="artistNameLabel" layoutX="29.0" layoutY="67.0" />
+      <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="50" />
       <Label layoutX="480.0" layoutY="34.0" text="Search:" />
       <TextField layoutX="522.0" layoutY="30.0" />
 

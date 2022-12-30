@@ -9,12 +9,11 @@ package com.iandw.musicplayerjavafx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.*;
+import java.util.Objects;
 
 public class MusicLibrary {
-
-    private static String musicRootDirectory;
-    private static ObservableList<String> artistNameCollection;
 
     /**
      * Function: loadArtistNameCollection => ObservableList<String>
@@ -22,12 +21,10 @@ public class MusicLibrary {
      *                                 taken from directory names.
      * @throws IOException
      */
-    public static ObservableList<String> loadArtistNameCollection(Path path) throws IOException {
-        artistNameCollection = FXCollections.observableArrayList();
+    public static ObservableList<String> loadArtistNameCollection(String musicRootDirectoryString) throws IOException {
+        ObservableList<String> artistNameCollection = FXCollections.observableArrayList();
 
-        //Path path = Paths.get("C:\\dev\\DemoMusic");
-        //Path path = Paths.get("E:\\Music");
-        musicRootDirectory = path.toString();
+        Path path = Paths.get(musicRootDirectoryString);
 
         if (Files.exists(path)) {
             if (Files.isDirectory(path)) {
@@ -49,11 +46,4 @@ public class MusicLibrary {
         return artistNameCollection;
     }
 
-    /**
-     * Function: getMusicRootDirectory => String
-     * @return musicRootDirectory => file path to root
-     */
-    public static String getMusicRootDirectory() {
-        return musicRootDirectory;
-    }
 }
