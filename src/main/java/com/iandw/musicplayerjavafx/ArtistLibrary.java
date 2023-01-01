@@ -26,7 +26,6 @@ public class ArtistLibrary {
      * function: loadArtistTableView => ObservableList<Track>
      * @param artistDirectoryPathStr => String from MusicPlayerController
      * @return trackData => Track Object container with track metadata for TableView in MusicPlayerController
-     * @throws IOException
      */
     public static ObservableList<Track> loadArtistTableView(String artistDirectoryPathStr) throws IOException {
         trackData = FXCollections.observableArrayList();
@@ -63,7 +62,7 @@ public class ArtistLibrary {
                                     String trackAlbum;
                                     String trackGenre = (String) mediaPlayer.getMedia().getMetadata().get("genre");
 
-                                    // Check title metadate for null value, if true replace with file name substring
+                                    // Check title metadata for null value, if true replace with file name substring
                                     if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
                                         trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
                                     } else {

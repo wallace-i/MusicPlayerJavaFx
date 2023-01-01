@@ -75,8 +75,8 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem onAction="#settingsClicked" mnemonicParsing="false" text="Settings" />
-                        <MenuItem onAction="#closeClicked" mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#settingsClicked" text="Settings" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -91,7 +91,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="Playing: -"/>
+      <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="Playing: -" />
       <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0" />
       <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0" />
       <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="209.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="397.0" showTickMarks="true" />
@@ -99,7 +99,7 @@
       <Label layoutX="86.0" layoutY="399.0" text="Vol:" />
       <Label fx:id="trackDurationLabel" layoutX="613.0" layoutY="399.0" text="00:00" />
       <Label fx:id="trackCurrentTimeLabel" layoutX="173.0" layoutY="399.0" text="00:00" />
-      <CheckBox fx:id="mute" layoutX="12.0" layoutY="398.0" mnemonicParsing="false" text="Mute" />
+      <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" />
       <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="50" />
       <Label layoutX="480.0" layoutY="34.0" text="Search:" />
       <TextField layoutX="522.0" layoutY="30.0" />

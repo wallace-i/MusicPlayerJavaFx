@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -14,31 +15,31 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class SettingsController extends AnchorPane {
     @FXML private AnchorPane anchorPane;
     @FXML private Button musicFolder;
     @FXML private Label rootDirectoryLabel;
-    private ListView<String> m_artistNameListView;
+    private ListView<String> artistNameListView;
+    private TableView<Track> trackTableView;
 
     public void initialize() {}
-    private void initializeData(ListView<String> artistNameListView) {
+    private void initializeData(ListView<String> artistNameListView, TableView<Track> trackTableView) {
         rootDirectoryLabel.setText(JsonReadWrite.readMusicDirectoryString(SettingsURL.getSettingsURL()));
-        m_artistNameListView = artistNameListView;
+        this.trackTableView = trackTableView;
+        this.artistNameListView = artistNameListView;
     }
 
-    public Stage showSettingsWindow(ListView<String> artistNameListView) throws IOException {
+    public void showSettingsWindow(ListView<String> artistNameListView, TableView<Track> trackTableView) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         SettingsController controller = loader.getController();
-        controller.initializeData(artistNameListView);
+        controller.initializeData(artistNameListView, trackTableView);
         stage.setTitle("Settings");
         stage.setResizable(false);
         stage.show();
 
-        return stage;
     }
 
 
@@ -53,7 +54,7 @@ public class SettingsController extends AnchorPane {
         if (file != null) {
             Path rootDirectoryPath = file.toPath();
             analyzePath(rootDirectoryPath);
-            m_artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootDirectoryPath.toString()));
+            trackTableView.getItems().clear();
 
         } else {
             rootDirectoryLabel.setText("Select file or directory");
@@ -67,7 +68,10 @@ public class SettingsController extends AnchorPane {
         if (path != null && Files.exists(path)) {
             rootDirectoryLabel.setText(path.toString());
             JsonReadWrite readWriteObject = new JsonReadWrite();
-            readWriteObject.updateRootDirectoryJson(path.toString());
+            String rootMusicDirectoryString = path.toString();
+            readWriteObject.jsonWriteNewDirectory(rootMusicDirectoryString);
+            artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
+            System.out.printf("updated root directory: %s%n", rootMusicDirectoryString);
         }
 
     }

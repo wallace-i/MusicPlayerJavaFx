@@ -7,21 +7,15 @@
 package com.iandw.musicplayerjavafx;
 
 import java.io.*;
-import java.nio.file.*;
 import java.security.SecureRandom;
 import java.util.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-
 
 public class MusicPlayerController {
     @FXML
@@ -83,12 +77,12 @@ public class MusicPlayerController {
     private boolean playing = false;
     private boolean stopped = true;
     List<Integer> shuffleArray = new ArrayList<>();
+    String settingsURL = SettingsURL.getSettingsURL();
 
-    public void initialize() throws IOException, InterruptedException {
+    public void initialize() throws IOException {
         // Get JSON file URL
-        String settingsURL = SettingsURL.getSettingsURL();
-
         System.out.println(settingsURL);
+
         // Initialize root directory path for controller
         rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(settingsURL);
 
@@ -96,7 +90,7 @@ public class MusicPlayerController {
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
         previousTrackIndex = 0;
         artistNameString = "";
-        volumeDouble = 0.26;
+        volumeDouble = 0.25;
 
 
         // listener for changes to volumeSlider's value
@@ -116,9 +110,7 @@ public class MusicPlayerController {
 
         // Mute checkbox
         mute.selectedProperty().addListener(
-                (observableValue, oldValue, newValue) -> {
-                    mediaPlayer.setMute(newValue);
-                }
+                (observableValue, oldValue, newValue) -> mediaPlayer.setMute(newValue)
         );
 
         // Seek time during track duration, and updating current duration on seekSlider
@@ -200,13 +192,13 @@ public class MusicPlayerController {
     @FXML
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            //TODO => fix bug where double clicking multiple times removes contents
-            // from table view
             if (mouseClick.getClickCount() == 2) {
+                rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(settingsURL);
                 previousArtistNameString = artistNameString;
                 artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
                 currentPath = rootMusicDirectoryString + File.separator + artistNameString;
                 trackTableView.setEditable(true);
+                trackTableView.getSortOrder().add(colAlbumTitle);
                 trackTableView.setItems(ArtistLibrary.loadArtistTableView(currentPath));
                 trackTableView.setVisible(true);
                 tableSize = ArtistLibrary.getTableSize();
@@ -319,7 +311,7 @@ public class MusicPlayerController {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
             if (shuffle.isSelected()) {
                 shuffleSelected();
-            } else {
+            } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
                 trackTableView.getSelectionModel().select(nextTrackIndex);
                 stopMedia(true);
                 playMedia();
@@ -329,7 +321,8 @@ public class MusicPlayerController {
 
     @FXML
     private void previousButtonPressed(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null &&
+        trackTableView.getSelectionModel().getSelectedItem() != null) {
             trackTableView.getSelectionModel().select(previousTrackIndex);
             stopMedia(true);
             playMedia();
@@ -365,14 +358,18 @@ public class MusicPlayerController {
 
         // Autoplay or stop media player after current track is finished
         mediaPlayer.setOnEndOfMedia(() -> {
-            if (autoPlay.isSelected()) {
-                autoPlaySelected();
-            } else if (repeat.isSelected()) {
-                repeatSelected();
-            } else if (shuffle.isSelected()) {
-                shuffleSelected();
+            if (trackTableView.getSelectionModel().getSelectedItem() != null) {
+                if (autoPlay.isSelected()) {
+                    autoPlaySelected();
+                } else if (repeat.isSelected()) {
+                    repeatSelected();
+                } else if (shuffle.isSelected()) {
+                    shuffleSelected();
+                } else {
+                    stopMedia(false);
+                }
             } else {
-                stopMedia(false);
+                stopMedia(true);
             }
         });
     }
@@ -404,7 +401,6 @@ public class MusicPlayerController {
     }
 
     private void seekValueUpdate() {
-        //TODO => fix "javafx.scene.control.TableView$TableViewSelectionModel.getSelectedItem()" is null
         if (mediaPlayer == null) {
             trackDurationLabel.setText("");
             trackCurrentTimeLabel.setText("");
@@ -422,7 +418,7 @@ public class MusicPlayerController {
             byLabel.setText("");
         } else {
             playingLabel.setText("Playing: " + trackTitleString);
-            albumLabel.setText("Album: " + albumTitleString);
+            albumLabel.setText("From: " + albumTitleString);
             byLabel.setText("By: " + artistNameString);
 
         }
@@ -489,7 +485,6 @@ public class MusicPlayerController {
         trackTableView.getSelectionModel().select(currentTrackIndex);
         stopMedia(true);
         playMedia();
-
     }
 
     @FXML
@@ -497,14 +492,15 @@ public class MusicPlayerController {
         System.exit(0);
     }
 
-    private ListView<String> getArtistNameListView() { return artistNameListView; }
-
     @FXML
     private void settingsClicked() throws IOException {
        SettingsController settingsController = new SettingsController();
-       settingsController.showSettingsWindow(getArtistNameListView());
-
+       settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView());
     }
+
+    // Getters
+    private ListView<String> getArtistNameListView() { return artistNameListView; }
+    private TableView<Track> getTrackTableView() { return trackTableView; }
 
 }
 

@@ -20,7 +20,7 @@ public class JsonReadWrite {
         return rootMusicDirectoryString;
     }
 
-    public void updateRootDirectoryJson(String newDirectoryString) throws IOException {
+    public void jsonWriteNewDirectory(String newDirectoryString) {
         JSONObject userSettingsDetails = new JSONObject();
         userSettingsDetails.put("musicLibrary", newDirectoryString);
 
