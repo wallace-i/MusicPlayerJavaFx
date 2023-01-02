@@ -6,11 +6,19 @@
  */
 package com.iandw.musicplayerjavafx;
 
+import java.awt.*;
 import java.io.*;
+import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.List;
+
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -86,7 +94,7 @@ public class MusicPlayerController {
         // Initialize root directory path for controller
         rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(settingsURL);
 
-        // Load data from music folders into app
+        // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
         previousTrackIndex = 0;
         artistNameString = "";
@@ -214,19 +222,38 @@ public class MusicPlayerController {
             }
         }
 
-        if (mouseClick.getButton().equals(MouseButton.SECONDARY)) {
-            System.out.println("right click");
-            // TODO => fix right click
-//            ContextMenu contextMenu = new ContextMenu();
-//            MenuItem item1 = new MenuItem("Open in Explorer");
-//            MenuItem item2 = new MenuItem("Rename");
-//            contextMenu.getItems().addAll(item1, item2);
-//            item1.setOnAction(event -> System.out.println("Open"));
-//            item2.setOnAction(event -> System.out.println("Rename"));
+    }
 
-        }
+    @FXML
+    private void handleListViewContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("View in Explorer");
+
+        item1.setOnAction(event -> viewInFileExplorer());
+        // TODO => Set more context menu options
+
+        contextMenu.getItems().addAll(item1);
+
+        artistNameListView.setContextMenu(contextMenu);
 
     }
+
+    @FXML
+    private void handleTableViewContextMenu() {
+        // TODO => create context menu options
+
+    }
+
+    private void viewInFileExplorer() {
+        String filePath = rootMusicDirectoryString + File.separator +
+                artistNameListView.getSelectionModel().getSelectedItem();
+        System.out.println(filePath);
+        System.out.println(Desktop.isDesktopSupported());
+        // TODO => fix
+
+    }
+
+
 
     @FXML
     private void handleTableViewMouseClick(MouseEvent mouseClick) {
