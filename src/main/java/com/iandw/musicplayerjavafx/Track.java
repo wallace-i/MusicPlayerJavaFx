@@ -53,6 +53,7 @@ public class Track {
     public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
     public String getTrackDurationStr() {return trackDurationStr.get(); }
+    public Duration getTrackDuration() { return trackDuration; }
     public String getTrackGenreStr() {return trackGenreStr.get(); }
 
 

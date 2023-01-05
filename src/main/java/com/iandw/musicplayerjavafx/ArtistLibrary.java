@@ -49,10 +49,10 @@ public class ArtistLibrary {
                                 String audioTrackPathStr = trackPath.toAbsolutePath().toString();
                                 String trackFileName = trackPath.getFileName().toString();
                                 String trackContainerType = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('.'));
-    //                          Debugger:
-    //                          System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
-    //                          System.out.printf("trackFileName: %s%n", trackFileName);
-    //                          System.out.printf("trackContainerType: %s%n", trackContainerType);
+                                //                          Debugger:
+                                //                          System.out.printf("audioTrackPathStr: %s%n", audioTrackPathStr);
+                                //                          System.out.printf("trackFileName: %s%n", trackFileName);
+                                //                          System.out.printf("trackContainerType: %s%n", trackContainerType);
 
                                 Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
                                 MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
@@ -91,11 +91,11 @@ public class ArtistLibrary {
 
                                     // Check for playable file container
                                     if (Objects.equals(trackContainerType.toLowerCase(), ".aif") ||
-                                        Objects.equals(trackContainerType.toLowerCase(), ".aiff")||
-                                        Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
-                                        Objects.equals(trackContainerType.toLowerCase(), ".mp4") ||
-                                        Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
-                                        Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
+                                            Objects.equals(trackContainerType.toLowerCase(), ".aiff")||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".mp4") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
+                                            Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
 
                                         // Populate Track object
                                         Track currentTrack = new Track(

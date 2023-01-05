@@ -8,22 +8,29 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
+import java.util.function.Predicate;
 
-import javafx.application.HostServices;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+import javax.swing.*;
+
 
 public class MusicPlayerController {
     @FXML
@@ -38,6 +45,9 @@ public class MusicPlayerController {
     public TableColumn<Track, String> colTrackLength;
     @FXML
     public TableColumn<Track, String> colTrackGenre;
+
+    @FXML
+    private TextField searchField;
     @FXML
     private Button playPauseButton;
     @FXML
@@ -70,6 +80,7 @@ public class MusicPlayerController {
     private RadioButton repeat;
     @FXML
     private CheckBox mute;
+
     private MediaPlayer mediaPlayer;
     private String currentPath;
     private String trackTitleString;
@@ -82,24 +93,25 @@ public class MusicPlayerController {
     private int previousTrackIndex;
     private int tableSize;
     private double volumeDouble;
-    private boolean playing = false;
-    private boolean stopped = true;
-    List<Integer> shuffleArray = new ArrayList<>();
-    String settingsURL = SettingsURL.getSettingsURL();
+    private boolean playing;
+    private boolean stopped;
+    private List<Integer> shuffleArray;
+    private FilteredList<Track> filteredMetadata;
+    private ObservableList<Track> trackList;
 
     public void initialize() throws IOException {
-        // Get JSON file URL
-        System.out.println(settingsURL);
+        // Initialize variables
+        playing = false;
+        stopped = true;
+        volumeDouble = 0.25;
+        artistNameString = "";
+        shuffleArray = new ArrayList<>();
 
         // Initialize root directory path for controller
-        rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(settingsURL);
+        rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
         // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
-        previousTrackIndex = 0;
-        artistNameString = "";
-        volumeDouble = 0.25;
-
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -195,22 +207,45 @@ public class MusicPlayerController {
                 }
         );
 
+        // SearchField Listener
+//        searchField.textProperty().addListener(
+//                ((observableValue, oldValue, newValue) -> {
+//                    filteredMetadata.setPredicate(createPredicate(newValue));
+//                    System.out.printf("%s was found: ", filteredMetadata.getPredicate().equals(newValue));
+//                })
+//        );
+
     }
 
     @FXML
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseClick.getClickCount() == 2) {
-                rootMusicDirectoryString = JsonReadWrite.readMusicDirectoryString(settingsURL);
+                rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
                 previousArtistNameString = artistNameString;
                 artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
                 currentPath = rootMusicDirectoryString + File.separator + artistNameString;
                 trackTableView.setEditable(true);
                 trackTableView.getSortOrder().add(colAlbumTitle);
-                trackTableView.setItems(ArtistLibrary.loadArtistTableView(currentPath));
-                trackTableView.setVisible(true);
-                tableSize = ArtistLibrary.getTableSize();
 
+                // Check map for key, populate trackTableView with value if true
+                if (false) {
+                    System.out.println("Reading from MetadataHashMap.json.");
+
+                } else {
+                    // Populate directly from artist directory, then write to map
+                    System.out.println("Reading from directory.");
+                    trackList = ArtistLibrary.loadArtistTableView(currentPath);
+                    filteredMetadata = new FilteredList<>(FXCollections.observableList(trackList));
+                    trackTableView.setItems(trackList);
+                    tableSize = ArtistLibrary.getTableSize();
+
+                    // write trackList to json file
+                    //MetadataFileIO.metadataHashMapOutput(artistNameString, artistLibrary.getTrackArray());
+
+                }
+
+                trackTableView.setVisible(true);
                 colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
                 colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
                 colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
@@ -523,6 +558,64 @@ public class MusicPlayerController {
     private void settingsClicked() throws IOException {
        SettingsController settingsController = new SettingsController();
        settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView());
+    }
+
+    /**
+     *  Notes: Search function has access to every artist name, track title,
+     *  and album title in a Tree map. Every key is has its artist name file path
+     *  as its value.
+     *
+     *  After automatically selecting the corresponding artist in ListView, the function then
+     *  searches the TableView for the String given by the TextField.
+     */
+    @FXML
+    private void handleSearchClicked(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            searchTree(searchField.getText());
+        }
+    }
+
+    @FXML
+    private void handleSearchEnterPressed() {
+        searchField.setOnKeyPressed( event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                //ToDO
+                searchTree(searchField.getText());
+            }
+        });
+    }
+
+    private void searchTree(String searchText) {
+        String resultArtistName = SearchTreeFileIO.getArtist();
+
+        if (resultArtistName == null) {
+            searchField.setText("Not Found.");
+        } if (resultArtistName.equals(searchText)) {
+            artistNameListView.getSelectionModel().select(resultArtistName);
+        } else {
+            artistNameListView.getSelectionModel().select(resultArtistName);
+
+        }
+
+    }
+
+    private Predicate<Track> createPredicate(String searchText) {
+        return track -> {
+            if (searchText == null || searchText.isEmpty()) return true;
+            return searchMetadata(track, searchText);
+        };
+    }
+
+    private boolean searchMetadata(Track track, String searchText) {
+        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase())) ||
+                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase());
+    }
+
+
+    @FXML
+    private void handleClearSearchText(MouseEvent mouseClick) {
+        searchField.setText("");
+        mouseClick.consume();
     }
 
     // Getters

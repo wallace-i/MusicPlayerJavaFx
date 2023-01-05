@@ -25,7 +25,7 @@ public class SettingsController extends AnchorPane {
 
     public void initialize() {}
     private void initializeData(ListView<String> artistNameListView, TableView<Track> trackTableView) {
-        rootDirectoryLabel.setText(JsonReadWrite.readMusicDirectoryString(SettingsURL.getSettingsURL()));
+        rootDirectoryLabel.setText(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()));
         this.trackTableView = trackTableView;
         this.artistNameListView = artistNameListView;
     }
@@ -67,9 +67,9 @@ public class SettingsController extends AnchorPane {
         // if the file or directory exists, display it
         if (path != null && Files.exists(path)) {
             rootDirectoryLabel.setText(path.toString());
-            JsonReadWrite readWriteObject = new JsonReadWrite();
+            SettingsFileIO readWriteObject = new SettingsFileIO();
             String rootMusicDirectoryString = path.toString();
-            readWriteObject.jsonWriteNewDirectory(rootMusicDirectoryString);
+            readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
             artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
             System.out.printf("updated root directory: %s%n", rootMusicDirectoryString);
         }

@@ -9,42 +9,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class JsonReadWrite {
+public class SettingsFileIO {
 
     private static String rootMusicDirectoryString;
 
 
-    public static String readMusicDirectoryString(String jsonURL) {
-        jsonRead(jsonURL);
+
+    public static String getMusicDirectoryString(String jsonURL) {
+        jsonFileInput(jsonURL);
 
         return rootMusicDirectoryString;
     }
 
-    public void jsonWriteNewDirectory(String newDirectoryString) {
-        JSONObject userSettingsDetails = new JSONObject();
-        userSettingsDetails.put("musicLibrary", newDirectoryString);
 
-        JSONObject userSettingsObject = new JSONObject();
-        userSettingsObject.put("userSettings", userSettingsDetails);
-
-        JSONArray userSettingsList = new JSONArray();
-        userSettingsList.add(userSettingsObject);
-
-        try (FileWriter file = new FileWriter(SettingsURL.getSettingsURL())) {
-            System.out.println("writing to json");
-            file.write(userSettingsList.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    private static void jsonRead(String jsonURL) {
+    // Input functions
+    private static void jsonFileInput(String jsonURL) {
 
         System.out.println("reading json");
+
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader(String.valueOf(Paths.get(jsonURL)))) {
@@ -64,4 +46,29 @@ public class JsonReadWrite {
         JSONObject settingObject = (JSONObject) settings.get("userSettings");
         rootMusicDirectoryString = (String) settingObject.get("musicLibrary");
     }
+
+    // Output functions
+    public void jsonOutputMusicDirectory(String newDirectoryString) {
+        JSONObject userSettingsDetails = new JSONObject();
+        userSettingsDetails.put("musicLibrary", newDirectoryString);
+
+        JSONObject userSettingsObject = new JSONObject();
+        userSettingsObject.put("userSettings", userSettingsDetails);
+
+        JSONArray userSettingsList = new JSONArray();
+        userSettingsList.add(userSettingsObject);
+
+        try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
+            System.out.println("writing to Settings.json");
+            file.write(userSettingsList.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }
