@@ -1,62 +1,86 @@
 package com.iandw.musicplayerjavafx;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class MetadataFileIO {
-    private static final char separator = '/';
 
-    // Json file for reading metadata directly from file instead of parsing through
-    // Media objects in ArtistLibrary
-    // [
-    //      {"artistName": {"trackTitle": "trackFileName/trackContainerType/trackTitle/albumDirectory/trackAlbum/trackGenre/totalDuration"}}
-    // ]
-    public static void metadataHashMapOutput(String artistNameString, ArrayList<Track> trackArray) {
-        // read to temp file
-        JSONArray artistObjectList = new JSONArray();
-        System.out.println(trackArray.isEmpty());
-        System.out.println("writing to MetadataHashMap.json");
-        for (Track track : trackArray) {
-            JSONObject metaDataObject = new JSONObject();
-            String metaDataString = track.getTrackFileNameStr() + separator + track.getTrackContainerTypeStr() +
-                    separator + track.getTrackTitleStr() + separator + track.getAlbumDirectoryStr() + separator +
-                    track.getAlbumTitleStr() + separator + track.getTrackGenreStr() + separator + track.getTrackDurationStr();
+    public static void metadataHashMapOutput(HashMap<String, HashMap<String, Track>> artistMetadata) throws FileNotFoundException {
 
-            metaDataObject.put(track.getTrackTitleStr(), metaDataString);
-            System.out.printf("Metadata String: %s", metaDataObject);
+        try {
+            FileOutputStream fileOut = new FileOutputStream(ResourceURLs.getMetadataHashMapURL());
+            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
 
-            JSONObject artistObject = new JSONObject();
-            artistObject.put(artistNameString, metaDataObject);
-            System.out.printf("Artist Object: %s", artistObject);
+            for (HashMap<String, Track> trackTitles : artistMetadata.values()) {
 
-            artistObjectList.add(artistObject);
-            System.out.printf("ArtistObjectList: %s", artistObjectList);
+                for (Track track : trackTitles.values()) {
+                    objOut.writeObject(track);
+                }
+            }
 
-        }
+            objOut.close();
+            System.out.printf("Serialized data saved at %s", ResourceURLs.getMetadataHashMapURL());
 
-        try (FileWriter file = new FileWriter(ResourceURLs.getMetadataHashMapURL())) {
-            file.write(artistObjectList.toJSONString());
-            file.flush();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
 
     }
 
-    public static ObservableList<Track> metadataHashMapInput(String artistNameString) {
-        ObservableList<Track> trackList = FXCollections.observableArrayList();
+    public static Metadata metadataHashMapInput() {
+        Metadata metadataHashMap = new Metadata();
+        HashMap<String, Track> trackHashMap = new HashMap<>();
+        Track tempTrack;
+        String currentArtist;
+        String previousTrackArtist;
+        String trackTitle;
 
-        return trackList;
+        try {
+            FileInputStream fileIn = new FileInputStream(ResourceURLs.getMetadataHashMapURL());
+            ObjectInputStream inObj = new ObjectInputStream(fileIn);
+
+            // Initialize map, load first track
+            tempTrack = (Track) inObj.readObject();
+            currentArtist = tempTrack.getArtistNameStr();
+            trackTitle = tempTrack.getTrackTitleStr();
+            trackHashMap.put(trackTitle, tempTrack);
+            metadataHashMap.put(currentArtist, trackHashMap);
+
+
+            // Load rest of file
+            while (fileIn.available() > 0) {
+
+                // Load all tracks of the same artist into trackHashMap
+                do {
+                    previousTrackArtist = currentArtist;
+                    tempTrack = (Track) inObj.readObject();
+                    currentArtist = tempTrack.getArtistNameStr();
+                    trackTitle = tempTrack.getTrackTitleStr();
+                    trackHashMap.put(trackTitle, tempTrack);
+
+                } while (Objects.equals(previousTrackArtist, currentArtist));
+
+                // Load trackHashMap into Artist metadataHashMap
+                metadataHashMap.put(currentArtist, trackHashMap);
+
+                // reset map
+                trackHashMap.clear();
+            }
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return metadataHashMap;
     }
+
+
 
 
 }

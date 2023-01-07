@@ -13,6 +13,7 @@ import javafx.util.Duration;
 
 
 public class Track {
+    private final SimpleStringProperty artistNameStr;
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
     private final SimpleStringProperty trackTitleStr;
@@ -23,11 +24,12 @@ public class Track {
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
 
-    public Track(String trackFileName, String trackContainerType, String trackTitleStr, String albumDirectoryStr,
+    public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr, String albumDirectoryStr,
                  String albumTitleStr, String trackGenreStr, Duration trackDuration)
     {
-        this.trackFileNameStr = new SimpleStringProperty(trackFileName);
-        this.trackContainerTypeStr = new SimpleStringProperty(trackContainerType);
+        this.artistNameStr = new SimpleStringProperty(artistNameStr);
+        this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
+        this.trackContainerTypeStr = new SimpleStringProperty(trackContainerTypeStr);
         this.trackTitleStr = new SimpleStringProperty(trackTitleStr);
         this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
         this.albumTitleStr = new SimpleStringProperty(albumTitleStr);
@@ -47,6 +49,7 @@ public class Track {
 
     }
 
+    public String getArtistNameStr() { return artistNameStr.get(); }
     public String getTrackFileNameStr() { return trackFileNameStr.get(); }
     public String getTrackContainerTypeStr() { return trackContainerTypeStr.get(); }
     public String getTrackTitleStr() { return trackTitleStr.get(); }

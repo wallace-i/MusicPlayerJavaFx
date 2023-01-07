@@ -1,0 +1,34 @@
+// read to temp file
+// Json file for reading metadata directly from file instead of parsing through
+    // Media objects in ArtistLibrary
+    // [
+    //      {"artistName": {"trackTitle": "trackFileName/trackContainerType/trackTitle/albumDirectory/trackAlbum/trackGenre/totalDuration"}}
+    // ]
+        JSONArray artistObjectList = new JSONArray();
+        System.out.println(trackArray.isEmpty());
+        System.out.println("writing to MetadataHashMap.json");
+        for (Track track : trackArray) {
+            JSONObject metaDataObject = new JSONObject();
+            String metaDataString = track.getTrackFileNameStr() + separator + track.getTrackContainerTypeStr() +
+                    separator + track.getTrackTitleStr() + separator + track.getAlbumDirectoryStr() + separator +
+                    track.getAlbumTitleStr() + separator + track.getTrackGenreStr() + separator + track.getTrackDurationStr();
+
+            metaDataObject.put(track.getTrackTitleStr(), metaDataString);
+            System.out.printf("Metadata String: %s", metaDataObject);
+
+            JSONObject artistObject = new JSONObject();
+            artistObject.put(artistNameString, metaDataObject);
+            System.out.printf("Artist Object: %s", artistObject);
+
+            artistObjectList.add(artistObject);
+            System.out.printf("ArtistObjectList: %s", artistObjectList);
+
+        }
+
+        try (FileWriter file = new FileWriter(ResourceURLs.getMetadataHashMapURL())) {
+            file.write(artistObjectList.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }

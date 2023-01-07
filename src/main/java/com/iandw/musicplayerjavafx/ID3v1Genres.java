@@ -1,7 +1,7 @@
 package com.iandw.musicplayerjavafx;
 
 public class ID3v1Genres {
-    static String[] genres = {
+    static final String[] genres = {
             "Blues",
             "Classic Rock",
             "Country",

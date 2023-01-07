@@ -96,8 +96,8 @@ public class MusicPlayerController {
     private boolean playing;
     private boolean stopped;
     private List<Integer> shuffleArray;
-    private FilteredList<Track> filteredMetadata;
     private ObservableList<Track> trackList;
+    private Metadata metadataHashMap;
 
     public void initialize() throws IOException {
         // Initialize variables
@@ -112,6 +112,10 @@ public class MusicPlayerController {
 
         // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
+
+        // Load track metadata
+        //TODO => initialize metadata if file is empty
+        metadataHashMap = MetadataFileIO.metadataHashMapInput();
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -229,19 +233,26 @@ public class MusicPlayerController {
                 trackTableView.getSortOrder().add(colAlbumTitle);
 
                 // Check map for key, populate trackTableView with value if true
-                if (false) {
-                    System.out.println("Reading from MetadataHashMap.json.");
+                if (metadataHashMap.containsKey(artistNameString)) {
+                    System.out.println("Reading from MetadataHashMap.ser");
+                    //TODO=> implement metadataIOinput
+                    trackList = metadataHashMap.getTrackList(artistNameString);
 
                 } else {
                     // Populate directly from artist directory, then write to map
-                    System.out.println("Reading from directory.");
-                    trackList = ArtistLibrary.loadArtistTableView(currentPath);
-                    filteredMetadata = new FilteredList<>(FXCollections.observableList(trackList));
+                    System.out.println("Reading from directory");
+                    ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
+                    trackList = artistLibrary.getArtistTableView();
                     trackTableView.setItems(trackList);
-                    tableSize = ArtistLibrary.getTableSize();
+                    tableSize = artistLibrary.getTableSize();
 
-                    // write trackList to json file
-                    //MetadataFileIO.metadataHashMapOutput(artistNameString, artistLibrary.getTrackArray());
+                    // write metadata to file
+//                    Metadata artistMetadata = new Metadata(trackList, artistNameString);
+//                    MetadataFileIO.metadataHashMapOutput(artistMetadata.getMetadata());
+
+
+
+
 
                 }
 
@@ -579,7 +590,7 @@ public class MusicPlayerController {
     private void handleSearchEnterPressed() {
         searchField.setOnKeyPressed( event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                //ToDO
+                //TODO => implement search metadata object
                 searchTree(searchField.getText());
             }
         });
@@ -599,17 +610,17 @@ public class MusicPlayerController {
 
     }
 
-    private Predicate<Track> createPredicate(String searchText) {
-        return track -> {
-            if (searchText == null || searchText.isEmpty()) return true;
-            return searchMetadata(track, searchText);
-        };
-    }
-
-    private boolean searchMetadata(Track track, String searchText) {
-        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase())) ||
-                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase());
-    }
+//    private Predicate<Track> createPredicate(String searchText) {
+//        return track -> {
+//            if (searchText == null || searchText.isEmpty()) return true;
+//            return searchMetadata(track, searchText);
+//        };
+//    }
+//
+//    private boolean searchMetadata(Track track, String searchText) {
+//        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase())) ||
+//                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase());
+//    }
 
 
     @FXML

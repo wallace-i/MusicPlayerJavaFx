@@ -7,7 +7,8 @@ public class SearchTreeFileIO {
     // Treemap (String, String) =>
     // Key: Artist Name || Album Title || Track Title, Value: Path
     // Search will choose from list view the artist and from table view the track
-    public static void searchTreeMapInput() {
+    public static void searchTreeMapInput(String artistDirectory) {
+
 
     }
 

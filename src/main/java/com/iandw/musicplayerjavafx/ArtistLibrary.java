@@ -18,8 +18,8 @@ import java.util.Objects;
 
 public class ArtistLibrary {
 
-    private static ObservableList<Track> trackData;
-    private static int tableSize;
+    private final ObservableList<Track> trackData;
+    private int tableSize;
 
 
     /**
@@ -27,9 +27,9 @@ public class ArtistLibrary {
      * @param artistDirectoryPathStr => String from MusicPlayerController
      * @return trackData => Track Object container with track metadata for TableView in MusicPlayerController
      */
-    public static ObservableList<Track> loadArtistTableView(String artistDirectoryPathStr) throws IOException {
+    public ArtistLibrary(String artistDirectoryPathStr) throws IOException {
         trackData = FXCollections.observableArrayList();
-
+        System.out.println(artistDirectoryPathStr);
         Path currentPath = Paths.get(artistDirectoryPathStr);
 
         if (Files.exists(currentPath)) {
@@ -41,7 +41,7 @@ public class ArtistLibrary {
                 try {
                     for (Path albumFolder : artistDir) {
                         String albumDirectoryPathStr = albumFolder.toAbsolutePath().toString();
-                        String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf('\\') + 1);
+                        String albumDirectory = albumDirectoryPathStr.substring(albumDirectoryPathStr.lastIndexOf(File.separator) + 1);
                         DirectoryStream<Path> albumDirPath = Files.newDirectoryStream(Paths.get(albumDirectoryPathStr));
 
                         for (Path trackPath : albumDirPath) {
@@ -58,9 +58,11 @@ public class ArtistLibrary {
                                 MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
 
                                 mediaPlayer.setOnReady(() -> {
+                                    String artistName = artistDirectoryPathStr.substring(artistDirectoryPathStr.lastIndexOf(File.separator) + 1);
                                     String trackTitle = trackFileName;
                                     String trackAlbum;
                                     String trackGenre = (String) mediaPlayer.getMedia().getMetadata().get("genre");
+
 
                                     // Check title metadata for null value, if true replace with file name substring
                                     if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
@@ -99,6 +101,7 @@ public class ArtistLibrary {
 
                                         // Populate Track object
                                         Track currentTrack = new Track(
+                                                artistName,
                                                 trackFileName,
                                                 trackContainerType,
                                                 trackTitle,
@@ -134,9 +137,10 @@ public class ArtistLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
-        return trackData;
     }
 
-    public static int getTableSize() { return  tableSize; }
+    public ObservableList<Track> getArtistTableView() { return trackData; }
+
+    public int getTableSize() { return  tableSize; }
 
 }
