@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class ArtistLibrary {
 
     private final ObservableList<Track> trackData;
+//    private final ArrayList<Track> trackArrayList;
     private int tableSize;
 
 
@@ -29,6 +31,8 @@ public class ArtistLibrary {
      */
     public ArtistLibrary(String artistDirectoryPathStr) throws IOException {
         trackData = FXCollections.observableArrayList();
+//        trackArrayList = new ArrayList<>();
+
         System.out.println(artistDirectoryPathStr);
         Path currentPath = Paths.get(artistDirectoryPathStr);
 
@@ -111,7 +115,7 @@ public class ArtistLibrary {
                                                 mediaPlayer.getTotalDuration()
                                         );
 
-                                        // Add track data to Observable List
+                                        // Add track data to ObservableList
                                         trackData.add(currentTrack);
 
                                     } else {
@@ -119,16 +123,20 @@ public class ArtistLibrary {
                                     }
                                 });
 
+
+
                                 // Increment size to calculate table size for shuffle play
                                 tableSize++;
                             }
-
                         }
                     }
                 } catch (Exception e) {
                     System.out.println("Directory cannot be loaded.");
+                    e.printStackTrace();
                 }
+
             }
+
         } else {
             System.out.printf("%s does not exist%n", currentPath);
         }
@@ -137,9 +145,12 @@ public class ArtistLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
+
     }
 
-    public ObservableList<Track> getArtistTableView() { return trackData; }
+    public ObservableList<Track> getTrackData() { return trackData; }
+
+//    public ArrayList<Track> getTrackArrayList() { return trackArrayList; }
 
     public int getTableSize() { return  tableSize; }
 

@@ -32,3 +32,45 @@
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
+    }
+
+                                    // Use wrapper to output metadata collected inside listener to list array
+                                    // for use in serializing the data to a file.
+    //                                var wrapper = new Object() {  String artistName;
+    //                                                              String trackFileName;
+    //                                                              String trackContainerType;
+    //                                                              String trackTitle;
+    //                                                              String albumDirectory;
+    //                                                              String trackAlbum;
+    //                                                              String trackGenre;
+    //                                                              Duration duration;
+    //                                };
+
+
+                                            // Load wrapper with metadata
+    //                                        wrapper.artistName = artistName;
+    //                                        wrapper.trackFileName = trackFileName;
+    //                                        wrapper.trackContainerType = trackContainerType;
+    //                                        wrapper.trackTitle = trackTitle;
+    //                                        wrapper.albumDirectory = albumDirectory;
+    //                                        wrapper.trackAlbum = trackAlbum;
+    //                                        wrapper.trackGenre = trackGenre;
+    //                                        wrapper.duration = mediaPlayer.getTotalDuration();
+
+                                    // Add track data to ArrayList
+                                    //System.out.printf("wrapperartist:%s%n", wrapper.artistName);
+    //                                Track tempTrack = new Track(
+    //                                        wrapper.artistName,
+    //                                        wrapper.trackFileName,
+    //                                        wrapper.trackContainerType,
+    //                                        wrapper.trackTitle,
+    //                                        wrapper.albumDirectory,
+    //                                        wrapper.trackAlbum,
+    //                                        wrapper.trackGenre,
+    //                                        wrapper.duration
+    //                                );
+
+    //                                trackArrayList.add(tempTrack);

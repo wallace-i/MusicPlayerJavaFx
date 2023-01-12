@@ -1,5 +1,7 @@
 package com.iandw.musicplayerjavafx;
 
+import javafx.scene.control.ListView;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Objects;
@@ -7,13 +9,13 @@ import java.util.Objects;
 
 public class MetadataFileIO {
 
-    public static void metadataHashMapOutput(HashMap<String, HashMap<String, Track>> artistMetadata) throws FileNotFoundException {
+    private static void metadataHashMapOutput(Metadata artistMetadata) throws FileNotFoundException {
 
         try {
             FileOutputStream fileOut = new FileOutputStream(ResourceURLs.getMetadataHashMapURL());
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
 
-            for (HashMap<String, Track> trackTitles : artistMetadata.values()) {
+            for (HashMap<String, Track> trackTitles : artistMetadata.getHashMap().values()) {
 
                 for (Track track : trackTitles.values()) {
                     objOut.writeObject(track);
@@ -21,6 +23,7 @@ public class MetadataFileIO {
             }
 
             objOut.close();
+            fileOut.close();
             System.out.printf("Serialized data saved at %s", ResourceURLs.getMetadataHashMapURL());
 
 
@@ -31,8 +34,7 @@ public class MetadataFileIO {
 
     }
 
-    public static Metadata metadataHashMapInput() {
-        Metadata metadataHashMap = new Metadata();
+    private static Metadata metadataHashMapInput(Metadata metadataHashMap) {
         HashMap<String, Track> trackHashMap = new HashMap<>();
         Track tempTrack;
         String currentArtist;
@@ -71,6 +73,9 @@ public class MetadataFileIO {
                 trackHashMap.clear();
             }
 
+            inObj.close();
+            fileIn.close();
+
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -78,6 +83,24 @@ public class MetadataFileIO {
         }
 
         return metadataHashMap;
+    }
+
+    public static Metadata initializeMetadataFile(String rootMusicDirectoryString, ListView<String> artistNameListView) throws IOException {
+        System.out.println("Initializing metadata file");
+        Metadata metadataHashMap = new Metadata();
+        // gather each track file metadata and copy to Metadata object
+        metadataHashMap.setMetadata(rootMusicDirectoryString, artistNameListView);
+
+        // write metadataHashMap to file
+        metadataHashMapOutput(metadataHashMap);
+
+        return metadataHashMap;
+    }
+
+    public static Metadata inputMetadataFromFile() {
+        Metadata metadataHashMap = new Metadata();
+
+        return metadataHashMapInput(metadataHashMap);
     }
 
 

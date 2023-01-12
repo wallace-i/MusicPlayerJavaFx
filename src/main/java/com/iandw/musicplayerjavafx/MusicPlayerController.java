@@ -11,11 +11,8 @@ import java.io.*;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
-import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -28,8 +25,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
-import javax.swing.*;
 
 
 public class MusicPlayerController {
@@ -113,9 +108,15 @@ public class MusicPlayerController {
         // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
 
-        // Load track metadata
-        //TODO => initialize metadata if file is empty
-        metadataHashMap = MetadataFileIO.metadataHashMapInput();
+
+        //TODO => try/catch file exists (or file null)
+//        try() {
+            // Load track metadata
+//            metadataHashMap = MetadataFileIO.initializeMetadataFile(rootMusicDirectoryString, artistNameListView);
+
+//        } catch (FileNotFoundException e) {
+//            System.err.println("Metadata File not found");
+//        }
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -233,16 +234,17 @@ public class MusicPlayerController {
                 trackTableView.getSortOrder().add(colAlbumTitle);
 
                 // Check map for key, populate trackTableView with value if true
-                if (metadataHashMap.containsKey(artistNameString)) {
-                    System.out.println("Reading from MetadataHashMap.ser");
-                    //TODO=> implement metadataIOinput
-                    trackList = metadataHashMap.getTrackList(artistNameString);
-
-                } else {
+//                if (metadataHashMap.containsKey(artistNameString)) {
+//                    System.out.println("Reading from MetadataHashMap.ser");
+//                    trackList = metadataHashMap.getTrackList(artistNameString);
+//                    trackTableView.setItems(trackList);
+//                    tableSize = metadataHashMap.getNumberOfTracks();
+//
+//                } else {
                     // Populate directly from artist directory, then write to map
-                    System.out.println("Reading from directory");
+//                    System.out.println("Reading from directory");
                     ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
-                    trackList = artistLibrary.getArtistTableView();
+                    trackList = artistLibrary.getTrackData();
                     trackTableView.setItems(trackList);
                     tableSize = artistLibrary.getTableSize();
 
@@ -254,7 +256,7 @@ public class MusicPlayerController {
 
 
 
-                }
+//                }
 
                 trackTableView.setVisible(true);
                 colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));

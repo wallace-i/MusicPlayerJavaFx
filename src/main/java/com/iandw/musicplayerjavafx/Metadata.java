@@ -2,14 +2,20 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Metadata extends HashMap {
-    //      HashMap<ArtistName, HashMap<TrackTitle, Track object>>
-    private HashMap<String, HashMap<String, Track>> metadataHashMap;
+    //      HashMap<ArtistName, HashMap<TrackTitle, Track Object>>
+    private final HashMap<String, HashMap<String, Track>> metadataHashMap;
+    private int numberOfTracks;
 
     public Metadata() {
-        metadataHashMap = null;
+        metadataHashMap = new HashMap<>();
 
     }
 
@@ -20,28 +26,52 @@ public class Metadata extends HashMap {
     // Setter
     public void setTrackMetadata(Track track, String artistName) {
 
-        metadataHashMap.get(artistName).put(track.getTrackTitleStr(), track);
+        //metadataHashMap.get(artistName).put(track.getTrackTitleStr(), track);
     }
 
-    public void setMetadata(ObservableList<Track> trackList, String artistName) {
-        metadataHashMap = new HashMap<>();
-        HashMap<String, Track> trackTempMap = new HashMap<>();
+    public void setMetadata(String rootMusicDirectoryString, ListView<String> artistNameListView) throws IOException {
 
-        for (Track track : trackList) {
-            trackTempMap.put(track.getTrackTitleStr(), track);
-        }
+        HashMap<String, Track> artistTracksMap = new HashMap<>();
 
-        metadataHashMap.put(artistName, trackTempMap);
+        // Loop through artists
+//        for (String artistName : artistNameListView.getItems()) {
+//            String currentPath = rootMusicDirectoryString + File.separator + artistName;
+//            ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
+//
+//            //TODO => empty tracklist bug, hashmap not populating
+////            System.out.printf("trackListisEmpty():%s%n", trackList.;
+//
+//            // Loop through tracks per artist
+//            for (Track track : ) {
+//                // Populate artistTracksMap with file name and track object for each
+//                // track in artist directory
+//                artistTracksMap.put(track.getTrackFileNameStr(), track);
+//                System.out.printf("metadataputtracktitle:%s%n:", track.getTrackTitleStr());
+//            }
+//
+//            // key => artistName, value => artistTracksMap
+//            metadataHashMap.put(artistName, artistTracksMap);
+//
+//        }
+
     }
 
     // Getter
-    public HashMap<String, HashMap<String, Track>> getMetadata() {
+    public HashMap<String, HashMap<String, Track>> getHashMap() {
         return metadataHashMap;
     }
+
     public ObservableList<Track> getTrackList(String artistNameString) {
         ObservableList<Track> trackList = FXCollections.observableArrayList();
 
+        trackList.addAll(metadataHashMap.get(artistNameString).values());
+        numberOfTracks = trackList.size();
+        System.out.printf("currentartisttracksamount: %s%n", numberOfTracks);
 
         return trackList;
     };
+
+    public int getNumberOfTracks() {
+        return numberOfTracks;
+    }
 }
