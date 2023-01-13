@@ -13,7 +13,7 @@ public class ResourceURLs {
 
     private static final String searchTreeMapURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "SearchTreeMap.dat")).toString().substring(6));
+                    "SearchTreeMap.ser")).toString().substring(6));
 
     // Getters
     public static String getSettingsURL() { return settingsURL; }

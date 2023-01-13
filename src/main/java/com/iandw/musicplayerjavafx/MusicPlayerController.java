@@ -83,6 +83,8 @@ public class MusicPlayerController {
     private String albumTitleString;
     private String previousArtistNameString;
     private String rootMusicDirectoryString;
+    private String artistNameValue;
+    private int trackIndexValue;
     private int currentTrackIndex;
     private int nextTrackIndex;
     private int previousTrackIndex;
@@ -90,9 +92,11 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
+    private boolean searching;
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
     private Metadata metadataHashMap;
+    private SearchTreeMap searchTreeMap;
 
     public void initialize() throws IOException {
         // Initialize variables
@@ -109,6 +113,9 @@ public class MusicPlayerController {
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
 
 
+        // Load search tree object
+        searchTreeMap = new SearchTreeMap(rootMusicDirectoryString);
+
         //TODO => try/catch file exists (or file null)
 //        try() {
             // Load track metadata
@@ -117,6 +124,7 @@ public class MusicPlayerController {
 //        } catch (FileNotFoundException e) {
 //            System.err.println("Metadata File not found");
 //        }
+
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -226,49 +234,32 @@ public class MusicPlayerController {
     private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseClick.getClickCount() == 2) {
-                rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
-                previousArtistNameString = artistNameString;
-                artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
-                currentPath = rootMusicDirectoryString + File.separator + artistNameString;
-                trackTableView.setEditable(true);
-                trackTableView.getSortOrder().add(colAlbumTitle);
+               listViewSelected();
+            }
+        }
+    }
 
-                // Check map for key, populate trackTableView with value if true
-//                if (metadataHashMap.containsKey(artistNameString)) {
-//                    System.out.println("Reading from MetadataHashMap.ser");
-//                    trackList = metadataHashMap.getTrackList(artistNameString);
-//                    trackTableView.setItems(trackList);
-//                    tableSize = metadataHashMap.getNumberOfTracks();
-//
-//                } else {
-                    // Populate directly from artist directory, then write to map
-//                    System.out.println("Reading from directory");
-                    ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
-                    trackList = artistLibrary.getTrackData();
-                    trackTableView.setItems(trackList);
-                    tableSize = artistLibrary.getTableSize();
+    private void listViewSelected() throws IOException {
+        rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        previousArtistNameString = artistNameString;
+        artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
+        currentPath = rootMusicDirectoryString + File.separator + artistNameString;
+        trackTableView.setEditable(true);
+        trackTableView.getSortOrder().add(colAlbumTitle);
 
-                    // write metadata to file
-//                    Metadata artistMetadata = new Metadata(trackList, artistNameString);
-//                    MetadataFileIO.metadataHashMapOutput(artistMetadata.getMetadata());
+        ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
+        trackList = artistLibrary.getTrackData();
+        trackTableView.setItems(trackList);
+        tableSize = artistLibrary.getTableSize();
+        trackTableView.setVisible(true);
 
-
-
-
-
-//                }
-
-                trackTableView.setVisible(true);
-                colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
-                colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
-                colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
-                colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
+        colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
+        colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
+        colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
+        colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
 
 //              Debugger
 //              System.out.printf("currentPath: %s%n", currentPath);
-
-            }
-        }
 
     }
 
@@ -302,26 +293,28 @@ public class MusicPlayerController {
     }
 
 
-
     @FXML
     private void handleTableViewMouseClick(MouseEvent mouseClick) {
-
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseClick.getClickCount() == 1 && !mouseClick.isDragDetect()) {
                 filePath();
             }
 
             if (mouseClick.getClickCount() == 2) {
-                if (playing) {
-                    mediaPlayer.stop();
-                    mediaPlayer.dispose();
-                    playing = false;
-                }
-                // Load currentPath and associated variables
-                playMedia();
-
+                tableViewSelected();
             }
         }
+    }
+
+    private void tableViewSelected() {
+        if (playing) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+            playing = false;
+        }
+        // Load currentPath and associated variables
+        playMedia();
+
     }
 
     // Toggle media playback and the text on the playPauseButton
@@ -405,8 +398,13 @@ public class MusicPlayerController {
     }
 
     private void playMedia() {
+
         // Update current path for media object
-        filePath();
+        if (searching) {
+            searchFilePath();
+        } else {
+            filePath();
+        }
 
         // Debugger
         System.out.printf("currentPath: %s%n", currentPath);
@@ -469,10 +467,21 @@ public class MusicPlayerController {
     private void filePath() {
         String trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
         trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
-        albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
         String albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
+        albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
         currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
                 File.separator + trackFileName;
+    }
+
+    private void searchFilePath() {
+        artistNameString = artistNameValue;
+        String trackFileName = trackTableView.getItems().get(trackIndexValue).getTrackFileNameStr();
+        trackTitleString = trackTableView.getItems().get(trackIndexValue).getTrackTitleStr();
+        String albumDirectoryString = trackTableView.getItems().get(trackIndexValue).getAlbumDirectoryStr();
+        albumTitleString = trackTableView.getItems().get(trackIndexValue).getAlbumTitleStr();
+        currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
+                File.separator + trackFileName;
+
     }
 
     private void seekValueUpdate() {
@@ -582,7 +591,7 @@ public class MusicPlayerController {
      *  searches the TableView for the String given by the TextField.
      */
     @FXML
-    private void handleSearchClicked(MouseEvent mouseClick) {
+    private void handleSearchClicked(MouseEvent mouseClick) throws IOException {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             searchTree(searchField.getText());
         }
@@ -592,25 +601,50 @@ public class MusicPlayerController {
     private void handleSearchEnterPressed() {
         searchField.setOnKeyPressed( event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                //TODO => implement search metadata object
-                searchTree(searchField.getText());
+                try {
+                    searchTree(searchField.getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private void searchTree(String searchText) {
-        String resultArtistName = SearchTreeFileIO.getArtist();
+    private void searchTree(String searchText) throws IOException {
+        System.out.println("searching...");
+        String result = searchTreeMap.searchForKey(searchText.toLowerCase());
 
-        if (resultArtistName == null) {
+        if (result == null) {
             searchField.setText("Not Found.");
-        } if (resultArtistName.equals(searchText)) {
-            artistNameListView.getSelectionModel().select(resultArtistName);
-        } else {
-            artistNameListView.getSelectionModel().select(resultArtistName);
 
+        } else  {
+            searching = true;
+            artistNameValue = result.substring(0, result.indexOf(File.separator));
+            String trackIndexValueStr = result.substring(result.indexOf(File.separator) + 1);
+            trackIndexValue = Integer.parseInt(trackIndexValueStr);
+
+            // if artist is not already selected, select artist from listview
+            if (!artistNameValue.equals(artistNameString)) {
+                artistNameListView.getSelectionModel().select(artistNameValue);
+                listViewSelected();
+            }
+
+            // if not searching for artist, select the corresponding track in tableview
+            if (!trackIndexValueStr.equals("null")) {
+                //TODO => Exception in thread "JavaFX Application Thread" java.lang.IndexOutOfBoundsException: Index 7 out of bounds for length 0
+                //	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+                //	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+                //	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+                trackTableView.getSelectionModel().select(trackIndexValue);
+                tableViewSelected();
+            }
         }
 
+        searching = false;
+
     }
+
+
 
 //    private Predicate<Track> createPredicate(String searchText) {
 //        return track -> {

@@ -74,3 +74,36 @@
     //                                );
 
     //                                trackArrayList.add(tempTrack);
+
+
+
+
+
+
+
+
+
+
+                // Check map for key, populate trackTableView with value if true
+//                if (metadataHashMap.containsKey(artistNameString)) {
+//                    System.out.println("Reading from MetadataHashMap.ser");
+//                    trackList = metadataHashMap.getTrackList(artistNameString);
+//                    trackTableView.setItems(trackList);
+//                    tableSize = metadataHashMap.getNumberOfTracks();
+//
+//                } else {
+                    // Populate directly from artist directory, then write to map
+//                    System.out.println("Reading from directory");
+
+
+
+
+                        // write metadata to file
+    //                    Metadata artistMetadata = new Metadata(trackList, artistNameString);
+    //                    MetadataFileIO.metadataHashMapOutput(artistMetadata.getMetadata());
+
+
+
+
+
+    //                }

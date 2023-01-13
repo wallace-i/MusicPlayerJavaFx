@@ -8,6 +8,8 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.*;
@@ -33,7 +35,7 @@ public class MusicLibrary {
 
                 for (Path artistDir : directoryStream) {
                     String artistNameStr = artistDir.toString();
-                    artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf('\\') + 1);
+                    artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf(File.separator) + 1);
                     artistNameCollection.add(artistNameStr);
 
                 }
