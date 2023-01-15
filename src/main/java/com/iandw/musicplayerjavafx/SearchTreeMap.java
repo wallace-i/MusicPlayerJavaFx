@@ -1,11 +1,11 @@
 package com.iandw.musicplayerjavafx;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.TreeMap;
 
 
@@ -24,11 +24,11 @@ public class SearchTreeMap {
         if (searchMap.isEmpty()) {
             System.out.println("Initializing search tree");
             initializeSearchTree(musicRootDirectory);
+            //fileOutput();
         } else {
             System.out.println("SearchTreeMap input from file");
+            //fileInput();
         }
-
-        fileOutput();
 
     }
 
@@ -46,16 +46,26 @@ public class SearchTreeMap {
 
     public void setSearchMap(String key, String value) { searchMap.put(key, value); }
 
-    private void fileInput() {
+    private void fileInput() throws IOException {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream(ResourceURLs.getSearchTreeMapURL()));
 
-
-
+        for (String key : properties.stringPropertyNames()) {
+            searchMap.put(key, properties.get(key).toString());
+        }
     }
 
-    private void fileOutput() {
-        for (String key : searchMap.keySet()) {
-            //System.out.printf("K:%s V:%s%n", key, searchMap.get(key));
-        }
+    private void fileOutput() throws IOException {
+        Properties properties = new Properties();
+
+        properties.putAll(searchMap);
+
+        properties.store(new FileOutputStream(ResourceURLs.getSearchTreeMapURL()), null);
+
+        // Debugger
+//        for (String key : searchMap.keySet()) {
+//            System.out.printf("K:%s V:%s%n", key, searchMap.get(key));
+//        }
 
     }
 
@@ -91,6 +101,14 @@ public class SearchTreeMap {
                                 for (Path track : albumDirectory) {
                                     String trackTitleStr = track.toString();
                                     trackTitleStr = trackTitleStr.substring(trackTitleStr.lastIndexOf(File.separator) + 1, trackTitleStr.lastIndexOf('.'));
+
+                                    if (Character.isDigit(trackTitleStr.charAt(0))) {
+                                        if (trackTitleStr.contains(" - ")) {
+                                            trackTitleStr = trackTitleStr.substring(trackTitleStr.lastIndexOf(' ') + 1);
+                                        } else {
+                                            trackTitleStr = trackTitleStr.substring(trackTitleStr.indexOf(' ') + 1);
+                                        }
+                                    }
 
                                     // Load TrackTitle into search tree
                                     searchMap.put(trackTitleStr.toLowerCase(), artistNameStr + File.separator + trackIndex);

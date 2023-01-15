@@ -8,6 +8,7 @@
 
 package com.iandw.musicplayerjavafx;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
@@ -19,7 +20,6 @@ public class Track {
     private final SimpleStringProperty trackTitleStr;
     private final SimpleStringProperty albumDirectoryStr;
     private final SimpleStringProperty albumTitleStr;
-
     private final Duration trackDuration;
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;

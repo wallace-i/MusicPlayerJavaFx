@@ -71,14 +71,21 @@ public class ArtistLibrary {
                                     // Check title metadata for null value, if true replace with file name substring
                                     if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
                                         trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
+
                                     } else {
                                         trackTitle = (String) mediaPlayer.getMedia().getMetadata().get("title");
                                     }
 
-                                    // if still null replace with trackFileName
+                                    // If still null replace with trackFileName
                                     if (trackTitle == null) {
                                         trackTitle = trackFileName;
                                     }
+
+                                    if (Character.isDigit(trackTitle.charAt(0))) {
+                                        trackTitle = filterDigitsFromTitle(trackTitle);
+                                    }
+
+
 
                                     // Check album metadata for null value, if true replace with directory name
                                     if (mediaPlayer.getMedia().getMetadata().get("album") == null) {
@@ -123,8 +130,6 @@ public class ArtistLibrary {
                                     }
                                 });
 
-
-
                                 // Increment size to calculate table size for shuffle play
                                 tableSize++;
                             }
@@ -148,10 +153,31 @@ public class ArtistLibrary {
 
     }
 
+    private String filterDigitsFromTitle(String trackTitle) {
+        if (trackTitle.contains(".")) {
+            if (trackTitle.contains(" - ")) {
+                trackTitle = trackTitle.substring(trackTitle.indexOf('-') + 2,  trackTitle.lastIndexOf('.'));
+            } else {
+                trackTitle = trackTitle.substring(trackTitle.indexOf(' ') + 1, trackTitle.lastIndexOf('.'));
+            }
+
+        } else {
+            if (trackTitle.contains(" - ")) {
+                trackTitle = trackTitle.substring(trackTitle.indexOf('-') + 2);
+            } else {
+                trackTitle = trackTitle.substring(trackTitle.indexOf(' ') + 1);
+            }
+
+        }
+
+
+        return trackTitle;
+    }
+
     public ObservableList<Track> getTrackData() { return trackData; }
 
 //    public ArrayList<Track> getTrackArrayList() { return trackArrayList; }
 
-    public int getTableSize() { return  tableSize; }
+    public int getTableSize() { return tableSize; }
 
 }

@@ -40,7 +40,8 @@ public class MusicPlayerController {
     public TableColumn<Track, String> colTrackLength;
     @FXML
     public TableColumn<Track, String> colTrackGenre;
-
+    @FXML
+    public TableColumn<Track, String> colTrackFileNameInvisible;
     @FXML
     private TextField searchField;
     @FXML
@@ -107,11 +108,11 @@ public class MusicPlayerController {
         shuffleArray = new ArrayList<>();
 
         // Initialize root directory path for controller
-        rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        rootMusicDirectoryString = //"/Users/admin/Music/DemoMusic";
+                 SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
         // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
-
 
         // Load search tree object
         searchTreeMap = new SearchTreeMap(rootMusicDirectoryString);
@@ -244,8 +245,9 @@ public class MusicPlayerController {
         previousArtistNameString = artistNameString;
         artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
         currentPath = rootMusicDirectoryString + File.separator + artistNameString;
-        trackTableView.setEditable(true);
-        trackTableView.getSortOrder().add(colAlbumTitle);
+        //trackTableView.setEditable(true);
+        trackTableView.getSortOrder().add(colTrackFileNameInvisible);
+
 
         ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
         trackList = artistLibrary.getTrackData();
@@ -253,10 +255,13 @@ public class MusicPlayerController {
         tableSize = artistLibrary.getTableSize();
         trackTableView.setVisible(true);
 
+        colTrackFileNameInvisible.setCellValueFactory(new PropertyValueFactory<>("trackFileNameStr"));
         colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
         colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
         colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
         colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
+
+
 
 //              Debugger
 //              System.out.printf("currentPath: %s%n", currentPath);
@@ -398,10 +403,10 @@ public class MusicPlayerController {
     }
 
     private void playMedia() {
-
         // Update current path for media object
         if (searching) {
             searchFilePath();
+            searching = false;
         } else {
             filePath();
         }
@@ -632,15 +637,14 @@ public class MusicPlayerController {
             // if not searching for artist, select the corresponding track in tableview
             if (!trackIndexValueStr.equals("null")) {
                 //TODO => Exception in thread "JavaFX Application Thread" java.lang.IndexOutOfBoundsException: Index 7 out of bounds for length 0
-                //	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
-                //	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
-                //	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
-                trackTableView.getSelectionModel().select(trackIndexValue);
+                if (playing) {
+                    stopMedia(true);
+                    playing = false;
+                    stopped = true;
+                }
                 tableViewSelected();
             }
         }
-
-        searching = false;
 
     }
 
