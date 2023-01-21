@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
+import java.io.File;
+
 
 public class Track {
     private final SimpleStringProperty artistNameStr;
@@ -23,9 +25,10 @@ public class Track {
     private final Duration trackDuration;
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
+    private final SimpleStringProperty trackPathStr;
 
     public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr, String albumDirectoryStr,
-                 String albumTitleStr, String trackGenreStr, Duration trackDuration)
+                 String albumTitleStr, String trackGenreStr, Duration trackDuration, String trackPathStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
@@ -37,6 +40,7 @@ public class Track {
         this.trackDuration = trackDuration;
         int trackDurationSeconds = (int) trackDuration.toSeconds();
         this.trackDurationStr =  new SimpleStringProperty(formatSeconds(trackDurationSeconds));
+        this.trackPathStr = new SimpleStringProperty(trackPathStr);
     }
 
     public static String formatSeconds(int seconds) {
@@ -57,7 +61,8 @@ public class Track {
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
     public String getTrackDurationStr() {return trackDurationStr.get(); }
     public Duration getTrackDuration() { return trackDuration; }
-    public String getTrackGenreStr() {return trackGenreStr.get(); }
+    public String getTrackGenreStr() { return trackGenreStr.get(); }
+    public String getTrackPathStr() { return trackPathStr.get(); }
 
 
 }

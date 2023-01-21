@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class ArtistLibrary {
 
-    private final ObservableList<Track> trackData;
+    private final ObservableList<Track> artistLibraryList;
 //    private final ArrayList<Track> trackArrayList;
     private int tableSize;
 
@@ -30,7 +30,7 @@ public class ArtistLibrary {
      * @return trackData => Track Object container with track metadata for TableView in MusicPlayerController
      */
     public ArtistLibrary(String artistDirectoryPathStr) throws IOException {
-        trackData = FXCollections.observableArrayList();
+        artistLibraryList = FXCollections.observableArrayList();
 //        trackArrayList = new ArrayList<>();
 
         System.out.println(artistDirectoryPathStr);
@@ -119,11 +119,12 @@ public class ArtistLibrary {
                                                 albumDirectory,
                                                 trackAlbum,
                                                 trackGenre,
-                                                mediaPlayer.getTotalDuration()
+                                                mediaPlayer.getTotalDuration(),
+                                                trackPath.toString()
                                         );
 
                                         // Add track data to ObservableList
-                                        trackData.add(currentTrack);
+                                        artistLibraryList.add(currentTrack);
 
                                     } else {
                                         System.out.printf("%s is not a compatible file type.", trackFileName);
@@ -174,7 +175,7 @@ public class ArtistLibrary {
         return trackTitle;
     }
 
-    public ObservableList<Track> getTrackData() { return trackData; }
+    public ObservableList<Track> getArtistLibraryList() { return artistLibraryList; }
 
 //    public ArrayList<Track> getTrackArrayList() { return trackArrayList; }
 

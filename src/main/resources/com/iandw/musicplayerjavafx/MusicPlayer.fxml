@@ -12,6 +12,7 @@
             <Separator orientation="VERTICAL" prefHeight="302.0" prefWidth="0.0" />
                 <TableView fx:id="trackTableView" onContextMenuRequested="#handleTableViewContextMenu" onMouseClicked="#handleTableViewMouseClick" prefHeight="302.0" prefWidth="530.0">
                     <columns>
+                        <TableColumn fx:id="colArtistNameInvisible" visible="false" />
                         <TableColumn fx:id="colTrackFileNameInvisible" visible="false" />
                         <TableColumn fx:id="colTrackTitle" prefWidth="199.0" text="Track Title" />
                         <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="189.0" text="Album" />
@@ -104,9 +105,9 @@
       <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="50" />
       <StackPane layoutX="472.0" layoutY="23.0" prefHeight="38.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="searchField" onAction="#handleSearchEnterPressed" prefWidth="200.0" promptText="search">
+            <TextField fx:id="searchField" prefWidth="200.0" promptText="search">
                <padding>
-                  <Insets bottom="2.0" left="50.0" right="2.0" top="2.0" />
+                  <Insets bottom="2.0" left="40.0" right="2.0" top="2.0" />
                </padding>
                <opaqueInsets>
                   <Insets />
@@ -114,7 +115,7 @@
                <StackPane.margin>
                   <Insets />
                </StackPane.margin></TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#handleSearchClicked" styleClass="search-button" text="Search" StackPane.alignment="CENTER_LEFT">
+            <Button mnemonicParsing="false" styleClass="search-button" text="Search" StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>

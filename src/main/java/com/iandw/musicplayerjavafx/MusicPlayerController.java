@@ -11,8 +11,11 @@ import java.io.*;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
+import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -20,12 +23,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 
 public class MusicPlayerController {
     @FXML
@@ -42,6 +43,8 @@ public class MusicPlayerController {
     public TableColumn<Track, String> colTrackGenre;
     @FXML
     public TableColumn<Track, String> colTrackFileNameInvisible;
+    @FXML
+    private TableColumn<Track, String> colArtistNameInvisible;
     @FXML
     private TextField searchField;
     @FXML
@@ -84,8 +87,8 @@ public class MusicPlayerController {
     private String albumTitleString;
     private String previousArtistNameString;
     private String rootMusicDirectoryString;
-    private String artistNameValue;
-    private int trackIndexValue;
+//    private String artistNameValue;
+//    private int trackIndexValue;
     private int currentTrackIndex;
     private int nextTrackIndex;
     private int previousTrackIndex;
@@ -93,11 +96,10 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
-    private boolean searching;
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
-    private Metadata metadataHashMap;
-    private SearchTreeMap searchTreeMap;
+
+    private FilteredList<Track> filteredList;
 
     public void initialize() throws IOException {
         // Initialize variables
@@ -108,24 +110,18 @@ public class MusicPlayerController {
         shuffleArray = new ArrayList<>();
 
         // Initialize root directory path for controller
-        rootMusicDirectoryString = //"/Users/admin/Music/DemoMusic";
-                 SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
         // Load data from root directory into app's List View
         artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
 
-        // Load search tree object
-        searchTreeMap = new SearchTreeMap(rootMusicDirectoryString);
+        //TODO => Load observable list into tableview array for tableview to be searched via search bar or artist listview
+        // file I/O for tableViewLibrary track data
+        TableViewLibrary tableViewLibrary = new TableViewLibrary();
+        trackList = tableViewLibrary.getTrackObservableList();
 
-        //TODO => try/catch file exists (or file null)
-//        try() {
-            // Load track metadata
-//            metadataHashMap = MetadataFileIO.initializeMetadataFile(rootMusicDirectoryString, artistNameListView);
 
-//        } catch (FileNotFoundException e) {
-//            System.err.println("Metadata File not found");
-//        }
-
+        //trackTableView.setItems(trackList);
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -222,12 +218,12 @@ public class MusicPlayerController {
         );
 
         // SearchField Listener
-//        searchField.textProperty().addListener(
-//                ((observableValue, oldValue, newValue) -> {
-//                    filteredMetadata.setPredicate(createPredicate(newValue));
-//                    System.out.printf("%s was found: ", filteredMetadata.getPredicate().equals(newValue));
-//                })
-//        );
+        searchField.textProperty().addListener(
+                ((observableValue, oldValue, newValue) -> {
+                    filteredList.setPredicate(createSearchPredicate(newValue));
+                })
+        );
+
 
     }
 
@@ -241,31 +237,50 @@ public class MusicPlayerController {
     }
 
     private void listViewSelected() throws IOException {
-        rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        // Get selected artist name (from directory name)
         previousArtistNameString = artistNameString;
         artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
-        currentPath = rootMusicDirectoryString + File.separator + artistNameString;
-        //trackTableView.setEditable(true);
         trackTableView.getSortOrder().add(colTrackFileNameInvisible);
 
-
-        ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
-        trackList = artistLibrary.getTrackData();
-        trackTableView.setItems(trackList);
-        tableSize = artistLibrary.getTableSize();
+        // Create a filtered list for trackTableView
+        filteredList = new FilteredList<>(FXCollections.observableArrayList(trackList));
+        filteredList.setPredicate(createListPredicate());
+        trackTableView.setItems(filteredList);
         trackTableView.setVisible(true);
 
+        // Populate trackTableView with track object data
+        colArtistNameInvisible.setCellValueFactory(new PropertyValueFactory<>("artistNameStr"));
         colTrackFileNameInvisible.setCellValueFactory(new PropertyValueFactory<>("trackFileNameStr"));
         colTrackTitle.setCellValueFactory(new PropertyValueFactory<>("trackTitleStr"));
         colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
         colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
         colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
 
-
-
 //              Debugger
 //              System.out.printf("currentPath: %s%n", currentPath);
 
+    }
+
+    private Predicate<Track> createListPredicate() {
+        return this::searchTracks;
+    }
+
+    private boolean searchTracks(Track track) {
+        return track.getArtistNameStr().contains(artistNameString);
+    }
+
+    private Predicate<Track> createSearchPredicate(String searchText) {
+        return track -> {
+            if (searchText == null || searchText.isEmpty()) return true;
+            return searchMetadata(track, searchText);
+        };
+    }
+
+    private boolean searchMetadata(Track track, String searchText) {
+        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                track.getArtistNameStr().toLowerCase().contains(searchText.toLowerCase())
+        );
     }
 
     @FXML
@@ -293,18 +308,13 @@ public class MusicPlayerController {
                 artistNameListView.getSelectionModel().getSelectedItem();
         System.out.println(filePath);
         System.out.println(Desktop.isDesktopSupported());
-        // TODO => fix
+        // TODO => fix?
 
     }
-
 
     @FXML
     private void handleTableViewMouseClick(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (mouseClick.getClickCount() == 1 && !mouseClick.isDragDetect()) {
-                filePath();
-            }
-
             if (mouseClick.getClickCount() == 2) {
                 tableViewSelected();
             }
@@ -403,13 +413,8 @@ public class MusicPlayerController {
     }
 
     private void playMedia() {
-        // Update current path for media object
-        if (searching) {
-            searchFilePath();
-            searching = false;
-        } else {
-            filePath();
-        }
+
+        currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
 
         // Debugger
         System.out.printf("currentPath: %s%n", currentPath);
@@ -469,26 +474,6 @@ public class MusicPlayerController {
         }
     }
 
-    private void filePath() {
-        String trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
-        trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
-        String albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
-        albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
-        currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
-                File.separator + trackFileName;
-    }
-
-    private void searchFilePath() {
-        artistNameString = artistNameValue;
-        String trackFileName = trackTableView.getItems().get(trackIndexValue).getTrackFileNameStr();
-        trackTitleString = trackTableView.getItems().get(trackIndexValue).getTrackTitleStr();
-        String albumDirectoryString = trackTableView.getItems().get(trackIndexValue).getAlbumDirectoryStr();
-        albumTitleString = trackTableView.getItems().get(trackIndexValue).getAlbumTitleStr();
-        currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
-                File.separator + trackFileName;
-
-    }
-
     private void seekValueUpdate() {
         if (mediaPlayer == null) {
             trackDurationLabel.setText("");
@@ -501,6 +486,7 @@ public class MusicPlayerController {
     }
 
     private void setNowPlayingText() {
+        //TODO => fix null values
         if (stopped) {
             playingLabel.setText("Playing: -");
             albumLabel.setText("");
@@ -536,6 +522,7 @@ public class MusicPlayerController {
     }
 
     private void shuffleSelected() {
+        //TODO => does shuffle still work? need table array size maybe
         if (shuffleArray == null || shuffleArray.isEmpty()) {
             assert false;
             shuffleArray.add(currentTrackIndex);
@@ -587,85 +574,10 @@ public class MusicPlayerController {
        settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView());
     }
 
-    /**
-     *  Notes: Search function has access to every artist name, track title,
-     *  and album title in a Tree map. Every key is has its artist name file path
-     *  as its value.
-     *
-     *  After automatically selecting the corresponding artist in ListView, the function then
-     *  searches the TableView for the String given by the TextField.
-     */
     @FXML
-    private void handleSearchClicked(MouseEvent mouseClick) throws IOException {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            searchTree(searchField.getText());
-        }
-    }
-
-    @FXML
-    private void handleSearchEnterPressed() {
-        searchField.setOnKeyPressed( event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    searchTree(searchField.getText());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
-
-    private void searchTree(String searchText) throws IOException {
-        System.out.println("searching...");
-        String result = searchTreeMap.searchForKey(searchText.toLowerCase());
-
-        if (result == null) {
-            searchField.setText("Not Found.");
-
-        } else  {
-            searching = true;
-            artistNameValue = result.substring(0, result.indexOf(File.separator));
-            String trackIndexValueStr = result.substring(result.indexOf(File.separator) + 1);
-            trackIndexValue = Integer.parseInt(trackIndexValueStr);
-
-            // if artist is not already selected, select artist from listview
-            if (!artistNameValue.equals(artistNameString)) {
-                artistNameListView.getSelectionModel().select(artistNameValue);
-                listViewSelected();
-            }
-
-            // if not searching for artist, select the corresponding track in tableview
-            if (!trackIndexValueStr.equals("null")) {
-                //TODO => Exception in thread "JavaFX Application Thread" java.lang.IndexOutOfBoundsException: Index 7 out of bounds for length 0
-                if (playing) {
-                    stopMedia(true);
-                    playing = false;
-                    stopped = true;
-                }
-                tableViewSelected();
-            }
-        }
-
-    }
-
-
-
-//    private Predicate<Track> createPredicate(String searchText) {
-//        return track -> {
-//            if (searchText == null || searchText.isEmpty()) return true;
-//            return searchMetadata(track, searchText);
-//        };
-//    }
-//
-//    private boolean searchMetadata(Track track, String searchText) {
-//        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase())) ||
-//                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase());
-//    }
-
-
-    @FXML
-    private void handleClearSearchText(MouseEvent mouseClick) {
+    private void handleClearSearchText(MouseEvent mouseClick) throws IOException {
         searchField.setText("");
+        listViewSelected();
         mouseClick.consume();
     }
 

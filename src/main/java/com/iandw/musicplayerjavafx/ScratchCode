@@ -1,3 +1,25 @@
+
+//        try() {
+            // Load track metadata
+//            metadataHashMap = MetadataFileIO.initializeMetadataFile(rootMusicDirectoryString, artistNameListView);
+
+//        } catch (FileNotFoundException e) {
+//            System.err.println("Metadata File not found");
+//        }
+
+****************************************************************************************************
+
+    private void filePath() {
+        String trackFileName = trackTableView.getSelectionModel().getSelectedItem().getTrackFileNameStr();
+        trackTitleString = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
+        String albumDirectoryString = trackTableView.getSelectionModel().getSelectedItem().getAlbumDirectoryStr();
+        albumTitleString = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
+        currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
+                File.separator + trackFileName;
+    }
+
+****************************************************************************************************
+
 // read to temp file
 // Json file for reading metadata directly from file instead of parsing through
     // Media objects in ArtistLibrary
@@ -36,6 +58,8 @@
 
 
     }
+
+****************************************************************************************************
 
                                     // Use wrapper to output metadata collected inside listener to list array
                                     // for use in serializing the data to a file.
@@ -77,7 +101,7 @@
 
 
 
-
+****************************************************************************************************
 
 
 
@@ -107,3 +131,68 @@
 
 
     //                }
+
+****************************************************************************************************
+
+    private void searchTree(String searchText) throws IOException {
+            System.out.println("searching...");
+            String result = searchTreeMap.searchForKey(searchText.toLowerCase());
+
+            if (result == null) {
+                searchField.setText("Not Found.");
+
+            } else  {
+                searching = true;
+                artistNameValue = result.substring(0, result.indexOf(File.separator));
+                String trackIndexValueStr = result.substring(result.indexOf(File.separator) + 1);
+                trackIndexValue = Integer.parseInt(trackIndexValueStr);
+
+                if (playing) {
+                    stopMedia(true);
+                }
+
+                // if not searching for artist, select the corresponding track in tableview
+                if (!trackIndexValueStr.equals("null")) {
+                    //TODO => Exception in thread "JavaFX Application Thread" java.lang.IndexOutOfBoundsException: Index 7 out of bounds for length 0
+                    listViewSelected();
+                    tableViewSelected();
+
+                } else {
+                    listViewSelected();
+                }
+            }
+
+        }
+
+
+****************************************************************************************************
+
+
+            private void searchFilePath() {
+                artistNameString = artistNameValue;
+                String trackFileName = trackTableView.getItems().get(trackIndexValue).getTrackFileNameStr();
+                System.out.println(trackFileName);
+                trackTitleString = trackTableView.getItems().get(trackIndexValue).getTrackTitleStr();
+                String albumDirectoryString = trackTableView.getItems().get(trackIndexValue).getAlbumDirectoryStr();
+                albumTitleString = trackTableView.getItems().get(trackIndexValue).getAlbumTitleStr();
+                currentPath = rootMusicDirectoryString + File.separator + artistNameString + File.separator + albumDirectoryString +
+                        File.separator + trackFileName;
+
+            }
+
+
+
+
+
+                @FXML
+                private void handleSearchEnterPressed() {
+            //        searchField.setOnKeyPressed( event -> {
+            //            if (event.getCode() == KeyCode.ENTER) {
+            //                try {
+            //                    searchTree(searchField.getText());
+            //                } catch (IOException e) {
+            //                    throw new RuntimeException(e);
+            //                }
+            //            }
+            //        });
+                }
