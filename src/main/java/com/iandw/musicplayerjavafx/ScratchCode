@@ -196,3 +196,336 @@
             //            }
             //        });
                 }
+
+
+****************************************************************************************************
+
+package com.iandw.musicplayerjavafx;
+
+import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
+import java.util.TreeMap;
+
+
+public class SearchTreeMap {
+    // searchMap => Treemap (K: String, V: String)
+    // Key: Artist Name || Album Title || Track Title
+    // Value: Path  =>  artist name path => "artistName"
+    //                  album title path => "artistName"
+    //                  track title path => "artistName" + File.separator + trackFilename
+    private final TreeMap<String, String> searchMap;
+
+    public SearchTreeMap(String musicRootDirectory) throws IOException {
+        searchMap = new TreeMap<>();
+        fileInput();
+
+        if (searchMap.isEmpty()) {
+            System.out.println("Initializing search tree");
+            initializeSearchTree(musicRootDirectory);
+            //fileOutput();
+        } else {
+            System.out.println("SearchTreeMap input from file");
+            //fileInput();
+        }
+
+    }
+
+    public String searchForKey(String key) {
+        String searchResult = null;
+
+        if (searchMap.containsKey(key)) {
+            searchResult = searchMap.get(key);
+        }
+
+        return searchResult;
+    }
+
+    public TreeMap<String, String> getSearchMap() { return searchMap; }
+
+    public void setSearchMap(String key, String value) { searchMap.put(key, value); }
+
+    private void fileInput() throws IOException {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream(ResourceURLs.getSearchTreeMapURL()));
+
+        for (String key : properties.stringPropertyNames()) {
+            searchMap.put(key, properties.get(key).toString());
+        }
+    }
+
+    private void fileOutput() throws IOException {
+        Properties properties = new Properties();
+
+        properties.putAll(searchMap);
+
+        properties.store(new FileOutputStream(ResourceURLs.getSearchTreeMapURL()), null);
+
+        // Debugger
+//        for (String key : searchMap.keySet()) {
+//            System.out.printf("K:%s V:%s%n", key, searchMap.get(key));
+//        }
+
+    }
+
+    private void initializeSearchTree(String musicRootDirectory) throws IOException {
+        Path rootPath = Paths.get(musicRootDirectory);
+
+        if (Files.exists(rootPath)) {
+            if (Files.isDirectory(rootPath)) {
+
+                DirectoryStream<Path> musicLibraryDirectory = Files.newDirectoryStream(rootPath);
+
+                for (Path artistDir : musicLibraryDirectory) {
+                    if (Files.isDirectory(artistDir)) {
+                        String artistNameStr = artistDir.toString();
+                        artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf(File.separator) + 1);
+
+                        // Load artistName into search tree
+                        searchMap.put(artistNameStr.toLowerCase(), artistNameStr + File.separator + "null");
+
+                        DirectoryStream<Path> artistDirectory = Files.newDirectoryStream(artistDir);
+                        int trackIndex = 0;
+
+                        for (Path albumDir : artistDirectory) {
+                            if (Files.isDirectory(albumDir)) {
+
+                                String albumTitleStr = albumDir.toString();
+                                albumTitleStr = albumTitleStr.substring(albumTitleStr.lastIndexOf(File.separator) + 1);;
+
+                                // Load Album Title into search tree
+                                searchMap.put(albumTitleStr.toLowerCase(), artistNameStr + File.separator + trackIndex);
+
+                                DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumDir);
+                                for (Path track : albumDirectory) {
+                                    String trackTitleStr = track.toString();
+                                    trackTitleStr = trackTitleStr.substring(trackTitleStr.lastIndexOf(File.separator) + 1, trackTitleStr.lastIndexOf('.'));
+
+                                    if (Character.isDigit(trackTitleStr.charAt(0))) {
+                                        if (trackTitleStr.contains(" - ")) {
+                                            trackTitleStr = trackTitleStr.substring(trackTitleStr.lastIndexOf(' ') + 1);
+                                        } else {
+                                            trackTitleStr = trackTitleStr.substring(trackTitleStr.indexOf(' ') + 1);
+                                        }
+                                    }
+
+                                    // Load TrackTitle into search tree
+                                    searchMap.put(trackTitleStr.toLowerCase(), artistNameStr + File.separator + trackIndex);
+                                    trackIndex++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        } else {
+            System.out.printf("%s does not exist%n", rootPath);
+        }
+
+    }
+
+}
+
+
+
+****************************************************************************************************
+
+
+
+package com.iandw.musicplayerjavafx;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
+public class Metadata extends HashMap {
+    //      HashMap<ArtistName, HashMap<TrackTitle, Track Object>>
+    private final HashMap<String, HashMap<String, Track>> metadataHashMap;
+    private int numberOfTracks;
+
+    public Metadata() {
+        metadataHashMap = new HashMap<>();
+
+    }
+
+    //TODO => Initiailze function
+    // have metadata re-initialize when directory changes in settings so only .ser file
+    // is enough for app.
+
+    // Setter
+    public void setTrackMetadata(Track track, String artistName) {
+
+        //metadataHashMap.get(artistName).put(track.getTrackTitleStr(), track);
+    }
+
+    public void setMetadata(String rootMusicDirectoryString, ListView<String> artistNameListView) throws IOException {
+
+        HashMap<String, Track> artistTracksMap = new HashMap<>();
+
+        // Loop through artists
+//        for (String artistName : artistNameListView.getItems()) {
+//            String currentPath = rootMusicDirectoryString + File.separator + artistName;
+//            ArtistLibrary artistLibrary = new ArtistLibrary(currentPath);
+//
+//            //TODO => empty tracklist bug, hashmap not populating
+////            System.out.printf("trackListisEmpty():%s%n", trackList.;
+//
+//            // Loop through tracks per artist
+//            for (Track track : ) {
+//                // Populate artistTracksMap with file name and track object for each
+//                // track in artist directory
+//                artistTracksMap.put(track.getTrackFileNameStr(), track);
+//                System.out.printf("metadataputtracktitle:%s%n:", track.getTrackTitleStr());
+//            }
+//
+//            // key => artistName, value => artistTracksMap
+//            metadataHashMap.put(artistName, artistTracksMap);
+//
+//        }
+
+    }
+
+    // Getter
+    public HashMap<String, HashMap<String, Track>> getHashMap() {
+        return metadataHashMap;
+    }
+
+    public ObservableList<Track> getTrackList(String artistNameString) {
+        ObservableList<Track> trackList = FXCollections.observableArrayList();
+
+        trackList.addAll(metadataHashMap.get(artistNameString).values());
+        numberOfTracks = trackList.size();
+        System.out.printf("currentartisttracksamount: %s%n", numberOfTracks);
+
+        return trackList;
+    };
+
+    public int getNumberOfTracks() {
+        return numberOfTracks;
+    }
+}
+
+
+
+****************************************************************************************************
+
+
+package com.iandw.musicplayerjavafx;
+
+import javafx.scene.control.ListView;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Objects;
+
+
+public class MetadataFileIO {
+
+    private static void metadataHashMapOutput(Metadata artistMetadata) throws FileNotFoundException {
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(ResourceURLs.getMetadataHashMapURL());
+            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+
+            for (HashMap<String, Track> trackTitles : artistMetadata.getHashMap().values()) {
+
+                for (Track track : trackTitles.values()) {
+                    objOut.writeObject(track);
+                }
+            }
+
+            objOut.close();
+            fileOut.close();
+            System.out.printf("Serialized data saved at %s", ResourceURLs.getMetadataHashMapURL());
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    private static Metadata metadataHashMapInput(Metadata metadataHashMap) {
+        HashMap<String, Track> trackHashMap = new HashMap<>();
+        Track tempTrack;
+        String currentArtist;
+        String previousTrackArtist;
+        String trackTitle;
+
+        try {
+            FileInputStream fileIn = new FileInputStream(ResourceURLs.getMetadataHashMapURL());
+            ObjectInputStream inObj = new ObjectInputStream(fileIn);
+
+            // Initialize map, load first track
+            tempTrack = (Track) inObj.readObject();
+            currentArtist = tempTrack.getArtistNameStr();
+            trackTitle = tempTrack.getTrackTitleStr();
+            trackHashMap.put(trackTitle, tempTrack);
+            metadataHashMap.put(currentArtist, trackHashMap);
+
+
+            // Load rest of file
+            while (fileIn.available() > 0) {
+
+                // Load all tracks of the same artist into trackHashMap
+                do {
+                    previousTrackArtist = currentArtist;
+                    tempTrack = (Track) inObj.readObject();
+                    currentArtist = tempTrack.getArtistNameStr();
+                    trackTitle = tempTrack.getTrackTitleStr();
+                    trackHashMap.put(trackTitle, tempTrack);
+
+                } while (Objects.equals(previousTrackArtist, currentArtist));
+
+                // Load trackHashMap into Artist metadataHashMap
+                metadataHashMap.put(currentArtist, trackHashMap);
+
+                // reset map
+                trackHashMap.clear();
+            }
+
+            inObj.close();
+            fileIn.close();
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return metadataHashMap;
+    }
+
+    public static Metadata initializeMetadataFile(String rootMusicDirectoryString, ListView<String> artistNameListView) throws IOException {
+        System.out.println("Initializing metadata file");
+        Metadata metadataHashMap = new Metadata();
+        // gather each track file metadata and copy to Metadata object
+        metadataHashMap.setMetadata(rootMusicDirectoryString, artistNameListView);
+
+        // write metadataHashMap to file
+        metadataHashMapOutput(metadataHashMap);
+
+        return metadataHashMap;
+    }
+
+    public static Metadata inputMetadataFromFile() {
+        Metadata metadataHashMap = new Metadata();
+
+        return metadataHashMapInput(metadataHashMap);
+    }
+
+}
+
+****************************************************************************************************
+
+

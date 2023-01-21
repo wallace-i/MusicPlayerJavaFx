@@ -12,7 +12,6 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
 import java.util.function.Predicate;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -81,14 +80,11 @@ public class MusicPlayerController {
     private CheckBox mute;
 
     private MediaPlayer mediaPlayer;
-    private String currentPath;
     private String trackTitleString;
     private String artistNameString;
     private String albumTitleString;
     private String previousArtistNameString;
     private String rootMusicDirectoryString;
-//    private String artistNameValue;
-//    private int trackIndexValue;
     private int currentTrackIndex;
     private int nextTrackIndex;
     private int previousTrackIndex;
@@ -96,6 +92,7 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
+    private boolean initialized;
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
 
@@ -105,8 +102,8 @@ public class MusicPlayerController {
         // Initialize variables
         playing = false;
         stopped = true;
+        initialized = false;
         volumeDouble = 0.25;
-        artistNameString = "";
         shuffleArray = new ArrayList<>();
 
         // Initialize root directory path for controller
@@ -120,8 +117,9 @@ public class MusicPlayerController {
         TableViewLibrary tableViewLibrary = new TableViewLibrary();
         trackList = tableViewLibrary.getTrackObservableList();
 
-
-        //trackTableView.setItems(trackList);
+        // Initialize table view
+        artistNameListView.getSelectionModel().select(0);
+        listViewSelected();
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -221,25 +219,32 @@ public class MusicPlayerController {
         searchField.textProperty().addListener(
                 ((observableValue, oldValue, newValue) -> {
                     filteredList.setPredicate(createSearchPredicate(newValue));
+                    tableSize = filteredList.size();
+                    shuffleArray.clear();
                 })
         );
-
 
     }
 
     @FXML
-    private void handleListViewMouseClick(MouseEvent mouseClick) throws IOException {
+    private void handleListViewMouseClick(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (mouseClick.getClickCount() == 2) {
-               listViewSelected();
-            }
+            listViewSelected();
         }
     }
 
-    private void listViewSelected() throws IOException {
+    private void listViewSelected() {
         // Get selected artist name (from directory name)
         previousArtistNameString = artistNameString;
-        artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
+
+        // TODO => Fix list initialization
+        if (!initialized) {
+            artistNameString = artistNameListView.getItems().get(0);
+            initialized = true;
+        } else {
+            artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
+        }
+
         trackTableView.getSortOrder().add(colTrackFileNameInvisible);
 
         // Create a filtered list for trackTableView
@@ -247,6 +252,7 @@ public class MusicPlayerController {
         filteredList.setPredicate(createListPredicate());
         trackTableView.setItems(filteredList);
         trackTableView.setVisible(true);
+        tableSize = filteredList.size();
 
         // Populate trackTableView with track object data
         colArtistNameInvisible.setCellValueFactory(new PropertyValueFactory<>("artistNameStr"));
@@ -279,7 +285,8 @@ public class MusicPlayerController {
     private boolean searchMetadata(Track track, String searchText) {
         return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
                 track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
-                track.getArtistNameStr().toLowerCase().contains(searchText.toLowerCase())
+                track.getArtistNameStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                track.getTrackGenreStr().toLowerCase().contains(searchText.toLowerCase())
         );
     }
 
@@ -349,7 +356,6 @@ public class MusicPlayerController {
                     playing = true;
                     stopped = false;
                     setNowPlayingText();
-
                 }
             } catch (NullPointerException e) {
                 System.out.println("No track selected.");
@@ -414,7 +420,7 @@ public class MusicPlayerController {
 
     private void playMedia() {
 
-        currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
+        String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
 
         // Debugger
         System.out.printf("currentPath: %s%n", currentPath);
@@ -486,16 +492,14 @@ public class MusicPlayerController {
     }
 
     private void setNowPlayingText() {
-        //TODO => fix null values
         if (stopped) {
             playingLabel.setText("Playing: -");
             albumLabel.setText("");
             byLabel.setText("");
         } else {
-            playingLabel.setText("Playing: " + trackTitleString);
-            albumLabel.setText("From: " + albumTitleString);
+            playingLabel.setText("Playing: " + trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr());
+            albumLabel.setText("From: " + trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr());
             byLabel.setText("By: " + artistNameString);
-
         }
     }
 
@@ -517,12 +521,12 @@ public class MusicPlayerController {
 
     private void autoPlaySelected() {
         trackTableView.getSelectionModel().select(nextTrackIndex);
+        trackTableView.scrollTo(nextTrackIndex);
         stopMedia(true);
         playMedia();
     }
 
     private void shuffleSelected() {
-        //TODO => does shuffle still work? need table array size maybe
         if (shuffleArray == null || shuffleArray.isEmpty()) {
             assert false;
             shuffleArray.add(currentTrackIndex);
@@ -553,6 +557,7 @@ public class MusicPlayerController {
         }
 
         trackTableView.getSelectionModel().select(randomIndex);
+        trackTableView.scrollTo(randomIndex);
         stopMedia(true);
         playMedia();
     }
