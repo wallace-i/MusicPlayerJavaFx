@@ -1,4 +1,9 @@
-
+/**
+ *      Author: Ian Wallace copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class:
+ *      Notes:
+ */
 //        try() {
             // Load track metadata
 //            metadataHashMap = MetadataFileIO.initializeMetadataFile(rootMusicDirectoryString, artistNameListView);

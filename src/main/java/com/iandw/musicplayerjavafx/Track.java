@@ -5,15 +5,10 @@
  *      Notes: Holds audio File Meta Data for TableView
  */
 
-
 package com.iandw.musicplayerjavafx;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
-
-import java.io.File;
-
 
 public class Track {
     private final SimpleStringProperty artistNameStr;
@@ -27,8 +22,9 @@ public class Track {
     private final SimpleStringProperty trackGenreStr;
     private final SimpleStringProperty trackPathStr;
 
-    public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr, String albumDirectoryStr,
-                 String albumTitleStr, String trackGenreStr, Duration trackDuration, String trackPathStr)
+    public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
+                 String albumDirectoryStr, String albumTitleStr, String trackGenreStr, Duration trackDuration,
+                 String trackPathStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
@@ -44,7 +40,6 @@ public class Track {
     }
 
     public static String formatSeconds(int seconds) {
-
         if (seconds >= 3600) {
             return String.format("%02d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60);
         }
@@ -63,6 +58,5 @@ public class Track {
     public Duration getTrackDuration() { return trackDuration; }
     public String getTrackGenreStr() { return trackGenreStr.get(); }
     public String getTrackPathStr() { return trackPathStr.get(); }
-
 
 }

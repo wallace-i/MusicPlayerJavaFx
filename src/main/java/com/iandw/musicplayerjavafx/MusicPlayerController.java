@@ -78,11 +78,8 @@ public class MusicPlayerController {
     private RadioButton repeat;
     @FXML
     private CheckBox mute;
-
     private MediaPlayer mediaPlayer;
-    private String trackTitleString;
     private String artistNameString;
-    private String albumTitleString;
     private String previousArtistNameString;
     private String rootMusicDirectoryString;
     private int currentTrackIndex;
@@ -95,7 +92,6 @@ public class MusicPlayerController {
     private boolean initialized;
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
-
     private FilteredList<Track> filteredList;
 
     public void initialize() throws IOException {
@@ -164,7 +160,7 @@ public class MusicPlayerController {
                 }
         );
 
-        // Toggle Group Listeners Logic
+        // Toggle Logic
         autoPlay.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     if (newValue) {
@@ -548,7 +544,7 @@ public class MusicPlayerController {
         } else {
             while (shuffleArray.contains(randomIndex)) { // if index present, find new index
                 randomIndex = randNum.nextInt(0, tableSize);
-                if (shuffleArray.size() == tableSize) {
+                if (shuffleArray.size() >= tableSize) { // while loop fail-safe
                     shuffleArray.clear();
                     break;
                 }

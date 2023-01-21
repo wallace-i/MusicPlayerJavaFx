@@ -1,3 +1,10 @@
+/**
+ *      Author: Ian Wallace copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class:
+ *      Notes:
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import org.json.simple.JSONArray;

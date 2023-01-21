@@ -1,8 +1,8 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class: ArtistLibrary
- *      Notes: Populates TableView with music file data
+ *      Class:
+ *      Notes:
  */
 
 package com.iandw.musicplayerjavafx;
