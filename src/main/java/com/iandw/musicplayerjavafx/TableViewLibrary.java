@@ -11,19 +11,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.JAXB;
 
-public class TableViewLibrary {
+public class TableViewLibrary implements Serializable {
 
+    @XmlElement(name="track")
     private ObservableList<Track> trackObservableList;
 
     public void initializeTrackObservableList() throws IOException {
         System.out.println("Initializing observable list");
+
         trackObservableList = FXCollections.observableArrayList();
 
         String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
@@ -128,9 +131,10 @@ public class TableViewLibrary {
                                             System.out.printf("%s is not a compatible file type.", trackFileName);
                                         }
                                     });
-
                                 }
                             }
+
+                            // for (Track track : trackArrayList) { System.out.println(track.getTrackTitleStr()); }
                         }
                     }
 
@@ -144,6 +148,7 @@ public class TableViewLibrary {
         } else {
             System.out.printf("%s does not exist%n", rootPath);
         }
+
 //        Debugger
 //        for (Track i : trackData) {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
@@ -153,38 +158,30 @@ public class TableViewLibrary {
 
     public void inputTrackObservableList() {
         System.out.println("Reading from file");
-        try {
-            FileInputStream fis = new FileInputStream(ResourceURLs.getTrackListURL());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ArrayList<Track> arrayList = (ArrayList<Track>) ois.readObject();
-            ois.close();
-            fis.close();
 
-            trackObservableList = FXCollections.observableArrayList(arrayList);
-
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        try (BufferedReader input = Files.newBufferedReader(Paths.get(ResourceURLs.getTrackListURL()))) {
+            ArrayList<Track> trackArrayList = JAXB.unmarshal(input, ArrayList.class);
+            trackObservableList = FXCollections.observableArrayList(trackArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//
 
     }
 
-    public void outputTrackObservableList() {
+    public void outputTrackObservableList() throws IOException {
         System.out.println("Writing to file");
 
-        try {
-            FileOutputStream fos = new FileOutputStream(ResourceURLs.getTrackListURL());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(new ArrayList<>(trackObservableList));
-            oos.close();
-            fos.close();
-
-        } catch (IOException e){
+        try(BufferedWriter output = Files.newBufferedWriter(Paths.get(ResourceURLs.getTrackListURL()))) {
+            JAXB.marshal(new ArrayList<>(trackObservableList), output);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
     public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
+
 
 
     private String filterDigitsFromTitle(String trackTitle) {

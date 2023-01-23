@@ -16,7 +16,7 @@ public class ResourceURLs {
 
     private static final String tracklistURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "tracklist.ser")).toString().substring(6));
+                    "tracklist.xml")).toString().substring(6));
 
     // Getters
     public static String getSettingsURL() { return settingsURL; }

@@ -9,6 +9,7 @@ package com.iandw.musicplayerjavafx;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.*;
@@ -118,10 +119,10 @@ public class MusicPlayerController {
         tableViewLibrary.initializeTrackObservableList();
 
         // Output to file
-        tableViewLibrary.outputTrackObservableList();
+        //tableViewLibrary.outputTrackObservableList();
 
         // Input from file
-        tableViewLibrary.inputTrackObservableList();
+        //tableViewLibrary.inputTrackObservableList();
 
         // Populate trackList
         trackList = tableViewLibrary.getTrackObservableList();

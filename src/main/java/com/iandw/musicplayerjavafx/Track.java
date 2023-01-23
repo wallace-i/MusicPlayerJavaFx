@@ -10,7 +10,10 @@ package com.iandw.musicplayerjavafx;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
-public class Track {
+import java.io.Serializable;
+
+
+public class Track implements Serializable {
     private final SimpleStringProperty artistNameStr;
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;

@@ -8,6 +8,8 @@ module com.iandw.musicplayerjavafx {
     requires javafx.media;
     requires java.desktop;
     requires json.simple;
+    requires java.xml.bind;
+    requires jakarta.xml.bind;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;
