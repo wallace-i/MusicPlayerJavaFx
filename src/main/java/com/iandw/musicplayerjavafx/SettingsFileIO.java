@@ -66,7 +66,7 @@ public class SettingsFileIO {
         userSettingsList.add(userSettingsObject);
 
         try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
-            System.out.println("writing to Settings.json");
+            System.out.println("writing to settings.json");
             file.write(userSettingsList.toJSONString());
             file.flush();
 

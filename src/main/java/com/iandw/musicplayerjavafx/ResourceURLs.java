@@ -12,18 +12,13 @@ import java.util.Objects;
 public class ResourceURLs {
     private static final String settingsURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "Settings.json")).toString().substring(6));
+                    "settings.json")).toString().substring(6));
 
-    private static final String metadataHashMapURL = Objects.requireNonNull(
+    private static final String tracklistURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "MetadataHashMap.ser")).toString().substring(6));
-
-    private static final String searchTreeMapURL = Objects.requireNonNull(
-            Objects.requireNonNull(SettingsController.class.getResource(
-                    "SearchTreeMap.ser")).toString().substring(6));
+                    "tracklist.ser")).toString().substring(6));
 
     // Getters
     public static String getSettingsURL() { return settingsURL; }
-    public static String getMetadataHashMapURL() { return metadataHashMapURL; }
-    public static String getSearchTreeMapURL() { return searchTreeMapURL; }
+    public static String getTrackListURL() { return tracklistURL; }
 }

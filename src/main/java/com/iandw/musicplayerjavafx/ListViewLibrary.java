@@ -11,11 +11,9 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.*;
-import java.util.Objects;
 
-public class MusicLibrary {
+public class ListViewLibrary {
 
     /**
      * Function: loadArtistNameCollection => ObservableList<String>

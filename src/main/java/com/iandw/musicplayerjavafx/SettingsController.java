@@ -38,7 +38,7 @@ public class SettingsController extends AnchorPane {
     }
 
     public void showSettingsWindow(ListView<String> artistNameListView, TableView<Track> trackTableView) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         SettingsController controller = loader.getController();
@@ -77,7 +77,7 @@ public class SettingsController extends AnchorPane {
             SettingsFileIO readWriteObject = new SettingsFileIO();
             String rootMusicDirectoryString = path.toString();
             readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
-            artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
+            artistNameListView.setItems(ListViewLibrary.loadArtistNameCollection(rootMusicDirectoryString));
             System.out.printf("updated root directory: %s%n", rootMusicDirectoryString);
         }
 

@@ -12,24 +12,19 @@ import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TableViewLibrary {
 
-    private final ObservableList<Track> trackObservableList;
-    //    private final ArrayList<Track> trackArrayList;
+    private ObservableList<Track> trackObservableList;
 
-    /**
-     * function: loadArtistTableView => ObservableList<Track>
-     * @param  => String from MusicPlayerController
-     * @return trackData => Track Object container with track metadata for TableView in MusicPlayerController
-     */
-    public TableViewLibrary() throws IOException {
+    public void initializeTrackObservableList() throws IOException {
+        System.out.println("Initializing observable list");
         trackObservableList = FXCollections.observableArrayList();
-//        trackArrayList = new ArrayList<>();
 
         String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
@@ -154,8 +149,43 @@ public class TableViewLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
+    }
+
+    public void inputTrackObservableList() {
+        System.out.println("Reading from file");
+        try {
+            FileInputStream fis = new FileInputStream(ResourceURLs.getTrackListURL());
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList<Track> arrayList = (ArrayList<Track>) ois.readObject();
+            ois.close();
+            fis.close();
+
+            trackObservableList = FXCollections.observableArrayList(arrayList);
+
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
+
+    public void outputTrackObservableList() {
+        System.out.println("Writing to file");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(ResourceURLs.getTrackListURL());
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(new ArrayList<>(trackObservableList));
+            oos.close();
+            fos.close();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
+
 
     private String filterDigitsFromTitle(String trackTitle) {
         if (trackTitle.contains(".")) {
@@ -177,8 +207,6 @@ public class TableViewLibrary {
 
         return trackTitle;
     }
-
-    public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
 
 
 }

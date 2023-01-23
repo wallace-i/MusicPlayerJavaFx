@@ -8,6 +8,8 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
@@ -106,16 +108,28 @@ public class MusicPlayerController {
         rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
         // Load data from root directory into app's List View
-        artistNameListView.setItems(MusicLibrary.loadArtistNameCollection(rootMusicDirectoryString));
+        artistNameListView.setItems(ListViewLibrary.loadArtistNameCollection(rootMusicDirectoryString));
 
         //TODO => Load observable list into tableview array for tableview to be searched via search bar or artist listview
         // file I/O for tableViewLibrary track data
         TableViewLibrary tableViewLibrary = new TableViewLibrary();
+
+        // Initialize track data directly from audio files
+        tableViewLibrary.initializeTrackObservableList();
+
+        // Output to file
+        tableViewLibrary.outputTrackObservableList();
+
+        // Input from file
+        tableViewLibrary.inputTrackObservableList();
+
+        // Populate trackList
         trackList = tableViewLibrary.getTrackObservableList();
 
+
         // Initialize table view
-        artistNameListView.getSelectionModel().select(0);
-        listViewSelected();
+//        artistNameListView.getSelectionModel().select(0);
+//        listViewSelected();
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(

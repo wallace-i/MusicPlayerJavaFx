@@ -18,7 +18,7 @@ import java.util.Objects;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MusicPlayer.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Music Player");
