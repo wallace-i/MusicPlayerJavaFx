@@ -9,7 +9,6 @@ package com.iandw.musicplayerjavafx;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.*;
@@ -47,6 +46,8 @@ public class MusicPlayerController {
     public TableColumn<Track, String> colTrackFileNameInvisible;
     @FXML
     private TableColumn<Track, String> colArtistNameInvisible;
+    @FXML
+    private TableColumn<Track, String> colPlaylistInvisible;
     @FXML
     private TextField searchField;
     @FXML
@@ -96,6 +97,7 @@ public class MusicPlayerController {
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
     private FilteredList<Track> filteredList;
+    private ArrayList<String> playlistArray;
 
     public void initialize() throws IOException {
         // Initialize variables
@@ -111,18 +113,25 @@ public class MusicPlayerController {
         // Load data from root directory into app's List View
         artistNameListView.setItems(ListViewLibrary.loadArtistNameCollection(rootMusicDirectoryString));
 
-        //TODO => Load observable list into tableview array for tableview to be searched via search bar or artist listview
-        // file I/O for tableViewLibrary track data
+        // Load user playlists into listview
+        //artistNameListView.setItems(PlaylistsFileIO.inputPlaylists());
+
+        // Create tableView Object by either inputting track data from tracklist.ser file
+        // or initializing the TableView with the user's root music directory and
+        // write music data to new tracklist.ser file.
         TableViewLibrary tableViewLibrary = new TableViewLibrary();
 
-        // Initialize track data directly from audio files
-        tableViewLibrary.initializeTrackObservableList();
+        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
+            // Input from file
+            tableViewLibrary.inputTrackObservableList();
 
-        // Output to file
-        //tableViewLibrary.outputTrackObservableList();
+        } else {
+            // Initialize track data directly from audio files
+            tableViewLibrary.initializeTrackObservableList();
 
-        // Input from file
-        //tableViewLibrary.inputTrackObservableList();
+            // Output to file
+            tableViewLibrary.outputTrackObservableList();
+        }
 
         // Populate trackList
         trackList = tableViewLibrary.getTrackObservableList();
@@ -237,6 +246,12 @@ public class MusicPlayerController {
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          LIST VIEW MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     @FXML
     private void handleListViewMouseClick(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
@@ -278,6 +293,41 @@ public class MusicPlayerController {
 
     }
 
+    @FXML
+    private void handleListViewContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("View in Explorer");
+        MenuItem createPlaylist = new MenuItem("Create Playlist");
+
+        item1.setOnAction(event -> viewInFileExplorer());
+        createPlaylist.setOnAction(event -> {
+            try {
+                createPlaylist();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        // TODO => Set more context menu options
+
+        contextMenu.getItems().addAll(item1);
+
+        artistNameListView.setContextMenu(contextMenu);
+
+    }
+
+    private void createPlaylist() throws IOException {
+//        PlaylistController playlistController = new PlaylistController();
+//        playlistController.showPlaylistInputWindow(playlistArray);
+
+    }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          SEARCH BAR/LISTVIEW SEARCH MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
     private Predicate<Track> createListPredicate() {
         return this::searchTracks;
     }
@@ -302,22 +352,25 @@ public class MusicPlayerController {
     }
 
     @FXML
-    private void handleListViewContextMenu() {
-        ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("View in Explorer");
-
-        item1.setOnAction(event -> viewInFileExplorer());
-        // TODO => Set more context menu options
-
-        contextMenu.getItems().addAll(item1);
-
-        artistNameListView.setContextMenu(contextMenu);
-
+    private void handleClearSearchText(MouseEvent mouseClick) throws IOException {
+        searchField.setText("");
+        listViewSelected();
+        mouseClick.consume();
     }
+
+
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          TABLE VIEW MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
     private void handleTableViewContextMenu() {
         // TODO => create context menu options
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem addToPlaylist = new MenuItem("Add to playlist");
 
     }
 
@@ -349,6 +402,12 @@ public class MusicPlayerController {
         playMedia();
 
     }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                 PLAY/PAUSE/PREVIOUS/NEXT/STOP BUTTON MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     // Toggle media playback and the text on the playPauseButton
     @FXML
@@ -429,6 +488,14 @@ public class MusicPlayerController {
         }
     }
 
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         PLAY/STOP/PAUSE MEDIA MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
     private void playMedia() {
 
         String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
@@ -437,8 +504,8 @@ public class MusicPlayerController {
         System.out.printf("currentPath: %s%n", currentPath);
 
         // Create Media Object
-        Media media = new Media(new File(currentPath).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+        Media audioFile = new Media(new File(currentPath).toURI().toString());
+        mediaPlayer = new MediaPlayer(audioFile);
 
         // Track current track index for prev, next and autoplay functions
         trackIndexTracker();
@@ -514,6 +581,12 @@ public class MusicPlayerController {
         }
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         TRACK AUTOPLAY/SHUFFLE/REPEAT MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     private void trackIndexTracker() {
         previousTrackIndex = currentTrackIndex;
         currentTrackIndex = trackTableView.getItems().indexOf(trackTableView.getSelectionModel().getSelectedItem());
@@ -579,6 +652,12 @@ public class MusicPlayerController {
         playMedia();
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         FILE MENU MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     @FXML
     private void closeClicked() {
         System.exit(0);
@@ -590,14 +669,12 @@ public class MusicPlayerController {
        settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView());
     }
 
-    @FXML
-    private void handleClearSearchText(MouseEvent mouseClick) throws IOException {
-        searchField.setText("");
-        listViewSelected();
-        mouseClick.consume();
-    }
 
-    // Getters
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         SETTERS/GETTERS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private ListView<String> getArtistNameListView() { return artistNameListView; }
     private TableView<Track> getTrackTableView() { return trackTableView; }
 

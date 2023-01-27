@@ -10,10 +10,11 @@ package com.iandw.musicplayerjavafx;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Duration;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
-public class Track implements Serializable {
+public class Track {
     private final SimpleStringProperty artistNameStr;
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
@@ -24,10 +25,11 @@ public class Track implements Serializable {
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
     private final SimpleStringProperty trackPathStr;
+    private SimpleStringProperty playlistStr;
 
     public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
                  String albumDirectoryStr, String albumTitleStr, String trackGenreStr, Duration trackDuration,
-                 String trackPathStr)
+                 String trackPathStr, String playlistStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
@@ -40,6 +42,7 @@ public class Track implements Serializable {
         int trackDurationSeconds = (int) trackDuration.toSeconds();
         this.trackDurationStr =  new SimpleStringProperty(formatSeconds(trackDurationSeconds));
         this.trackPathStr = new SimpleStringProperty(trackPathStr);
+        this.playlistStr = new SimpleStringProperty(playlistStr);
     }
 
     public static String formatSeconds(int seconds) {
@@ -61,5 +64,8 @@ public class Track implements Serializable {
     public Duration getTrackDuration() { return trackDuration; }
     public String getTrackGenreStr() { return trackGenreStr.get(); }
     public String getTrackPathStr() { return trackPathStr.get(); }
+
+    public String getPlaylistStr() { return playlistStr.get(); }
+    public void setPlaylistStr(String playlist) { this.playlistStr = new SimpleStringProperty(playlist); }
 
 }

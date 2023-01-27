@@ -18,6 +18,7 @@
                         <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="189.0" text="Album" />
                         <TableColumn fx:id="colTrackLength" prefWidth="50.0" text="Time" />
                         <TableColumn fx:id="colTrackGenre" prefWidth="91.0" text="Genre" />
+                        <TableColumn fx:id="colPlaylistInvisible" visible="false" />
                     </columns>
                 </TableView>
             </children>

@@ -16,9 +16,14 @@ public class ResourceURLs {
 
     private static final String tracklistURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "tracklist.xml")).toString().substring(6));
+                    "tracklist.ser")).toString().substring(6));
+
+    private static final String playlistsURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "playlists.ser")).toString().substring(6));
 
     // Getters
     public static String getSettingsURL() { return settingsURL; }
     public static String getTrackListURL() { return tracklistURL; }
+    public static String getPlaylistsURL() { return playlistsURL; }
 }

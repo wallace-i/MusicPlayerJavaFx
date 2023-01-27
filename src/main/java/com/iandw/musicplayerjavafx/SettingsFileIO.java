@@ -21,7 +21,6 @@ public class SettingsFileIO {
     private static String rootMusicDirectoryString;
 
 
-
     public static String getMusicDirectoryString(String jsonURL) {
         jsonFileInput(jsonURL);
 
