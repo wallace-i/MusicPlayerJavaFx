@@ -17,16 +17,13 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class SettingsFileIO {
-
     private static String rootMusicDirectoryString;
-
 
     public static String getMusicDirectoryString(String jsonURL) {
         jsonFileInput(jsonURL);
 
         return rootMusicDirectoryString;
     }
-
 
     // Input functions
     private static void jsonFileInput(String jsonURL) {
@@ -39,8 +36,6 @@ public class SettingsFileIO {
             Object obj = jsonParser.parse(reader);
             JSONArray settingsList = (JSONArray) obj;
             settingsList.forEach( settings -> parseSettingsObject( (JSONObject) settings));
-            System.out.println(rootMusicDirectoryString);
-
 
         } catch (ParseException | IOException e) {
             e.printStackTrace();

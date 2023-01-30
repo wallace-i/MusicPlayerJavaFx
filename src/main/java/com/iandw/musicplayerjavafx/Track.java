@@ -8,11 +8,6 @@
 package com.iandw.musicplayerjavafx;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.util.Duration;
-
-import java.io.Serial;
-import java.io.Serializable;
-
 
 public class Track {
     private final SimpleStringProperty artistNameStr;
@@ -21,14 +16,13 @@ public class Track {
     private final SimpleStringProperty trackTitleStr;
     private final SimpleStringProperty albumDirectoryStr;
     private final SimpleStringProperty albumTitleStr;
-    private final Duration trackDuration;
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
     private final SimpleStringProperty trackPathStr;
     private SimpleStringProperty playlistStr;
 
     public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
-                 String albumDirectoryStr, String albumTitleStr, String trackGenreStr, Duration trackDuration,
+                 String albumDirectoryStr, String albumTitleStr, String trackGenreStr, String trackDurationStr,
                  String trackPathStr, String playlistStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
@@ -38,20 +32,9 @@ public class Track {
         this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
         this.albumTitleStr = new SimpleStringProperty(albumTitleStr);
         this.trackGenreStr = new SimpleStringProperty(trackGenreStr);
-        this.trackDuration = trackDuration;
-        int trackDurationSeconds = (int) trackDuration.toSeconds();
-        this.trackDurationStr =  new SimpleStringProperty(formatSeconds(trackDurationSeconds));
+        this.trackDurationStr = new SimpleStringProperty(trackDurationStr);
         this.trackPathStr = new SimpleStringProperty(trackPathStr);
         this.playlistStr = new SimpleStringProperty(playlistStr);
-    }
-
-    public static String formatSeconds(int seconds) {
-        if (seconds >= 3600) {
-            return String.format("%02d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60);
-        }
-
-        return String.format("%02d:%02d", (seconds / 60) % 60, seconds % 60);
-
     }
 
     public String getArtistNameStr() { return artistNameStr.get(); }
@@ -61,7 +44,6 @@ public class Track {
     public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
     public String getTrackDurationStr() {return trackDurationStr.get(); }
-    public Duration getTrackDuration() { return trackDuration; }
     public String getTrackGenreStr() { return trackGenreStr.get(); }
     public String getTrackPathStr() { return trackPathStr.get(); }
 

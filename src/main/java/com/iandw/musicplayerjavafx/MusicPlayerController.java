@@ -98,6 +98,13 @@ public class MusicPlayerController {
     private ObservableList<Track> trackList;
     private FilteredList<Track> filteredList;
     private ArrayList<String> playlistArray;
+    private TableViewLibrary tableViewLibrary;
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          INITIALIZE CONTROLLER & LISTENERS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public void initialize() throws IOException {
         // Initialize variables
@@ -119,18 +126,14 @@ public class MusicPlayerController {
         // Create tableView Object by either inputting track data from tracklist.ser file
         // or initializing the TableView with the user's root music directory and
         // write music data to new tracklist.ser file.
-        TableViewLibrary tableViewLibrary = new TableViewLibrary();
+        tableViewLibrary = new TableViewLibrary();
 
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
             // Input from file
             tableViewLibrary.inputTrackObservableList();
-
         } else {
             // Initialize track data directly from audio files
             tableViewLibrary.initializeTrackObservableList();
-
-            // Output to file
-            tableViewLibrary.outputTrackObservableList();
         }
 
         // Populate trackList
@@ -287,6 +290,7 @@ public class MusicPlayerController {
         colAlbumTitle.setCellValueFactory(new PropertyValueFactory<>("albumTitleStr"));
         colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
         colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
+        colPlaylistInvisible.setCellValueFactory(new PropertyValueFactory<>("playlistStr"));
 
 //              Debugger
 //              System.out.printf("currentPath: %s%n", currentPath);
@@ -563,8 +567,8 @@ public class MusicPlayerController {
             trackDurationLabel.setText("");
             trackCurrentTimeLabel.setText("");
         }
-        trackDurationLabel.setText(Track.formatSeconds((int) mediaPlayer.getTotalDuration().toSeconds()));
-        trackCurrentTimeLabel.setText(Track.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
+        trackDurationLabel.setText(Utils.formatSeconds((int) mediaPlayer.getTotalDuration().toSeconds()));
+        trackCurrentTimeLabel.setText(Utils.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
         seekSlider.valueProperty().setValue(mediaPlayer.getCurrentTime().toMillis() /
                 mediaPlayer.getTotalDuration().toMillis() * 100);
     }
@@ -666,7 +670,8 @@ public class MusicPlayerController {
     @FXML
     private void settingsClicked() throws IOException {
        SettingsController settingsController = new SettingsController();
-       settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView());
+       settingsController.showSettingsWindow(getArtistNameListView(), getTrackTableView(),
+               getTableViewLibrary(), getTrackList());
     }
 
 
@@ -677,6 +682,8 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private ListView<String> getArtistNameListView() { return artistNameListView; }
     private TableView<Track> getTrackTableView() { return trackTableView; }
+    private TableViewLibrary getTableViewLibrary() { return tableViewLibrary; }
+    private ObservableList<Track> getTrackList() { return trackList; }
 
 }
 

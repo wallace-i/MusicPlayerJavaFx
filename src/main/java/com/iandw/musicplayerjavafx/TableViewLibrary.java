@@ -9,23 +9,29 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.FieldKey;
 
 public class TableViewLibrary implements Serializable {
-
-    private ObservableList<Track> trackObservableList;
-
+    private final ObservableList<Track> trackObservableList;
     private ArrayList<TrackSerializable> trackArrayList;
+    private final List<String> supportedFileTypes;
 
     public TableViewLibrary() {
         trackObservableList = FXCollections.observableArrayList();
         trackArrayList = new ArrayList<>();
-
+        supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
     }
 
     public void initializeTrackObservableList() throws IOException {
@@ -54,9 +60,9 @@ public class TableViewLibrary implements Serializable {
 
                             for (Path trackPath : albumDirPath) {
                                 if (Files.exists(trackPath)) {
-                                    String audioTrackPathStr = trackPath.toAbsolutePath().toString();
+                                    String trackPathStr = trackPath.toAbsolutePath().toString();
                                     String trackFileName = trackPath.getFileName().toString();
-                                    String trackContainerType = audioTrackPathStr.substring(audioTrackPathStr.lastIndexOf('.'));
+                                    String trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
 
                                     // Debugger:
                                     // System.out.printf("TrackPath: %s%n", trackPath);
@@ -64,85 +70,85 @@ public class TableViewLibrary implements Serializable {
                                     // System.out.printf("trackFileName: %s%n", trackFileName);
                                     // System.out.printf("trackContainerType: %s%n", trackContainerType);
 
-                                    Media audioTrack = new Media(new File(audioTrackPathStr).toURI().toString());
-                                    MediaPlayer mediaPlayer = new MediaPlayer(audioTrack);
+                                    try {
+                                        File file = new File(trackPathStr);
+                                        AudioFile audioFile = AudioFileIO.read(file);
+                                        Tag tag = audioFile.getTag();
+//
+                                        String trackTitle = trackFileName;
+                                        String trackAlbum;
+                                        String trackGenre = tag.getFirst(FieldKey.GENRE);
+                                        String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
 
-                                    String trackTitle = trackFileName;
-                                    String trackAlbum;
-                                    String trackGenre = (String) mediaPlayer.getMedia().getMetadata().get("genre");
+                                        // Check title metadata for null value, if true replace with file name substring
+                                        if (tag.getFirst(FieldKey.TITLE) == null) {
+                                            trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
 
-                                    // Check title metadata for null value, if true replace with file name substring
-                                    if (mediaPlayer.getMedia().getMetadata().get("title") == null) {
-                                        trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
+                                        } else {
+                                            trackTitle = tag.getFirst(FieldKey.TITLE);
+                                        }
 
-                                    } else {
-                                        trackTitle = (String) mediaPlayer.getMedia().getMetadata().get("title");
-                                    }
+                                        // If still null replace with trackFileName
+                                        if (trackTitle == null) {
+                                            trackTitle = trackFileName;
+                                        }
 
-                                    // If still null replace with trackFileName
-                                    if (trackTitle == null) {
-                                        trackTitle = trackFileName;
-                                    }
+                                        if (Character.isDigit(trackTitle.charAt(0))) {
+                                            trackTitle = filterDigitsFromTitle(trackTitle);
+                                        }
 
-                                    if (Character.isDigit(trackTitle.charAt(0))) {
-                                        trackTitle = filterDigitsFromTitle(trackTitle);
-                                    }
+                                        // Check album metadata for null value, if true replace with directory name
+                                        if (tag.getFirst(FieldKey.ALBUM) == null) {
+                                            trackAlbum = albumDirectoryStr;
+                                        } else {
+                                            trackAlbum = tag.getFirst(FieldKey.ALBUM);
+                                        }
 
-                                    // Check album metadata for null value, if true replace with directory name
-                                    if (mediaPlayer.getMedia().getMetadata().get("album") == null) {
-                                        trackAlbum = albumDirectoryStr;
-                                    } else {
-                                        trackAlbum = (String) mediaPlayer.getMedia().getMetadata().get("album");
-                                    }
+                                        // Check genre metadata for null value, if true leave blank
+                                        if (trackGenre == null) {
+                                            trackGenre = "";
+                                        } else if (trackGenre.startsWith("(")) {
+                                            String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
+                                            trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
+                                        }
 
-                                    // Check genre metadata for null value, if true leave blank
-                                    if (trackGenre == null) {
-                                        trackGenre = "";
-                                    } else if (trackGenre.startsWith("(")) {
-                                        String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
-                                        trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
-                                    }
+                                        // Check for playable file container
+                                        if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
-                                    // Check for playable file container
-                                    if (Objects.equals(trackContainerType.toLowerCase(), ".aif") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".aiff") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".mp3") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".mp4") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".m4a") ||
-                                            Objects.equals(trackContainerType.toLowerCase(), ".wav")) {
+                                            // Populate Track object
+                                            Track track = new Track(
+                                                    artistNameStr,
+                                                    trackFileName,
+                                                    trackContainerType,
+                                                    trackTitle,
+                                                    albumDirectoryStr,
+                                                    trackAlbum,
+                                                    trackGenre,
+                                                    duration,
+                                                    trackPathStr,
+                                                    null
+                                            );
 
-                                        // Populate Track object
-                                        TrackSerializable serializableTrack = new TrackSerializable(
-                                                artistNameStr,
-                                                trackFileName,
-                                                trackContainerType,
-                                                trackTitle,
-                                                albumDirectoryStr,
-                                                trackAlbum,
-                                                trackGenre,
-                                                mediaPlayer.getTotalDuration(),
-                                                trackPath.toString(),
-                                                null
-                                        );
+                                            trackObservableList.add(track);
 
-                                        // Add track data to ObservableList
-                                        trackArrayList.add(serializableTrack);
+                                        } else {
+                                            System.out.printf("%s is not a compatible file type.", trackFileName);
+                                        }
 
-                                    } else {
-                                        System.out.printf("%s is not a compatible file type.", trackFileName);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
                                 }
                             }
                         }
                     }
-
                 } catch (Exception e) {
                     System.out.println("Directory cannot be loaded.");
                     e.printStackTrace();
                 }
 
-                deepCopyArrayToObservable();
-
+                // Copy ObservableList to Array and serialize output to trackfile.ser
+                outputTrackObservableList();
             }
 
         } else {
@@ -156,10 +162,9 @@ public class TableViewLibrary implements Serializable {
 
     }
 
-    private void deepCopyArrayToObservable() {
-        for (TrackSerializable track : trackArrayList) {
-           // System.out.printf("Copying %s%n", track.getTrackFileNameStr());
-            trackObservableList.add(new Track(
+    private void deepCopyObservableToArray() {
+        for (Track track : trackObservableList) {
+            trackArrayList.add(new TrackSerializable(
                     track.getArtistNameStr(),
                     track.getTrackFileNameStr(),
                     track.getTrackContainerTypeStr(),
@@ -167,12 +172,28 @@ public class TableViewLibrary implements Serializable {
                     track.getAlbumDirectoryStr(),
                     track.getAlbumTitleStr(),
                     track.getTrackGenreStr(),
-                    track.getTrackDuration(),
+                    track.getTrackDurationStr(),
                     track.getTrackPathStr(),
                     track.getPlaylistStr()
             ));
         }
+    }
 
+    private void deepCopyArrayToObservable() {
+        for (TrackSerializable track : trackArrayList) {
+            trackObservableList.add(new Track(
+                track.getArtistNameStr(),
+                track.getTrackFileNameStr(),
+                track.getTrackContainerTypeStr(),
+                track.getTrackTitleStr(),
+                track.getAlbumDirectoryStr(),
+                track.getAlbumTitleStr(),
+                track.getTrackGenreStr(),
+                track.getTrackDurationStr(),
+                track.getTrackPathStr(),
+                track.getPlaylistStr()
+            ));
+        }
     }
 
     public void inputTrackObservableList() {
@@ -193,8 +214,10 @@ public class TableViewLibrary implements Serializable {
 
     }
 
-    public void outputTrackObservableList() {
+    public void outputTrackObservableList() throws FileNotFoundException {
         System.out.println("Writing to file");
+
+        deepCopyObservableToArray();
 
         try {
             // Write track objects to file
@@ -210,12 +233,8 @@ public class TableViewLibrary implements Serializable {
     }
 
     public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
-
-    public void clearList() {
-        System.out.println("Clearing observablelist");
-        trackObservableList.clear();
-    }
-
+    public void clearObservableList() { trackObservableList.clear(); }
+    public void clearArrayList() { trackArrayList.clear(); }
 
     private String filterDigitsFromTitle(String trackTitle) {
         if (trackTitle.contains(".")) {
@@ -233,7 +252,6 @@ public class TableViewLibrary implements Serializable {
             }
 
         }
-
 
         return trackTitle;
     }
