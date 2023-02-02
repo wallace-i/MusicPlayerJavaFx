@@ -8,7 +8,6 @@ module com.iandw.musicplayerjavafx {
     requires javafx.media;
     requires java.desktop;
     requires json.simple;
-    requires org.bouncycastle.mail;
     requires jaudiotagger;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;

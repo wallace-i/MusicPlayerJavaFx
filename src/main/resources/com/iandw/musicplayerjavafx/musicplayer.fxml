@@ -57,17 +57,17 @@
                         <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Button>
-            <RadioButton fx:id="autoPlay" accessibleRole="COMBO_BOX" mnemonicParsing="false" text="Auto">
+            <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false" text="Auto">
                <padding>
                   <Insets left="25.0" right="5.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="shuffle" mnemonicParsing="false" text="Shuffle">
+            <RadioButton fx:id="shuffleButton" mnemonicParsing="false" text="Shuffle">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </RadioButton>
-            <RadioButton fx:id="repeat" mnemonicParsing="false" text="Repeat">
+            <RadioButton fx:id="repeatButton" mnemonicParsing="false" text="Repeat">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>

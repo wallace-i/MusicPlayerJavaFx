@@ -8,8 +8,6 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
@@ -75,11 +73,11 @@ public class MusicPlayerController {
     @FXML
     private Label volumeLabel;
     @FXML
-    private RadioButton autoPlay;
+    private RadioButton autoButton;
     @FXML
-    private RadioButton shuffle;
+    private RadioButton shuffleButton;
     @FXML
-    private RadioButton repeat;
+    private RadioButton repeatButton;
     @FXML
     private CheckBox mute;
     private MediaPlayer mediaPlayer;
@@ -93,12 +91,15 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
-    private boolean initialized;
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
     private FilteredList<Track> filteredList;
     private ArrayList<String> playlistArray;
     private TableViewLibrary tableViewLibrary;
+    private AutoPlay autoPlay;
+
+    public MusicPlayerController() {
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -110,9 +111,9 @@ public class MusicPlayerController {
         // Initialize variables
         playing = false;
         stopped = true;
-        initialized = false;
         volumeDouble = 0.25;
         shuffleArray = new ArrayList<>();
+        autoPlay = AutoPlay.OFF;
 
         // Initialize root directory path for controller
         rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
@@ -128,21 +129,29 @@ public class MusicPlayerController {
         // write music data to new tracklist.ser file.
         tableViewLibrary = new TableViewLibrary();
 
-        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
-            // Input from file
-            tableViewLibrary.inputTrackObservableList();
-        } else {
-            // Initialize track data directly from audio files
-            tableViewLibrary.initializeTrackObservableList();
-        }
+        // Test Logic => for file R/W every run
+//        tableViewLibrary.initializeTrackObservableList();
+//        tableViewLibrary.outputTrackObservableList();
+//        tableViewLibrary.clearObservableList();
+        tableViewLibrary.inputTrackObservableList();
+
+        // File input logic TODO => make better/less dumb
+//        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
+//            // Input from file
+//            tableViewLibrary.inputTrackObservableList();
+//        } else {
+//            // Initialize track data directly from audio files
+//            tableViewLibrary.initializeTrackObservableList();
+//            tableViewLibrary.outputTrackObservableList();
+//        }
 
         // Populate trackList
         trackList = tableViewLibrary.getTrackObservableList();
 
-
         // Initialize table view
-//        artistNameListView.getSelectionModel().select(0);
-//        listViewSelected();
+        artistNameListView.getSelectionModel().select(0);
+        trackTableView.refresh();
+        listViewSelected();
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -188,52 +197,57 @@ public class MusicPlayerController {
         );
 
         // Toggle Logic
-        autoPlay.selectedProperty().addListener(
+        autoButton.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     if (newValue) {
-                        if (shuffle.isSelected() || repeat.isSelected()) {
-                            shuffle.setSelected(false);
-                            repeat.setSelected(false);
-                            autoPlay.setSelected(true);
+                        autoPlay = AutoPlay.AUTO_PLAY;
+
+                        if (shuffleButton.isSelected() || repeatButton.isSelected()) {
+                            radioButtonActive();
                         } else {
-                            autoPlay.setSelected(true);
+                            radioButtonOff();
                         }
                     } else {
-                        autoPlay.setSelected(false);
+                        autoPlay = AutoPlay.OFF;
+                        deselectRadioButton();
                         shuffleArray.clear();
                     }
                 }
         );
 
-        shuffle.selectedProperty().addListener(
+        shuffleButton.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     if (newValue) {
-                        if (autoPlay.isSelected() || repeat.isSelected()) {
-                            shuffle.setSelected(true);
-                            repeat.setSelected(false);
-                            autoPlay.setSelected(false);
+                        autoPlay = AutoPlay.SHUFFLE;
+
+                        if (autoButton.isSelected() || repeatButton.isSelected()) {
+                            radioButtonActive();
+
                         } else {
-                            shuffle.setSelected(true);
+                            radioButtonOff();
                         }
                     } else {
-                        shuffle.setSelected(false);
+                        autoPlay = AutoPlay.OFF;
+                        deselectRadioButton();
 
                     }
                 }
         );
 
-        repeat.selectedProperty().addListener(
+        repeatButton.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     if (newValue) {
-                        if (shuffle.isSelected() || autoPlay.isSelected()) {
-                            shuffle.setSelected(false);
-                            repeat.setSelected(true);
-                            autoPlay.setSelected(false);
+                        autoPlay = AutoPlay.REPEAT;
+
+                        if (shuffleButton.isSelected() || autoButton.isSelected()) {
+                            radioButtonActive();
+
                         } else {
-                            repeat.setSelected(true);
+                            radioButtonOff();
                         }
                     } else {
-                        repeat.setSelected(false);
+                        autoPlay = AutoPlay.OFF;
+                        deselectRadioButton();
                     }
                 }
         );
@@ -266,13 +280,7 @@ public class MusicPlayerController {
         // Get selected artist name (from directory name)
         previousArtistNameString = artistNameString;
 
-        // TODO => Fix list initialization
-        if (!initialized) {
-            artistNameString = artistNameListView.getItems().get(0);
-            initialized = true;
-        } else {
-            artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
-        }
+        artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
 
         trackTableView.getSortOrder().add(colTrackFileNameInvisible);
 
@@ -472,7 +480,7 @@ public class MusicPlayerController {
     @FXML
     private void nextButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
-            if (shuffle.isSelected()) {
+            if (shuffleButton.isSelected()) {
                 shuffleSelected();
             } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
                 trackTableView.getSelectionModel().select(nextTrackIndex);
@@ -519,22 +527,25 @@ public class MusicPlayerController {
 
         // Play media
         mediaPlayer.setVolume(volumeDouble);
-        mediaPlayer.play();
-        playPauseButton.setText("Pause");
-        playing = true;
-        stopped = false;
 
-        // Set text to currently playing text fields
-        setNowPlayingText();
+        mediaPlayer.setOnReady(() -> {
+            mediaPlayer.play();
+            playPauseButton.setText("Pause");
+            playing = true;
+            stopped = false;
+
+            // Set text to currently playing text fields
+            setNowPlayingText();
+        });
 
         // Autoplay or stop media player after current track is finished
         mediaPlayer.setOnEndOfMedia(() -> {
             if (trackTableView.getSelectionModel().getSelectedItem() != null) {
-                if (autoPlay.isSelected()) {
+                if (autoButton.isSelected()) {
                     autoPlaySelected();
-                } else if (repeat.isSelected()) {
+                } else if (repeatButton.isSelected()) {
                     repeatSelected();
-                } else if (shuffle.isSelected()) {
+                } else if (shuffleButton.isSelected()) {
                     shuffleSelected();
                 } else {
                     stopMedia(false);
@@ -581,7 +592,7 @@ public class MusicPlayerController {
         } else {
             playingLabel.setText("Playing: " + trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr());
             albumLabel.setText("From: " + trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr());
-            byLabel.setText("By: " + artistNameString);
+            byLabel.setText("By: " + trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr());
         }
     }
 
@@ -590,6 +601,59 @@ public class MusicPlayerController {
      *                         TRACK AUTOPLAY/SHUFFLE/REPEAT MODULES
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    private void radioButtonActive() {
+        switch (autoPlay) {
+            case AUTO_PLAY -> {
+                shuffleButton.setSelected(false);
+                repeatButton.setSelected(false);
+                autoButton.setSelected(true);
+            }
+            case SHUFFLE -> {
+                shuffleButton.setSelected(true);
+                repeatButton.setSelected(false);
+                autoButton.setSelected(false);
+            }
+            case REPEAT -> {
+                shuffleButton.setSelected(false);
+                repeatButton.setSelected(true);
+                autoButton.setSelected(false);
+            }
+            case OFF -> {
+                shuffleButton.setSelected(false);
+                repeatButton.setSelected(false);
+                autoButton.setSelected(false);
+            }
+
+        }
+    }
+    private void radioButtonOff() {
+        switch (autoPlay) {
+            case AUTO_PLAY -> {
+                autoButton.setSelected(true);
+            }
+            case SHUFFLE -> {
+                shuffleButton.setSelected(true);
+            }
+            case REPEAT -> {
+                repeatButton.setSelected(true);
+            }
+        }
+    }
+
+    private void deselectRadioButton() {
+        switch (autoPlay) {
+            case AUTO_PLAY -> {
+                autoButton.setSelected(false);
+            }
+            case SHUFFLE -> {
+                shuffleButton.setSelected(false);
+            }
+            case REPEAT -> {
+                repeatButton.setSelected(false);
+            }
+        }
+    }
 
     private void trackIndexTracker() {
         previousTrackIndex = currentTrackIndex;
@@ -609,7 +673,7 @@ public class MusicPlayerController {
 
     private void autoPlaySelected() {
         trackTableView.getSelectionModel().select(nextTrackIndex);
-        trackTableView.scrollTo(nextTrackIndex);
+        trackTableView.scrollTo(nextTrackIndex); //TODO => funky scroll logic
         stopMedia(true);
         playMedia();
     }
@@ -677,7 +741,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         SETTERS/GETTERS
+     *                         GETTERS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private ListView<String> getArtistNameListView() { return artistNameListView; }

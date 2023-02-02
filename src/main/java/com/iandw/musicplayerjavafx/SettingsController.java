@@ -100,12 +100,16 @@ public class SettingsController extends AnchorPane {
             trackList.clear();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.clearArrayList();
-            trackTableView.getItems().clear();
-            artistNameListView.getItems().clear();
+//            trackTableView.getItems().clear();
+//            artistNameListView.getItems().clear();
 
             // Re-initialize with new metadata from new root directory
             tableViewLibrary.initializeTrackObservableList();
+            tableViewLibrary.outputTrackObservableList();
             trackList = tableViewLibrary.getTrackObservableList();
+            trackTableView.refresh();
+            artistNameListView.refresh();
+            System.out.println("Finished initializing.");
 
         }
     }
