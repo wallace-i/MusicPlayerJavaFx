@@ -24,34 +24,41 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class SettingsController extends AnchorPane {
     @FXML private AnchorPane anchorPane;
     @FXML private Button musicFolder;
     @FXML private Label rootDirectoryLabel;
+    private TableViewLibrary tableViewLibrary;
     private ListView<String> artistNameListView;
     private TableView<Track> trackTableView;
-    private TableViewLibrary tableViewLibrary;
     private ObservableList<Track> trackList;
+    private ArrayList<String> playlistArray;
 
     public void initialize() {}
     private void initializeData(ListView<String> artistNameListView, TableView<Track> trackTableView,
-                                TableViewLibrary tableViewLibrary, ObservableList<Track> trackList) {
+                                TableViewLibrary tableViewLibrary, ObservableList<Track> trackList,
+                                ArrayList<String> playlistArray)
+    {
         rootDirectoryLabel.setText(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()));
         this.trackTableView = trackTableView;
         this.artistNameListView = artistNameListView;
         this.tableViewLibrary = tableViewLibrary;
         this.trackList = trackList;
+        this.playlistArray = playlistArray;
     }
 
     public void showSettingsWindow(ListView<String> artistNameListView, TableView<Track> trackTableView,
-                                   TableViewLibrary tableViewLibrary, ObservableList<Track> trackList) throws IOException {
+                                   TableViewLibrary tableViewLibrary, ObservableList<Track> trackList,
+                                   ArrayList<String> playlistArray) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
 
         SettingsController controller = loader.getController();
-        controller.initializeData(artistNameListView, trackTableView, tableViewLibrary, trackList);
+        controller.initializeData(artistNameListView, trackTableView, tableViewLibrary, trackList, playlistArray);
 
         stage.setTitle("Settings");
         stage.setResizable(false);
@@ -89,24 +96,29 @@ public class SettingsController extends AnchorPane {
             String rootMusicDirectoryString = path.toString();
 
             readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
-            artistNameListView.setItems(ListViewLibrary.loadArtistNameCollection(rootMusicDirectoryString));
+          //  artistNameListView.setItems(ListViewLibrary.loadArtistNameCollection(rootMusicDirectoryString, playlistArray));
 
             System.out.printf("updated root directory: %s%n", rootMusicDirectoryString);
             System.out.println("Initializing metadata");
 
             // Clear current list file and observable list
-            PrintWriter pw = new PrintWriter(ResourceURLs.getTrackListURL());
-            pw.close();
+            PrintWriter clearTracklist = new PrintWriter(ResourceURLs.getTrackListURL());
+            clearTracklist.close();
+            PrintWriter clearArtistList = new PrintWriter(ResourceURLs.getArtistListURL());
+            clearArtistList.close();
+            PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistsURL());
+            clearPlaylists.close();
             trackList.clear();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.clearArrayList();
-//            trackTableView.getItems().clear();
-//            artistNameListView.getItems().clear();
+            playlistArray.clear();
 
             // Re-initialize with new metadata from new root directory
-            tableViewLibrary.initializeTrackObservableList();
-            tableViewLibrary.outputTrackObservableList();
-            trackList = tableViewLibrary.getTrackObservableList();
+            MusicLibrary musicLibrary = new MusicLibrary();
+            musicLibrary.initializeMusicLibrary();
+            artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
+           // trackList = musicLibrary.getTrackObservableList();
+            trackList.addAll(musicLibrary.getTrackObservableList());
             trackTableView.refresh();
             artistNameListView.refresh();
             System.out.println("Finished initializing.");

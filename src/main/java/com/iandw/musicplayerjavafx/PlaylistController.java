@@ -1,9 +1,11 @@
 package com.iandw.musicplayerjavafx;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -13,9 +15,9 @@ import java.util.ArrayList;
 
 public class PlaylistController {
     @FXML private AnchorPane anchorPane;
+    @FXML private Label playlistNameTextInput;
     @FXML private Button okButton;
-
-    private String playlistInput;
+    @FXML private Button cancelButton;
     private ArrayList<String> playlistArray;
 
     public void initialize() {}
@@ -36,9 +38,15 @@ public class PlaylistController {
         stage.show();
     }
 
+    @FXML
     private void okButtonClicked() {
-
+        playlistArray.add(playlistNameTextInput.getText());
+        PlaylistsFileIO.outputPlaylists(playlistArray);
     }
 
+    @FXML
+    private void cancelButtonClicked() {
+
+    }
 
 }

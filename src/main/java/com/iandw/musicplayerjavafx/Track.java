@@ -14,7 +14,7 @@ public class Track {
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
     private final SimpleStringProperty trackTitleStr;
-    private final SimpleStringProperty albumDirectoryStr;
+    //private final SimpleStringProperty albumDirectoryStr;
     private final SimpleStringProperty albumTitleStr;
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
@@ -22,14 +22,14 @@ public class Track {
     private SimpleStringProperty playlistStr;
 
     public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
-                 String albumDirectoryStr, String albumTitleStr, String trackGenreStr, String trackDurationStr,
+                 String albumTitleStr, String trackGenreStr, String trackDurationStr,
                  String trackPathStr, String playlistStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
         this.trackContainerTypeStr = new SimpleStringProperty(trackContainerTypeStr);
         this.trackTitleStr = new SimpleStringProperty(trackTitleStr);
-        this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
+       // this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
         this.albumTitleStr = new SimpleStringProperty(albumTitleStr);
         this.trackGenreStr = new SimpleStringProperty(trackGenreStr);
         this.trackDurationStr = new SimpleStringProperty(trackDurationStr);
@@ -41,7 +41,7 @@ public class Track {
     public String getTrackFileNameStr() { return trackFileNameStr.get(); }
     public String getTrackContainerTypeStr() { return trackContainerTypeStr.get(); }
     public String getTrackTitleStr() { return trackTitleStr.get(); }
-    public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
+   // public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
     public String getTrackDurationStr() {return trackDurationStr.get(); }
     public String getTrackGenreStr() { return trackGenreStr.get(); }

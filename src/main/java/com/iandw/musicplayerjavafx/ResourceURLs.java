@@ -14,6 +14,10 @@ public class ResourceURLs {
             Objects.requireNonNull(SettingsController.class.getResource(
                     "settings.json")).toString().substring(6));
 
+    private static final String artistlistURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "artistlist.ser")).toString().substring(6));
+
     private static final String tracklistURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
                     "tracklist.ser")).toString().substring(6));
@@ -24,6 +28,7 @@ public class ResourceURLs {
 
     // Getters
     public static String getSettingsURL() { return settingsURL; }
+    public static String getArtistListURL() { return artistlistURL; }
     public static String getTrackListURL() { return tracklistURL; }
     public static String getPlaylistsURL() { return playlistsURL; }
 }
