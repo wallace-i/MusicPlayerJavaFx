@@ -31,8 +31,12 @@ public class ListViewLibrary implements Serializable {
 
         // Load user playlists into listview
         artistNameObservableList.add("------- Playlists -------");
-        playlistArray.add("Playlist1");
-        artistNameObservableList.addAll(playlistArray);
+
+        if (playlistArray.isEmpty()) {
+            artistNameObservableList.add("* no playlists *");
+        } else {
+            artistNameObservableList.addAll(playlistArray);
+        }
         artistNameObservableList.add("------- Artists ---------");
 
         // Get artist names from artist folders

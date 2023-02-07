@@ -149,17 +149,6 @@ public class MusicPlayerController {
         trackList.addAll(tableViewLibrary.getTrackObservableList());
 
 
-        // Test Logic => for file R/W every run
-//        tableViewLibrary.initializeTrackObservableList();
-//        tableViewLibrary.outputTrackObservableList();
-//        tableViewLibrary.outputArtistNameObservableList();
-//        tableViewLibrary.clearObservableList();
-//        tableViewLibrary.inputTrackObservableList();
-//        tableViewLibrary.inputArtistNameObservableList();
-
-
-
-
         // File input logic TODO => make better/less dumb
 //        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
 //            // Input from file
@@ -332,10 +321,20 @@ public class MusicPlayerController {
     @FXML
     private void handleListViewContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("View in Explorer");
+        Menu playlists = new Menu("Playlists");
+        MenuItem viewInExplorer = new MenuItem("View in Explorer");
         MenuItem createPlaylist = new MenuItem("Create Playlist");
+        Menu removePlaylist = new Menu("Remove Playlist");
 
-        item1.setOnAction(event -> viewInFileExplorer());
+        for (String playlist : playlistArray) {
+            MenuItem removeItem = new MenuItem(playlist);
+            removePlaylist.getItems().add(removeItem);
+        }
+
+        viewInExplorer.setOnAction(event -> viewInFileExplorer());
+
+       // removePlaylist.getItems().addAll(createPlaylist, removePlaylist);
+
         createPlaylist.setOnAction(event -> {
             try {
                 createPlaylist();
@@ -343,17 +342,28 @@ public class MusicPlayerController {
                 throw new RuntimeException(e);
             }
         });
-        // TODO => Set more context menu options
 
-        contextMenu.getItems().addAll(item1);
+        removePlaylist.setOnAction(event -> {
+            removePlaylist(((MenuItem)event.getTarget()).getText());
+        });
+
+        contextMenu.getItems().addAll(viewInExplorer, createPlaylist, removePlaylist);
 
         artistNameListView.setContextMenu(contextMenu);
 
     }
 
     private void createPlaylist() throws IOException {
-//        PlaylistController playlistController = new PlaylistController();
-//        playlistController.showPlaylistInputWindow(playlistArray);
+        PlaylistController playlistController = new PlaylistController();
+        playlistController.showPlaylistInputWindow(playlistArray, artistNameListView, listViewLibrary);
+    }
+
+    private void removePlaylist(String removePlaylist) {
+        playlistArray.remove(removePlaylist);
+        PlaylistsFileIO.outputPlaylists(playlistArray);
+        //TODO => remove playlist from track objects logic
+        artistNameListView.getItems().clear();
+        artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
 
     }
 
