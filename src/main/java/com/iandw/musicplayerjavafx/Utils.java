@@ -1,5 +1,8 @@
 package com.iandw.musicplayerjavafx;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Utils {
 
     public static String formatSeconds(int seconds) {
@@ -8,6 +11,16 @@ public class Utils {
         }
 
         return String.format("%02d:%02d", (seconds / 60) % 60, seconds % 60);
+    }
+
+    public static void clearSerializedFiles() throws IOException {
+        PrintWriter clearTrackList = new PrintWriter(ResourceURLs.getTrackListURL());
+        clearTrackList.close();
+        PrintWriter clearArtistList = new PrintWriter(ResourceURLs.getArtistListURL());
+        clearArtistList.close();
+        PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistsURL());
+        clearPlaylists.close();
+
     }
 
 }

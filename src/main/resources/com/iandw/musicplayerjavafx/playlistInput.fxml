@@ -18,7 +18,7 @@
             </Label>
             <TextField fx:id="playlistNameTextInput" prefHeight="25.0" prefWidth="174.0">
                <padding>
-                  <Insets bottom="5.0" left="50.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <FlowPane.margin>
                   <Insets top="10.0" />
@@ -26,7 +26,7 @@
             </TextField>
          </children>
       </FlowPane>
-      <Button fx:id="okButton" onMouseClicked="#okButtonClicked" layoutX="59.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" scaleShape="false" text="OK" />
-      <Button fx:id="cancelButton" onMouseClicked="#cancelButtonClicked" layoutX="155.0" layoutY="59.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="okButton" layoutX="59.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#okButtonClicked" prefHeight="25.0" prefWidth="52.0" scaleShape="false" text="OK" />
+      <Button fx:id="cancelButton" layoutX="155.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#cancelButtonClicked" text="Cancel" />
    </children>
 </AnchorPane>

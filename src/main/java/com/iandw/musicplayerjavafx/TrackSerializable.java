@@ -7,7 +7,6 @@ public class TrackSerializable implements Serializable {
     private final String trackFileNameStr;
     private final String trackContainerTypeStr;
     private final String trackTitleStr;
-   // private final String albumDirectoryStr;
     private final String albumTitleStr;
     private final String trackDurationStr;
     private final String trackGenreStr;
@@ -22,7 +21,6 @@ public class TrackSerializable implements Serializable {
         this.trackFileNameStr = trackFileNameStr;
         this.trackContainerTypeStr = trackContainerTypeStr;
         this.trackTitleStr = trackTitleStr;
-      //  this.albumDirectoryStr = albumDirectoryStr;
         this.albumTitleStr = albumTitleStr;
         this.trackDurationStr = trackDurationStr;
         this.trackGenreStr = trackGenreStr;
@@ -36,7 +34,6 @@ public class TrackSerializable implements Serializable {
     public String getTrackFileNameStr() { return trackFileNameStr; }
     public String getTrackContainerTypeStr() { return trackContainerTypeStr; }
     public String getTrackTitleStr() { return trackTitleStr; }
-    //public String getAlbumDirectoryStr() { return albumDirectoryStr; }
     public String getAlbumTitleStr() { return albumTitleStr; }
     public String getTrackDurationStr() { return trackDurationStr; }
     public String getTrackGenreStr() { return trackGenreStr; }

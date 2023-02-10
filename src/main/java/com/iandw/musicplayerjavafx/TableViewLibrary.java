@@ -2,7 +2,6 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class TableViewLibrary implements Serializable {
 
-    private final ObservableList<Track> trackObservableList;
+    private ObservableList<Track> trackObservableList;
 
     private ArrayList<TrackSerializable> trackArrayList;
 
@@ -40,7 +39,6 @@ public class TableViewLibrary implements Serializable {
                     track.getTrackFileNameStr(),
                     track.getTrackContainerTypeStr(),
                     track.getTrackTitleStr(),
-                    // track.getAlbumDirectoryStr(),
                     track.getAlbumTitleStr(),
                     track.getTrackGenreStr(),
                     track.getTrackDurationStr(),
@@ -57,7 +55,6 @@ public class TableViewLibrary implements Serializable {
                     track.getTrackFileNameStr(),
                     track.getTrackContainerTypeStr(),
                     track.getTrackTitleStr(),
-                    //  track.getAlbumDirectoryStr(),
                     track.getAlbumTitleStr(),
                     track.getTrackGenreStr(),
                     track.getTrackDurationStr(),
@@ -75,7 +72,7 @@ public class TableViewLibrary implements Serializable {
 
 
     public void inputTrackObservableList() {
-        System.out.println("Reading Track data from file");
+        System.out.println("Reading from tracklist.ser");
 
         try {
             // Read from file
@@ -84,6 +81,7 @@ public class TableViewLibrary implements Serializable {
             trackArrayList = (ArrayList<TrackSerializable>) ois.readObject();
             ois.close();
 
+            clearObservableList();
             deepCopyArrayToObservable();
 
         } catch (IOException | ClassNotFoundException e) {
@@ -92,15 +90,17 @@ public class TableViewLibrary implements Serializable {
 
     }
 
-    public void outputTrackObservableList() {
-        System.out.println("Writing to file");
+    public void outputTrackObservableList() throws FileNotFoundException {
+        System.out.println("Writing to tracklist.ser");
 
+        clearArrayList();
         deepCopyObservableToArray();
 
         try {
             // Write track objects to file
             OutputStream out = Files.newOutputStream(Path.of(ResourceURLs.getTrackListURL()));
             ObjectOutputStream oos = new ObjectOutputStream(out);
+
             oos.writeObject(trackArrayList);
             oos.close();
 
@@ -112,11 +112,14 @@ public class TableViewLibrary implements Serializable {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          GETTERS / CLEAR ARRAYS
+     *                          GETTERS / SETTERS / CLEAR ARRAYS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
+    public void setTrackObservableList(ObservableList<Track> trackObservableList) {
+        this.trackObservableList = trackObservableList;
+    }
     public void clearObservableList() { trackObservableList.clear(); }
     public void clearArrayList() { trackArrayList.clear(); }
 

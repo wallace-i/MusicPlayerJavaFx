@@ -14,7 +14,6 @@ public class Track {
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
     private final SimpleStringProperty trackTitleStr;
-    //private final SimpleStringProperty albumDirectoryStr;
     private final SimpleStringProperty albumTitleStr;
     private final SimpleStringProperty trackDurationStr;
     private final SimpleStringProperty trackGenreStr;
@@ -29,7 +28,6 @@ public class Track {
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);
         this.trackContainerTypeStr = new SimpleStringProperty(trackContainerTypeStr);
         this.trackTitleStr = new SimpleStringProperty(trackTitleStr);
-       // this.albumDirectoryStr = new SimpleStringProperty(albumDirectoryStr);
         this.albumTitleStr = new SimpleStringProperty(albumTitleStr);
         this.trackGenreStr = new SimpleStringProperty(trackGenreStr);
         this.trackDurationStr = new SimpleStringProperty(trackDurationStr);
@@ -41,7 +39,6 @@ public class Track {
     public String getTrackFileNameStr() { return trackFileNameStr.get(); }
     public String getTrackContainerTypeStr() { return trackContainerTypeStr.get(); }
     public String getTrackTitleStr() { return trackTitleStr.get(); }
-   // public String getAlbumDirectoryStr() { return albumDirectoryStr.get(); }
     public String getAlbumTitleStr() { return albumTitleStr.get(); }
     public String getTrackDurationStr() {return trackDurationStr.get(); }
     public String getTrackGenreStr() { return trackGenreStr.get(); }

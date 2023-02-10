@@ -53,7 +53,7 @@ public class ListViewLibrary implements Serializable {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public void inputArtistNameObservableList() {
-        System.out.println("Reading Artist Names from file");
+        System.out.println("Reading from artistlist.ser");
 
         try {
             // Read from file
@@ -71,7 +71,7 @@ public class ListViewLibrary implements Serializable {
     }
 
     public void outputArtistNameObservableList() {
-        System.out.println("Writing to file");
+        System.out.println("Writing to artistlist.ser");
 
         artistNameArrayList.addAll(artistNameObservableList);
 

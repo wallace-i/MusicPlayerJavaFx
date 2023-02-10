@@ -21,7 +21,6 @@ import java.io.IOException;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -102,12 +101,7 @@ public class SettingsController extends AnchorPane {
             System.out.println("Initializing metadata");
 
             // Clear current list file and observable list
-            PrintWriter clearTracklist = new PrintWriter(ResourceURLs.getTrackListURL());
-            clearTracklist.close();
-            PrintWriter clearArtistList = new PrintWriter(ResourceURLs.getArtistListURL());
-            clearArtistList.close();
-            PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistsURL());
-            clearPlaylists.close();
+            Utils.clearSerializedFiles();
             trackList.clear();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.clearArrayList();

@@ -47,6 +47,8 @@ public class MusicLibrary {
     public void initializeMusicLibrary() throws IOException {
         System.out.println("Initializing observable list");
 
+        Utils.clearSerializedFiles();
+
         String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
@@ -156,6 +158,7 @@ public class MusicLibrary {
             String trackAlbum;
             String trackGenre = tag.getFirst(FieldKey.GENRE);
             String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
+            String playlist = "*";
 
             // Check title metadata for null value, if true replace with file name substring
             if (tag.getFirst(FieldKey.TITLE) == null || Objects.equals(tag.getFirst(FieldKey.TITLE), "")) {
@@ -195,12 +198,11 @@ public class MusicLibrary {
                     trackFileName,
                     trackContainerType,
                     trackTitle,
-                  //  albumDirectoryStr,
                     trackAlbum,
                     trackGenre,
                     duration,
                     trackPathStr,
-                    null
+                    playlist
             );
 
             trackObservableList.add(track);
