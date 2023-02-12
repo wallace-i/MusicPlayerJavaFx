@@ -11,7 +11,7 @@ public class TrackSerializable implements Serializable {
     private final String trackDurationStr;
     private final String trackGenreStr;
     private final String trackPathStr;
-    private String playlistStr;
+    private final String playlistStr;
 
     public TrackSerializable(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
                              String albumTitleStr, String trackGenreStr, String trackDurationStr,

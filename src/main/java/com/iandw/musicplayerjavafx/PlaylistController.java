@@ -1,21 +1,15 @@
 package com.iandw.musicplayerjavafx;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlaylistController {
@@ -30,11 +24,13 @@ public class PlaylistController {
 
     public void initialize() {}
 
-    public void initializeData(ArrayList<String> playlistArray, ListView<String> artistNameListView,
+    private void initializeData(ArrayList<String> playlistArray, ListView<String> artistNameListView,
                                ListViewLibrary listViewLibrary) {
         this.playlistArray = playlistArray;
         this.artistNameListView = artistNameListView;
         this.listViewLibrary = listViewLibrary;
+        playlistNameTextInput.setPromptText("new playlist");
+        playlistNameTextInput.setFocusTraversable(false);
 
     }
 
@@ -45,15 +41,9 @@ public class PlaylistController {
         stage.setScene(new Scene(loader.load()));
         PlaylistController controller = loader.getController();
         controller.initializeData(playlistArray, artistNameListView, listViewLibrary);
-        stage.setTitle("Playlists");
+        stage.setTitle("Playlist");
         stage.setResizable(false);
         stage.show();
-
-//        okButton.setOnKeyPressed(event -> {
-//            if (event.getCode().equals(KeyCode.ENTER)) {
-//                okButton.fire();
-//            }
-//        });
     }
 
     @FXML

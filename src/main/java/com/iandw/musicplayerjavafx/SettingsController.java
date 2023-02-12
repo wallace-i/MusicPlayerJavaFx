@@ -104,7 +104,6 @@ public class SettingsController extends AnchorPane {
             Utils.clearSerializedFiles();
             trackList.clear();
             tableViewLibrary.clearObservableList();
-            tableViewLibrary.clearArrayList();
             playlistArray.clear();
 
             // Re-initialize with new metadata from new root directory

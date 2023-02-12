@@ -10,13 +10,13 @@ package com.iandw.musicplayerjavafx;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Track {
-    private final SimpleStringProperty artistNameStr;
+    private SimpleStringProperty artistNameStr;
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
-    private final SimpleStringProperty trackTitleStr;
-    private final SimpleStringProperty albumTitleStr;
+    private SimpleStringProperty trackTitleStr;
+    private SimpleStringProperty albumTitleStr;
     private final SimpleStringProperty trackDurationStr;
-    private final SimpleStringProperty trackGenreStr;
+    private SimpleStringProperty trackGenreStr;
     private final SimpleStringProperty trackPathStr;
     private SimpleStringProperty playlistStr;
 
@@ -43,8 +43,12 @@ public class Track {
     public String getTrackDurationStr() {return trackDurationStr.get(); }
     public String getTrackGenreStr() { return trackGenreStr.get(); }
     public String getTrackPathStr() { return trackPathStr.get(); }
-
     public String getPlaylistStr() { return playlistStr.get(); }
-    public void setPlaylistStr(String playlist) { this.playlistStr = new SimpleStringProperty(playlist); }
+
+    public void setArtistNameStr(String artistNameStr) { this.artistNameStr = new SimpleStringProperty(artistNameStr); }
+    public void setTrackTitleStr(String trackTitleStr) { this.trackTitleStr = new SimpleStringProperty(trackTitleStr); }
+    public void setAlbumTitleStr(String albumTitleStr) { this.albumTitleStr = new SimpleStringProperty(albumTitleStr); }
+    public void setTrackGenreStr(String trackGenreStr) { this.trackGenreStr = new SimpleStringProperty(trackGenreStr); }
+    public void setPlaylistStr(String playlistStr) { this.playlistStr = new SimpleStringProperty(playlistStr); }
 
 }

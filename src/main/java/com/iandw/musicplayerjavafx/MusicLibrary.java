@@ -141,11 +141,11 @@ public class MusicLibrary {
 
         // Output track and artist name data to files
         ListViewLibrary listViewLibrary = new ListViewLibrary(artistNameObservableList);
-        TableViewLibrary tableViewLibrary = new TableViewLibrary(trackObservableList);
+        //TableViewLibrary tableViewLibrary = new TableViewLibrary(trackObservableList);
 
         System.out.println("Writing user music library to files.");
         listViewLibrary.outputArtistNameObservableList();
-        tableViewLibrary.outputTrackObservableList();
+        TracklistFileIO.outputTrackObservableList(trackObservableList);
 
     }
 
