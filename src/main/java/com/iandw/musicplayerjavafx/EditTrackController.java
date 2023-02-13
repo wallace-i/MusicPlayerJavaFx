@@ -12,13 +12,11 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class EditTrackController {
     @FXML
     private AnchorPane anchorPane;
     @FXML private TextField editTextField;
-    @FXML private Label trackDataLabel;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
     private ListView<String> artistNameListView;
@@ -26,8 +24,8 @@ public class EditTrackController {
     private TableViewLibrary tableViewLibrary;
     private TableView<Track> trackTableView;
     private ObservableList<Track> trackList;
+    private ArrayList<String> playlistArray;
     private String columnName;
-    private String mutableTrackData;
 
     private void initializeData( String columnName, String mutableTrackData, ObservableList<Track> trackList,
                                 TableView<Track> trackTableView, TableViewLibrary tableViewLibrary)
@@ -40,9 +38,18 @@ public class EditTrackController {
         editTextField.setFocusTraversable(false);
     }
 
-    private void initializeDataArtistName(String columnName, String mutableTrackData, ListView<String> artistNameListView) {
+    private void initializeDataArtistName(String columnName, String mutableTrackData, ObservableList<Track> trackList,
+                                          TableView<Track> trackTableView, ListView<String> artistNameListView,
+                                          ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary,
+                                          ArrayList<String> playlistArray)
+    {
         this.columnName = columnName;
         this.artistNameListView = artistNameListView;
+        this.trackList = trackList;
+        this.trackTableView = trackTableView;
+        this.listViewLibrary = listViewLibrary;
+        this.tableViewLibrary = tableViewLibrary;
+        this.playlistArray = playlistArray;
         editTextField.setText(mutableTrackData);
         editTextField.setFocusTraversable(false);
     }
@@ -60,12 +67,17 @@ public class EditTrackController {
         stage.show();
     }
 
-    public void showEditArtistWindow(String columnName, String mutableTrackData, ListView<String> artistNameListView) throws IOException {
+    public void showEditArtistWindow(String columnName, String mutableTrackData, ObservableList<Track> trackList,
+                                     TableView<Track> trackTableView, ListView<String> artistNameListView,
+                                     ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary,
+                                     ArrayList<String> playlistArray) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
-        controller.initializeDataArtistName(columnName, mutableTrackData, artistNameListView);
+        controller.initializeDataArtistName(columnName, mutableTrackData, trackList, trackTableView, artistNameListView,
+                listViewLibrary, tableViewLibrary, playlistArray);
         stage.setTitle("Edit");
         stage.setResizable(false);
         stage.show();
@@ -86,25 +98,22 @@ public class EditTrackController {
                 trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(newArtistName);
 
                 if (!artistNameListView.getItems().contains(newArtistName)) {
-                    artistNameListView.getItems().add(newArtistName);
-
-                    //TODO => finish artist list edit
-
-                    // Load user playlists into listview
-//                    artistNameObservableList.add("------- Playlists -------");
+//                    artistNameListView.getItems().add(newArtistName);
 //
-//                    if (playlistArray.isEmpty()) {
-//                        artistNameObservableList.add("* no playlists *");
-//                    } else {
-//                        artistNameObservableList.addAll(playlistArray);
-//                    }
-//                    artistNameObservableList.add("------- Artists ---------");
+//                    artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
 //
 //                    // Get artist names from artist folders
-//                    inputArtistNameObservableList();
+//                   // inputArtistNameObservableList();
+//                    ArtistlistFileIO.inputArtistNameObservableList();
+
+
+//                    playlistArray.add(playlistNameTextInput.getText());
+//                    PlaylistsFileIO.outputPlaylists(playlistArray);
+                    listViewLibrary.addArtist(newArtistName);
+                    artistNameListView.getItems().clear();
+                    artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
 
                 }
-
 
             }
 

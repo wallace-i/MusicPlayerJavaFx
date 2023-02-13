@@ -21,8 +21,8 @@ import org.jaudiotagger.tag.FieldKey;
 public class MusicLibrary {
     private final ObservableList<Track> trackObservableList;
     private final ObservableList<String> artistNameObservableList;
-    private ArrayList<TrackSerializable> trackArrayList;
-    private ArrayList<String> artistNameArrayList;
+//    private ArrayList<TrackSerializable> trackArrayList;
+//    private ArrayList<String> artistNameArrayList;
     private final List<String> supportedFileTypes;
     private String artistNameStr;
     private String albumDirectoryStr;
@@ -33,8 +33,8 @@ public class MusicLibrary {
     public MusicLibrary() {
         trackObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
-        trackArrayList = new ArrayList<>();
-        artistNameArrayList = new ArrayList<>();
+//        trackArrayList = new ArrayList<>();
+//        artistNameArrayList = new ArrayList<>();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
     }
 
@@ -53,8 +53,6 @@ public class MusicLibrary {
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
 
-        //TODO => directory mismatch InvocationTargetExcteption, ie need to ignore extrafolders/
-        // incorrect directory structure
         if (Files.exists(rootPath)) {
             if (Files.isDirectory(rootPath)) {
                 DirectoryStream<Path> musicDir = Files.newDirectoryStream(rootPath);
@@ -139,12 +137,15 @@ public class MusicLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
+        //TODO => clean up
+
         // Output track and artist name data to files
-        ListViewLibrary listViewLibrary = new ListViewLibrary(artistNameObservableList);
+      //  ListViewLibrary listViewLibrary = new ListViewLibrary(artistNameObservableList);
         //TableViewLibrary tableViewLibrary = new TableViewLibrary(trackObservableList);
 
         System.out.println("Writing user music library to files.");
-        listViewLibrary.outputArtistNameObservableList();
+        ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
+      //  listViewLibrary.outputArtistNameObservableList();
         TracklistFileIO.outputTrackObservableList(trackObservableList);
 
     }
@@ -153,7 +154,6 @@ public class MusicLibrary {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();
-            //
             String trackTitle = trackFileName;
             String trackAlbum;
             String trackGenre = tag.getFirst(FieldKey.GENRE);
@@ -212,16 +212,6 @@ public class MusicLibrary {
         }
     }
 
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     *                          GETTERS
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
-    public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
-
-
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -248,6 +238,15 @@ public class MusicLibrary {
 
         return trackTitle;
     }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          GETTERS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
+    public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
 
 
 }

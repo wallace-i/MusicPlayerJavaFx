@@ -52,7 +52,7 @@ public class PlaylistController {
         playlistArray.add(playlistNameTextInput.getText());
         PlaylistsFileIO.outputPlaylists(playlistArray);
         artistNameListView.getItems().clear();
-        artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
+        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
         stage.close();
     }
 

@@ -135,7 +135,7 @@ public class MusicPlayerController {
         // File I/O logic
         // Artist names / Playlists
         listViewLibrary = new ListViewLibrary();
-        artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
+        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
 
         // Track data
         tableViewLibrary = new TableViewLibrary();
@@ -378,7 +378,7 @@ public class MusicPlayerController {
         }
 
         artistNameListView.getItems().clear();
-        artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
+        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
 
     }
 
@@ -486,7 +486,8 @@ public class MusicPlayerController {
             String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
             System.out.println(currentTrackTitle);
             try {
-                editTrackController.showEditArtistWindow(columnName, currentTrackTitle, artistNameListView);
+                editTrackController.showEditArtistWindow(columnName, currentTrackTitle, trackList, trackTableView,
+                        artistNameListView, listViewLibrary, tableViewLibrary, playlistArray);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
