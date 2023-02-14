@@ -313,15 +313,20 @@ public class MusicPlayerController {
     @FXML
     private void handleListViewContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem openInExplorer = new MenuItem("Open in Explorer");
-        MenuItem createPlaylist = new MenuItem("Create Playlist");
-        Menu removePlaylist = new Menu("Remove Playlist");
+        String menuSelection = artistNameListView.getSelectionModel().getSelectedItem();
 
-        // Add all playlists to context menu
-        for (String playlist : playlistArray) {
-            MenuItem removeItem = new MenuItem(playlist);
-            removePlaylist.getItems().add(removeItem);
-        }
+        // Add to list
+        MenuItem createPlaylist = new MenuItem("Create Playlist");
+        MenuItem addArtist = new MenuItem("Add Artist");
+        SeparatorMenuItem divider1 = new SeparatorMenuItem();
+
+        // Remove from list
+        MenuItem removeArtist = new MenuItem("Remove Artist");
+        MenuItem removePlaylist = new MenuItem("Remove Playlist");
+        SeparatorMenuItem divider2 = new SeparatorMenuItem();
+
+        // View folder in explorer
+        MenuItem openInExplorer = new MenuItem("Open in Explorer");
 
         // Create playlist
         createPlaylist.setOnAction(event -> {
@@ -334,18 +339,42 @@ public class MusicPlayerController {
 
         // Remove playlist
         removePlaylist.setOnAction(event -> {
-            removePlaylist(((MenuItem)event.getTarget()).getText());
+            //removePlaylist(((MenuItem)event.getTarget()).getText());
+            removePlaylist(artistNameListView.getSelectionModel().getSelectedItem());
+        });
+
+        // Add artist
+        addArtist.setOnAction(event -> {
+
+        });
+
+        // Remove artist
+        removeArtist.setOnAction(event -> {
+
         });
 
         // Open in file explorer
         openInExplorer.setOnAction(event -> {
             File file = new File(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
-                    File.separator + artistNameListView.getSelectionModel().getSelectedItem());
+                    File.separator + menuSelection);
 
             openExplorer(file);
         });
 
-        contextMenu.getItems().addAll(openInExplorer, createPlaylist, removePlaylist);
+        artistNameListView.refresh();
+
+        // Show remove playlist if playlist selected
+        if (playlistArray.contains(menuSelection)) {
+            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, removePlaylist, divider2,  openInExplorer);
+
+        // Show remove artist if artist is selected
+        } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
+            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, removeArtist, divider2,  openInExplorer);
+
+        // Don't show any removal if not playlist or artist
+        } else {
+            contextMenu.getItems().addAll(createPlaylist, divider1, addArtist, divider2, openInExplorer);
+        }
 
         artistNameListView.setContextMenu(contextMenu);
 
@@ -927,6 +956,11 @@ public class MusicPlayerController {
        SettingsController settingsController = new SettingsController();
        settingsController.showSettingsWindow(artistNameListView, trackTableView, tableViewLibrary,
                trackList, playlistArray);
+    }
+
+    @FXML
+    private void importClicked() {
+
     }
 
 
