@@ -9,7 +9,7 @@
         <FlowPane layoutY="87.0" prefHeight="392.0" prefWidth="675.0">
             <children>
                 <ListView fx:id="artistNameListView" onContextMenuRequested="#handleListViewContextMenu" onMouseClicked="#handleListViewMouseClick" prefHeight="302.0" prefWidth="139.0" />
-            <Separator orientation="VERTICAL" prefHeight="302.0" prefWidth="0.0" />
+                <Separator orientation="VERTICAL" prefHeight="302.0" prefWidth="0.0" />
                 <TableView fx:id="trackTableView" onContextMenuRequested="#handleTableViewContextMenu" onMouseClicked="#handleTableViewMouseClick" prefHeight="302.0" prefWidth="530.0">
                     <columns>
                         <TableColumn fx:id="colArtistNameInvisible" visible="false" />
@@ -57,21 +57,21 @@
                         <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Button>
-            <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false" text="Auto">
-               <padding>
-                  <Insets left="25.0" right="5.0" />
-               </padding>
-            </RadioButton>
-            <RadioButton fx:id="shuffleButton" mnemonicParsing="false" text="Shuffle">
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
-            </RadioButton>
-            <RadioButton fx:id="repeatButton" mnemonicParsing="false" text="Repeat">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </RadioButton>
+                <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false" text="Auto">
+                    <padding>
+                        <Insets left="25.0" right="5.0" />
+                    </padding>
+                </RadioButton>
+                <RadioButton fx:id="shuffleButton" mnemonicParsing="false" text="Shuffle">
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
+                </RadioButton>
+                <RadioButton fx:id="repeatButton" mnemonicParsing="false" text="Repeat">
+                    <HBox.margin>
+                        <Insets left="5.0" />
+                    </HBox.margin>
+                </RadioButton>
             </children>
         </HBox>
         <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
@@ -94,44 +94,44 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="Playing: -" />
-      <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0" />
-      <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0" />
-      <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="209.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="397.0" showTickMarks="true" />
-      <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" />
-      <Label layoutX="86.0" layoutY="399.0" text="Vol:" />
-      <Label fx:id="trackDurationLabel" layoutX="613.0" layoutY="399.0" text="00:00" />
-      <Label fx:id="trackCurrentTimeLabel" layoutX="173.0" layoutY="399.0" text="00:00" />
-      <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" />
-      <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="50" />
-      <StackPane layoutX="472.0" layoutY="23.0" prefHeight="38.0" prefWidth="200.0">
-         <children>
-            <TextField fx:id="searchField" prefWidth="200.0" promptText="search">
-               <padding>
-                  <Insets bottom="2.0" left="40.0" right="2.0" top="2.0" />
-               </padding>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin></TextField>
-            <Button mnemonicParsing="false" styleClass="search-button" text="Search" StackPane.alignment="CENTER_LEFT">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding></Button>
-            <Button mnemonicParsing="false" onMouseClicked="#handleClearSearchText" styleClass="delete-button" text="Delete" StackPane.alignment="CENTER_RIGHT">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding></Button>
-         </children>
-      </StackPane>
+        <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="Playing: -" />
+        <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0" />
+        <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0" />
+        <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="209.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="397.0" showTickMarks="true" />
+        <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" />
+        <Label layoutX="86.0" layoutY="399.0" text="Vol:" />
+        <Label fx:id="trackDurationLabel" layoutX="613.0" layoutY="399.0" text="00:00" />
+        <Label fx:id="trackCurrentTimeLabel" layoutX="173.0" layoutY="399.0" text="00:00" />
+        <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" />
+        <Label fx:id="volumeLabel" layoutX="109.0" layoutY="399.0" text="50" />
+        <StackPane layoutX="472.0" layoutY="23.0" prefHeight="38.0" prefWidth="200.0">
+            <children>
+                <TextField fx:id="searchField" prefWidth="200.0" promptText="search">
+                    <padding>
+                        <Insets bottom="2.0" left="40.0" right="2.0" top="2.0" />
+                    </padding>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <StackPane.margin>
+                        <Insets />
+                    </StackPane.margin></TextField>
+                <Button mnemonicParsing="false" styleClass="search-button" text="Search" StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets />
+                    </StackPane.margin>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding></Button>
+                <Button mnemonicParsing="false" onMouseClicked="#handleClearSearchText" styleClass="delete-button" text="Delete" StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin>
+                        <Insets />
+                    </StackPane.margin>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding></Button>
+            </children>
+        </StackPane>
 
     </children>
 </AnchorPane>
