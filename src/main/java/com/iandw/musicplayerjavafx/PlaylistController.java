@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PlaylistController {
     @FXML private AnchorPane anchorPane;
@@ -50,30 +49,11 @@ public class PlaylistController {
     @FXML
     private void okButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) okButton.getScene().getWindow();
-
-        try {
-            String userInput = playlistNameTextInput.getText();
-
-            // Throw exception if playlist is the same name as an Artist
-            // otherwise may cause bugs when choosing to remove an artist or playlist
-            if (listViewLibrary.getArtistList().contains(userInput) || playlistArray.contains(userInput)) {
-                throw new Exception();
-            }
-
-            playlistArray.add(userInput);
-            Collections.sort(playlistArray);
-            PlaylistsFileIO.outputPlaylists(playlistArray);
-            artistNameListView.getItems().clear();
-            artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
-            stage.close();
-
-        } catch (Exception e) {
-            playlistNameTextInput.clear();
-            playlistNameTextInput.setPromptText("Playlist must be unique");
-            playlistNameTextInput.setFocusTraversable(false);
-        }
-
-
+        playlistArray.add(playlistNameTextInput.getText());
+        PlaylistsFileIO.outputPlaylists(playlistArray);
+        artistNameListView.getItems().clear();
+        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+        stage.close();
     }
 
     @FXML

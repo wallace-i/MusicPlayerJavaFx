@@ -98,6 +98,17 @@ public class EditTrackController {
                 trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(newArtistName);
 
                 if (!artistNameListView.getItems().contains(newArtistName)) {
+//                    artistNameListView.getItems().add(newArtistName);
+//
+//                    artistNameListView.setItems(listViewLibrary.loadArtistNameObservableList(playlistArray));
+//
+//                    // Get artist names from artist folders
+//                   // inputArtistNameObservableList();
+//                    ArtistlistFileIO.inputArtistNameObservableList();
+
+
+//                    playlistArray.add(playlistNameTextInput.getText());
+//                    PlaylistsFileIO.outputPlaylists(playlistArray);
                     listViewLibrary.addArtist(newArtistName);
                     artistNameListView.getItems().clear();
                     artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
