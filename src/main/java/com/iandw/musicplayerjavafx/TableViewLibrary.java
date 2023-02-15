@@ -3,6 +3,7 @@ package com.iandw.musicplayerjavafx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
+import java.util.Collections;
 
 public class TableViewLibrary implements Serializable {
     private ObservableList<Track> trackObservableList;
@@ -13,6 +14,15 @@ public class TableViewLibrary implements Serializable {
 
     public TableViewLibrary(ObservableList<Track> trackObservableList) {
         this.trackObservableList = trackObservableList;
+    }
+
+    public void addTrack(Track track) throws FileNotFoundException {
+        trackObservableList.add(track);
+        TracklistFileIO.outputTrackObservableList(trackObservableList);
+    }
+
+    public void removeTrack(Track track) {
+        trackObservableList.remove(track);
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

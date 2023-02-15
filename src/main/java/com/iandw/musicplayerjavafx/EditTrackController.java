@@ -84,7 +84,7 @@ public class EditTrackController {
     }
 
     @FXML
-    private void okButtonClicked(MouseEvent mouseClick) throws FileNotFoundException {
+    private void okButtonClicked(MouseEvent mouseClick) throws IOException {
         final String artistName = "Artist Name";
         final String trackTitle = "Track Title";
         final String albumTitle = "Album Title";
@@ -101,9 +101,7 @@ public class EditTrackController {
                     listViewLibrary.addArtist(newArtistName);
                     artistNameListView.getItems().clear();
                     artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
-
                 }
-
             }
 
             case trackTitle -> {

@@ -13,12 +13,21 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.FieldKey;
 
 public class MusicLibrary {
+    @FXML
+    private AnchorPane anchorPane;
     private final ObservableList<Track> trackObservableList;
     private final ObservableList<String> artistNameObservableList;
 //    private ArrayList<TrackSerializable> trackArrayList;
@@ -212,6 +221,69 @@ public class MusicLibrary {
         }
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          IMPORT MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    public void importArtist() {
+
+
+    }
+
+    public void importAlbum() {
+        DirectoryChooser rootMusicDirectoryChooser = new DirectoryChooser();
+        AnchorPane anchorPane = new AnchorPane();
+        rootMusicDirectoryChooser.setTitle("Select Music Folder");
+        rootMusicDirectoryChooser.setInitialDirectory((new File(".")));
+
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        File file = rootMusicDirectoryChooser.showDialog(stage);
+
+
+
+
+    }
+
+    public void importTrack() throws IOException {
+        FileChooser trackChooser = new FileChooser();
+
+        trackChooser.setTitle("Select Track File");
+        trackChooser.setInitialDirectory((new File(".")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        File file = trackChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            Path trackPath = file.toPath();
+
+            if (Files.isRegularFile(trackPath)) {
+                if (Files.exists(trackPath)) {
+                    trackPathStr = trackPath.toAbsolutePath().toString();
+                    trackFileName = trackPath.getFileName().toString();
+                    trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+
+                    // Check for playable file container
+                    if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+
+                        parseMetadata();
+
+                    } else {
+                        System.out.printf("%s is not a compatible file type.", trackFileName);
+                    }
+                }
+            } else {
+                System.out.printf("%s is not a file%n", trackPath);
+            }
+
+        } else {
+            System.out.println("Track File empty or does not exist");
+        }
+
+
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -247,6 +319,11 @@ public class MusicLibrary {
 
     public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
     public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
+    public Track getImportedTrack() {
+        Track track = trackObservableList.get(0);
+        trackObservableList.clear();
 
+        return track;
+    }
 
 }

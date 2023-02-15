@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ListViewLibrary implements Serializable {
@@ -44,9 +46,24 @@ public class ListViewLibrary implements Serializable {
         return listViewObservableList;
     }
 
-    public void addArtist(String artistName) {
+    public void addArtist(String artistName) throws IOException {
         artistList.add(artistName);
         Collections.sort(artistList);
+        ArtistlistFileIO.outputArtistNameObservableList(artistList);
+
+        // Create new directory if non-existent
+        String artistPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL())
+                + File.separator + artistName;
+
+        File artistDir = new File(artistPathStr);
+        if (!artistDir.exists()) {
+            Files.createDirectory(Paths.get(artistPathStr));
+        }
+
+    }
+
+    public void removeArtist(String artistName) {
+        artistList.remove(artistName);
         ArtistlistFileIO.outputArtistNameObservableList(artistList);
 
     }

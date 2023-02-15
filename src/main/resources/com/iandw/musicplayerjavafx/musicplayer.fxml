@@ -78,6 +78,13 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
+                        <Menu mnemonicParsing="false" text="Import">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" />
+                                <MenuItem mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" />
+                                <MenuItem mnemonicParsing="false" onAction="#importTrackClicked" text="Track" />
+                            </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#settingsClicked" text="Settings" />
                         <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
                     </items>
@@ -135,3 +142,4 @@
 
     </children>
 </AnchorPane>
+
