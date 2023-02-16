@@ -30,8 +30,6 @@ public class MusicLibrary {
     private AnchorPane anchorPane;
     private final ObservableList<Track> trackObservableList;
     private final ObservableList<String> artistNameObservableList;
-//    private ArrayList<TrackSerializable> trackArrayList;
-//    private ArrayList<String> artistNameArrayList;
     private final List<String> supportedFileTypes;
     private String artistNameStr;
     private String albumDirectoryStr;
@@ -42,8 +40,6 @@ public class MusicLibrary {
     public MusicLibrary() {
         trackObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
-//        trackArrayList = new ArrayList<>();
-//        artistNameArrayList = new ArrayList<>();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
     }
 
@@ -146,19 +142,19 @@ public class MusicLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
-        //TODO => clean up
-
-        // Output track and artist name data to files
-      //  ListViewLibrary listViewLibrary = new ListViewLibrary(artistNameObservableList);
-        //TableViewLibrary tableViewLibrary = new TableViewLibrary(trackObservableList);
-
         System.out.println("Writing user music library to files.");
         ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
-      //  listViewLibrary.outputArtistNameObservableList();
         TracklistFileIO.outputTrackObservableList(trackObservableList);
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          TRACK METADATA MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    // For Library Initialization
     private void parseMetadata() {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
@@ -166,8 +162,8 @@ public class MusicLibrary {
             String trackTitle = trackFileName;
             String trackAlbum;
             String trackGenre = tag.getFirst(FieldKey.GENRE);
-            String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
-            String playlist = "*";
+            final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
+            final String playlist = "*";
 
             // Check title metadata for null value, if true replace with file name substring
             if (tag.getFirst(FieldKey.TITLE) == null || Objects.equals(tag.getFirst(FieldKey.TITLE), "")) {
@@ -221,6 +217,80 @@ public class MusicLibrary {
         }
     }
 
+    // For Track/Album/Artist Importing
+    private void importTrackMetadata() {
+        try {
+            AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
+            Tag tag = audioFile.getTag();
+            String trackTitle = trackFileName;
+            String trackArtist;
+            String trackAlbum;
+            String trackGenre = tag.getFirst(FieldKey.GENRE);
+            final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
+            final String playlist = "*";
+            final String unknown = "Unknown";
+
+            // Check title metadata for null value, if true replace with file name substring
+            if (tag.getFirst(FieldKey.TITLE) == null || Objects.equals(tag.getFirst(FieldKey.TITLE), "")) {
+                trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
+
+                if (Character.isDigit(trackTitle.charAt(0))) {
+                    trackTitle = filterDigitsFromTitle(trackTitle);
+                }
+
+            } else {
+                trackTitle = tag.getFirst(FieldKey.TITLE);
+            }
+
+            // If still null replace with trackFileName (Redundancy)
+            if (trackTitle == null) {
+                trackTitle = trackFileName;
+            }
+
+            // Check Artist metadata for null value, if true replace with Unknown
+            if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
+                trackArtist = unknown;
+            } else {
+                trackArtist = tag.getFirst(FieldKey.ALBUM);
+            }
+
+            // Check Album metadata for null value, if true replace with Unknown
+            if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
+                trackAlbum = unknown;
+            } else {
+                trackAlbum = tag.getFirst(FieldKey.ALBUM);
+            }
+
+            // Check genre metadata for null value, if true leave blank
+            if (trackGenre == null) {
+                trackGenre = "";
+            } else if (trackGenre.startsWith("(")) {
+                String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
+                trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
+            }
+
+            // Populate Track object
+            Track track = new Track(
+                    trackArtist,
+                    trackFileName,
+                    trackContainerType,
+                    trackTitle,
+                    trackAlbum,
+                    trackGenre,
+                    duration,
+                    trackPathStr,
+                    playlist
+            );
+
+            trackObservableList.add(track);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
      *                          IMPORT MODULES
@@ -239,9 +309,6 @@ public class MusicLibrary {
 
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File file = rootMusicDirectoryChooser.showDialog(stage);
-
-
-
 
     }
 
@@ -267,8 +334,45 @@ public class MusicLibrary {
 
                     // Check for playable file container
                     if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+                        // Clear list for new track
+                        trackObservableList.clear();
 
-                        parseMetadata();
+                        importTrackMetadata();
+
+                        String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+                        String trackArtist = trackObservableList.get(0).getArtistNameStr();
+                        String trackAlbum = trackObservableList.get(0).getAlbumTitleStr();
+                        String trackFileName = trackObservableList.get(0).getTrackFileNameStr();
+                        String source = trackPath.toString();
+                        String destination = rootDirectory + File.separator + trackArtist+ File.separator +
+                                trackAlbum + File.separator + trackFileName;
+
+                        // Create new Artist/Album Directories, filepath and move track
+                        // If Artist Directory Exists move to Artist Directory,
+                        if (Files.exists(Path.of(rootDirectory + File.separator + trackArtist)))
+                        {
+                            // If Album Directory Exists move to Album Directory,
+                            if (Files.exists(Path.of(rootDirectory + File.separator + trackArtist+ File.separator +
+                                    trackAlbum)))
+                            {
+                                Utils.moveFile(source, destination);
+
+                            } else {
+                                // Else create Album Directory hen move file
+                                Utils.createDirectory(rootDirectory + File.separator + trackArtist, trackAlbum);
+                                Utils.moveFile(source, destination);
+                            }
+
+                        } else {
+                            // Else Create new Artist and Album Directory
+                            Utils.createDirectory(rootDirectory, trackArtist);
+                            Utils.createDirectory(rootDirectory + File.separator + trackArtist, trackAlbum);
+                            Utils.moveFile(source, destination);
+
+                        }
+
+                        trackObservableList.get(0).setTrackPathStr(destination);
+                        artistNameStr = trackObservableList.get(0).getArtistNameStr();
 
                     } else {
                         System.out.printf("%s is not a compatible file type.", trackFileName);
@@ -281,6 +385,7 @@ public class MusicLibrary {
         } else {
             System.out.println("Track File empty or does not exist");
         }
+
 
 
     }
@@ -320,10 +425,13 @@ public class MusicLibrary {
     public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
     public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
     public Track getImportedTrack() {
+        // Get Track, clear list
         Track track = trackObservableList.get(0);
         trackObservableList.clear();
 
         return track;
     }
+
+    public String getArtistNameStr() { return artistNameStr; }
 
 }

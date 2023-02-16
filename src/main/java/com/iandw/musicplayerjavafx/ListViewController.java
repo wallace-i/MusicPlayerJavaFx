@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class AddToListViewController {
+public class ListViewController {
     @FXML private AnchorPane anchorPane;
     @FXML private TextField playlistNameTextInput;
     @FXML private Button okButton;
@@ -24,10 +24,12 @@ public class AddToListViewController {
 
     public void initialize() {}
 
-    private void initializeData(ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary, String title) {
+    private void initializeData(ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
+                                String windowTitle)
+    {
         this.artistPlaylistListView = artistPlaylistListView;
         this.listViewLibrary = listViewLibrary;
-        this.windowTitle = title;
+        this.windowTitle = windowTitle;
 
         if (Objects.equals(windowTitle, "Playlist")) {
             playlistNameTextInput.setPromptText("add Playlist");
@@ -40,11 +42,12 @@ public class AddToListViewController {
     }
 
     public void showListViewInputWindow(ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
-                                        String windowTitle) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addtolistview.fxml"));
+                                        String windowTitle) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("listview.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
-        AddToListViewController controller = loader.getController();
+        ListViewController controller = loader.getController();
         controller.initializeData(artistPlaylistListView, listViewLibrary, windowTitle);
         stage.setTitle(windowTitle);
         stage.setResizable(false);

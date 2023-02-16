@@ -17,7 +17,7 @@ public class Track {
     private SimpleStringProperty albumTitleStr;
     private final SimpleStringProperty trackDurationStr;
     private SimpleStringProperty trackGenreStr;
-    private final SimpleStringProperty trackPathStr;
+    private SimpleStringProperty trackPathStr;
     private SimpleStringProperty playlistStr;
 
     public Track(String artistNameStr, String trackFileNameStr, String trackContainerTypeStr, String trackTitleStr,
@@ -50,5 +50,5 @@ public class Track {
     public void setAlbumTitleStr(String albumTitleStr) { this.albumTitleStr = new SimpleStringProperty(albumTitleStr); }
     public void setTrackGenreStr(String trackGenreStr) { this.trackGenreStr = new SimpleStringProperty(trackGenreStr); }
     public void setPlaylistStr(String playlistStr) { this.playlistStr = new SimpleStringProperty(playlistStr); }
-
+    public void setTrackPathStr(String trackPathStr) { this.trackPathStr = new SimpleStringProperty(trackPathStr); }
 }

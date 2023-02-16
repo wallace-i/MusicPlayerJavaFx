@@ -23,20 +23,9 @@ public class EditTrackController {
     private ObservableList<Track> trackList;
     private String columnName;
 
-    private void initializeData( String columnName, String mutableTrackData, ObservableList<Track> trackList,
-                                TableView<Track> trackTableView, TableViewLibrary tableViewLibrary)
-    {
-        this.columnName = columnName;
-        this.trackList = trackList;
-        this.trackTableView = trackTableView;
-        this.tableViewLibrary = tableViewLibrary;
-        editTextField.setText(mutableTrackData);
-        editTextField.setFocusTraversable(false);
-    }
-
-    private void initializeDataArtistName(String columnName, String mutableTrackData, ObservableList<Track> trackList,
-                                          TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
-                                          ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
+    private void initializeData(String columnName, String mutableTrackData, ObservableList<Track> trackList,
+                                TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
+                                ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
     {
         this.columnName = columnName;
         this.artistPlaylistListView = artistPlaylistListView;
@@ -48,28 +37,15 @@ public class EditTrackController {
         editTextField.setFocusTraversable(false);
     }
 
-    public void showEditTrackWindow(String columnName, String mutableTrackData, ObservableList<Track> trackList,
-                                    TableView<Track> trackTableView, TableViewLibrary tableViewLibrary) throws IOException
+    public void showEditWindow(String columnName, String mutableTrackData, ObservableList<Track> trackList,
+                               TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
+                               ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
-        controller.initializeData(columnName, mutableTrackData, trackList, trackTableView, tableViewLibrary);
-        stage.setTitle("Edit");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    public void showEditArtistWindow(String columnName, String mutableTrackData, ObservableList<Track> trackList,
-                                     TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
-                                     ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException
-    {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        EditTrackController controller = loader.getController();
-        controller.initializeDataArtistName(columnName, mutableTrackData, trackList, trackTableView, artistPlaylistListView,
+        controller.initializeData(columnName, mutableTrackData, trackList, trackTableView, artistPlaylistListView,
                 listViewLibrary, tableViewLibrary);
         stage.setTitle("Edit");
         stage.setResizable(false);

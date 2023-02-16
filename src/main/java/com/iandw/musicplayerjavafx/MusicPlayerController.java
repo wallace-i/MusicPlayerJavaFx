@@ -114,18 +114,18 @@ public class MusicPlayerController {
         stopped = true;
         volumeDouble = 0.25;
         shuffleArray = new ArrayList<>();
-        musicLibrary = new MusicLibrary();
-        listViewLibrary = new ListViewLibrary();
         trackList = FXCollections.observableArrayList();
         autoPlay = AutoPlay.OFF;
 
         // Initialization logic
+        musicLibrary = new MusicLibrary();
 //        musicLibrary.initializeMusicLibrary();
 //        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
 //        trackList.addAll(musicLibrary.getTrackObservableList());
 
         // File I/O logic
         // Artist names / Playlists
+        listViewLibrary = new ListViewLibrary();
         artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
         // Track data
@@ -331,7 +331,7 @@ public class MusicPlayerController {
         createPlaylist.setOnAction(event -> {
             try {
                 String windowTitle = "Playlist";
-                AddToListViewController addToListViewController = new AddToListViewController();
+                ListViewController addToListViewController = new ListViewController();
                 addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
 
             } catch (IOException e) {
@@ -343,7 +343,7 @@ public class MusicPlayerController {
         addArtist.setOnAction(event -> {
             try {
                 String windowTitle = "Artist";
-                AddToListViewController addToListViewController = new AddToListViewController();
+                ListViewController addToListViewController = new ListViewController();
                 addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
 
             } catch (IOException e) {
@@ -548,7 +548,7 @@ public class MusicPlayerController {
             String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
             System.out.println(currentTrackTitle);
             try {
-                editTrackController.showEditArtistWindow(columnName, currentTrackTitle, trackList, trackTableView,
+                editTrackController.showEditWindow(columnName, currentTrackTitle, trackList, trackTableView,
                         artistPlaylistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -564,7 +564,8 @@ public class MusicPlayerController {
             String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
             System.out.println(currentTrackTitle);
             try {
-                editTrackController.showEditTrackWindow(columnName, currentTrackTitle, trackList, trackTableView, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentTrackTitle, trackList, trackTableView,
+                        artistPlaylistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -579,7 +580,8 @@ public class MusicPlayerController {
             String currentTrackAlbum = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
             System.out.println(currentTrackAlbum);
             try {
-                editTrackController.showEditTrackWindow(columnName, currentTrackAlbum, trackList, trackTableView, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentTrackAlbum, trackList, trackTableView,
+                        artistPlaylistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -595,7 +597,8 @@ public class MusicPlayerController {
             String currentGenre = trackTableView.getSelectionModel().getSelectedItem().getTrackGenreStr();
             System.out.println(currentGenre);
             try {
-                editTrackController.showEditTrackWindow(columnName, currentGenre, trackList, trackTableView, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentGenre, trackList, trackTableView,
+                        artistPlaylistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -821,20 +824,16 @@ public class MusicPlayerController {
     }
 
     private void stopMedia(boolean dispose) {
+        mediaPlayer.stop();
+
         if (dispose) {
-            mediaPlayer.stop();
             mediaPlayer.dispose();
-            playPauseButton.setText("Play");
-            playing = false;
-            stopped = true;
-            setNowPlayingText();
-        } else {
-            mediaPlayer.stop();
-            playPauseButton.setText("Play");
-            playing = false;
-            stopped = true;
-            setNowPlayingText();
         }
+
+        playPauseButton.setText("Play");
+        playing = false;
+        stopped = true;
+        setNowPlayingText();
     }
 
     private void seekValueUpdate() {
@@ -1005,8 +1004,13 @@ public class MusicPlayerController {
         musicLibrary.importTrack();
         tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
         trackList.setAll(tableViewLibrary.getTrackObservableList());
-        //TODO => finish add/move file to new artist/album folder if need be
-        // fix bug when reading from tracklist after importing and closing app
+
+        if (!listViewLibrary.getArtistList().contains(musicLibrary.getArtistNameStr())) {
+            listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
+            artistPlaylistListView.getItems().clear();
+            artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+        }
+
     }
 
 
