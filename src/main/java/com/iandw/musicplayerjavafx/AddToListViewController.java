@@ -10,34 +10,27 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Objects;
 
 public class AddToListViewController {
     @FXML private AnchorPane anchorPane;
     @FXML private TextField playlistNameTextInput;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
-    private ArrayList<String> playlistArray;
-    private ListView<String> artistNameListView;
+    private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
-    private boolean addPlaylist;
-
+    private String windowTitle;
 
     public void initialize() {}
 
-    private void initializeData(ArrayList<String> playlistArray, ListView<String> artistNameListView,
-                               ListViewLibrary listViewLibrary) {
-        this.playlistArray = playlistArray;
-        this.artistNameListView = artistNameListView;
+    private void initializeData(ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary, String title) {
+        this.artistPlaylistListView = artistPlaylistListView;
         this.listViewLibrary = listViewLibrary;
-        if (addPlaylist) {
-            playlistNameTextInput.setPromptText("add playlist");
+        this.windowTitle = title;
+
+        if (Objects.equals(windowTitle, "Playlist")) {
+            playlistNameTextInput.setPromptText("add Playlist");
         } else {
             playlistNameTextInput.setPromptText("add Artist");
         }
@@ -46,28 +39,14 @@ public class AddToListViewController {
 
     }
 
-    public void showPlaylistInputWindow(ArrayList<String> playlistArray, ListView<String> artistNameListView,
-                                        ListViewLibrary listViewLibrary) throws IOException {
+    public void showListViewInputWindow(ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
+                                        String windowTitle) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addtolistview.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         AddToListViewController controller = loader.getController();
-        addPlaylist = true;
-        controller.initializeData(playlistArray, artistNameListView, listViewLibrary);
-        stage.setTitle("Playlist");
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    public void showArtistInputWindow(ArrayList<String> playlistArray, ListView<String> artistNameListView,
-                                        ListViewLibrary listViewLibrary) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addtolistview.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        AddToListViewController controller = loader.getController();
-        addPlaylist = false;
-        controller.initializeData(playlistArray, artistNameListView, listViewLibrary);
-        stage.setTitle("Artist");
+        controller.initializeData(artistPlaylistListView, listViewLibrary, windowTitle);
+        stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
     }
@@ -77,22 +56,21 @@ public class AddToListViewController {
         Stage stage = (Stage) okButton.getScene().getWindow();
         String userInput = playlistNameTextInput.getText();
 
-        if (addPlaylist) {
+        if (Objects.equals(windowTitle, "Playlist")) {
             // Add playlist
             try {
-
-
                 // Throw exception if playlist is the same name as an Artist
                 // otherwise may cause bugs when choosing to remove an artist or playlist
-                if (listViewLibrary.getArtistList().contains(userInput) || playlistArray.contains(userInput)) {
+                if (listViewLibrary.getArtistList().contains(userInput) ||
+                        listViewLibrary.getPlaylistArray().contains(userInput))
+                {
                     throw new Exception();
                 }
 
-                playlistArray.add(userInput);
-                Collections.sort(playlistArray);
-                PlaylistsFileIO.outputPlaylists(playlistArray);
-                artistNameListView.getItems().clear();
-                artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+                listViewLibrary.addPlaylist(userInput);
+                artistPlaylistListView.getItems().clear();
+                artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+
                 stage.close();
 
             } catch (Exception e) {
@@ -106,13 +84,15 @@ public class AddToListViewController {
             try {
                 // Throw exception if playlist is the same name as an Artist
                 // otherwise may cause bugs when choosing to remove an artist or playlist
-                if (listViewLibrary.getArtistList().contains(userInput) || playlistArray.contains(userInput)) {
+                if (listViewLibrary.getArtistList().contains(userInput) ||
+                        listViewLibrary.getPlaylistArray().contains(userInput))
+                {
                     throw new Exception();
                 }
 
                 listViewLibrary.addArtist(userInput);
-                artistNameListView.getItems().clear();
-                artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+                artistPlaylistListView.getItems().clear();
+                artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
                 stage.close();
 
@@ -121,17 +101,12 @@ public class AddToListViewController {
                 playlistNameTextInput.setPromptText("Artist must be unique");
                 playlistNameTextInput.setFocusTraversable(false);
             }
-
         }
-
-
     }
 
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-
     }
-
 }

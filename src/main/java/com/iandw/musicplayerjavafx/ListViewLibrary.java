@@ -11,23 +11,33 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
 public class ListViewLibrary implements Serializable {
-    ObservableList<String> listViewObservableList;
-    ObservableList<String> artistList;
+    private ObservableList<String> listViewObservableList;
+    private ArrayList<String> playlistArray;
+    private ObservableList<String> artistList;
 
-    public ListViewLibrary() {
+    public ListViewLibrary() throws IOException {
         listViewObservableList = FXCollections.observableArrayList();
+
+        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
+            playlistArray = new ArrayList<>(PlaylistsFileIO.inputPlaylists());
+
+        } else {
+            playlistArray = new ArrayList<>();
+        }
+
         artistList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
     };
 
-    public ListViewLibrary(ObservableList<String> artistNameObservableList) {
-        this.listViewObservableList = artistNameObservableList;
-    }
+//    public ListViewLibrary(ObservableList<String> artistNameObservableList) {
+//        this.listViewObservableList = artistNameObservableList;
+//    }
 
-    public ObservableList<String> loadListViewObservableList(ArrayList<String> playlistArray) {
+    public ObservableList<String> loadListViewObservableList() {
 
         // Load user playlists into listview
         listViewObservableList.add("------- Playlists -------");
@@ -45,6 +55,12 @@ public class ListViewLibrary implements Serializable {
 
         return listViewObservableList;
     }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          ADD / REMOVE ELEMENTS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public void addArtist(String artistName) throws IOException {
         artistList.add(artistName);
@@ -68,13 +84,26 @@ public class ListViewLibrary implements Serializable {
 
     }
 
+    public void addPlaylist(String playlist) {
+        playlistArray.add(playlist);
+        Collections.sort(playlistArray);
+        PlaylistsFileIO.outputPlaylists(playlistArray);
+    }
+    public void removePlaylist(String playlist) {
+        playlistArray.remove(playlist);
+        PlaylistsFileIO.outputPlaylists(playlistArray);
+    }
+
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          GETTERS
+     *                          GETTERS / SETTERS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public ObservableList<String> getListViewObservableList() { return listViewObservableList; }
     public ObservableList<String> getArtistList() { return artistList; }
+    public ArrayList<String> getPlaylistArray() { return playlistArray; }
+    public void setPlaylistArray(ArrayList<String> playlistArray) { this.playlistArray = playlistArray; }
+    public void clearPlaylistArray() { playlistArray.clear(); }
 }

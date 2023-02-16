@@ -31,33 +31,32 @@ public class SettingsController extends AnchorPane {
     @FXML private Label rootDirectoryLabel;
     private TableViewLibrary tableViewLibrary;
     private ListView<String> artistNameListView;
+    private ListViewLibrary listViewLibrary;
     private TableView<Track> trackTableView;
     private ObservableList<Track> trackList;
-    private ArrayList<String> playlistArray;
 
     public void initialize() {}
-    private void initializeData(ListView<String> artistNameListView, TableView<Track> trackTableView,
-                                TableViewLibrary tableViewLibrary, ObservableList<Track> trackList,
-                                ArrayList<String> playlistArray)
+    private void initializeData(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
+                                TableView<Track> trackTableView, TableViewLibrary tableViewLibrary,
+                                ObservableList<Track> trackList)
     {
         rootDirectoryLabel.setText(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()));
         this.trackTableView = trackTableView;
         this.artistNameListView = artistNameListView;
+        this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
         this.trackList = trackList;
-        this.playlistArray = playlistArray;
     }
 
-    public void showSettingsWindow(ListView<String> artistNameListView, TableView<Track> trackTableView,
-                                   TableViewLibrary tableViewLibrary, ObservableList<Track> trackList,
-                                   ArrayList<String> playlistArray) throws IOException
+    public void showSettingsWindow(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
+                                   TableView<Track> trackTableView, TableViewLibrary tableViewLibrary, ObservableList<Track> trackList) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
 
         SettingsController controller = loader.getController();
-        controller.initializeData(artistNameListView, trackTableView, tableViewLibrary, trackList, playlistArray);
+        controller.initializeData(artistNameListView, listViewLibrary, trackTableView, tableViewLibrary, trackList);
 
         stage.setTitle("Settings");
         stage.setResizable(false);
@@ -104,13 +103,12 @@ public class SettingsController extends AnchorPane {
             Utils.clearSerializedFiles();
             trackList.clear();
             tableViewLibrary.clearObservableList();
-            playlistArray.clear();
+            listViewLibrary.clearPlaylistArray();
 
             // Re-initialize with new metadata from new root directory
             MusicLibrary musicLibrary = new MusicLibrary();
             musicLibrary.initializeMusicLibrary();
             artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
-           // trackList = musicLibrary.getTrackObservableList();
             trackList.addAll(musicLibrary.getTrackObservableList());
             trackTableView.refresh();
             artistNameListView.refresh();

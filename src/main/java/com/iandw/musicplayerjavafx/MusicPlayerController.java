@@ -8,8 +8,6 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.Desktop;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
@@ -32,7 +30,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class MusicPlayerController {
     @FXML
-    private ListView<String> artistNameListView;
+    private ListView<String> artistPlaylistListView;
     @FXML
     private TableView<Track> trackTableView;
     @FXML
@@ -96,7 +94,6 @@ public class MusicPlayerController {
     private List<Integer> shuffleArray;
     private ObservableList<Track> trackList;
     private FilteredList<Track> filteredList;
-    private ArrayList<String> playlistArray;
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
     private ListViewLibrary listViewLibrary;
@@ -117,25 +114,19 @@ public class MusicPlayerController {
         stopped = true;
         volumeDouble = 0.25;
         shuffleArray = new ArrayList<>();
-        playlistArray = new ArrayList<>();
         musicLibrary = new MusicLibrary();
+        listViewLibrary = new ListViewLibrary();
         trackList = FXCollections.observableArrayList();
         autoPlay = AutoPlay.OFF;
 
-        // Input user playlists
-        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-            playlistArray.addAll(PlaylistsFileIO.inputPlaylists());
-        }
-
         // Initialization logic
-        musicLibrary.initializeMusicLibrary();
+//        musicLibrary.initializeMusicLibrary();
 //        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
 //        trackList.addAll(musicLibrary.getTrackObservableList());
 
         // File I/O logic
         // Artist names / Playlists
-        listViewLibrary = new ListViewLibrary();
-        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
         // Track data
         tableViewLibrary = new TableViewLibrary(TracklistFileIO.inputTrackObservableList());
@@ -155,7 +146,7 @@ public class MusicPlayerController {
 
 
         // Initialize table view
-        artistNameListView.getSelectionModel().select(0);
+        artistPlaylistListView.getSelectionModel().select(0);
         trackTableView.refresh();
         listViewSelected();
 
@@ -286,7 +277,7 @@ public class MusicPlayerController {
         // Get selected artist name (from directory name)
         previousArtistNameString = artistNameString;
 
-        artistNameString = artistNameListView.getSelectionModel().getSelectedItem();
+        artistNameString = artistPlaylistListView.getSelectionModel().getSelectedItem();
 
         trackTableView.getSortOrder().add(colTrackFileNameInvisible);
 
@@ -315,11 +306,11 @@ public class MusicPlayerController {
     private void handleListViewContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
 
-        artistNameListView.getSelectionModel().select(artistNameListView.getSelectionModel().getSelectedItem());
+        artistPlaylistListView.getSelectionModel().select(artistPlaylistListView.getSelectionModel().getSelectedItem());
         trackTableView.refresh();
         listViewSelected();
 
-        String menuSelection = artistNameListView.getSelectionModel().getSelectedItem();
+        String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
 
         System.out.println("menuSelction: " + menuSelection);
 
@@ -339,7 +330,22 @@ public class MusicPlayerController {
         // Create playlist
         createPlaylist.setOnAction(event -> {
             try {
-                createPlaylist();
+                String windowTitle = "Playlist";
+                AddToListViewController addToListViewController = new AddToListViewController();
+                addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Add artist
+        addArtist.setOnAction(event -> {
+            try {
+                String windowTitle = "Artist";
+                AddToListViewController addToListViewController = new AddToListViewController();
+                addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -348,21 +354,12 @@ public class MusicPlayerController {
         // Remove playlist
         removePlaylist.setOnAction(event -> {
             //removePlaylist(((MenuItem)event.getTarget()).getText());
-            removePlaylist(artistNameListView.getSelectionModel().getSelectedItem());
-        });
-
-        // Add artist
-        addArtist.setOnAction(event -> {
-            try {
-                addArtist();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            removePlaylist(artistPlaylistListView.getSelectionModel().getSelectedItem());
         });
 
         // Remove artist
         removeArtist.setOnAction(event -> {
-            removeArtist(artistNameListView.getSelectionModel().getSelectedItem());
+            removeArtist(artistPlaylistListView.getSelectionModel().getSelectedItem());
 
         });
 
@@ -374,14 +371,14 @@ public class MusicPlayerController {
             openExplorer(file);
         });
 
-        artistNameListView.refresh();
-        System.out.println(playlistArray.contains(menuSelection));
+        artistPlaylistListView.refresh();
+        System.out.println(listViewLibrary.getPlaylistArray().contains(menuSelection));
         System.out.println(listViewLibrary.getArtistList().contains(menuSelection));
 
         //TODO => right click lag on context menu
 
         // Show remove playlist if playlist selected
-        if (playlistArray.contains(menuSelection)) {
+        if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
             contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, removePlaylist, divider2,  openInExplorer);
 
         // Show remove artist if artist is selected
@@ -393,18 +390,8 @@ public class MusicPlayerController {
             contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, openInExplorer);
         }
 
-        artistNameListView.setContextMenu(contextMenu);
+        artistPlaylistListView.setContextMenu(contextMenu);
 
-    }
-
-    private void addArtist() throws IOException {
-        AddToListViewController addToListViewController = new AddToListViewController();
-        addToListViewController.showArtistInputWindow(playlistArray, artistNameListView, listViewLibrary);
-    }
-
-    private void createPlaylist() throws IOException {
-        AddToListViewController addToListViewController = new AddToListViewController();
-        addToListViewController.showPlaylistInputWindow(playlistArray, artistNameListView, listViewLibrary);
     }
 
     private void removeArtist(String removeArtistStr) {
@@ -414,7 +401,7 @@ public class MusicPlayerController {
             // Remove Tracks from library
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        artistNameListView.getSelectionModel().getSelectedItem());
+                        artistPlaylistListView.getSelectionModel().getSelectedItem());
                 tableViewLibrary.removeTrack(trackTableView.getItems().get(trackIndex));
                 trackTableView.refresh();
             }
@@ -429,19 +416,18 @@ public class MusicPlayerController {
             }
         }
 
-        artistNameListView.getItems().clear();
-        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+        artistPlaylistListView.getItems().clear();
+        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
     }
 
     private void removePlaylist(String removePlaylistStr) {
-        playlistArray.remove(removePlaylistStr);
-        PlaylistsFileIO.outputPlaylists(playlistArray);
+        listViewLibrary.removePlaylist(removePlaylistStr);
 
         if (tableSize > 0) {
             // Alter all playlist tracks playlist to "*"
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        artistNameListView.getSelectionModel().getSelectedItem());
+                        artistPlaylistListView.getSelectionModel().getSelectedItem());
                 trackTableView.getItems().get(trackIndex).setPlaylistStr("*");
                 trackTableView.refresh();
             }
@@ -454,8 +440,8 @@ public class MusicPlayerController {
             }
         }
 
-        artistNameListView.getItems().clear();
-        artistNameListView.setItems(listViewLibrary.loadListViewObservableList(playlistArray));
+        artistPlaylistListView.getItems().clear();
+        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
     }
 
     private void openExplorer(File file) {
@@ -502,7 +488,7 @@ public class MusicPlayerController {
         SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
         // Add playlists to menu
-        for (String playlist : playlistArray) {
+        for (String playlist : listViewLibrary.getPlaylistArray()) {
             playlistMenuList.add(new MenuItem(playlist));
         }
 
@@ -563,7 +549,7 @@ public class MusicPlayerController {
             System.out.println(currentTrackTitle);
             try {
                 editTrackController.showEditArtistWindow(columnName, currentTrackTitle, trackList, trackTableView,
-                        artistNameListView, listViewLibrary, tableViewLibrary, playlistArray);
+                        artistPlaylistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -620,7 +606,7 @@ public class MusicPlayerController {
         // Delete Track
         deleteTrack.setOnAction(event -> {
             System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
-                    artistNameListView.getSelectionModel().getSelectedItem());
+                    artistPlaylistListView.getSelectionModel().getSelectedItem());
             tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
             trackList.setAll(tableViewLibrary.getTrackObservableList());
             trackTableView.refresh();
@@ -661,10 +647,10 @@ public class MusicPlayerController {
 
     private boolean listViewTrackSearch(Track track) {
         if (track.getPlaylistStr().contains("*") || track.getArtistNameStr().contains(artistNameString)) {
-            return track.getArtistNameStr().contains(artistNameListView.getSelectionModel().getSelectedItem());
+            return track.getArtistNameStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
 
         } else {
-            return track.getPlaylistStr().contains(artistNameListView.getSelectionModel().getSelectedItem());
+            return track.getPlaylistStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
 
         }
     }
@@ -743,7 +729,7 @@ public class MusicPlayerController {
     private void stopButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             try {
-                if (playing && (Objects.equals(artistNameString, artistNameListView.getSelectionModel().getSelectedItem()))) {
+                if (playing && (Objects.equals(artistNameString, artistPlaylistListView.getSelectionModel().getSelectedItem()))) {
                     stopMedia(false);
                 } else {
                     stopMedia(playing);
@@ -1027,8 +1013,8 @@ public class MusicPlayerController {
     @FXML
     private void settingsClicked() throws IOException {
        SettingsController settingsController = new SettingsController();
-       settingsController.showSettingsWindow(artistNameListView, trackTableView, tableViewLibrary,
-               trackList, playlistArray);
+       settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
+               tableViewLibrary, trackList);
     }
 
     @FXML
