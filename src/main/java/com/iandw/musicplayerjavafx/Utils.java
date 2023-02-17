@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -33,6 +34,14 @@ public class Utils {
 
     public static void moveFile(String source, String destination) throws IOException {
         Files.move(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public static void copyFile(String source, String destination) throws IOException {
+        if (!Files.exists(Paths.get(destination))) {
+            Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            System.out.printf("Cannot copy, path %s already exists", destination);
+        }
     }
 
     public static void createDirectory(String path, String directoryName) throws IOException {

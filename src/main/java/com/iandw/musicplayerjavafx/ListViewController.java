@@ -21,6 +21,7 @@ public class ListViewController {
     private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
     private String windowTitle;
+    private String artistName;
 
     public void initialize() {}
 
@@ -94,6 +95,7 @@ public class ListViewController {
                 }
 
                 listViewLibrary.addArtist(userInput);
+                artistName = userInput;
                 artistPlaylistListView.getItems().clear();
                 artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
@@ -112,4 +114,6 @@ public class ListViewController {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+    public String getArtistName() { return artistName; }
 }

@@ -319,51 +319,66 @@ public class MusicPlayerController {
         MenuItem addArtist = new MenuItem("Add Artist");
         SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
-        // Remove from list
-        MenuItem removeArtist = new MenuItem("Remove Artist");
-        MenuItem removePlaylist = new MenuItem("Remove Playlist");
+        // Edit List
+        MenuItem editPlaylist = new MenuItem("Edit Playlist");
+        MenuItem editArtist = new MenuItem("Edit Artist");
         SeparatorMenuItem divider2 = new SeparatorMenuItem();
+
+        // Remove from list
+        MenuItem removePlaylist = new MenuItem("Remove Playlist");
+        MenuItem removeArtist = new MenuItem("Remove Artist");
+        SeparatorMenuItem divider3 = new SeparatorMenuItem();
 
         // View folder in explorer
         MenuItem openInExplorer = new MenuItem("Open in Explorer");
 
-        // Create playlist
+        // Create Playlist
         createPlaylist.setOnAction(event -> {
             try {
                 String windowTitle = "Playlist";
-                ListViewController addToListViewController = new ListViewController();
-                addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
 
-        // Add artist
+        // Add Artist
         addArtist.setOnAction(event -> {
             try {
                 String windowTitle = "Artist";
-                ListViewController addToListViewController = new ListViewController();
-                addToListViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(artistPlaylistListView, listViewLibrary, windowTitle);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
 
-        // Remove playlist
+        // Edit Playlist
+        editPlaylist.setOnAction(event -> {
+
+        });
+
+        // Edit Artist
+        editArtist.setOnAction(event -> {
+
+        });
+
+        // Remove Playlist
         removePlaylist.setOnAction(event -> {
             //removePlaylist(((MenuItem)event.getTarget()).getText());
             removePlaylist(artistPlaylistListView.getSelectionModel().getSelectedItem());
         });
 
-        // Remove artist
+        // Remove Artist
         removeArtist.setOnAction(event -> {
             removeArtist(artistPlaylistListView.getSelectionModel().getSelectedItem());
 
         });
 
-        // Open in file explorer
+        // Open in File Explorer
         openInExplorer.setOnAction(event -> {
             File file = new File(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
                     File.separator + menuSelection);
@@ -377,18 +392,10 @@ public class MusicPlayerController {
 
         //TODO => right click lag on context menu
 
-        // Show remove playlist if playlist selected
-        if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
-            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, removePlaylist, divider2,  openInExplorer);
+        contextMenu.getItems().addAll(createPlaylist, addArtist, divider1,
+                editPlaylist, editArtist, divider2,
+                removePlaylist, removeArtist, divider3,  openInExplorer);
 
-        // Show remove artist if artist is selected
-        } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
-            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, removeArtist, divider2,  openInExplorer);
-
-        // Don't show any removal if not playlist or artist
-        } else {
-            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, openInExplorer);
-        }
 
         artistPlaylistListView.setContextMenu(contextMenu);
 
@@ -1024,7 +1031,6 @@ public class MusicPlayerController {
             artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
         }
     }
-
 
     @FXML
     private void settingsClicked() throws IOException {
