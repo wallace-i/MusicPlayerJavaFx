@@ -36,6 +36,7 @@ public class MusicLibrary {
     private String trackPathStr;
     private String trackFileName;
     private String trackContainerType;
+    private int index;
 
     public MusicLibrary() {
         trackObservableList = FXCollections.observableArrayList();
@@ -248,10 +249,10 @@ public class MusicLibrary {
             }
 
             // Check Artist metadata for null value, if true replace with Unknown
-            if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
+            if (tag.getFirst(FieldKey.ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ARTIST), "")) {
                 trackArtist = unknown;
             } else {
-                trackArtist = tag.getFirst(FieldKey.ALBUM);
+                trackArtist = tag.getFirst(FieldKey.ARTIST);
             }
 
             // Check Album metadata for null value, if true replace with Unknown
@@ -296,22 +297,109 @@ public class MusicLibrary {
      *                          IMPORT MODULES
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    public void importArtist() {
+
+    //
+    //      IMPORT ARTIST
+    //
+    public void importArtist() throws IOException {
+        DirectoryChooser artistChooser = new DirectoryChooser();
+
+        artistChooser.setTitle("Select Artist Folder");
+        artistChooser.setInitialDirectory((new File(".")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        File file = artistChooser.showDialog(stage);
+
+        if (file != null) {
+            Path artistPath = file.toPath();
+
+            if (Files.isDirectory(artistPath)) {
+                DirectoryStream<Path> artistDirectory = Files.newDirectoryStream(artistPath);
+                artistNameStr = artistPath.toString().substring(artistPath.toString().lastIndexOf(File.separator) + 1);
+
+                // Clear list to write Artist's tracks
+                trackObservableList.clear();
+                final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+                index = 0;
+
+                for (Path albumPath : artistDirectory) {
+                    if (Files.isDirectory(albumPath)) {
+                        DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
+
+                        for (Path trackPath : albumDirectory) {
+                            if (Files.isRegularFile(trackPath)) {
+                                if (Files.exists(trackPath)) {
+                                    importTrackLogic(trackPath, rootDirectory);
+                                }
+
+                            } else {
+                                System.out.printf("%s is not a file%n", trackPath);
+                            }
+                        }
+
+                    } else {
+                        System.out.printf("%s is not a directory%n", albumPath);
+                    }
+                }
+            }
+        } else {
+            System.out.println("Track File empty or does not exist");
+        }
 
 
     }
 
-    public void importAlbum() {
-        DirectoryChooser rootMusicDirectoryChooser = new DirectoryChooser();
-        AnchorPane anchorPane = new AnchorPane();
-        rootMusicDirectoryChooser.setTitle("Select Music Folder");
-        rootMusicDirectoryChooser.setInitialDirectory((new File(".")));
+    //
+    //      IMPORT ALBUM
+    //
+    public void importAlbum() throws IOException {
+        DirectoryChooser albumChooser = new DirectoryChooser();
 
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
-        File file = rootMusicDirectoryChooser.showDialog(stage);
+        albumChooser.setTitle("Select Album Folder");
+        albumChooser.setInitialDirectory((new File(".")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        File file = albumChooser.showDialog(stage);
+
+        if (file != null) {
+            Path albumPath = file.toPath();
+
+            if (Files.isDirectory(albumPath)) {
+                DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
+
+                // Clear list to write album
+                trackObservableList.clear();
+                final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+                index = 0;
+                //TODO => get artist name from user
+
+                for (Path trackPath : albumDirectory) {
+                    if (Files.isRegularFile(trackPath)) {
+                        if (Files.exists(trackPath)) {
+                            importTrackLogic(trackPath, rootDirectory);
+
+                        }
+
+                    } else {
+                        System.out.printf("%s is not a file%n", trackPath);
+                    }
+                }
+            } else {
+                System.out.printf("%s is not a directory%n", albumPath);
+            }
+        } else {
+            System.out.println("Track File empty or does not exist");
+        }
 
     }
 
+    //
+    //      IMPORT TRACK
+    //
     public void importTrack() throws IOException {
         FileChooser trackChooser = new FileChooser();
 
@@ -328,55 +416,12 @@ public class MusicLibrary {
 
             if (Files.isRegularFile(trackPath)) {
                 if (Files.exists(trackPath)) {
-                    trackPathStr = trackPath.toAbsolutePath().toString();
-                    trackFileName = trackPath.getFileName().toString();
-                    trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+                    index = 0;
+                    //TODO => Get artist name from user
+                    final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
-                    // Check for playable file container
-                    if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-                        // Clear list for new track
-                        trackObservableList.clear();
+                    importTrackLogic(trackPath, rootDirectory);
 
-                        importTrackMetadata();
-
-                        String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
-                        String trackArtist = trackObservableList.get(0).getArtistNameStr();
-                        String trackAlbum = trackObservableList.get(0).getAlbumTitleStr();
-                        String trackFileName = trackObservableList.get(0).getTrackFileNameStr();
-                        String source = trackPath.toString();
-                        String destination = rootDirectory + File.separator + trackArtist+ File.separator +
-                                trackAlbum + File.separator + trackFileName;
-
-                        // Create new Artist/Album Directories, filepath and move track
-                        // If Artist Directory Exists move to Artist Directory,
-                        if (Files.exists(Path.of(rootDirectory + File.separator + trackArtist)))
-                        {
-                            // If Album Directory Exists move to Album Directory,
-                            if (Files.exists(Path.of(rootDirectory + File.separator + trackArtist+ File.separator +
-                                    trackAlbum)))
-                            {
-                                Utils.moveFile(source, destination);
-
-                            } else {
-                                // Else create Album Directory hen move file
-                                Utils.createDirectory(rootDirectory + File.separator + trackArtist, trackAlbum);
-                                Utils.moveFile(source, destination);
-                            }
-
-                        } else {
-                            // Else Create new Artist and Album Directory
-                            Utils.createDirectory(rootDirectory, trackArtist);
-                            Utils.createDirectory(rootDirectory + File.separator + trackArtist, trackAlbum);
-                            Utils.moveFile(source, destination);
-
-                        }
-
-                        trackObservableList.get(0).setTrackPathStr(destination);
-                        artistNameStr = trackObservableList.get(0).getArtistNameStr();
-
-                    } else {
-                        System.out.printf("%s is not a compatible file type.", trackFileName);
-                    }
                 }
             } else {
                 System.out.printf("%s is not a file%n", trackPath);
@@ -386,8 +431,53 @@ public class MusicLibrary {
             System.out.println("Track File empty or does not exist");
         }
 
+    }
 
+    private void importTrackLogic(Path trackPath, String rootDirectory) throws IOException {
+        trackPathStr = trackPath.toAbsolutePath().toString();
+        trackFileName = trackPath.getFileName().toString();
+        trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
 
+        // Check for playable file container
+        if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+
+            importTrackMetadata();
+
+            String trackAlbum = trackObservableList.get(index).getAlbumTitleStr();
+            String trackFileName = trackObservableList.get(index).getTrackFileNameStr();
+            String source = trackPath.toString();
+            String destination = rootDirectory + File.separator + artistNameStr + File.separator +
+                    trackAlbum + File.separator + trackFileName;
+
+            // Create new Artist/Album Directories, filepath and move track
+            // If Artist Directory Exists move to Artist Directory,
+            if (Files.exists(Path.of(rootDirectory + File.separator + artistNameStr))) {
+
+                // If Album Directory Exists move to Album Directory,
+                if (Files.exists(Path.of(rootDirectory + File.separator + artistNameStr + File.separator +
+                        trackAlbum))) {
+                    Utils.moveFile(source, destination);
+
+                } else {
+                    // Else create Album Directory hen move file
+                    Utils.createDirectory(rootDirectory + File.separator + artistNameStr, trackAlbum);
+                    Utils.moveFile(source, destination);
+                }
+
+            } else {
+                // Else Create new Artist and Album Directory
+                Utils.createDirectory(rootDirectory, artistNameStr);
+                Utils.createDirectory(rootDirectory + File.separator + artistNameStr, trackAlbum);
+                Utils.moveFile(source, destination);
+
+            }
+
+            trackObservableList.get(index).setTrackPathStr(destination);
+            index++;
+
+        } else {
+            System.out.printf("%s is not a compatible file type.", trackFileName);
+        }
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

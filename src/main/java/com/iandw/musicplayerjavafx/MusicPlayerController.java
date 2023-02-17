@@ -119,7 +119,7 @@ public class MusicPlayerController {
 
         // Initialization logic
         musicLibrary = new MusicLibrary();
-//        musicLibrary.initializeMusicLibrary();
+        musicLibrary.initializeMusicLibrary();
 //        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
 //        trackList.addAll(musicLibrary.getTrackObservableList());
 
@@ -990,13 +990,22 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    private void importArtistClicked() {
+    private void importArtistClicked() throws IOException {
         musicLibrary.importArtist();
+        tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
+        trackList.setAll(tableViewLibrary.getTrackObservableList());
+
+        addArtistFromImport();
+
     }
 
     @FXML
-    private void importAlbumClicked() {
+    private void importAlbumClicked() throws IOException {
         musicLibrary.importAlbum();
+        tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
+        trackList.setAll(tableViewLibrary.getTrackObservableList());
+
+        addArtistFromImport();
     }
 
     @FXML
@@ -1005,12 +1014,15 @@ public class MusicPlayerController {
         tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
         trackList.setAll(tableViewLibrary.getTrackObservableList());
 
+        addArtistFromImport();
+    }
+
+    private void addArtistFromImport() throws IOException {
         if (!listViewLibrary.getArtistList().contains(musicLibrary.getArtistNameStr())) {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistPlaylistListView.getItems().clear();
             artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
         }
-
     }
 
 
