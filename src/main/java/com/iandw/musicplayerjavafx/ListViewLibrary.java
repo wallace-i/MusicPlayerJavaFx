@@ -69,14 +69,8 @@ public class ListViewLibrary implements Serializable {
 
         // Create new directory if non-existent
         String artistPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
-//                + File.separator + artistName;
-//
-//        File artistDir = new File(artistPathStr);
-//        if (!artistDir.exists()) {
-//            Files.createDirectory(Paths.get(artistPathStr));
-//        }
-        Utils.createDirectory(artistPathStr, artistName);
 
+        Utils.createDirectory(artistPathStr, artistName);
     }
 
     public void removeArtist(String artistName) {

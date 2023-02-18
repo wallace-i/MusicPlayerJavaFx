@@ -33,7 +33,11 @@ public class Utils {
     }
 
     public static void moveFile(String source, String destination) throws IOException {
-        Files.move(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
+        if (!Files.exists(Paths.get(destination))) {
+            Files.move(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            System.out.printf("Cannot copy, path %s already exists", destination);
+        }
     }
 
     public static void copyFile(String source, String destination) throws IOException {
