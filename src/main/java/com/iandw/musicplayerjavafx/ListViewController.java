@@ -1,5 +1,6 @@
 package com.iandw.musicplayerjavafx;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,9 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
 
 public class ListViewController {
@@ -25,6 +27,8 @@ public class ListViewController {
     private TableView<Track> trackTableView;
     private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
+    private ObservableList<Track> trackList;
+    private TableViewLibrary tableViewLibrary;
     private String windowTitle;
     private String userInput;
     private String menuSelection;
@@ -35,10 +39,13 @@ public class ListViewController {
 
     public void initialize() {}
 
-    private void initializeData(TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
+    private void initializeData(ObservableList<Track> trackList, TableViewLibrary tableViewLibrary,
+                                TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
                                 ListViewLibrary listViewLibrary, String windowTitle, String menuSelection,
                                 int tableSize)
     {
+        this.trackList = trackList;
+        this.tableViewLibrary = tableViewLibrary;
         this.trackTableView = trackTableView;
         this.artistPlaylistListView = artistPlaylistListView;
         this.listViewLibrary = listViewLibrary;
@@ -62,7 +69,8 @@ public class ListViewController {
 
     }
 
-    public void showListViewInputWindow(TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
+    public void showListViewInputWindow(ObservableList<Track> trackList, TableViewLibrary tableViewLibrary,
+                                        TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
                                         ListViewLibrary listViewLibrary, String windowTitle, String menuSelection,
                                         int tableSize) throws IOException
     {
@@ -70,7 +78,8 @@ public class ListViewController {
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
-        controller.initializeData(trackTableView, artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
+        controller.initializeData(trackList, tableViewLibrary, trackTableView, artistPlaylistListView,
+                listViewLibrary, windowTitle, menuSelection, tableSize);
         stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
@@ -146,34 +155,74 @@ public class ListViewController {
 
                     // Edit playlist
                     if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
+                        listViewLibrary.removePlaylist(menuSelection);
+                        listViewLibrary.addPlaylist(userInput);
+                        artistPlaylistListView.getItems().clear();
+                        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+
+                        editPlaylist();
 
                     } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
                         // Edit Artist
-                        // Remove old artist, add user change
                         listViewLibrary.removeArtist(menuSelection);
                         listViewLibrary.addArtist(userInput);
                         artistPlaylistListView.getItems().clear();
                         artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
                         editArtist();
-
-                        stage.close();
-
                     }
-
-
-
 
                 } catch (Exception e) {
                     playlistNameTextInput.clear();
                     playlistNameTextInput.setPromptText("Name must be unique");
                     playlistNameTextInput.setFocusTraversable(false);
+
                 }
+            }
+        }
+
+        stage.close();
+    }
 
 
+    private void editArtist() {
+        if (tableSize > 0) {
+            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
+                System.out.printf("Editing %s artist to %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
+                        userInput);
+                trackTableView.getItems().get(trackIndex).setArtistNameStr(userInput);
+                trackTableView.refresh();
+            }
+
+            // Write to file
+            try {
+                trackList.clear();
+                trackList.setAll(tableViewLibrary.getTrackObservableList());
+                TracklistFileIO.outputTrackObservableList(trackList);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
+
+    private void editPlaylist() {
+        if (tableSize > 0) {
+            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
+                trackTableView.getItems().get(trackIndex).setPlaylistStr(userInput);
+                trackTableView.refresh();
+            }
+
+            // Write to file
+            try {
+                trackList.clear();
+                trackList.setAll(tableViewLibrary.getTrackObservableList());
+                TracklistFileIO.outputTrackObservableList(trackList);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
@@ -187,45 +236,7 @@ public class ListViewController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    private void editArtist() throws IOException {
 
-        // Create new Artist Folder
-        Utils.createDirectory(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()), userInput);
-
-        String newArtistDirPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
-                File.separator + userInput;
-
-        for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
-            String albumTitle = trackTableView.getItems().get(trackIndex).getAlbumTitleStr();
-
-            if (albumTitle == null || Objects.equals(albumTitle, "")) {
-                albumTitle = "Unknown";
-            }
-
-            String albumDirStr = newArtistDirPathStr + File.separator + albumTitle;
-
-            // Create new albumFolder if album doesn't exist
-            if (!Files.exists(Path.of(albumDirStr))) {
-                Utils.createDirectory(albumDirStr, albumTitle);
-            }
-
-            // Move File to new artist/album folder
-            String trackFileNameStr = trackTableView.getItems().get(trackIndex).getTrackFileNameStr();
-            String source = trackTableView.getItems().get(trackIndex).getTrackPathStr();
-            String destination = newArtistDirPathStr + File.separator + albumTitle + File.separator +
-                    trackFileNameStr;
-
-            //TODO => fix file move
-            Utils.moveFile(source, destination);
-            System.out.printf("Editing %s artist to %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(), userInput);
-
-            // Update track metadata
-            trackTableView.getItems().get(trackIndex).setArtistNameStr(userInput);
-            trackTableView.getItems().get(trackIndex).setTrackPathStr(destination);
-            trackTableView.refresh();
-        }
-
-    }
 
     public String getUserInput() { return userInput; }
 }

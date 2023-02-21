@@ -307,6 +307,7 @@ public class MusicPlayerController {
     @FXML
     private void handleListViewContextMenu() {
         if (artistPlaylistListView.getSelectionModel().getSelectedItem() != null) {
+            //TODO => sluggish left click, edit artist/playlist bugs
             ContextMenu contextMenu = new ContextMenu();
 
             artistPlaylistListView.getSelectionModel().select(artistPlaylistListView.getSelectionModel().getSelectedItem());
@@ -338,8 +339,8 @@ public class MusicPlayerController {
                 try {
                     String windowTitle = "Playlist";
                     ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackTableView, artistPlaylistListView, listViewLibrary,
-                            windowTitle, menuSelection, tableSize);
+                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -351,8 +352,8 @@ public class MusicPlayerController {
                 try {
                     String windowTitle = "Artist";
                     ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackTableView, artistPlaylistListView, listViewLibrary,
-                            windowTitle, menuSelection, tableSize);
+                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -364,8 +365,8 @@ public class MusicPlayerController {
                 try {
                     String windowTitle = "Edit";
                     ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackTableView, artistPlaylistListView, listViewLibrary,
-                            windowTitle, menuSelection, tableSize);
+                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -376,6 +377,7 @@ public class MusicPlayerController {
             removeListView.setOnAction(event -> {
                 if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
                     removePlaylist(artistPlaylistListView.getSelectionModel().getSelectedItem());
+
                 } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
                     removeArtist(artistPlaylistListView.getSelectionModel().getSelectedItem());
                 }
@@ -390,8 +392,6 @@ public class MusicPlayerController {
             });
 
             artistPlaylistListView.refresh();
-            System.out.println(listViewLibrary.getPlaylistArray().contains(menuSelection));
-            System.out.println(listViewLibrary.getArtistList().contains(menuSelection));
 
             contextMenu.getItems().addAll(createPlaylist, addArtist, divider1,
                     editListView, divider2, removeListView, divider3, openInExplorer);
@@ -399,7 +399,6 @@ public class MusicPlayerController {
             artistPlaylistListView.setContextMenu(contextMenu);
         }
     }
-
 
     private void removeArtist(String removeArtistStr) {
         listViewLibrary.removeArtist(removeArtistStr);
