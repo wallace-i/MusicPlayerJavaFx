@@ -86,7 +86,6 @@ public class EditTrackController {
             }
         }
 
-
         System.out.printf("Update %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
                 columnName);
 

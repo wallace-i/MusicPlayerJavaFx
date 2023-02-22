@@ -8,8 +8,6 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.Desktop;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
@@ -25,6 +23,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -306,98 +305,102 @@ public class MusicPlayerController {
 
     @FXML
     private void handleListViewContextMenu() {
-        if (artistPlaylistListView.getSelectionModel().getSelectedItem() != null) {
-            //TODO => sluggish left click, edit artist/playlist bugs
-            ContextMenu contextMenu = new ContextMenu();
 
+        // Right clicking will update the tableview based on selection
+        if (artistPlaylistListView.getSelectionModel().getSelectedItem() != null) {
             artistPlaylistListView.getSelectionModel().select(artistPlaylistListView.getSelectionModel().getSelectedItem());
             trackTableView.refresh();
             listViewSelected();
-
-            String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
-
-            System.out.println("menuSelction: " + menuSelection);
-
-            // Add to list
-            MenuItem createPlaylist = new MenuItem("Create Playlist");
-            MenuItem addArtist = new MenuItem("Add Artist");
-            SeparatorMenuItem divider1 = new SeparatorMenuItem();
-
-            // Edit List
-            MenuItem editListView = new MenuItem("Edit");
-            SeparatorMenuItem divider2 = new SeparatorMenuItem();
-
-            // Remove from list
-            MenuItem removeListView = new MenuItem("Remove");
-            SeparatorMenuItem divider3 = new SeparatorMenuItem();
-
-            // View folder in explorer
-            MenuItem openInExplorer = new MenuItem("Open in Explorer");
-
-            // Create Playlist
-            createPlaylist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Playlist";
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
-                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            // Add Artist
-            addArtist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Artist";
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
-                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            // Edit Playlist
-            editListView.setOnAction(event -> {
-                try {
-                    String windowTitle = "Edit";
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
-                            artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            // Remove Playlist
-            removeListView.setOnAction(event -> {
-                if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
-                    removePlaylist(artistPlaylistListView.getSelectionModel().getSelectedItem());
-
-                } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
-                    removeArtist(artistPlaylistListView.getSelectionModel().getSelectedItem());
-                }
-            });
-
-            // Open in File Explorer
-            openInExplorer.setOnAction(event -> {
-                File file = new File(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
-                        File.separator + menuSelection);
-
-                openExplorer(file);
-            });
-
-            artistPlaylistListView.refresh();
-
-            contextMenu.getItems().addAll(createPlaylist, addArtist, divider1,
-                    editListView, divider2, removeListView, divider3, openInExplorer);
-
-            artistPlaylistListView.setContextMenu(contextMenu);
         }
+
+        String selectedItem = artistPlaylistListView.getSelectionModel().getSelectedItem();
+        System.out.println("ListView selected: " + selectedItem);
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        // Add to list
+        MenuItem createPlaylist = new MenuItem("Create Playlist");
+        MenuItem addArtist = new MenuItem("Add Artist");
+        SeparatorMenuItem divider1 = new SeparatorMenuItem();
+
+        // Edit List
+        MenuItem editListView = new MenuItem("Edit");
+        SeparatorMenuItem divider2 = new SeparatorMenuItem();
+
+        // Remove from list
+        MenuItem removeListView = new MenuItem("Remove");
+        SeparatorMenuItem divider3 = new SeparatorMenuItem();
+
+        // View folder in explorer
+        MenuItem openInExplorer = new MenuItem("Open in Explorer");
+
+        // Create Playlist
+        createPlaylist.setOnAction(event -> {
+            try {
+                String windowTitle = "Playlist";
+                String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                        artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Add Artist
+        addArtist.setOnAction(event -> {
+            try {
+                String windowTitle = "Artist";
+                String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                        artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Edit Artist or Playlist
+        editListView.setOnAction(event -> {
+            try {
+                String windowTitle = "Edit";
+                String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(trackList, tableViewLibrary, trackTableView,
+                        artistPlaylistListView, listViewLibrary, windowTitle, menuSelection, tableSize);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Remove Artist or Playlist
+        removeListView.setOnAction(event -> {
+            String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+            if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
+                removePlaylist(menuSelection);
+
+            } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
+                removeArtist(menuSelection);
+            }
+        });
+
+        // Open in File Explorer
+        openInExplorer.setOnAction(event -> {
+            String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+            File file = new File(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
+                    File.separator + menuSelection);
+
+            openExplorer(file);
+        });
+
+        contextMenu.getItems().addAll(createPlaylist, addArtist, divider1, editListView, divider2, removeListView,
+                divider3, openInExplorer);
+
+        artistPlaylistListView.setContextMenu(contextMenu);
+
     }
 
     private void removeArtist(String removeArtistStr) {

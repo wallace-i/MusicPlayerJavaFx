@@ -97,8 +97,9 @@ public class ListViewController {
         this.userInput = playlistNameTextInput.getText();
 
         switch (windowTitle) {
+
+            // Add playlist
             case playlist -> {
-                // Add playlist
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
@@ -120,8 +121,8 @@ public class ListViewController {
                 }
             }
 
+            // Add Artist
             case artist -> {
-                // Add Artist
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
@@ -144,7 +145,6 @@ public class ListViewController {
             }
 
             case edit -> {
-                // Add Artist
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
@@ -160,6 +160,7 @@ public class ListViewController {
                         artistPlaylistListView.getItems().clear();
                         artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
+                        //TODO => edit playlist wipes out tracklist
                         editPlaylist();
 
                     } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
@@ -208,6 +209,8 @@ public class ListViewController {
     private void editPlaylist() {
         if (tableSize > 0) {
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
+                System.out.printf("Editing %s playlist to %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
+                        userInput);
                 trackTableView.getItems().get(trackIndex).setPlaylistStr(userInput);
                 trackTableView.refresh();
             }
@@ -223,20 +226,10 @@ public class ListViewController {
         }
     }
 
-
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     *                          EDIT / REMOVE MODULES
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-
-    public String getUserInput() { return userInput; }
 }
