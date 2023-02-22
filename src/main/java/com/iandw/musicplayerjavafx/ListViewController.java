@@ -155,16 +155,17 @@ public class ListViewController {
 
                     // Edit playlist
                     if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
+                        System.out.println("Editing playlist");
                         listViewLibrary.removePlaylist(menuSelection);
                         listViewLibrary.addPlaylist(userInput);
                         artistPlaylistListView.getItems().clear();
                         artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
-                        //TODO => edit playlist wipes out tracklist
                         editPlaylist();
 
+                    // Edit Artist
                     } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
-                        // Edit Artist
+                        System.out.println("Editing artist");
                         listViewLibrary.removeArtist(menuSelection);
                         listViewLibrary.addArtist(userInput);
                         artistPlaylistListView.getItems().clear();
@@ -185,51 +186,55 @@ public class ListViewController {
         stage.close();
     }
 
-
-    private void editArtist() {
-        if (tableSize > 0) {
-            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
-                System.out.printf("Editing %s artist to %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        userInput);
-                trackTableView.getItems().get(trackIndex).setArtistNameStr(userInput);
-                trackTableView.refresh();
-            }
-
-            // Write to file
-            try {
-                trackList.clear();
-                trackList.setAll(tableViewLibrary.getTrackObservableList());
-                TracklistFileIO.outputTrackObservableList(trackList);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private void editPlaylist() {
-        if (tableSize > 0) {
-            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
-                System.out.printf("Editing %s playlist to %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        userInput);
-                trackTableView.getItems().get(trackIndex).setPlaylistStr(userInput);
-                trackTableView.refresh();
-            }
-
-            // Write to file
-            try {
-                trackList.clear();
-                trackList.setAll(tableViewLibrary.getTrackObservableList());
-                TracklistFileIO.outputTrackObservableList(trackList);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          EDIT PLAYLIST / ARTIST MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    private void editPlaylist() {
+        if (tableSize > 0) {
+            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
+                System.out.printf("Editing %s playlist to %s%n",
+                        trackTableView.getItems().get(trackIndex).getTrackTitleStr(), userInput);
+                trackTableView.getItems().get(trackIndex).setPlaylistStr(userInput);
+                trackTableView.refresh();
+            }
+
+
+            try {
+                // Update trackList and Write to file
+                tableViewLibrary.setTrackObservableList(trackList);
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void editArtist() {
+        if (tableSize > 0) {
+            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
+                System.out.printf("Editing %s artist to %s%n",
+                        trackTableView.getItems().get(trackIndex).getTrackTitleStr(), userInput);
+                trackTableView.getItems().get(trackIndex).setArtistNameStr(userInput);
+                trackTableView.refresh();
+            }
+
+
+            try {
+                // Update trackList and Write to file
+                tableViewLibrary.setTrackObservableList(trackList);
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

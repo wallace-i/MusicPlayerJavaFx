@@ -23,11 +23,11 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.web.WebView;
 
 public class MusicPlayerController {
     @FXML
@@ -217,6 +217,7 @@ public class MusicPlayerController {
                 (observableValue, oldValue, newValue) -> {
                     if (newValue) {
                         autoPlay = AutoPlay.SHUFFLE;
+
                         if (autoButton.isSelected() || repeatButton.isSelected()) {
                             radioButtonActive();
 
@@ -668,7 +669,10 @@ public class MusicPlayerController {
 
     private Predicate<Track> createSearchPredicate(String searchText) {
         return track -> {
-            if (searchText == null || searchText.isEmpty()) return true;
+            if (searchText == null || searchText.isEmpty()) {
+                return true;
+            }
+
             return searchMetadata(track, searchText);
         };
     }

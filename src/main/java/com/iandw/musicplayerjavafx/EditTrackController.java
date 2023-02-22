@@ -54,35 +54,34 @@ public class EditTrackController {
 
     @FXML
     private void okButtonClicked(MouseEvent mouseClick) throws IOException {
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        String userInput = editTextField.getText();
         final String artistName = "Artist Name";
         final String trackTitle = "Track Title";
         final String albumTitle = "Album Title";
         final String genre = "Genre";
 
-        Stage stage = (Stage) okButton.getScene().getWindow();
-
         switch (columnName) {
             case artistName -> {
-                String newArtistName = editTextField.getText();
-                trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(newArtistName);
+                trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(userInput);
 
-                if (!artistPlaylistListView.getItems().contains(newArtistName)) {
-                    listViewLibrary.addArtist(newArtistName);
+                if (!artistPlaylistListView.getItems().contains(userInput)) {
+                    listViewLibrary.addArtist(userInput);
                     artistPlaylistListView.getItems().clear();
                     artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
                 }
             }
 
             case trackTitle -> {
-                trackTableView.getSelectionModel().getSelectedItem().setTrackTitleStr(editTextField.getText());
+                trackTableView.getSelectionModel().getSelectedItem().setTrackTitleStr(userInput);
             }
 
             case albumTitle -> {
-                trackTableView.getSelectionModel().getSelectedItem().setAlbumTitleStr(editTextField.getText());
+                trackTableView.getSelectionModel().getSelectedItem().setAlbumTitleStr(userInput);
             }
 
             case genre -> {
-                trackTableView.getSelectionModel().getSelectedItem().setTrackGenreStr(editTextField.getText());
+                trackTableView.getSelectionModel().getSelectedItem().setTrackGenreStr(userInput);
             }
         }
 

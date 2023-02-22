@@ -33,10 +33,6 @@ public class ListViewLibrary implements Serializable {
         artistList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
     };
 
-//    public ListViewLibrary(ObservableList<String> artistNameObservableList) {
-//        this.listViewObservableList = artistNameObservableList;
-//    }
-
     public ObservableList<String> loadListViewObservableList() {
 
         // Load user playlists into listview
@@ -49,8 +45,6 @@ public class ListViewLibrary implements Serializable {
         }
         listViewObservableList.add("------- Artists ---------");
 
-        // Get artist names from artist folders
-       // inputArtistNameObservableList();
         listViewObservableList.addAll(artistList);
 
         return listViewObservableList;
@@ -67,10 +61,11 @@ public class ListViewLibrary implements Serializable {
         Collections.sort(artistList);
         ArtistlistFileIO.outputArtistNameObservableList(artistList);
 
-        // Create new directory if non-existent
-        String artistPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        //TODO => Decide if app should file manage as well
 
-        Utils.createDirectory(artistPathStr, artistName);
+        // Create new directory if non-existent
+//        String artistPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+//        Utils.createDirectory(artistPathStr, artistName);
     }
 
     public void removeArtist(String artistName) {
