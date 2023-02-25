@@ -27,7 +27,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.web.WebView;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class MusicPlayerController {
     @FXML
@@ -73,7 +73,9 @@ public class MusicPlayerController {
     @FXML
     private Label trackDurationLabel;
     @FXML
-    private Label volumeLabel;
+    private Label volumeLevelLabel;
+    @FXML
+    private Label volumeIconLabel;
     @FXML
     private RadioButton autoButton;
     @FXML
@@ -82,6 +84,22 @@ public class MusicPlayerController {
     private RadioButton repeatButton;
     @FXML
     private CheckBox mute;
+    @FXML
+    private FontIcon playIcon;
+    @FXML
+    private FontIcon pauseIcon;
+    @FXML
+    private FontIcon volumeUp;
+    @FXML
+    private FontIcon volumeDown;
+    @FXML
+    private FontIcon volumeOff;
+    @FXML
+    private FontIcon volumeMute;
+    @FXML
+    private FontIcon albumIcon;
+    @FXML
+    private FontIcon artistIcon;
     private MediaPlayer mediaPlayer;
     private String artistNameString;
     private String previousArtistNameString;
@@ -100,8 +118,7 @@ public class MusicPlayerController {
     private ListViewLibrary listViewLibrary;
     private AutoPlay autoPlay;
 
-    public MusicPlayerController() {
-    }
+    public MusicPlayerController() {}
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -113,6 +130,10 @@ public class MusicPlayerController {
         // Initialize variables
         playing = false;
         stopped = true;
+        playPauseButton.setGraphic(playIcon);
+        volumeIconLabel.setGraphic(volumeDown);
+        albumIcon.setOpacity(0);
+        artistIcon.setOpacity(0);
         volumeDouble = 0.25;
         shuffleArray = new ArrayList<>();
         trackList = FXCollections.observableArrayList();
@@ -120,7 +141,7 @@ public class MusicPlayerController {
 
         // Initialization logic
         musicLibrary = new MusicLibrary();
-        musicLibrary.initializeMusicLibrary();
+//        musicLibrary.initializeMusicLibrary();
 //        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
 //        trackList.addAll(musicLibrary.getTrackObservableList());
 
@@ -155,7 +176,7 @@ public class MusicPlayerController {
         volumeSlider.valueProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     int volumeInt = newValue.intValue();
-                    volumeLabel.setText(Integer.toString(volumeInt));
+                    volumeLevelLabel.setText(Integer.toString(volumeInt));
 
                     try {
                         volumeDouble = Math.pow(newValue.doubleValue(), 2) / 10000;
@@ -163,12 +184,37 @@ public class MusicPlayerController {
                     } catch (NullPointerException e) {
                         System.out.println("mediaPlayer is null");
                     }
+
+                    if (volumeSlider.getValue() >= 60) {
+                        volumeIconLabel.setGraphic(volumeUp);
+                    } else if (volumeSlider.getValue() > 0) {
+                        volumeIconLabel.setGraphic(volumeDown);
+                    } else {
+                        volumeIconLabel.setGraphic(volumeOff);
+                    }
                 }
         );
 
         // Mute checkbox
         mute.selectedProperty().addListener(
-                (observableValue, oldValue, newValue) -> mediaPlayer.setMute(newValue)
+                (observableValue, oldValue, newValue) -> {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.setMute(newValue);
+
+                        if (mute.isSelected()) {
+                            volumeIconLabel.setGraphic(volumeMute);
+                        } else {
+                            if (volumeSlider.getValue() >= 60) {
+                                volumeIconLabel.setGraphic(volumeUp);
+                            } else if (volumeSlider.getValue() > 0) {
+                                volumeIconLabel.setGraphic(volumeDown);
+                            } else {
+                                volumeIconLabel.setGraphic(volumeOff);
+                            }
+                        }
+                    }
+
+                }
         );
 
         // Seek time during track duration, and updating current duration on seekSlider
@@ -380,6 +426,9 @@ public class MusicPlayerController {
         // Remove Artist or Playlist
         removeListView.setOnAction(event -> {
             String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
+
+            // TODO => confirm remove choice
+
             if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
                 removePlaylist(menuSelection);
 
@@ -418,9 +467,7 @@ public class MusicPlayerController {
 
             // Write to file
             try {
-                trackList.clear();
-                trackList.setAll(tableViewLibrary.getTrackObservableList());
-                TracklistFileIO.outputTrackObservableList(trackList);
+                tableViewLibrary.setTrackObservableList(trackList);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -503,7 +550,6 @@ public class MusicPlayerController {
         }
 
         addTrackToPlaylist.getItems().addAll(playlistMenuList);
-        //TODO => Implement
 
         // Edit track data
         Menu editTrack = new Menu("Edit Track");
@@ -543,7 +589,6 @@ public class MusicPlayerController {
                 trackTableView.getSelectionModel().getSelectedItem().setPlaylistStr("*");
                 trackTableView.refresh();
                 try {
-                    //TODO => update tableviewlibrary object?
                     tableViewLibrary.setTrackObservableList(trackList);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
@@ -706,13 +751,15 @@ public class MusicPlayerController {
             try {
                 if (playing) {
                     mediaPlayer.pause();
-                    playPauseButton.setText("Play");
+                    playPauseButton.setGraphic(playIcon);
                     playing = false;
+
                 } else if (this.mediaPlayer == null) {
                     playMedia();
+
                 } else {
                     mediaPlayer.play();
-                    playPauseButton.setText("Pause");
+                    playPauseButton.setGraphic(pauseIcon);
                     playing = true;
                     stopped = false;
                     setNowPlayingText();
@@ -729,10 +776,12 @@ public class MusicPlayerController {
             try {
                 if (!playing) {
                     mediaPlayer.play();
-                    playPauseButton.setText("Pause");
+                    playPauseButton.setGraphic(pauseIcon);
+
                 } else if (this.mediaPlayer == null) {
                     playMedia();
                 }
+
             } catch (NullPointerException e) {
                 System.out.println("No track selected.");
             }
@@ -746,9 +795,11 @@ public class MusicPlayerController {
             try {
                 if (playing && (Objects.equals(artistNameString, artistPlaylistListView.getSelectionModel().getSelectedItem()))) {
                     stopMedia(false);
+
                 } else {
                     stopMedia(playing);
                 }
+
             } catch (NullPointerException e) {
                 System.out.println("No track selected.");
             }
@@ -760,6 +811,7 @@ public class MusicPlayerController {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
             if (shuffleButton.isSelected()) {
                 shuffleSelected();
+
             } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
                 trackTableView.getSelectionModel().select(nextTrackIndex);
                 stopMedia(true);
@@ -808,7 +860,7 @@ public class MusicPlayerController {
 
         mediaPlayer.setOnReady(() -> {
             mediaPlayer.play();
-            playPauseButton.setText("Pause");
+            playPauseButton.setGraphic(pauseIcon);
             playing = true;
             stopped = false;
 
@@ -842,7 +894,7 @@ public class MusicPlayerController {
             mediaPlayer.dispose();
         }
 
-        playPauseButton.setText("Play");
+        playPauseButton.setGraphic(playIcon);
         playing = false;
         stopped = true;
         setNowPlayingText();
@@ -861,13 +913,18 @@ public class MusicPlayerController {
 
     private void setNowPlayingText() {
         if (stopped) {
-            playingLabel.setText("Playing: -");
+            playingLabel.setText("-");
             albumLabel.setText("");
             byLabel.setText("");
+            albumIcon.setOpacity(0);
+            artistIcon.setOpacity(0);
+
         } else {
-            playingLabel.setText("Playing: " + trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr());
-            albumLabel.setText("From: " + trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr());
-            byLabel.setText("By: " + trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr());
+            albumIcon.setOpacity(100);
+            artistIcon.setOpacity(100);
+            playingLabel.setText(" " + trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr());
+            albumLabel.setText(" " + trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr());
+            byLabel.setText(" " + trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr());
         }
     }
 
