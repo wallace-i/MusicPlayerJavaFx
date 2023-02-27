@@ -23,11 +23,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.kordamp.ikonli.javafx.FontIcon;
+import javafx.scene.image.ImageView;
 
 public class MusicPlayerController {
     @FXML
@@ -100,6 +102,9 @@ public class MusicPlayerController {
     private FontIcon albumIcon;
     @FXML
     private FontIcon artistIcon;
+    @FXML
+    private ImageView imageView;
+    private Image musicNotes;
     private MediaPlayer mediaPlayer;
     private String artistNameString;
     private String previousArtistNameString;
@@ -131,7 +136,7 @@ public class MusicPlayerController {
         playing = false;
         stopped = true;
         playPauseButton.setGraphic(playIcon);
-        volumeIconLabel.setGraphic(volumeDown);
+        volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
         artistIcon.setOpacity(0);
         volumeDouble = 0.25;
@@ -139,9 +144,22 @@ public class MusicPlayerController {
         trackList = FXCollections.observableArrayList();
         autoPlay = AutoPlay.OFF;
 
+        // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
+        ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
+        autoButton.setGraphic(autoPlayIcon);
+        autoButton.getGraphic().setTranslateX(2.0);
+        autoButton.getGraphic().setOpacity(.65);
+
+        // Album Art default graphic
+        musicNotes = new Image(ResourceURLs.getMusicnotesURL());
+        imageView.setImage(musicNotes);
+        imageView.setCache(true);
+        imageView.setVisible(true);
+
+
         // Initialization logic
         musicLibrary = new MusicLibrary();
-//        musicLibrary.initializeMusicLibrary();
+        musicLibrary.initializeMusicLibrary();
 //        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
 //        trackList.addAll(musicLibrary.getTrackObservableList());
 
@@ -185,7 +203,7 @@ public class MusicPlayerController {
                         System.out.println("mediaPlayer is null");
                     }
 
-                    if (volumeSlider.getValue() >= 60) {
+                    if (volumeSlider.getValue() >= 50) {
                         volumeIconLabel.setGraphic(volumeUp);
                     } else if (volumeSlider.getValue() > 0) {
                         volumeIconLabel.setGraphic(volumeDown);
@@ -204,7 +222,7 @@ public class MusicPlayerController {
                         if (mute.isSelected()) {
                             volumeIconLabel.setGraphic(volumeMute);
                         } else {
-                            if (volumeSlider.getValue() >= 60) {
+                            if (volumeSlider.getValue() >= 50) {
                                 volumeIconLabel.setGraphic(volumeUp);
                             } else if (volumeSlider.getValue() > 0) {
                                 volumeIconLabel.setGraphic(volumeDown);
@@ -860,6 +878,15 @@ public class MusicPlayerController {
 
         mediaPlayer.setOnReady(() -> {
             mediaPlayer.play();
+
+            if (mediaPlayer.getMedia().getMetadata().get("image") == null) {
+                imageView.setImage(musicNotes);
+            } else {
+                imageView.setImage((Image) mediaPlayer.getMedia().getMetadata().get("image"));
+            }
+
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(57);
             playPauseButton.setGraphic(pauseIcon);
             playing = true;
             stopped = false;
@@ -1063,7 +1090,7 @@ public class MusicPlayerController {
         musicLibrary.importArtist();
         tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
         trackList.setAll(tableViewLibrary.getTrackObservableList());
-
+        TracklistFileIO.outputTrackObservableList(tableViewLibrary.getTrackObservableList());
         addArtistFromImport();
     }
 
@@ -1072,7 +1099,7 @@ public class MusicPlayerController {
         musicLibrary.importAlbum();
         tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
         trackList.setAll(tableViewLibrary.getTrackObservableList());
-
+        TracklistFileIO.outputTrackObservableList(tableViewLibrary.getTrackObservableList());
         addArtistFromImport();
     }
 
@@ -1081,7 +1108,6 @@ public class MusicPlayerController {
         musicLibrary.importTrack();
         tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
         trackList.setAll(tableViewLibrary.getTrackObservableList());
-
         addArtistFromImport();
     }
 
