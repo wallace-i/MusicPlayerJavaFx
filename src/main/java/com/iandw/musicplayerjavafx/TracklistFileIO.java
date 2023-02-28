@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class TracklistFileIO {
 
-    public static ObservableList<Track> inputTrackObservableList() {
+    public static ObservableList<TrackMetadata> inputTrackObservableList() {
         System.out.println("Reading from tracklist.ser");
 
-        ObservableList<Track> trackObservableList = FXCollections.observableArrayList();
+        ObservableList<TrackMetadata> trackMetadataObservableList = FXCollections.observableArrayList();
 
         try {
             // Read from file
@@ -23,7 +23,7 @@ public class TracklistFileIO {
 
             // Deep copy Array to Observable
             for (TrackSerializable trackSerializable : trackArrayList) {
-                trackObservableList.add(new Track(
+                trackMetadataObservableList.add(new TrackMetadata(
                         trackSerializable.getArtistNameStr(),
                         trackSerializable.getTrackFileNameStr(),
                         trackSerializable.getTrackContainerTypeStr(),
@@ -40,26 +40,26 @@ public class TracklistFileIO {
             throw new RuntimeException(e);
         }
 
-        return trackObservableList;
+        return trackMetadataObservableList;
     }
 
-    public static void outputTrackObservableList(ObservableList<Track> trackObservableList) throws FileNotFoundException {
+    public static void outputTrackObservableList(ObservableList<TrackMetadata> trackMetadataObservableList) throws FileNotFoundException {
         System.out.println("Writing to tracklist.ser");
 
         ArrayList<TrackSerializable> trackArrayList = new ArrayList<>();
 
         // Deep copy Observable to Array
-        for (Track track : trackObservableList) {
+        for (TrackMetadata trackMetadata : trackMetadataObservableList) {
             trackArrayList.add(new TrackSerializable(
-                    track.getArtistNameStr(),
-                    track.getTrackFileNameStr(),
-                    track.getTrackContainerTypeStr(),
-                    track.getTrackTitleStr(),
-                    track.getAlbumTitleStr(),
-                    track.getTrackGenreStr(),
-                    track.getTrackDurationStr(),
-                    track.getTrackPathStr(),
-                    track.getPlaylistStr()
+                    trackMetadata.getArtistNameStr(),
+                    trackMetadata.getTrackFileNameStr(),
+                    trackMetadata.getTrackContainerTypeStr(),
+                    trackMetadata.getTrackTitleStr(),
+                    trackMetadata.getAlbumTitleStr(),
+                    trackMetadata.getTrackGenreStr(),
+                    trackMetadata.getTrackDurationStr(),
+                    trackMetadata.getTrackPathStr(),
+                    trackMetadata.getPlaylistStr()
             ));
         }
 

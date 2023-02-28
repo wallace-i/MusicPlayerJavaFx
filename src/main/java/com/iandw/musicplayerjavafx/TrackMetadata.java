@@ -9,7 +9,7 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Track {
+public class TrackMetadata {
     private SimpleStringProperty artistNameStr;
     private final SimpleStringProperty trackFileNameStr;
     private final SimpleStringProperty trackContainerTypeStr;
@@ -20,9 +20,9 @@ public class Track {
     private SimpleStringProperty trackPathStr;
     private SimpleStringProperty playlistStr;
 
-    public Track(String artistNameStr,      String trackFileNameStr,    String trackContainerTypeStr,
-                 String trackTitleStr,      String albumTitleStr,       String trackGenreStr,
-                 String trackDurationStr,   String trackPathStr,        String playlistStr)
+    public TrackMetadata(String artistNameStr,    String trackFileNameStr, String trackContainerTypeStr,
+                         String trackTitleStr,    String albumTitleStr,    String trackGenreStr,
+                         String trackDurationStr, String trackPathStr,     String playlistStr)
     {
         this.artistNameStr = new SimpleStringProperty(artistNameStr);
         this.trackFileNameStr = new SimpleStringProperty(trackFileNameStr);

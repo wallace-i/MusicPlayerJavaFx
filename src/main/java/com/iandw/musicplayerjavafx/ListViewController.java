@@ -1,6 +1,5 @@
 package com.iandw.musicplayerjavafx;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,23 +10,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Objects;
 
 public class ListViewController {
     @FXML private AnchorPane anchorPane;
     @FXML private TextField playlistNameTextInput;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
-    private TableView<Track> trackTableView;
+    private TableView<TrackMetadata> trackTableView;
     private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
     private TableViewLibrary tableViewLibrary;
+    private TrackIndex trackIndex;
     private String windowTitle;
     private String userInput;
     private String menuSelection;
@@ -37,14 +32,15 @@ public class ListViewController {
 
     public void initialize() {}
 
-    private void initializeData(TableViewLibrary tableViewLibrary, TableView<Track> trackTableView,
+    private void initializeData(TableViewLibrary tableViewLibrary, TableView<TrackMetadata> trackTableView,
                                 ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
-                                String windowTitle, String menuSelection)
+                                TrackIndex trackIndex, String windowTitle, String menuSelection)
     {
         this.tableViewLibrary = tableViewLibrary;
         this.trackTableView = trackTableView;
         this.artistPlaylistListView = artistPlaylistListView;
         this.listViewLibrary = listViewLibrary;
+        this.trackIndex = trackIndex;
         this.windowTitle = windowTitle;
         this.menuSelection = menuSelection;
 
@@ -64,16 +60,16 @@ public class ListViewController {
 
     }
 
-    public void showListViewInputWindow(TableViewLibrary tableViewLibrary, TableView<Track> trackTableView,
+    public void showListViewInputWindow(TableViewLibrary tableViewLibrary, TableView<TrackMetadata> trackTableView,
                                         ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
-                                        String windowTitle, String menuSelection) throws IOException
+                                        TrackIndex trackIndex, String windowTitle, String menuSelection) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("listview.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
         controller.initializeData(tableViewLibrary, trackTableView, artistPlaylistListView,
-                listViewLibrary, windowTitle, menuSelection);
+                listViewLibrary, trackIndex, windowTitle, menuSelection);
         stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
@@ -192,7 +188,7 @@ public class ListViewController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private void editPlaylist() {
-        int tableSize = tableViewLibrary.getTableSize();
+        int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
@@ -213,7 +209,7 @@ public class ListViewController {
     }
 
     private void editArtist() {
-        int tableSize = tableViewLibrary.getTableSize();
+        int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {

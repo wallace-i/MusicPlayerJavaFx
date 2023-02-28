@@ -23,7 +23,6 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class SettingsController extends AnchorPane {
     @FXML private AnchorPane anchorPane;
@@ -32,31 +31,31 @@ public class SettingsController extends AnchorPane {
     private TableViewLibrary tableViewLibrary;
     private ListView<String> artistNameListView;
     private ListViewLibrary listViewLibrary;
-    private TableView<Track> trackTableView;
-    private ObservableList<Track> trackList;
+    private TableView<TrackMetadata> trackTableView;
+    private ObservableList<TrackMetadata> trackMetadataList;
 
     public void initialize() {}
     private void initializeData(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
-                                TableView<Track> trackTableView, TableViewLibrary tableViewLibrary,
-                                ObservableList<Track> trackList)
+                                TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary,
+                                ObservableList<TrackMetadata> trackMetadataList)
     {
         rootDirectoryLabel.setText(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()));
         this.trackTableView = trackTableView;
         this.artistNameListView = artistNameListView;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
-        this.trackList = trackList;
+        this.trackMetadataList = trackMetadataList;
     }
 
     public void showSettingsWindow(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
-                                   TableView<Track> trackTableView, TableViewLibrary tableViewLibrary, ObservableList<Track> trackList) throws IOException
+                                   TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary, ObservableList<TrackMetadata> trackMetadataList) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
 
         SettingsController controller = loader.getController();
-        controller.initializeData(artistNameListView, listViewLibrary, trackTableView, tableViewLibrary, trackList);
+        controller.initializeData(artistNameListView, listViewLibrary, trackTableView, tableViewLibrary, trackMetadataList);
 
         stage.setTitle("Settings");
         stage.setResizable(false);
@@ -101,7 +100,7 @@ public class SettingsController extends AnchorPane {
 
             // Clear current list file and observable list
             Utils.clearSerializedFiles();
-            trackList.clear();
+            trackMetadataList.clear();
             tableViewLibrary.clearObservableList();
             listViewLibrary.clearPlaylistArray();
 
@@ -109,7 +108,7 @@ public class SettingsController extends AnchorPane {
             MusicLibrary musicLibrary = new MusicLibrary();
             musicLibrary.initializeMusicLibrary();
             artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
-            trackList.addAll(musicLibrary.getTrackObservableList());
+            trackMetadataList.addAll(musicLibrary.getTrackObservableList());
             trackTableView.refresh();
             artistNameListView.refresh();
             System.out.println("Finished initializing.");

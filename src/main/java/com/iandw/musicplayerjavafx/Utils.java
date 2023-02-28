@@ -1,14 +1,9 @@
 package com.iandw.musicplayerjavafx;
 
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -32,14 +27,6 @@ public class Utils {
 
     }
 
-//    public static void moveFile(String source, String destination) throws IOException {
-//        if (!Files.exists(Paths.get(destination))) {
-//            Files.move(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-//        } else {
-//            System.out.printf("Cannot copy, path %s already exists", destination);
-//        }
-//    }
-
     /**
      *      CopyFile & createDirectory
      *      Used for importing artist/album/track data by MusicLibrary
@@ -47,6 +34,7 @@ public class Utils {
     public static void copyFile(String source, String destination) throws IOException {
         if (!Files.exists(Paths.get(destination))) {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
+
         } else {
             System.out.printf("Cannot copy, path %s already exists", destination);
         }
@@ -56,10 +44,10 @@ public class Utils {
         String newPath = path + File.separator + directoryName;
 
         File directory = new File(newPath);
+
         if (!directory.exists()) {
             Files.createDirectory(Paths.get(newPath));
         }
-
     }
 
 }

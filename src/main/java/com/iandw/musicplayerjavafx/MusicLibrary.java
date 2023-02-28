@@ -12,11 +12,9 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -29,7 +27,7 @@ import org.jaudiotagger.tag.FieldKey;
 public class MusicLibrary {
     @FXML
     private AnchorPane anchorPane;
-    private final ObservableList<Track> trackObservableList;
+    private final ObservableList<TrackMetadata> trackMetadataObservableList;
     private final ObservableList<String> artistNameObservableList;
     private final List<String> supportedFileTypes;
     private String artistNameStr;
@@ -41,7 +39,7 @@ public class MusicLibrary {
     private ImportCatagory importCatagory;
 
     public MusicLibrary() {
-        trackObservableList = FXCollections.observableArrayList();
+        trackMetadataObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
     }
@@ -147,7 +145,7 @@ public class MusicLibrary {
 
         System.out.println("Writing user music library to files.");
         ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
-        TracklistFileIO.outputTrackObservableList(trackObservableList);
+        TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
 
     }
 
@@ -201,7 +199,7 @@ public class MusicLibrary {
             }
 
             // Populate Track object
-            Track track = new Track(
+            TrackMetadata trackMetadata = new TrackMetadata(
                     artistNameStr,
                     trackFileName,
                     trackContainerType,
@@ -213,7 +211,7 @@ public class MusicLibrary {
                     playlist
             );
 
-            trackObservableList.add(track);
+            trackMetadataObservableList.add(trackMetadata);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,7 +299,7 @@ public class MusicLibrary {
             }
 
             // Populate Track object
-            Track track = new Track(
+            TrackMetadata trackMetadata = new TrackMetadata(
                     trackArtist,
                     trackFileName,
                     trackContainerType,
@@ -313,7 +311,7 @@ public class MusicLibrary {
                     playlist
             );
 
-            trackObservableList.add(track);
+            trackMetadataObservableList.add(trackMetadata);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -352,7 +350,7 @@ public class MusicLibrary {
 
                 // Clear list to write Artist's tracks
                 index = 0;
-                trackObservableList.clear();
+                trackMetadataObservableList.clear();
                 final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
                 for (Path albumPath : artistDirectory) {
@@ -389,7 +387,7 @@ public class MusicLibrary {
                     }
                 }
 
-                artistNameStr = trackObservableList.get(0).getArtistNameStr();
+                artistNameStr = trackMetadataObservableList.get(0).getArtistNameStr();
             }
 
         } else {
@@ -422,7 +420,7 @@ public class MusicLibrary {
 
                 // Clear list to write album and initialize variables
                 index = 0;
-                trackObservableList.clear();
+                trackMetadataObservableList.clear();
                 final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
                 for (Path trackPath : albumDirectory) {
@@ -435,7 +433,7 @@ public class MusicLibrary {
                         System.out.printf("%s is not a file%n", trackPath);
                     }
                 }
-                artistNameStr = trackObservableList.get(0).getArtistNameStr();
+                artistNameStr = trackMetadataObservableList.get(0).getArtistNameStr();
 
             } else {
                 System.out.printf("%s is not a directory%n", albumPath);
@@ -469,12 +467,12 @@ public class MusicLibrary {
             if (Files.isRegularFile(trackPath)) {
                 if (Files.exists(trackPath)) {
                     index = 0;
-                    trackObservableList.clear();
+                    trackMetadataObservableList.clear();
                     final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
 
                     importTrackLogic(trackPath, rootDirectory);
 
-                    artistNameStr = trackObservableList.get(0).getArtistNameStr();
+                    artistNameStr = trackMetadataObservableList.get(0).getArtistNameStr();
                     System.out.println("ArtistName: " + artistNameStr);
                 }
 
@@ -499,9 +497,9 @@ public class MusicLibrary {
             importTrackMetadata();
 
             try {
-                final String trackArtist = trackObservableList.get(index).getArtistNameStr();
-                final String trackAlbum = trackObservableList.get(index).getAlbumTitleStr();
-                final String trackFileName = trackObservableList.get(index).getTrackFileNameStr();
+                final String trackArtist = trackMetadataObservableList.get(index).getArtistNameStr();
+                final String trackAlbum = trackMetadataObservableList.get(index).getAlbumTitleStr();
+                final String trackFileName = trackMetadataObservableList.get(index).getTrackFileNameStr();
                 final String source = trackPath.toString();
                 final String destination = rootDirectory + File.separator + trackArtist + File.separator +
                         trackAlbum + File.separator + trackFileName;
@@ -528,7 +526,7 @@ public class MusicLibrary {
 
                 }
 
-                trackObservableList.get(index).setTrackPathStr(destination);
+                trackMetadataObservableList.get(index).setTrackPathStr(destination);
                 index++;
 
             }catch(IndexOutOfBoundsException e) {
@@ -572,14 +570,14 @@ public class MusicLibrary {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public ObservableList<Track> getTrackObservableList() { return trackObservableList; }
+    public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
     public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
-    public Track getImportedTrack() {
+    public TrackMetadata getImportedTrack() {
         // Get Track, clear list
-        Track track = trackObservableList.get(0);
-        trackObservableList.clear();
+        TrackMetadata trackMetadata = trackMetadataObservableList.get(0);
+        trackMetadataObservableList.clear();
 
-        return track;
+        return trackMetadata;
     }
 
     public String getArtistNameStr() { return artistNameStr; }

@@ -10,11 +10,7 @@ import java.awt.Desktop;
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.*;
-import java.util.List;
 import java.util.function.Predicate;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -32,24 +28,25 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
 
 public class MusicPlayerController {
+    // FXML ids
     @FXML
     private ListView<String> artistPlaylistListView;
     @FXML
-    private TableView<Track> trackTableView;
+    private TableView<TrackMetadata> trackTableView;
     @FXML
-    private TableColumn<Track, String> colTrackTitle;
+    private TableColumn<TrackMetadata, String> colTrackTitle;
     @FXML
-    public TableColumn<Track, String> colAlbumTitle;
+    public TableColumn<TrackMetadata, String> colAlbumTitle;
     @FXML
-    public TableColumn<Track, String> colTrackLength;
+    public TableColumn<TrackMetadata, String> colTrackLength;
     @FXML
-    public TableColumn<Track, String> colTrackGenre;
+    public TableColumn<TrackMetadata, String> colTrackGenre;
     @FXML
-    public TableColumn<Track, String> colTrackFileNameInvisible;
+    public TableColumn<TrackMetadata, String> colTrackFileNameInvisible;
     @FXML
-    private TableColumn<Track, String> colArtistNameInvisible;
+    private TableColumn<TrackMetadata, String> colArtistNameInvisible;
     @FXML
-    private TableColumn<Track, String> colPlaylistInvisible;
+    private TableColumn<TrackMetadata, String> colPlaylistInvisible;
     @FXML
     private TextField searchField;
     @FXML
@@ -111,6 +108,7 @@ public class MusicPlayerController {
     private TableViewLibrary tableViewLibrary;
     private ListViewLibrary listViewLibrary;
     private AutoPlay autoPlay;
+    private TrackIndex trackIndex;
 
     private String artistNameString;
     private String previousArtistNameString;
@@ -136,6 +134,7 @@ public class MusicPlayerController {
         artistIcon.setOpacity(0);
         volumeDouble = 0.25;
         autoPlay = AutoPlay.OFF;
+        trackIndex = new TrackIndex();
 
         // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
@@ -265,7 +264,7 @@ public class MusicPlayerController {
                     } else {
                         autoPlay = AutoPlay.OFF;
                         deselectRadioButton();
-                        tableViewLibrary.getShuffleArray().clear();
+                        trackIndex.getShuffleArray().clear();
                     }
                 }
         );
@@ -311,8 +310,8 @@ public class MusicPlayerController {
         searchField.textProperty().addListener(
                 ((observableValue, oldValue, newValue) -> {
                     tableViewLibrary.getFilteredList().setPredicate(createSearchPredicate(newValue));
-                    tableViewLibrary.setTableSize(tableViewLibrary.getFilteredList().size());
-                    tableViewLibrary.getShuffleArray().clear();
+                    trackIndex.setTableSize(tableViewLibrary.getFilteredList().size());
+                    trackIndex.getShuffleArray().clear();
                 })
         );
 
@@ -345,7 +344,7 @@ public class MusicPlayerController {
         tableViewLibrary.getFilteredList().setPredicate(createListPredicate());
         trackTableView.setItems(tableViewLibrary.getFilteredList());
         trackTableView.setVisible(true);
-        tableViewLibrary.setTableSize(tableViewLibrary.getFilteredList().size());
+        trackIndex.setTableSize(tableViewLibrary.getFilteredList().size());
 
         // Populate trackTableView with track object data
         colArtistNameInvisible.setCellValueFactory(new PropertyValueFactory<>("artistNameStr"));
@@ -399,7 +398,7 @@ public class MusicPlayerController {
                 String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
                 ListViewController listViewController = new ListViewController();
                 listViewController.showListViewInputWindow(tableViewLibrary, trackTableView, artistPlaylistListView,
-                        listViewLibrary, windowTitle, menuSelection);
+                        listViewLibrary, trackIndex, windowTitle, menuSelection);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -413,7 +412,7 @@ public class MusicPlayerController {
                 String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
                 ListViewController listViewController = new ListViewController();
                 listViewController.showListViewInputWindow(tableViewLibrary, trackTableView, artistPlaylistListView,
-                        listViewLibrary, windowTitle, menuSelection);
+                        listViewLibrary, trackIndex, windowTitle, menuSelection);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -427,7 +426,7 @@ public class MusicPlayerController {
                 String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
                 ListViewController listViewController = new ListViewController();
                 listViewController.showListViewInputWindow(tableViewLibrary, trackTableView, artistPlaylistListView,
-                        listViewLibrary, windowTitle, menuSelection);
+                        listViewLibrary, trackIndex, windowTitle, menuSelection);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -467,7 +466,7 @@ public class MusicPlayerController {
     private void removeArtist(String removeArtistStr) {
         listViewLibrary.removeArtist(removeArtistStr);
 
-        int tableSize = tableViewLibrary.getTableSize();
+        int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
             // Remove Tracks from library
@@ -493,7 +492,7 @@ public class MusicPlayerController {
     private void removePlaylist(String removePlaylistStr) {
         listViewLibrary.removePlaylist(removePlaylistStr);
 
-        int tableSize = tableViewLibrary.getTableSize();
+        int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
             // Alter all playlist tracks playlist to "*"
@@ -583,7 +582,7 @@ public class MusicPlayerController {
 
         // Add track to Playlist
         addTrackToPlaylist.setOnAction(event ->  {
-            int tableSize = tableViewLibrary.getTableSize();
+            int tableSize = trackIndex.getTableSize();
 
             if (tableSize > 0) {
                 System.out.printf("Add %s to %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(), ((MenuItem) event.getTarget()).getText());
@@ -600,7 +599,7 @@ public class MusicPlayerController {
 
         // Remove track from Playlist
         removeTrackFromPlaylist.setOnAction(event -> {
-            int tableSize = tableViewLibrary.getTableSize();
+            int tableSize = trackIndex.getTableSize();
 
             if (tableSize > 0 && !Objects.equals(trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr(), "*")) {
                 System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
@@ -722,20 +721,20 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-    private Predicate<Track> createListPredicate() {
+    private Predicate<TrackMetadata> createListPredicate() {
         return this::listViewTrackSearch;
     }
 
-    private boolean listViewTrackSearch(Track track) {
-        if (track.getPlaylistStr().contains("*") || track.getArtistNameStr().contains(artistNameString)) {
-            return track.getArtistNameStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
+    private boolean listViewTrackSearch(TrackMetadata trackMetadata) {
+        if (trackMetadata.getPlaylistStr().contains("*") || trackMetadata.getArtistNameStr().contains(artistNameString)) {
+            return trackMetadata.getArtistNameStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
 
         } else {
-            return track.getPlaylistStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
+            return trackMetadata.getPlaylistStr().contains(artistPlaylistListView.getSelectionModel().getSelectedItem());
         }
     }
 
-    private Predicate<Track> createSearchPredicate(String searchText) {
+    private Predicate<TrackMetadata> createSearchPredicate(String searchText) {
         return track -> {
             if (searchText == null || searchText.isEmpty()) {
                 return true;
@@ -745,12 +744,12 @@ public class MusicPlayerController {
         };
     }
 
-    private boolean searchMetadata(Track track, String searchText) {
-        return (track.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
-                track.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
-                track.getArtistNameStr().toLowerCase().contains(searchText.toLowerCase()) ||
-                track.getTrackGenreStr().toLowerCase().contains(searchText.toLowerCase()) ||
-                track.getPlaylistStr().toLowerCase().contains(searchText.toLowerCase())
+    private boolean searchMetadata(TrackMetadata trackMetadata, String searchText) {
+        return (trackMetadata.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                trackMetadata.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                trackMetadata.getArtistNameStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                trackMetadata.getTrackGenreStr().toLowerCase().contains(searchText.toLowerCase()) ||
+                trackMetadata.getPlaylistStr().toLowerCase().contains(searchText.toLowerCase())
         );
     }
 
@@ -836,7 +835,7 @@ public class MusicPlayerController {
                 shuffleSelected();
 
             } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
-                trackTableView.getSelectionModel().select(tableViewLibrary.getNextTrackIndex());
+                trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
                 stopMedia(true);
                 playMedia();
             }
@@ -847,7 +846,7 @@ public class MusicPlayerController {
     private void previousButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null &&
         trackTableView.getSelectionModel().getSelectedItem() != null) {
-            trackTableView.getSelectionModel().select(tableViewLibrary.getPreviousTrackIndex());
+            trackTableView.getSelectionModel().select(trackIndex.getPreviousTrackIndex());
             stopMedia(true);
             playMedia();
         }
@@ -1020,62 +1019,62 @@ public class MusicPlayerController {
     }
 
     private void trackIndexTracker() {
-        tableViewLibrary.setPreviousTrackIndex(tableViewLibrary.getCurrentTrackIndex());
-        tableViewLibrary.setCurrentTrackIndex(trackTableView.getItems().indexOf(
+        trackIndex.setPreviousTrackIndex(trackIndex.getCurrentTrackIndex());
+        trackIndex.setCurrentTrackIndex(trackTableView.getItems().indexOf(
                 trackTableView.getSelectionModel().getSelectedItem()));
 
-        if (tableViewLibrary.getCurrentTrackIndex() == tableViewLibrary.getTableSize() - 1) {
-            tableViewLibrary.setNextTrackIndex(0);
+        if (trackIndex.getCurrentTrackIndex() == trackIndex.getTableSize() - 1) {
+            trackIndex.setNextTrackIndex(0);
         } else {
-            tableViewLibrary.setNextTrackIndex(tableViewLibrary.getCurrentTrackIndex() + 1);
+            trackIndex.setNextTrackIndex(trackIndex.getCurrentTrackIndex() + 1);
         }
 //        Index Debugger
-        System.out.printf("curIndex:%d%n", tableViewLibrary.getCurrentTrackIndex());
-        System.out.printf("nextIndex:%d%n", tableViewLibrary.getNextTrackIndex());
-        System.out.printf("prevIndex:%d%n", tableViewLibrary.getPreviousTrackIndex());
-        System.out.printf("lastIndex:%d%n", tableViewLibrary.getTableSize() - 1);
+//        System.out.printf("curIndex:%d%n", shuffle.getCurrentTrackIndex());
+//        System.out.printf("nextIndex:%d%n", shuffle.getNextTrackIndex());
+//        System.out.printf("prevIndex:%d%n", shuffle.getPreviousTrackIndex());
+//        System.out.printf("lastIndex:%d%n", shuffle.getTableSize() - 1);
     }
 
     private void autoPlaySelected() {
-        trackTableView.getSelectionModel().select(tableViewLibrary.getNextTrackIndex());
-        trackTableView.scrollTo(tableViewLibrary.getNextTrackIndex());
+        trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
+        trackTableView.scrollTo(trackIndex.getNextTrackIndex());
         stopMedia(true);
         playMedia();
     }
 
     private void shuffleSelected() {
-        int tableSize = tableViewLibrary.getTableSize();
+        int tableSize = trackIndex.getTableSize();
 
-        if (tableViewLibrary.getShuffleArray() == null || tableViewLibrary.getShuffleArray().isEmpty()) {
+        if (trackIndex.getShuffleArray() == null || trackIndex.getShuffleArray().isEmpty()) {
             assert false;
-            tableViewLibrary.addToShuffle(tableViewLibrary.getCurrentTrackIndex());
+            trackIndex.addToShuffleArray(trackIndex.getCurrentTrackIndex());
         }
 
         if (!Objects.equals(previousArtistNameString, artistNameString)) {
-            tableViewLibrary.clearShuffleArray();
+            trackIndex.clearShuffleArray();
             previousArtistNameString = artistNameString;
         }
 
         SecureRandom randNum = new SecureRandom();
         int randomIndex = randNum.nextInt(0, tableSize);
 
-        if (!tableViewLibrary.getShuffleArray().contains(randomIndex)) { // If index is not present play next
-            tableViewLibrary.addToShuffle(randomIndex);
+        if (!trackIndex.getShuffleArray().contains(randomIndex)) { // If index is not present play next
+            trackIndex.addToShuffleArray(randomIndex);
 
-        } else if (tableViewLibrary.getShuffleArray().size() >= tableSize) { // reset table if array is larger than table size
-            tableViewLibrary.clearShuffleArray();
-            tableViewLibrary.addToShuffle(randomIndex);
+        } else if (trackIndex.getShuffleArray().size() >= tableSize) { // reset table if array is larger than table size
+            trackIndex.clearShuffleArray();
+            trackIndex.addToShuffleArray(randomIndex);
 
         } else {
-            while (tableViewLibrary.getShuffleArray().contains(randomIndex)) { // if index present, find new index
+            while (trackIndex.getShuffleArray().contains(randomIndex)) { // if index present, find new index
                 randomIndex = randNum.nextInt(0, tableSize);
 
-                if (tableViewLibrary.getShuffleArray().size() >= tableSize) { // while loop fail-safe
-                    tableViewLibrary.clearShuffleArray();
+                if (trackIndex.getShuffleArray().size() >= tableSize) { // while loop fail-safe
+                    trackIndex.clearShuffleArray();
                     break;
                 }
             }
-            tableViewLibrary.getShuffleArray().add(randomIndex);
+            trackIndex.getShuffleArray().add(randomIndex);
         }
 
         trackTableView.getSelectionModel().select(randomIndex);
@@ -1085,7 +1084,7 @@ public class MusicPlayerController {
     }
 
     private void repeatSelected() {
-        trackTableView.getSelectionModel().select(tableViewLibrary.getCurrentTrackIndex());
+        trackTableView.getSelectionModel().select(trackIndex.getCurrentTrackIndex());
         stopMedia(true);
         playMedia();
     }
