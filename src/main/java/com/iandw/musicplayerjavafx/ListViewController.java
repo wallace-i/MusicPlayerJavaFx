@@ -27,7 +27,6 @@ public class ListViewController {
     private TableView<Track> trackTableView;
     private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
-    private ObservableList<Track> trackList;
     private TableViewLibrary tableViewLibrary;
     private String windowTitle;
     private String userInput;
@@ -35,23 +34,19 @@ public class ListViewController {
     final private String playlist = "Playlist";
     final private String artist = "Artist";
     final private String edit = "Edit";
-    private int tableSize;
 
     public void initialize() {}
 
-    private void initializeData(ObservableList<Track> trackList, TableViewLibrary tableViewLibrary,
-                                TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
-                                ListViewLibrary listViewLibrary, String windowTitle, String menuSelection,
-                                int tableSize)
+    private void initializeData(TableViewLibrary tableViewLibrary, TableView<Track> trackTableView,
+                                ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
+                                String windowTitle, String menuSelection)
     {
-        this.trackList = trackList;
         this.tableViewLibrary = tableViewLibrary;
         this.trackTableView = trackTableView;
         this.artistPlaylistListView = artistPlaylistListView;
         this.listViewLibrary = listViewLibrary;
         this.windowTitle = windowTitle;
         this.menuSelection = menuSelection;
-        this.tableSize = tableSize;
 
         switch (windowTitle) {
             case playlist -> {
@@ -69,17 +64,16 @@ public class ListViewController {
 
     }
 
-    public void showListViewInputWindow(ObservableList<Track> trackList, TableViewLibrary tableViewLibrary,
-                                        TableView<Track> trackTableView, ListView<String> artistPlaylistListView,
-                                        ListViewLibrary listViewLibrary, String windowTitle, String menuSelection,
-                                        int tableSize) throws IOException
+    public void showListViewInputWindow(TableViewLibrary tableViewLibrary, TableView<Track> trackTableView,
+                                        ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
+                                        String windowTitle, String menuSelection) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("listview.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
-        controller.initializeData(trackList, tableViewLibrary, trackTableView, artistPlaylistListView,
-                listViewLibrary, windowTitle, menuSelection, tableSize);
+        controller.initializeData(tableViewLibrary, trackTableView, artistPlaylistListView,
+                listViewLibrary, windowTitle, menuSelection);
         stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
@@ -198,6 +192,8 @@ public class ListViewController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private void editPlaylist() {
+        int tableSize = tableViewLibrary.getTableSize();
+
         if (tableSize > 0) {
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Editing %s playlist to %s%n",
@@ -206,10 +202,9 @@ public class ListViewController {
                 trackTableView.refresh();
             }
 
-
             try {
                 // Update trackList and Write to file
-                tableViewLibrary.setTrackObservableList(trackList);
+                tableViewLibrary.outputTrackObservableList();
 
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -218,6 +213,8 @@ public class ListViewController {
     }
 
     private void editArtist() {
+        int tableSize = tableViewLibrary.getTableSize();
+
         if (tableSize > 0) {
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Editing %s artist to %s%n",
@@ -229,12 +226,11 @@ public class ListViewController {
 
             try {
                 // Update trackList and Write to file
-                tableViewLibrary.setTrackObservableList(trackList);
+                tableViewLibrary.outputTrackObservableList();
 
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
 }

@@ -372,7 +372,20 @@ public class MusicLibrary {
                         }
 
                     } else {
-                        System.out.printf("%s is not a directory%n", albumPath);
+                        if (Files.exists(albumPath)) {
+                            trackPathStr = albumPath.toAbsolutePath().toString();
+                            trackFileName = albumPath.getFileName().toString();
+                            trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+
+                            // Check for playable file container
+                            if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+
+                                parseMetadata();
+
+                            } else {
+                                System.out.printf("%s is not a compatible file type.", trackFileName);
+                            }
+                        }
                     }
                 }
 
@@ -570,6 +583,5 @@ public class MusicLibrary {
     }
 
     public String getArtistNameStr() { return artistNameStr; }
-    public void setArtistNameStr(String artistNameStr) { this.artistNameStr = artistNameStr; }
 
 }

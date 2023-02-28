@@ -143,7 +143,7 @@
         </Label>
         <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0">
             <graphic>
-                <FontIcon fx:id="artistIcon" iconLiteral="bi-person-circle" iconSize="15" styleClass="icon" />
+                <FontIcon fx:id="artistIcon" iconLiteral="bi-person-fill" iconSize="15" styleClass="icon" />
             </graphic>
         </Label>
         <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="202.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="356.0" showTickMarks="true" />
