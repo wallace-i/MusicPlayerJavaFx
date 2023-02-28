@@ -1,5 +1,5 @@
 /**
- *      Author: Ian Wallace copyright 2022 all rights reserved.
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
  *      Application: MusicPlayer
  *      Class: MusicPlayerController
  *      Notes: Contains FXML member variables and controls program interface
@@ -8,7 +8,6 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.Desktop;
 import java.io.*;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Predicate;
 import javafx.fxml.FXML;
@@ -116,6 +115,8 @@ public class MusicPlayerController {
     private boolean playing;
     private boolean stopped;
 
+
+    // Default Constructor
     public MusicPlayerController() {}
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -136,6 +137,13 @@ public class MusicPlayerController {
         autoPlay = AutoPlay.OFF;
         trackIndex = new TrackIndex();
 
+        // Set TableView column widths
+        colTrackTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 ); // 35% width etc.
+        colAlbumTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 );
+        colTrackLength.setMaxWidth( 1f * Integer.MAX_VALUE * 6 );
+        colTrackGenre.setMaxWidth( 1f * Integer.MAX_VALUE * 16 );
+
+
         // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
         autoButton.setGraphic(autoPlayIcon);
@@ -152,8 +160,6 @@ public class MusicPlayerController {
         // Initialization logic
         musicLibrary = new MusicLibrary();
 //        musicLibrary.initializeMusicLibrary();
-//        artistNameListView.setItems(musicLibrary.getArtistNameObservableList());
-//        trackList.addAll(musicLibrary.getTrackObservableList());
 
         // File I/O logic
         // Artist names / Playlists
@@ -162,9 +168,6 @@ public class MusicPlayerController {
 
         // Track data
         tableViewLibrary = new TableViewLibrary(TracklistFileIO.inputTrackObservableList());
-       // tableViewLibrary.setTrackObservableList(TracklistFileIO.inputTrackObservableList());
-     //   trackList.setAll(tableViewLibrary.getTrackObservableList());
-
 
         // File input logic TODO => make better/less dumb
 //        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
@@ -311,7 +314,8 @@ public class MusicPlayerController {
                 ((observableValue, oldValue, newValue) -> {
                     tableViewLibrary.getFilteredList().setPredicate(createSearchPredicate(newValue));
                     trackIndex.setTableSize(tableViewLibrary.getFilteredList().size());
-                    trackIndex.getShuffleArray().clear();
+                    trackIndex.clearShuffleArray();
+                    trackIndex.clearPreviousIndexStack();
                 })
         );
 
@@ -760,6 +764,7 @@ public class MusicPlayerController {
         mouseClick.consume();
     }
 
+
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
      *                 PLAY/PAUSE/PREVIOUS/NEXT/STOP BUTTON MODULES
@@ -770,6 +775,8 @@ public class MusicPlayerController {
     @FXML
     private void playPauseButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            trackIndex.setPushCurrentTrackToStack(true);
+
             try {
                 if (playing) {
                     mediaPlayer.pause();
@@ -831,6 +838,7 @@ public class MusicPlayerController {
     @FXML
     private void nextButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
+            trackIndex.setPushCurrentTrackToStack(true);
             if (shuffleButton.isSelected()) {
                 shuffleSelected();
 
@@ -845,8 +853,17 @@ public class MusicPlayerController {
     @FXML
     private void previousButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null &&
-        trackTableView.getSelectionModel().getSelectedItem() != null) {
-            trackTableView.getSelectionModel().select(trackIndex.getPreviousTrackIndex());
+            trackTableView.getSelectionModel().getSelectedItem() != null)
+        {
+            trackIndex.setPushCurrentTrackToStack(false);
+
+
+           trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
+
+            if (!trackIndex.getPreviousIndexStack().empty()) {
+                trackTableView.getSelectionModel().select(trackIndex.popPreviousIndexArray());
+            }
+
             stopMedia(true);
             playMedia();
         }
@@ -859,10 +876,8 @@ public class MusicPlayerController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
     private void playMedia() {
-
-        String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
+        final String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
 
         // Debugger
         System.out.printf("currentPath: %s%n", currentPath);
@@ -903,15 +918,20 @@ public class MusicPlayerController {
         mediaPlayer.setOnEndOfMedia(() -> {
             if (trackTableView.getSelectionModel().getSelectedItem() != null) {
                 System.out.println(autoPlay);
+
                 if (autoButton.isSelected()) {
                     autoPlaySelected();
+
                 } else if (repeatButton.isSelected()) {
                     repeatSelected();
+
                 } else if (shuffleButton.isSelected()) {
                     shuffleSelected();
+
                 } else {
                     stopMedia(false);
                 }
+
             } else {
                 stopMedia(true);
             }
@@ -936,7 +956,8 @@ public class MusicPlayerController {
             trackDurationLabel.setText("");
             trackCurrentTimeLabel.setText("");
         }
-        trackDurationLabel.setText(Utils.formatSeconds((int) mediaPlayer.getTotalDuration().toSeconds()));
+        trackDurationLabel.setText(Utils.formatSeconds(
+                (int) mediaPlayer.getTotalDuration().toSeconds() - (int) mediaPlayer.getCurrentTime().toSeconds()));
         trackCurrentTimeLabel.setText(Utils.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
         seekSlider.valueProperty().setValue(mediaPlayer.getCurrentTime().toMillis() /
                 mediaPlayer.getTotalDuration().toMillis() * 100);
@@ -987,39 +1008,32 @@ public class MusicPlayerController {
                 repeatButton.setSelected(false);
                 autoButton.setSelected(false);
             }
-
         }
     }
     private void radioButtonOff() {
         switch (autoPlay) {
-            case AUTO_PLAY -> {
-                autoButton.setSelected(true);
-            }
-            case SHUFFLE -> {
-                shuffleButton.setSelected(true);
-            }
-            case REPEAT -> {
-                repeatButton.setSelected(true);
-            }
+            case AUTO_PLAY  -> autoButton.setSelected(true);
+            case SHUFFLE    -> shuffleButton.setSelected(true);
+            case REPEAT     -> repeatButton.setSelected(true);
         }
     }
 
     private void deselectRadioButton() {
         switch (autoPlay) {
-            case AUTO_PLAY -> {
-                autoButton.setSelected(false);
-            }
-            case SHUFFLE -> {
-                shuffleButton.setSelected(false);
-            }
-            case REPEAT -> {
-                repeatButton.setSelected(false);
-            }
+            case AUTO_PLAY  -> autoButton.setSelected(false);
+            case SHUFFLE    -> shuffleButton.setSelected(false);
+            case REPEAT     -> repeatButton.setSelected(false);
+
         }
     }
 
     private void trackIndexTracker() {
-        trackIndex.setPreviousTrackIndex(trackIndex.getCurrentTrackIndex());
+        // If prev button is continually pressed, do not add current track to stack.
+        // Will add current track to stack when true, while next, auto, user selection, or shuffle are selected.
+        if (trackIndex.getPushCurrentTrackToStack()) {
+            trackIndex.pushToPreviousIndexArray(trackIndex.getCurrentTrackIndex());
+        }
+
         trackIndex.setCurrentTrackIndex(trackTableView.getItems().indexOf(
                 trackTableView.getSelectionModel().getSelectedItem()));
 
@@ -1029,13 +1043,14 @@ public class MusicPlayerController {
             trackIndex.setNextTrackIndex(trackIndex.getCurrentTrackIndex() + 1);
         }
 //        Index Debugger
-//        System.out.printf("curIndex:%d%n", shuffle.getCurrentTrackIndex());
-//        System.out.printf("nextIndex:%d%n", shuffle.getNextTrackIndex());
-//        System.out.printf("prevIndex:%d%n", shuffle.getPreviousTrackIndex());
-//        System.out.printf("lastIndex:%d%n", shuffle.getTableSize() - 1);
+//        System.out.printf("curIndex:%d%n", trackIndex.getCurrentTrackIndex());
+//        System.out.printf("nextIndex:%d%n", trackIndex.getNextTrackIndex());
+//        System.out.printf("prevIndex:%d%n", trackIndex.peekPreviousIndexArray());
+//        System.out.printf("lastIndex:%d%n", trackIndex.getTableSize() - 1);
     }
 
     private void autoPlaySelected() {
+        trackIndex.setPushCurrentTrackToStack(true);
         trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
         trackTableView.scrollTo(trackIndex.getNextTrackIndex());
         stopMedia(true);
@@ -1044,6 +1059,7 @@ public class MusicPlayerController {
 
     private void shuffleSelected() {
         int tableSize = trackIndex.getTableSize();
+        trackIndex.setPushCurrentTrackToStack(true);
 
         if (trackIndex.getShuffleArray() == null || trackIndex.getShuffleArray().isEmpty()) {
             assert false;
@@ -1055,8 +1071,8 @@ public class MusicPlayerController {
             previousArtistNameString = artistNameString;
         }
 
-        SecureRandom randNum = new SecureRandom();
-        int randomIndex = randNum.nextInt(0, tableSize);
+        Random random = new Random();
+        int randomIndex = random.nextInt(0, tableSize);
 
         if (!trackIndex.getShuffleArray().contains(randomIndex)) { // If index is not present play next
             trackIndex.addToShuffleArray(randomIndex);
@@ -1067,7 +1083,7 @@ public class MusicPlayerController {
 
         } else {
             while (trackIndex.getShuffleArray().contains(randomIndex)) { // if index present, find new index
-                randomIndex = randNum.nextInt(0, tableSize);
+                randomIndex = random.nextInt(0, tableSize);
 
                 if (trackIndex.getShuffleArray().size() >= tableSize) { // while loop fail-safe
                     trackIndex.clearShuffleArray();
@@ -1084,6 +1100,7 @@ public class MusicPlayerController {
     }
 
     private void repeatSelected() {
+        trackIndex.setPushCurrentTrackToStack(false);
         trackTableView.getSelectionModel().select(trackIndex.getCurrentTrackIndex());
         stopMedia(true);
         playMedia();
