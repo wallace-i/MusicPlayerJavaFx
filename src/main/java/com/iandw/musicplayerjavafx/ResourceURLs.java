@@ -36,7 +36,7 @@ public class ResourceURLs {
 
     private static final String styledefaultURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "style-default.css")).toString().substring(6));
+                    "style-light.css")).toString().substring(6));
 
 
     // Getters

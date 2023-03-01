@@ -6,7 +6,9 @@
  */
 package com.iandw.musicplayerjavafx;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.io.*;
@@ -16,13 +18,14 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class ListViewLibrary implements Serializable {
-    private ObservableList<String> listViewObservableList;
+    private final ObservableList<String> listViewObservableList;
     private ArrayList<String> playlistArray;
-    private ObservableList<String> artistList;
+    private final ObservableList<String> artistList;
 
     public ListViewLibrary() throws IOException {
         listViewObservableList = FXCollections.observableArrayList();
 
+        // Input playlist data if file is not empty
         if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
             playlistArray = new ArrayList<>(PlaylistsFileIO.inputPlaylists());
 
@@ -30,7 +33,14 @@ public class ListViewLibrary implements Serializable {
             playlistArray = new ArrayList<>();
         }
 
-        artistList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+        // Input artist data if file is not empty
+        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
+            artistList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+
+        } else {
+            artistList = FXCollections.observableArrayList();
+
+        }
     };
 
     public ObservableList<String> loadListViewObservableList() {
@@ -56,22 +66,15 @@ public class ListViewLibrary implements Serializable {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void addArtist(String artistName) throws IOException {
+    public void addArtist(String artistName) {
         artistList.add(artistName);
         Collections.sort(artistList);
         ArtistlistFileIO.outputArtistNameObservableList(artistList);
-
-        //TODO => Decide if app should file manage as well
-
-        // Create new directory if non-existent
-//        String artistPathStr = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
-//        Utils.createDirectory(artistPathStr, artistName);
     }
 
     public void removeArtist(String artistName) {
         artistList.remove(artistName);
         ArtistlistFileIO.outputArtistNameObservableList(artistList);
-
     }
 
     public void addPlaylist(String playlist) {

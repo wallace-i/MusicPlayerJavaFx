@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class EditTrackController {
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane anchorPane; //TODO => Delete?
     @FXML private TextField editTextField;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
@@ -72,17 +72,11 @@ public class EditTrackController {
                 }
             }
 
-            case trackTitle -> {
-                trackTableView.getSelectionModel().getSelectedItem().setTrackTitleStr(userInput);
-            }
+            case trackTitle -> trackTableView.getSelectionModel().getSelectedItem().setTrackTitleStr(userInput);
 
-            case albumTitle -> {
-                trackTableView.getSelectionModel().getSelectedItem().setAlbumTitleStr(userInput);
-            }
+            case albumTitle -> trackTableView.getSelectionModel().getSelectedItem().setAlbumTitleStr(userInput);
 
-            case genre -> {
-                trackTableView.getSelectionModel().getSelectedItem().setTrackGenreStr(userInput);
-            }
+            case genre -> trackTableView.getSelectionModel().getSelectedItem().setTrackGenreStr(userInput);
         }
 
         System.out.printf("Update %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),

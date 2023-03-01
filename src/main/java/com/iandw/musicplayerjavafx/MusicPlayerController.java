@@ -8,6 +8,8 @@ package com.iandw.musicplayerjavafx;
 
 import java.awt.Desktop;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Predicate;
 import javafx.fxml.FXML;
@@ -121,7 +123,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          INITIALIZE CONTROLLER & LISTENERS
+     *                          INITIALIZE CONTROLLER ON STARTUP
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -138,11 +140,10 @@ public class MusicPlayerController {
         trackIndex = new TrackIndex();
 
         // Set TableView column widths
-        colTrackTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 ); // 35% width etc.
+        colTrackTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 ); // 40% width
         colAlbumTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 );
         colTrackLength.setMaxWidth( 1f * Integer.MAX_VALUE * 6 );
-        colTrackGenre.setMaxWidth( 1f * Integer.MAX_VALUE * 16 );
-
+        colTrackGenre.setMaxWidth( 1f * Integer.MAX_VALUE * 14 );
 
         // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
@@ -156,34 +157,42 @@ public class MusicPlayerController {
         imageView.setCache(true);
         imageView.setVisible(true);
 
-
-        // Initialization logic
+        // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary();
 //        musicLibrary.initializeMusicLibrary();
 
-        // File I/O logic
-        // Artist names / Playlists
         listViewLibrary = new ListViewLibrary();
+        tableViewLibrary = new TableViewLibrary();
+
+        // Initialize Library if tracklist.ser is empty
+        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
+            // Choose Root Directory for Music Library
+            String musicFolderString = "Welcome, please choose Music Folder for Library.";
+            SettingsController settingsController = new SettingsController();
+            settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
+                    tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicFolderString);
+
+            // Initialize Music Library
+            musicLibrary.initializeMusicLibrary();
+        }
+
+        // Playlist and Artist List Data => artistPlaylistListView
         artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
-        // Track data
-        tableViewLibrary = new TableViewLibrary(TracklistFileIO.inputTrackObservableList());
-
-        // File input logic TODO => make better/less dumb
-//        if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) != 0) {
-//            // Input from file
-//            tableViewLibrary.inputTrackObservableList();
-//        } else {
-//            // Initialize track data directly from audio files
-//            tableViewLibrary.initializeTrackObservableList();
-//            tableViewLibrary.outputTrackObservableList();
-//        }
-
+        // Track Metadata => trackTableView
+        trackTableView.setItems(tableViewLibrary.loadTrackObservableList());
 
         // Initialize table view
         artistPlaylistListView.getSelectionModel().select(0);
         trackTableView.refresh();
         listViewSelected();
+
+
+        /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *
+         *                        LISTENERS => MusicPlayerController.java
+         *
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         // listener for changes to volumeSlider's value
         volumeSlider.valueProperty().addListener(
@@ -454,8 +463,7 @@ public class MusicPlayerController {
         // Open in File Explorer
         openInExplorer.setOnAction(event -> {
             String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
-            File file = new File(SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL()) +
-                    File.separator + menuSelection);
+            File file = new File(SettingsFileIO.getMusicDirectoryString() + File.separator + menuSelection);
 
             openExplorer(file);
         });
@@ -1131,13 +1139,17 @@ public class MusicPlayerController {
     @FXML
     private void importTrackClicked() throws IOException {
         musicLibrary.importTrack();
-        tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
-        tableViewLibrary.outputTrackObservableList();
-        addArtistFromImport();
+
+        if (!musicLibrary.getTrackObservableList().isEmpty()) {
+            tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
+            tableViewLibrary.outputTrackObservableList();
+            addArtistFromImport();
+        }
+
     }
 
     // Add artist name to list view and save to file if not available
-    private void addArtistFromImport() throws IOException {
+    private void addArtistFromImport() {
         if (!listViewLibrary.getArtistList().contains(musicLibrary.getArtistNameStr())) {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistPlaylistListView.getItems().clear();
@@ -1147,9 +1159,10 @@ public class MusicPlayerController {
 
     @FXML
     private void settingsClicked() throws IOException {
-       SettingsController settingsController = new SettingsController();
-       settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
-               tableViewLibrary, tableViewLibrary.getTrackObservableList());
+        String musicFolderString = SettingsFileIO.getMusicDirectoryString();
+        SettingsController settingsController = new SettingsController();
+        settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
+               tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicFolderString);
     }
 
     @FXML

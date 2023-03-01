@@ -16,8 +16,14 @@ public class TableViewLibrary implements Serializable {
         trackMetadataObservableList = FXCollections.observableArrayList();
     }
 
-    public TableViewLibrary(ObservableList<TrackMetadata> trackMetadataObservableList) {
-        this.trackMetadataObservableList = trackMetadataObservableList;
+//    public TableViewLibrary(ObservableList<TrackMetadata> trackMetadataObservableList) {
+//        this.trackMetadataObservableList = trackMetadataObservableList;
+//    }
+
+    public ObservableList<TrackMetadata> loadTrackObservableList() {
+        trackMetadataObservableList = TracklistFileIO.inputTrackObservableList();
+
+        return trackMetadataObservableList;
     }
 
     public void createFilteredList() {

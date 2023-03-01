@@ -20,7 +20,9 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style-default.css")).toExternalForm());
+        String themeFileNameString = SettingsFileIO.getThemeFileNameString();
+
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style-light.css")).toExternalForm());
         stage.setTitle("Music Player");
         stage.setScene(scene);
         stage.setResizable(false);

@@ -55,7 +55,7 @@ public class MusicLibrary {
 
         Utils.clearSerializedFiles();
 
-        String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+        String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString();
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
 
@@ -331,16 +331,21 @@ public class MusicLibrary {
     public void importArtist() throws IOException {
         importCatagory = ImportCatagory.ARTIST;
 
-        DirectoryChooser artistChooser = new DirectoryChooser();
+        // Clear list to write Artist's tracks
+        trackMetadataObservableList.clear();
 
+        // Select Artist
+        DirectoryChooser artistChooser = new DirectoryChooser();
         artistChooser.setTitle("Select Artist Folder");
         artistChooser.setInitialDirectory((new File(".")));
 
+        // Set Stage, show artistChooser Dialog
         FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         File file = artistChooser.showDialog(stage);
 
+        // Import Artist metadata into Music Library
         if (file != null) {
             Path artistPath = file.toPath();
             artistNameStr = artistPath.toString().substring(artistPath.toString().lastIndexOf(File.separator) + 1);
@@ -348,10 +353,9 @@ public class MusicLibrary {
             if (Files.isDirectory(artistPath)) {
                 DirectoryStream<Path> artistDirectory = Files.newDirectoryStream(artistPath);
 
-                // Clear list to write Artist's tracks
                 index = 0;
-                trackMetadataObservableList.clear();
-                final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+
+                final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
 
                 for (Path albumPath : artistDirectory) {
                     if (Files.isDirectory(albumPath)) {
@@ -401,16 +405,21 @@ public class MusicLibrary {
     public void importAlbum() throws IOException {
         importCatagory = ImportCatagory.ALBUM;
 
-        DirectoryChooser albumChooser = new DirectoryChooser();
+        // Clear list to write album
+        trackMetadataObservableList.clear();
 
+        // Select album folder
+        DirectoryChooser albumChooser = new DirectoryChooser();
         albumChooser.setTitle("Select Album Folder");
         albumChooser.setInitialDirectory((new File(".")));
 
+        // Set Stage, show albumChooser Dialog
         FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         File file = albumChooser.showDialog(stage);
 
+        // Import Album metadata into Music Library
         if (file != null) {
             Path albumPath = file.toPath();
             albumDirectoryStr = albumPath.toString().substring(albumPath.toString().lastIndexOf(File.separator) + 1);
@@ -418,10 +427,9 @@ public class MusicLibrary {
             if (Files.isDirectory(albumPath)) {
                 DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
 
-                // Clear list to write album and initialize variables
                 index = 0;
-                trackMetadataObservableList.clear();
-                final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+
+                final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
 
                 for (Path trackPath : albumDirectory) {
                     if (Files.isRegularFile(trackPath)) {
@@ -451,24 +459,29 @@ public class MusicLibrary {
     public void importTrack() throws IOException {
         importCatagory = ImportCatagory.TRACK;
 
-        FileChooser trackChooser = new FileChooser();
+        // Clear list to write track
+        trackMetadataObservableList.clear();
 
+        // Select track file
+        FileChooser trackChooser = new FileChooser();
         trackChooser.setTitle("Select Track File");
         trackChooser.setInitialDirectory((new File(".")));
 
+        // Set Stage, show trackChooser Dialog
         FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         File file = trackChooser.showOpenDialog(stage);
 
+        // Import Track metadata into Music Library
         if (file != null) {
             Path trackPath = file.toPath();
 
             if (Files.isRegularFile(trackPath)) {
                 if (Files.exists(trackPath)) {
                     index = 0;
-                    trackMetadataObservableList.clear();
-                    final String rootDirectory = SettingsFileIO.getMusicDirectoryString(ResourceURLs.getSettingsURL());
+
+                    final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
 
                     importTrackLogic(trackPath, rootDirectory);
 

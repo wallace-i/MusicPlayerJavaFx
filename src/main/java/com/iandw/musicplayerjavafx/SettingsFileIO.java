@@ -14,25 +14,22 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class SettingsFileIO {
     private static String rootMusicDirectoryString;
+    private static String themeFileNameString;
 
-    public static String getMusicDirectoryString(String jsonURL) {
-        jsonFileInput(jsonURL);
-
-        return rootMusicDirectoryString;
-    }
 
     // Input functions
-    private static void jsonFileInput(String jsonURL) {
+    private static void jsonFileInput() {
 
         System.out.println("reading json");
-
+        Path jsonURL = Paths.get(ResourceURLs.getSettingsURL());
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader(String.valueOf(Paths.get(jsonURL)))) {
+        try (FileReader reader = new FileReader(String.valueOf(jsonURL))) {
             Object obj = jsonParser.parse(reader);
             JSONArray settingsList = (JSONArray) obj;
             settingsList.forEach( settings -> parseSettingsObject( (JSONObject) settings));
@@ -46,9 +43,15 @@ public class SettingsFileIO {
     private static void parseSettingsObject(JSONObject settings) {
         JSONObject settingObject = (JSONObject) settings.get("userSettings");
         rootMusicDirectoryString = (String) settingObject.get("musicLibrary");
+        themeFileNameString = (String) settingObject.get("themeFileName");
     }
 
-    // Output functions
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          Output Modules
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     public void jsonOutputMusicDirectory(String newDirectoryString) {
         JSONObject userSettingsDetails = new JSONObject();
         userSettingsDetails.put("musicLibrary", newDirectoryString);
@@ -60,7 +63,7 @@ public class SettingsFileIO {
         userSettingsList.add(userSettingsObject);
 
         try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
-            System.out.println("writing to settings.json");
+            System.out.println("Writing 'newDirectoryString' to settings.json");
             file.write(userSettingsList.toJSONString());
             file.flush();
 
@@ -70,6 +73,42 @@ public class SettingsFileIO {
 
     }
 
+    public void jsonOutputThemeFileName(String newThemeFileNameString) {
+        JSONObject userSettingsDetails = new JSONObject();
+        userSettingsDetails.put("themeFileName", newThemeFileNameString);
 
+        JSONObject userSettingsObject = new JSONObject();
+        userSettingsObject.put("userSettings", userSettingsDetails);
 
+        JSONArray userSettingsList = new JSONArray();
+        userSettingsList.add(userSettingsObject);
+
+        try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
+            System.out.println("Writing 'newThemeFileName' to settings.json");
+            file.write(userSettingsList.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          GETTERS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    public static String getMusicDirectoryString() {
+        jsonFileInput();
+
+        return rootMusicDirectoryString;
+    }
+
+    public static String getThemeFileNameString() {
+        jsonFileInput();
+
+        return themeFileNameString;
+    }
 }

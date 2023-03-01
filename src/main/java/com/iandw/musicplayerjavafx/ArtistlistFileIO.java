@@ -18,6 +18,7 @@ public class ArtistlistFileIO {
         try {
             // Read from file
             InputStream in = Files.newInputStream(Path.of(ResourceURLs.getArtistListURL()));
+
             ObjectInputStream ois = new ObjectInputStream(in);
             artistNameArrayList = (ArrayList<String>) ois.readObject();
             ois.close();
