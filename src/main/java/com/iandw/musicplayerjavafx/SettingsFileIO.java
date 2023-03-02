@@ -18,33 +18,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class SettingsFileIO {
-    private static String rootMusicDirectoryString;
-    private static String themeFileNameString;
 
 
     // Input functions
-    private static void jsonFileInput() {
+    public static JSONArray jsonFileInput() {
 
-        System.out.println("reading json");
+        System.out.println("Reading user settings from JSON file.");
         Path jsonURL = Paths.get(ResourceURLs.getSettingsURL());
         JSONParser jsonParser = new JSONParser();
+        Object obj = new Object();
 
         try (FileReader reader = new FileReader(String.valueOf(jsonURL))) {
-            Object obj = jsonParser.parse(reader);
-            JSONArray settingsList = (JSONArray) obj;
-            settingsList.forEach( settings -> parseSettingsObject( (JSONObject) settings));
+            obj = jsonParser.parse(reader);
 
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
 
+        return (JSONArray) obj;
+
     }
 
-    private static void parseSettingsObject(JSONObject settings) {
-        JSONObject settingObject = (JSONObject) settings.get("userSettings");
-        rootMusicDirectoryString = (String) settingObject.get("musicLibrary");
-        themeFileNameString = (String) settingObject.get("themeFileName");
-    }
+
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -52,9 +47,13 @@ public class SettingsFileIO {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void jsonOutputMusicDirectory(String newDirectoryString) {
+    public static void jsonFileOutput(UserSettings userSettings) {
+        final String rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
+        final String themeFileNameString = userSettings.getThemeFileNameString();
+
         JSONObject userSettingsDetails = new JSONObject();
-        userSettingsDetails.put("musicLibrary", newDirectoryString);
+        userSettingsDetails.put("musicLibrary", rootMusicDirectoryString);
+        userSettingsDetails.put("themeFileName", themeFileNameString);
 
         JSONObject userSettingsObject = new JSONObject();
         userSettingsObject.put("userSettings", userSettingsDetails);
@@ -63,52 +62,12 @@ public class SettingsFileIO {
         userSettingsList.add(userSettingsObject);
 
         try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
-            System.out.println("Writing 'newDirectoryString' to settings.json");
+            System.out.println("Writing user settings to settings.json");
             file.write(userSettingsList.toJSONString());
             file.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void jsonOutputThemeFileName(String newThemeFileNameString) {
-        JSONObject userSettingsDetails = new JSONObject();
-        userSettingsDetails.put("themeFileName", newThemeFileNameString);
-
-        JSONObject userSettingsObject = new JSONObject();
-        userSettingsObject.put("userSettings", userSettingsDetails);
-
-        JSONArray userSettingsList = new JSONArray();
-        userSettingsList.add(userSettingsObject);
-
-        try (FileWriter file = new FileWriter(ResourceURLs.getSettingsURL())) {
-            System.out.println("Writing 'newThemeFileName' to settings.json");
-            file.write(userSettingsList.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     *                          GETTERS
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    public static String getMusicDirectoryString() {
-        jsonFileInput();
-
-        return rootMusicDirectoryString;
-    }
-
-    public static String getThemeFileNameString() {
-        jsonFileInput();
-
-        return themeFileNameString;
     }
 }

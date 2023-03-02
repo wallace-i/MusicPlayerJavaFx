@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import java.io.*;
 
-public class TableViewLibrary implements Serializable {
+public class TableViewLibrary {
     // Main list to hold all Track objects for TableView
     private ObservableList<TrackMetadata> trackMetadataObservableList;
 
@@ -15,10 +15,6 @@ public class TableViewLibrary implements Serializable {
     public TableViewLibrary() {
         trackMetadataObservableList = FXCollections.observableArrayList();
     }
-
-//    public TableViewLibrary(ObservableList<TrackMetadata> trackMetadataObservableList) {
-//        this.trackMetadataObservableList = trackMetadataObservableList;
-//    }
 
     public ObservableList<TrackMetadata> loadTrackObservableList() {
         trackMetadataObservableList = TracklistFileIO.inputTrackObservableList();

@@ -27,8 +27,8 @@ import org.jaudiotagger.tag.FieldKey;
 public class MusicLibrary {
     @FXML
     private AnchorPane anchorPane;
-    private final ObservableList<TrackMetadata> trackMetadataObservableList;
-    private final ObservableList<String> artistNameObservableList;
+    private ObservableList<TrackMetadata> trackMetadataObservableList;
+    private ObservableList<String> artistNameObservableList;
     private final List<String> supportedFileTypes;
     private String artistNameStr;
     private String albumDirectoryStr;
@@ -37,8 +37,10 @@ public class MusicLibrary {
     private String trackContainerType;
     private int index;
     private ImportCatagory importCatagory;
+    private String rootMusicDirectoryString;
 
-    public MusicLibrary() {
+    public MusicLibrary(UserSettings userSettings) {
+        rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
         trackMetadataObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
@@ -54,8 +56,6 @@ public class MusicLibrary {
         System.out.println("Initializing observable list");
 
         Utils.clearSerializedFiles();
-
-        String rootMusicDirectoryString = SettingsFileIO.getMusicDirectoryString();
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
 
@@ -355,8 +355,6 @@ public class MusicLibrary {
 
                 index = 0;
 
-                final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
-
                 for (Path albumPath : artistDirectory) {
                     if (Files.isDirectory(albumPath)) {
                         DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
@@ -365,7 +363,7 @@ public class MusicLibrary {
                         for (Path trackPath : albumDirectory) {
                             if (Files.isRegularFile(trackPath)) {
                                 if (Files.exists(trackPath)) {
-                                    importTrackLogic(trackPath, rootDirectory);
+                                    importTrackLogic(trackPath, rootMusicDirectoryString);
                                 }
 
                             } else {
@@ -429,12 +427,10 @@ public class MusicLibrary {
 
                 index = 0;
 
-                final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
-
                 for (Path trackPath : albumDirectory) {
                     if (Files.isRegularFile(trackPath)) {
                         if (Files.exists(trackPath)) {
-                            importTrackLogic(trackPath, rootDirectory);
+                            importTrackLogic(trackPath, rootMusicDirectoryString);
                         }
 
                     } else {
@@ -479,11 +475,10 @@ public class MusicLibrary {
 
             if (Files.isRegularFile(trackPath)) {
                 if (Files.exists(trackPath)) {
+
                     index = 0;
 
-                    final String rootDirectory = SettingsFileIO.getMusicDirectoryString();
-
-                    importTrackLogic(trackPath, rootDirectory);
+                    importTrackLogic(trackPath, rootMusicDirectoryString);
 
                     artistNameStr = trackMetadataObservableList.get(0).getArtistNameStr();
                     System.out.println("ArtistName: " + artistNameStr);
@@ -579,12 +574,16 @@ public class MusicLibrary {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          GETTERS
+     *                          GETTERS / CLEAR
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    public void clearMusicLibrary() {
+        trackMetadataObservableList.clear();
+        artistNameObservableList.clear();
+    }
+
     public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
-    public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
     public TrackMetadata getImportedTrack() {
         // Get Track, clear list
         TrackMetadata trackMetadata = trackMetadataObservableList.get(0);

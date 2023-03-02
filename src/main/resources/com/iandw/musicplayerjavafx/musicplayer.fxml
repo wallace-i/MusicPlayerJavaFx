@@ -9,6 +9,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0"
             prefWidth="675.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
+
     <FlowPane layoutY="87.0" prefHeight="302.0" prefWidth="675.0">
         <ListView fx:id="artistPlaylistListView" onContextMenuRequested="#handleListViewContextMenu"
                   onMouseClicked="#handleListViewMouseClick" prefHeight="302.0" prefWidth="139.0"/>

@@ -31,41 +31,50 @@ public class SettingsController extends AnchorPane {
     @FXML
     private Button resetLibrary;
     @FXML
+    private Button clearLibrary;
+    @FXML
     private ComboBox<String> themesComboBox;
     @FXML
     private Label rootDirectoryLabel;
 
+    private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
     private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
     private TableView<TrackMetadata> trackTableView;
     private ObservableList<TrackMetadata> trackMetadataList;
-    private ObservableList<String> themesList;
 
-    public void initialize() {}
+    private UserSettings userSettings;
+
+    // ComboBox variables
+    final String light = "light";
+    final String dark = "dark";
+
+    public void initialize() {
+        // Initialize ComboBox for css themes
+        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark);
+        themesComboBox.getItems().addAll(themesList);
+    }
 
     private void initializeData(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
                                 TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary,
-                                ObservableList<TrackMetadata> trackMetadataList, String musicFolderString)
+                                ObservableList<TrackMetadata> trackMetadataList, MusicLibrary musicLibrary,
+                                UserSettings userSettings, String directoryLabel)
     {
-        rootDirectoryLabel.setText(musicFolderString);
+        rootDirectoryLabel.setText(directoryLabel);
         this.trackTableView = trackTableView;
         this.artistPlaylistListView = artistNameListView;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
+        this.musicLibrary = musicLibrary;
+        this.userSettings = userSettings;
         this.trackMetadataList = trackMetadataList;
-    }
-
-    private void initializeThemes() {
-        themesList = FXCollections.observableArrayList("Light", "Dark");
-
-        themesComboBox = new ComboBox<>(themesList);
-
     }
 
     public void showSettingsWindow(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
                                    TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary,
-                                   ObservableList<TrackMetadata> trackMetadataList, String musicFolderString) throws IOException
+                                   ObservableList<TrackMetadata> trackMetadataList, MusicLibrary musicLibrary,
+                                   UserSettings userSettings, String directoryLabel) throws IOException
     {
         // Load Stage and SettignsController
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
@@ -75,9 +84,7 @@ public class SettingsController extends AnchorPane {
 
         // Initialize SettingsController object member variables
         controller.initializeData(artistNameListView, listViewLibrary, trackTableView, tableViewLibrary,
-                trackMetadataList, musicFolderString);
-
-        initializeThemes();
+                trackMetadataList, musicLibrary, userSettings, directoryLabel);
 
         // Set/Show Stage
         stage.setAlwaysOnTop(true);
@@ -126,7 +133,7 @@ public class SettingsController extends AnchorPane {
         listViewLibrary.clearPlaylistArray();
 
         // Re-initialize with new metadata from new root directory
-        MusicLibrary musicLibrary = new MusicLibrary();
+        musicLibrary.clearMusicLibrary();
         musicLibrary.initializeMusicLibrary();
 
         listViewLibrary = new ListViewLibrary();
@@ -144,10 +151,10 @@ public class SettingsController extends AnchorPane {
         if (path != null && Files.exists(path)) {
             rootDirectoryLabel.setText(path.toString());
 
-            SettingsFileIO readWriteObject = new SettingsFileIO();
-            String rootMusicDirectoryString = path.toString();
-
-            readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
+//            SettingsFileIO readWriteObject = new SettingsFileIO();
+//            String rootMusicDirectoryString = path.toString();
+//
+//          readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
 
             System.out.println("Initializing metadata");
 
@@ -158,7 +165,7 @@ public class SettingsController extends AnchorPane {
             listViewLibrary.clearPlaylistArray();
 
             // Re-initialize with new metadata from new root directory
-            MusicLibrary musicLibrary = new MusicLibrary();
+            musicLibrary.clearMusicLibrary();
             musicLibrary.initializeMusicLibrary();
 
             listViewLibrary = new ListViewLibrary();
@@ -197,9 +204,19 @@ public class SettingsController extends AnchorPane {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          Themes Combo Box
+     *                          THEMES COMBOBOX
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    private void themeSelection() {
+        // CSS files
+        final String styleLight = "style-light.css";
+        final String styleDark = "style-dark.css";
+
+
+
+
+    }
 
 
 }

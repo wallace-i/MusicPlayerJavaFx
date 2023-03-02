@@ -25,6 +25,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
 
@@ -110,6 +111,8 @@ public class MusicPlayerController {
     private ListViewLibrary listViewLibrary;
     private AutoPlay autoPlay;
     private TrackIndex trackIndex;
+    private UserSettings userSettings;
+    private Stage stage;
 
     private String artistNameString;
     private String previousArtistNameString;
@@ -119,7 +122,9 @@ public class MusicPlayerController {
 
 
     // Default Constructor
-    public MusicPlayerController() {}
+    public MusicPlayerController(UserSettings userSettings) {
+        this.userSettings = userSettings;
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -158,7 +163,7 @@ public class MusicPlayerController {
         imageView.setVisible(true);
 
         // Initialize main app objects for Music Library, ListView, and TableView
-        musicLibrary = new MusicLibrary();
+        musicLibrary = new MusicLibrary(userSettings);
 //        musicLibrary.initializeMusicLibrary();
 
         listViewLibrary = new ListViewLibrary();
@@ -166,11 +171,13 @@ public class MusicPlayerController {
 
         // Initialize Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
+
             // Choose Root Directory for Music Library
-            String musicFolderString = "Welcome, please choose Music Folder for Library.";
+            String directoryLabel = "Welcome, please choose Music Folder for Library.";
+
             SettingsController settingsController = new SettingsController();
             settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
-                    tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicFolderString);
+                    tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicLibrary, userSettings, directoryLabel);
 
             // Initialize Music Library
             musicLibrary.initializeMusicLibrary();
@@ -463,7 +470,7 @@ public class MusicPlayerController {
         // Open in File Explorer
         openInExplorer.setOnAction(event -> {
             String menuSelection = artistPlaylistListView.getSelectionModel().getSelectedItem();
-            File file = new File(SettingsFileIO.getMusicDirectoryString() + File.separator + menuSelection);
+            File file = new File(userSettings.getRootMusicDirectoryString() + File.separator + menuSelection);
 
             openExplorer(file);
         });
@@ -1159,16 +1166,21 @@ public class MusicPlayerController {
 
     @FXML
     private void settingsClicked() throws IOException {
-        String musicFolderString = SettingsFileIO.getMusicDirectoryString();
+        String directoryLabel = userSettings.getRootMusicDirectoryString();
         SettingsController settingsController = new SettingsController();
         settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
-               tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicFolderString);
+               tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicLibrary, userSettings, directoryLabel);
     }
 
     @FXML
     private void closeClicked() {
-        System.exit(0);
+        SettingsFileIO.jsonFileOutput(userSettings);
+        stage.close();
     }
 
+
+    // SETTERS
+    public void setUserSettings(UserSettings userSettings) { this.userSettings = userSettings;}
+    public void setStage(Stage stage) { this.stage = stage; }
 }
 
