@@ -51,20 +51,20 @@ public class SettingsController extends AnchorPane {
     // ComboBox variables
     final String light = "Light";
     final String dark = "Dark";
-    final String sea = "Sea";
-    final String earthy = "Earthy";
-    final String rose = "Rose";
+    final String blue = "Blue";
+    final String green = "Green";
+    final String pink = "Pink";
 
     // CSS File Names
     final String styleLightFileName = "style-light.css";
     final String styleDarkFileName = "style-dark.css";
-    final String styleSeaFileName = "style-sea.css";
-    final String styleEarthyFileName = "style-earthy.css";
-    final String styleRoseFileName = "style-rose.css";
+    final String styleBlueFileName = "style-blue.css";
+    final String styleGreenFileName = "style-green.css";
+    final String stylePinkFileName = "style-pink.css";
 
     public void initialize() {
         // Initialize ComboBox for css themes
-        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, sea, earthy, rose);
+        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, blue, green, pink);
         themesComboBox.getItems().addAll(themesList);
 
         themeSelection();
@@ -137,8 +137,35 @@ public class SettingsController extends AnchorPane {
 
         if (file != null) {
             Path rootDirectoryPath = file.toPath();
-            analyzePath(rootDirectoryPath);
-            System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+
+            if (Files.exists(rootDirectoryPath)) {
+                rootDirectoryLabel.setText(rootDirectoryPath.toString());
+
+                userSettings.setRootMusicDirectoryString(rootDirectoryPath.toString());
+
+                System.out.println("Initializing metadata");
+
+                // Clear current list file and observable list
+                Utils.clearSerializedFiles();
+                trackMetadataList.clear();
+                tableViewLibrary.clearObservableList();
+                listViewLibrary.clearPlaylistArray();
+
+                // Re-initialize with new metadata from new root directory
+                musicLibrary.clearMusicLibrary();
+                musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
+                musicLibrary.initializeMusicLibrary();
+
+                listViewLibrary = new ListViewLibrary();
+                artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+
+                trackMetadataList.addAll(musicLibrary.getTrackObservableList());
+                trackTableView.refresh();
+                artistPlaylistListView.refresh();
+                System.out.println("Finished initializing.");
+                System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+
+            }
 
         } else {
             rootDirectoryLabel.setText("Select file or directory");
@@ -147,36 +174,17 @@ public class SettingsController extends AnchorPane {
 
     @FXML
     public void resetLibraryClicked(MouseEvent mouseClick) throws IOException {
-        System.out.println("Resetting Music Library.");
 
-        // Clear current list file and observable list
-        Utils.clearSerializedFiles();
-        trackMetadataList.clear();
-        tableViewLibrary.clearObservableList();
-        listViewLibrary.clearPlaylistArray();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
 
-        // Re-initialize with new metadata from new root directory
-        musicLibrary.clearMusicLibrary();
-        musicLibrary.initializeMusicLibrary();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear Library");
+        alert.setHeaderText("You are about to reset your track metadata and clear playlists.");
+        alert.setContentText("Would you like to continue?");
 
-        listViewLibrary = new ListViewLibrary();
-        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
-
-        trackMetadataList.addAll(musicLibrary.getTrackObservableList());
-
-        trackTableView.refresh();
-        artistPlaylistListView.refresh();
-        System.out.println("Finished Resetting.");
-    }
-
-    private void analyzePath(Path path) throws IOException {
-        // if the file or directory exists, display it
-        if (path != null && Files.exists(path)) {
-            rootDirectoryLabel.setText(path.toString());
-
-            userSettings.setRootMusicDirectoryString(path.toString());
-
-            System.out.println("Initializing metadata");
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            System.out.println("Resetting Music Library.");
 
             // Clear current list file and observable list
             Utils.clearSerializedFiles();
@@ -186,19 +194,23 @@ public class SettingsController extends AnchorPane {
 
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
-            musicLibrary.setRootMusicDirectoryString(path.toString());
             musicLibrary.initializeMusicLibrary();
 
             listViewLibrary = new ListViewLibrary();
             artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
 
             trackMetadataList.addAll(musicLibrary.getTrackObservableList());
+
             trackTableView.refresh();
             artistPlaylistListView.refresh();
-            System.out.println("Finished initializing.");
+            System.out.println("Finished Resetting.");
 
         }
+
+        stage.setAlwaysOnTop(true);
     }
+
+
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -207,17 +219,33 @@ public class SettingsController extends AnchorPane {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     @FXML
     private void clearLibraryClicked() throws IOException {
-        System.out.println("Clearing Music Library data.");
-        System.out.println("Does not remove actual music files or folders from your harddisk.");
 
-        // Clear files
-        Utils.clearSerializedFiles();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
 
-        // Clear
-        artistPlaylistListView.getItems().clear();
-        trackTableView.getItems().removeAll();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear Library");
+        alert.setHeaderText("You are about to clear all track metadata and playlists.");
+        alert.setContentText("Would you like to continue?");
 
-        trackTableView.refresh();
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            System.out.println("Clearing Music Library data.");
+            System.out.println("Does not remove actual music files or folders from your harddisk.");
+
+            // Clear files
+            Utils.clearSerializedFiles();
+
+            // Clear listview and tableview
+            artistPlaylistListView.getItems().clear();
+            tableViewLibrary.clearObservableList();
+            tableViewLibrary.createFilteredList();
+            trackTableView.setItems(tableViewLibrary.getTrackObservableList());
+            trackTableView.refresh();
+        }
+
+        stage.setAlwaysOnTop(true);
+
     }
 
 

@@ -165,34 +165,31 @@ public class MusicPlayerController {
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
 //        musicLibrary.initializeMusicLibrary();
-
         listViewLibrary = new ListViewLibrary();
         tableViewLibrary = new TableViewLibrary();
 
         // Initialize Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
-
             // Choose Root Directory for Music Library
-            String directoryLabel = "Welcome, please choose Music Folder for Library.";
+            String directoryLabel = "Welcome, press 'Music Folder' to initialize.";
 
             SettingsController settingsController = new SettingsController();
             settingsController.showSettingsWindow(artistPlaylistListView, listViewLibrary, trackTableView,
                     tableViewLibrary, tableViewLibrary.getTrackObservableList(), musicLibrary, userSettings, directoryLabel);
 
-            // Initialize Music Library
-            musicLibrary.initializeMusicLibrary();
+        } else {
+            // Else initialize data normally from .ser files
+            // Playlist and Artist List Data => artistPlaylistListView
+            artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+
+            // Track Metadata => trackTableView
+            trackTableView.setItems(tableViewLibrary.loadTrackObservableList());
+
+            // Initialize table view
+            artistPlaylistListView.getSelectionModel().select(0);
+            trackTableView.refresh();
+            listViewSelected();
         }
-
-        // Playlist and Artist List Data => artistPlaylistListView
-        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
-
-        // Track Metadata => trackTableView
-        trackTableView.setItems(tableViewLibrary.loadTrackObservableList());
-
-        // Initialize table view
-        artistPlaylistListView.getSelectionModel().select(0);
-        trackTableView.refresh();
-        listViewSelected();
 
 
         /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

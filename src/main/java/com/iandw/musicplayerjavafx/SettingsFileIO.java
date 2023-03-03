@@ -19,8 +19,7 @@ import java.nio.file.Paths;
 
 public class SettingsFileIO {
 
-
-    // Input functions
+    // Input
     public static JSONArray jsonFileInput() {
 
         System.out.println("Reading user settings from JSON file.");
@@ -39,14 +38,7 @@ public class SettingsFileIO {
 
     }
 
-
-
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     *                          Output Modules
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+    // Output
     public static void jsonFileOutput(UserSettings userSettings) {
         final String rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
         final String themeFileNameString = userSettings.getThemeFileNameString();
