@@ -36,6 +36,8 @@ public class SettingsController extends AnchorPane {
     private ComboBox<String> themesComboBox;
     @FXML
     private Label rootDirectoryLabel;
+    @FXML
+    private Label themesLabel;
 
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
@@ -47,13 +49,25 @@ public class SettingsController extends AnchorPane {
     private UserSettings userSettings;
 
     // ComboBox variables
-    final String light = "light";
-    final String dark = "dark";
+    final String light = "Light";
+    final String dark = "Dark";
+    final String sea = "Sea";
+    final String earthy = "Earthy";
+    final String rose = "Rose";
+
+    // CSS File Names
+    final String styleLightFileName = "style-light.css";
+    final String styleDarkFileName = "style-dark.css";
+    final String styleSeaFileName = "style-sea.css";
+    final String styleEarthyFileName = "style-earthy.css";
+    final String styleRoseFileName = "style-rose.css";
 
     public void initialize() {
         // Initialize ComboBox for css themes
-        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark);
+        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, sea, earthy, rose);
         themesComboBox.getItems().addAll(themesList);
+
+        themeSelection();
     }
 
     private void initializeData(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
@@ -62,6 +76,15 @@ public class SettingsController extends AnchorPane {
                                 UserSettings userSettings, String directoryLabel)
     {
         rootDirectoryLabel.setText(directoryLabel);
+        themesLabel.setText("Music Player Appearance.");
+
+        // Initialize ComboBox
+        String currentTheme = userSettings.getThemeFileNameString();
+        switch (currentTheme) {
+            case styleLightFileName -> themesComboBox.setValue(light);
+            case styleDarkFileName -> themesComboBox.setValue(dark);
+        }
+
         this.trackTableView = trackTableView;
         this.artistPlaylistListView = artistNameListView;
         this.listViewLibrary = listViewLibrary;
@@ -151,10 +174,7 @@ public class SettingsController extends AnchorPane {
         if (path != null && Files.exists(path)) {
             rootDirectoryLabel.setText(path.toString());
 
-//            SettingsFileIO readWriteObject = new SettingsFileIO();
-//            String rootMusicDirectoryString = path.toString();
-//
-//          readWriteObject.jsonOutputMusicDirectory(rootMusicDirectoryString);
+            userSettings.setRootMusicDirectoryString(path.toString());
 
             System.out.println("Initializing metadata");
 
@@ -166,6 +186,7 @@ public class SettingsController extends AnchorPane {
 
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
+            musicLibrary.setRootMusicDirectoryString(path.toString());
             musicLibrary.initializeMusicLibrary();
 
             listViewLibrary = new ListViewLibrary();
@@ -209,14 +230,16 @@ public class SettingsController extends AnchorPane {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     private void themeSelection() {
-        // CSS files
-        final String styleLight = "style-light.css";
-        final String styleDark = "style-dark.css";
+        themesComboBox.setOnAction( (event) -> {
+            String selectedTheme = themesComboBox.getSelectionModel().getSelectedItem();
 
+            System.out.printf("System theme changed from %s to %s.%n", userSettings.getThemeFileNameString(), selectedTheme);
+            switch (selectedTheme) {
+                case light -> userSettings.setThemeFileNameString(styleLightFileName);
+                case dark -> userSettings.setThemeFileNameString(styleDarkFileName);
+            }
 
-
-
+            themesLabel.setText("Restart application to apply new theme");
+        });
     }
-
-
 }

@@ -8,43 +8,39 @@
    <children>
        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="349.0">
            <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="88.0"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="261.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="88.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="261.0" />
            </columnConstraints>
            <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
            <Label fx:id="rootDirectoryLabel" prefHeight="17.0" prefWidth="256.0" GridPane.columnIndex="1">
               <padding>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
               </padding>
            </Label>
-           <Button fx:id="musicFolder" mnemonicParsing="false" onMouseClicked="#rootDirectoryClicked" prefHeight="25.0"
-                   prefWidth="85.0" text="Music Folder"/>
-           <Button fx:id="resetLibrary" mnemonicParsing="false" onMouseClicked="#resetLibraryClicked" prefWidth="85.0"
-                   text="Reset Library" GridPane.rowIndex="4"/>
-           <Label prefHeight="17.0" prefWidth="258.0" text="Re-initialize with current root directory"
-                  GridPane.columnIndex="1" GridPane.rowIndex="4">
+           <Button fx:id="musicFolder" mnemonicParsing="false" onMouseClicked="#rootDirectoryClicked" prefHeight="25.0" prefWidth="85.0" text="Music Folder" />
+           <Button fx:id="resetLibrary" mnemonicParsing="false" onMouseClicked="#resetLibraryClicked" prefWidth="85.0" text="Reset Library" GridPane.rowIndex="1" />
+           <Label prefHeight="17.0" prefWidth="258.0" text="Use current root directory to re-initialize." GridPane.columnIndex="1" GridPane.rowIndex="1">
               <padding>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
               </padding>
            </Label>
-           <ComboBox fx:id="themesComboBox" prefWidth="85.0" GridPane.rowIndex="1"/>
-           <Label text="Theme Selection" GridPane.columnIndex="1" GridPane.rowIndex="1">
+           <ComboBox fx:id="themesComboBox" prefWidth="85.0" GridPane.rowIndex="4" />
+           <Label fx:id="themesLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
               <padding>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
               </padding>
            </Label>
-           <Button fx:id="clearLibrary" mnemonicParsing="false" prefWidth="85.0" text="Clear Library"
-                   onMouseClicked="#clearLibraryClicked" GridPane.rowIndex="5"/>
-           <Label text="Clears Library, does not remove or delete files" GridPane.columnIndex="1" GridPane.rowIndex="5">
+           <Button fx:id="clearLibrary" mnemonicParsing="false" onMouseClicked="#clearLibraryClicked" prefWidth="85.0" text="Clear Library" GridPane.rowIndex="2" />
+           <Label text="Does not remove or delete files audio files." GridPane.columnIndex="1" GridPane.rowIndex="2">
               <padding>
-                  <Insets left="10.0"/>
+                  <Insets left="10.0" />
               </padding>
            </Label>
        </GridPane>

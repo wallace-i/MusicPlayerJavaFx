@@ -11,8 +11,8 @@ public class UserSettings {
         JSONArray jsonArray = SettingsFileIO.jsonFileInput();
         jsonArray.forEach( settings -> parseSettingsObject( (JSONObject) settings));
 
-        System.out.println(rootMusicDirectoryString);
-        System.out.println(themeFileNameString);
+        System.out.println("Root Directory: " + rootMusicDirectoryString);
+        System.out.println("Theme File: " + themeFileNameString);
 
     }
 

@@ -27,8 +27,8 @@ import org.jaudiotagger.tag.FieldKey;
 public class MusicLibrary {
     @FXML
     private AnchorPane anchorPane;
-    private ObservableList<TrackMetadata> trackMetadataObservableList;
-    private ObservableList<String> artistNameObservableList;
+    private final ObservableList<TrackMetadata> trackMetadataObservableList;
+    private final ObservableList<String> artistNameObservableList;
     private final List<String> supportedFileTypes;
     private String artistNameStr;
     private String albumDirectoryStr;
@@ -44,6 +44,11 @@ public class MusicLibrary {
         trackMetadataObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
+    }
+
+    public void clearMusicLibrary() {
+        trackMetadataObservableList.clear();
+        artistNameObservableList.clear();
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -574,16 +579,16 @@ public class MusicLibrary {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          GETTERS / CLEAR
+     *                          SETTERS / GETTERS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void clearMusicLibrary() {
-        trackMetadataObservableList.clear();
-        artistNameObservableList.clear();
+    public void setRootMusicDirectoryString(String rootMusicDirectoryString) {
+        this.rootMusicDirectoryString = rootMusicDirectoryString;
     }
 
     public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
+
     public TrackMetadata getImportedTrack() {
         // Get Track, clear list
         TrackMetadata trackMetadata = trackMetadataObservableList.get(0);
