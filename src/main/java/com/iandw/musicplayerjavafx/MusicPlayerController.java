@@ -119,6 +119,7 @@ public class MusicPlayerController {
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
+    private int albumImageWidth;
 
 
     // Default Constructor
@@ -140,6 +141,7 @@ public class MusicPlayerController {
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
         artistIcon.setOpacity(0);
+        albumImageWidth = 55;
         volumeDouble = 0.25;
         autoPlay = AutoPlay.OFF;
         trackIndex = new TrackIndex();
@@ -917,7 +919,7 @@ public class MusicPlayerController {
             }
 
             imageView.setPreserveRatio(true);
-            imageView.setFitWidth(57);
+            imageView.setFitWidth(albumImageWidth);
             playPauseButton.setGraphic(pauseIcon);
             playing = true;
             stopped = false;

@@ -45,7 +45,6 @@ public class SettingsController extends AnchorPane {
     private ListViewLibrary listViewLibrary;
     private TableView<TrackMetadata> trackTableView;
     private ObservableList<TrackMetadata> trackMetadataList;
-
     private UserSettings userSettings;
 
     // ComboBox variables
@@ -265,6 +264,9 @@ public class SettingsController extends AnchorPane {
             switch (selectedTheme) {
                 case light -> userSettings.setThemeFileNameString(styleLightFileName);
                 case dark -> userSettings.setThemeFileNameString(styleDarkFileName);
+                case blue -> userSettings.setThemeFileNameString(styleBlueFileName);
+                case green -> userSettings.setThemeFileNameString(styleGreenFileName);
+                case pink -> userSettings.setThemeFileNameString(stylePinkFileName);
             }
 
             themesLabel.setText("Restart application to apply new theme");
