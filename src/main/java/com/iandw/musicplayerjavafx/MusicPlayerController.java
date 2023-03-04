@@ -117,10 +117,12 @@ public class MusicPlayerController {
     private Stage stage;
 
     private String artistNameString;
+    private String playlistTitleString;
     private String previousArtistNameString;
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
+    private boolean artistsListSelected;
     private int albumImageWidth;
 
 
@@ -139,6 +141,7 @@ public class MusicPlayerController {
         // Initialize variables
         playing = false;
         stopped = true;
+        artistsListSelected = true;
         playPauseButton.setGraphic(playIcon);
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
@@ -147,6 +150,8 @@ public class MusicPlayerController {
         volumeDouble = 0.25;
         autoPlay = AutoPlay.OFF;
         trackIndex = new TrackIndex();
+        artistNameString = "";
+        playlistTitleString = "";
 
         // Set TableView column widths
         colTrackTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 ); // 40% width
@@ -168,7 +173,7 @@ public class MusicPlayerController {
 
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
-        musicLibrary.initializeMusicLibrary();
+//        musicLibrary.initializeMusicLibrary();
         listViewLibrary = new ListViewLibrary();
         tableViewLibrary = new TableViewLibrary();
 
@@ -193,7 +198,7 @@ public class MusicPlayerController {
             // Initialize table view
             artistsListView.getSelectionModel().select(0);
             trackTableView.refresh();
-            listViewSelected();
+//            listViewSelected();
         }
 
 
@@ -349,15 +354,10 @@ public class MusicPlayerController {
     @FXML
     private void handleArtistsListViewMouseClick(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            // Deselect playlistListView so that the search function can use only
-            // one input from list views
-//            int i = playlistsListView.getSelectionModel().getSelectedIndex();
-//
-//            if (playlistsListView.getSelectionModel().getSelectedIndices().contains(i)) {
-//
-//            }
             playlistsListView.getSelectionModel().clearSelection();
             artistsListView.requestFocus();
+            artistsListSelected = true;
+            artistNameString = artistsListView.getSelectionModel().getSelectedItem();
             listViewSelected();
         }
     }
@@ -365,15 +365,10 @@ public class MusicPlayerController {
     @FXML
     private void handlePlaylistsListViewClick(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            // Deselect artistsListView so that the search function can use only
-            // one input from list views
-//            int i = artistsListView.getSelectionModel().getSelectedIndex();
-//
-//            if (artistsListView.getSelectionModel().getSelectedIndices().contains(i)) {
-//
-//            }
             artistsListView.getSelectionModel().clearSelection();
             playlistsListView.requestFocus();
+            artistsListSelected = false;
+            playlistTitleString = playlistsListView.getSelectionModel().getSelectedItem();
             listViewSelected();
         }
     }
@@ -382,18 +377,26 @@ public class MusicPlayerController {
         // Get selected artist name (from directory name)
         previousArtistNameString = artistNameString;
 
-        if (artistsListView.isFocused()) {
-            artistNameString = artistsListView.getSelectionModel().getSelectedItem();
-        }
-
-        trackTableView.getSortOrder().add(colTrackFileNameInvisible);
-
         // Create a filtered list for trackTableView
         tableViewLibrary.createFilteredList();
-        tableViewLibrary.getFilteredList().setPredicate(createListPredicate());
+
+        // Check artistsObservableList for artist name, call artist list predicate if true.
+        // Else call the playlistListView predicate
+        if (artistsListSelected) {
+            tableViewLibrary.getFilteredList().setPredicate(createArtistsListPredicate());
+
+        } else {
+            tableViewLibrary.getFilteredList().setPredicate(createPlaylistsListPredicate());
+        }
+
+//        tableViewLibrary.getFilteredList().setPredicate(createListPredicate());
+
         trackTableView.setItems(tableViewLibrary.getFilteredList());
         trackTableView.setVisible(true);
         trackIndex.setTableSize(tableViewLibrary.getFilteredList().size());
+
+        // Sort Table
+        trackTableView.getSortOrder().add(colTrackFileNameInvisible);
 
         // Populate trackTableView with track object data
         colArtistNameInvisible.setCellValueFactory(new PropertyValueFactory<>("artistNameStr"));
@@ -830,18 +833,42 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-    private Predicate<TrackMetadata> createListPredicate() {
-        return this::listViewTrackSearch;
+    private Predicate<TrackMetadata> createArtistsListPredicate() {
+        return this::artistsListTrackSearch;
     }
 
-    private boolean listViewTrackSearch(TrackMetadata trackMetadata) {
-        if (trackMetadata.getPlaylistStr().contains("*") || trackMetadata.getArtistNameStr().contains(artistNameString)) {
+    private Predicate<TrackMetadata> createPlaylistsListPredicate() {
+        return this::playlistsListTrackSearch;
+    }
+
+    private boolean artistsListTrackSearch(TrackMetadata trackMetadata) {
+        if (trackMetadata.getArtistNameStr().contains(artistNameString) && artistsListView != null) {
             return trackMetadata.getArtistNameStr().contains(artistsListView.getSelectionModel().getSelectedItem());
-
-        } else {
-            return trackMetadata.getPlaylistStr().contains(artistsListView.getSelectionModel().getSelectedItem());
         }
+
+        return false;
     }
+
+    private boolean playlistsListTrackSearch(TrackMetadata trackMetadata) {
+        if (trackMetadata.getPlaylistStr().contains(playlistTitleString) && playlistsListView != null) {
+            return trackMetadata.getPlaylistStr().contains(playlistsListView.getSelectionModel().getSelectedItem());
+        }
+
+        return false;
+    }
+
+//    private Predicate<TrackMetadata> createListPredicate() {
+//        return this::listViewTrackSearch;
+//    }
+//
+//    private boolean listViewTrackSearch(TrackMetadata trackMetadata) {
+//        if (trackMetadata.getPlaylistStr().contains("*") || trackMetadata.getArtistNameStr().contains(artistNameString)) {
+//            return trackMetadata.getArtistNameStr().contains(artistsListView.getSelectionModel().getSelectedItem());
+//
+//        } else {
+//            return trackMetadata.getPlaylistStr().contains(playlistsListView.getSelectionModel().getSelectedItem());
+//        }
+//    }
 
     private Predicate<TrackMetadata> createSearchPredicate(String searchText) {
         return track -> {

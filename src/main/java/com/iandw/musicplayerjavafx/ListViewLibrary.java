@@ -27,8 +27,8 @@ public class ListViewLibrary {
 
         } else {
             artistsObservableList = FXCollections.observableArrayList();
-            assert false;
-            playlistsObservableList.add(noArtists);
+//            assert false;
+//            playlistsObservableList.add(noArtists);
         }
 
         // Input playlist data if file is not empty
@@ -37,7 +37,7 @@ public class ListViewLibrary {
 
         } else {
             playlistsObservableList = FXCollections.observableArrayList();
-            playlistsObservableList.add(noPlaylists);
+//            playlistsObservableList.add(noPlaylists);
         }
     }
 
@@ -55,7 +55,7 @@ public class ListViewLibrary {
 
     public void addArtist(String artistName) {
         // Remove warning if empty
-        artistsObservableList.remove(noArtists);
+//        artistsObservableList.remove(noArtists);
 
         // Update observable list, sort, and write to file
         artistsObservableList.add(artistName);
@@ -70,7 +70,7 @@ public class ListViewLibrary {
 
     public void addPlaylist(String playlist) {
         // Remove warning if empty
-        artistsObservableList.remove(noPlaylists);
+//        artistsObservableList.remove(noPlaylists);
 
         // Update observable list, sort, and write to file
         playlistsObservableList.add(playlist);

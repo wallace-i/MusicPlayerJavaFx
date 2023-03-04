@@ -180,7 +180,7 @@
                 <Insets right="3.0" />
             </StackPane.margin>
         </TextField>
-        <Label mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" styleClass="search-button" StackPane.alignment="CENTER_LEFT">
+        <Label prefHeight="25.0" prefWidth="30.0" styleClass="search-button" StackPane.alignment="CENTER_LEFT">
             <graphic>
                 <FontIcon iconLiteral="bi-search" iconSize="13" styleClass="icon" translateX="5.0" />
             </graphic>
