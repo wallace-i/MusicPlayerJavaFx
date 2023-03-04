@@ -68,7 +68,7 @@ public class EditTrackController {
                 if (!artistPlaylistListView.getItems().contains(userInput)) {
                     listViewLibrary.addArtist(userInput);
                     artistPlaylistListView.getItems().clear();
-                    artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+                    artistPlaylistListView.setItems(listViewLibrary.getArtistObservableList());
                 }
             }
 

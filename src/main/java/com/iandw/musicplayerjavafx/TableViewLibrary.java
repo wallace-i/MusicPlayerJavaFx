@@ -3,7 +3,11 @@ package com.iandw.musicplayerjavafx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class TableViewLibrary {
     // Main list to hold all Track objects for TableView
@@ -12,14 +16,21 @@ public class TableViewLibrary {
     // Filtered from trackObservableList from Search Bar or ListView
     private FilteredList<TrackMetadata> filteredList;
 
-    public TableViewLibrary() {
-        trackMetadataObservableList = FXCollections.observableArrayList();
+    public TableViewLibrary() throws IOException {
+
+        // Load trackTableView
+        if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
+            trackMetadataObservableList = FXCollections.observableArrayList(TracklistFileIO.inputTrackObservableList());
+
+        } else {
+            trackMetadataObservableList = FXCollections.observableArrayList();
+
+        }
+
     }
 
-    public ObservableList<TrackMetadata> loadTrackObservableList() {
+    public void loadTrackMetadataObservableListFromFile() {
         trackMetadataObservableList = TracklistFileIO.inputTrackObservableList();
-
-        return trackMetadataObservableList;
     }
 
     public void createFilteredList() {
@@ -27,7 +38,7 @@ public class TableViewLibrary {
         filteredList = new FilteredList<>(FXCollections.observableArrayList(trackMetadataObservableList));
     }
 
-    public void addTrack(TrackMetadata trackMetadata) throws FileNotFoundException {
+    public void addTrack(TrackMetadata trackMetadata) {
         trackMetadataObservableList.add(trackMetadata);
     }
 
@@ -41,14 +52,17 @@ public class TableViewLibrary {
 
     public void clearObservableList() { trackMetadataObservableList.clear(); }
 
-    // Setter
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          SETTERS / GETTERS
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     public void setTrackObservableList(ObservableList<TrackMetadata> trackMetadataObservableList) {
         this.trackMetadataObservableList = trackMetadataObservableList;
     }
-
-
-    // Getters
     public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
     public FilteredList<TrackMetadata> getFilteredList() { return filteredList; }
+
 
 }

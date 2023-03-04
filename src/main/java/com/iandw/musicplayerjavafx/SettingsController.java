@@ -38,13 +38,12 @@ public class SettingsController extends AnchorPane {
     private Label rootDirectoryLabel;
     @FXML
     private Label themesLabel;
-
+    private TableView<TrackMetadata> trackTableView;
+    private ListView<String> artistsListView;
+    private ListView<String> playlistsListView;
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
-    private ListView<String> artistPlaylistListView;
     private ListViewLibrary listViewLibrary;
-    private TableView<TrackMetadata> trackTableView;
-    private ObservableList<TrackMetadata> trackMetadataList;
     private UserSettings userSettings;
 
     // ComboBox variables
@@ -69,9 +68,9 @@ public class SettingsController extends AnchorPane {
         themeSelection();
     }
 
-    private void initializeData(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
-                                TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary,
-                                ObservableList<TrackMetadata> trackMetadataList, MusicLibrary musicLibrary,
+    private void initializeData(ListView<String> artistsListView, ListView<String> playlistsListView,
+                                TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
                                 UserSettings userSettings, String directoryLabel)
     {
         rootDirectoryLabel.setText(directoryLabel);
@@ -84,18 +83,18 @@ public class SettingsController extends AnchorPane {
             case styleDarkFileName -> themesComboBox.setValue(dark);
         }
 
+        this.artistsListView = artistsListView;
+        this.playlistsListView = playlistsListView;
         this.trackTableView = trackTableView;
-        this.artistPlaylistListView = artistNameListView;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
         this.musicLibrary = musicLibrary;
         this.userSettings = userSettings;
-        this.trackMetadataList = trackMetadataList;
     }
 
-    public void showSettingsWindow(ListView<String> artistNameListView, ListViewLibrary listViewLibrary,
-                                   TableView<TrackMetadata> trackTableView, TableViewLibrary tableViewLibrary,
-                                   ObservableList<TrackMetadata> trackMetadataList, MusicLibrary musicLibrary,
+    public void showSettingsWindow(ListView<String> artistsListView, ListView<String> playlistsListView,
+                                   TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                   TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
                                    UserSettings userSettings, String directoryLabel) throws IOException
     {
         // Load Stage and SettignsController
@@ -105,8 +104,8 @@ public class SettingsController extends AnchorPane {
         SettingsController controller = loader.getController();
 
         // Initialize SettingsController object member variables
-        controller.initializeData(artistNameListView, listViewLibrary, trackTableView, tableViewLibrary,
-                trackMetadataList, musicLibrary, userSettings, directoryLabel);
+        controller.initializeData(artistsListView, playlistsListView, trackTableView, listViewLibrary, tableViewLibrary,
+                musicLibrary, userSettings, directoryLabel);
 
         // Set/Show Stage
         stage.setAlwaysOnTop(true);
@@ -146,21 +145,17 @@ public class SettingsController extends AnchorPane {
 
                 // Clear current list file and observable list
                 Utils.clearSerializedFiles();
-                trackMetadataList.clear();
                 tableViewLibrary.clearObservableList();
-                listViewLibrary.clearPlaylistArray();
+                tableViewLibrary.clearObservableList();
+                listViewLibrary.clearObservableLists();
 
                 // Re-initialize with new metadata from new root directory
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
                 musicLibrary.initializeMusicLibrary();
 
-                listViewLibrary = new ListViewLibrary();
-                artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+                loadLibraries();
 
-                trackMetadataList.addAll(musicLibrary.getTrackObservableList());
-                trackTableView.refresh();
-                artistPlaylistListView.refresh();
                 System.out.println("Finished initializing.");
                 System.out.printf("updated root directory: %s%n", rootDirectoryPath);
 
@@ -187,21 +182,16 @@ public class SettingsController extends AnchorPane {
 
             // Clear current list file and observable list
             Utils.clearSerializedFiles();
-            trackMetadataList.clear();
+            trackTableView.getItems().clear();
             tableViewLibrary.clearObservableList();
-            listViewLibrary.clearPlaylistArray();
+            listViewLibrary.clearObservableLists();
 
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
             musicLibrary.initializeMusicLibrary();
 
-            listViewLibrary = new ListViewLibrary();
-            artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+            loadLibraries();
 
-            trackMetadataList.addAll(musicLibrary.getTrackObservableList());
-
-            trackTableView.refresh();
-            artistPlaylistListView.refresh();
             System.out.println("Finished Resetting.");
 
         }
@@ -209,6 +199,15 @@ public class SettingsController extends AnchorPane {
         stage.setAlwaysOnTop(true);
     }
 
+    private void loadLibraries() {
+        // Load updated files into listViewLibrary and tableViewLibrary
+        listViewLibrary.loadObservableListsFromFile();
+        tableViewLibrary.loadTrackMetadataObservableListFromFile();
+
+        trackTableView.refresh();
+        artistsListView.refresh();
+        playlistsListView.refresh();
+    }
 
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -236,7 +235,8 @@ public class SettingsController extends AnchorPane {
             Utils.clearSerializedFiles();
 
             // Clear listview and tableview
-            artistPlaylistListView.getItems().clear();
+            artistsListView.getItems().clear();
+            playlistsListView.getItems().clear();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.createFilteredList();
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());

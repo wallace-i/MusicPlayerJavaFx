@@ -7,15 +7,19 @@
 
 package com.iandw.musicplayerjavafx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class PlaylistsFileIO implements Serializable {
-    public static ArrayList<String> inputPlaylists() {
+    public static ObservableList<String> inputPlaylists() {
 
         ArrayList<String> playlistArray;
+        ObservableList<String> playlistObservableList = FXCollections.observableArrayList();
 
         try {
             // Read from file
@@ -25,22 +29,26 @@ public class PlaylistsFileIO implements Serializable {
             playlistArray = (ArrayList<String>) ois.readObject();
             ois.close();
 
+            playlistObservableList.addAll(playlistArray);
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        return playlistArray;
+        return playlistObservableList;
 
     }
 
-    public static void outputPlaylists(ArrayList<String> playlistArray) {
+    public static void outputPlaylists(ObservableList<String> playlistsObservableList) {
+
+        ArrayList<String> playlistsArrayList = new ArrayList<>(playlistsObservableList);
 
         try {
             // Write track objects to file
             System.out.println("Writing to playlists.ser");
             OutputStream out = Files.newOutputStream(Path.of(ResourceURLs.getPlaylistsURL()));
             ObjectOutputStream oos = new ObjectOutputStream(out);
-            oos.writeObject(playlistArray);
+            oos.writeObject(playlistsArrayList);
             oos.close();
 
         } catch (IOException e){

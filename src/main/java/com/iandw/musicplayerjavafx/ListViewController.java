@@ -19,57 +19,56 @@ public class ListViewController {
     @FXML private Button okButton;
     @FXML private Button cancelButton;
     private TableView<TrackMetadata> trackTableView;
-    private ListView<String> artistPlaylistListView;
+    private ListView<String> artistsListView;
+    private ListView<String> playlistsListView;
     private ListViewLibrary listViewLibrary;
     private TableViewLibrary tableViewLibrary;
     private TrackIndex trackIndex;
     private String windowTitle;
     private String userInput;
     private String menuSelection;
-    final private String playlist = "Playlist";
-    final private String artist = "Artist";
-    final private String edit = "Edit";
+    final private String addArtist = "Add Artist";
+    final private String editArtist = "Edit Artist";
+    final private String createPlaylist = "Create Playlist";
+    final private String editPlaylist = "Edit Playlist";
 
     public void initialize() {}
 
-    private void initializeData(TableViewLibrary tableViewLibrary, TableView<TrackMetadata> trackTableView,
-                                ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
-                                TrackIndex trackIndex, String windowTitle, String menuSelection)
+    private void initializeData(ListView<String> artistsListView, ListView<String> playlistsListView,
+                                TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
+                                String windowTitle, String menuSelection)
     {
-        this.tableViewLibrary = tableViewLibrary;
+        this.artistsListView = artistsListView;
+        this.playlistsListView = playlistsListView;
         this.trackTableView = trackTableView;
-        this.artistPlaylistListView = artistPlaylistListView;
+        this.tableViewLibrary = tableViewLibrary;
         this.listViewLibrary = listViewLibrary;
         this.trackIndex = trackIndex;
         this.windowTitle = windowTitle;
         this.menuSelection = menuSelection;
 
         switch (windowTitle) {
-            case playlist -> {
-                playlistNameTextInput.setPromptText("create Playlist");
-            }
-            case artist -> {
-                playlistNameTextInput.setPromptText("add Artist");
-            }
-            case edit -> {
-                playlistNameTextInput.setText(menuSelection);
-            }
+            case addArtist -> playlistNameTextInput.setPromptText("add Artist");
+            case createPlaylist -> playlistNameTextInput.setPromptText("create Playlist");
+            case editArtist, editPlaylist -> playlistNameTextInput.setText(menuSelection);
         }
 
         playlistNameTextInput.setFocusTraversable(false);
 
     }
 
-    public void showListViewInputWindow(TableViewLibrary tableViewLibrary, TableView<TrackMetadata> trackTableView,
-                                        ListView<String> artistPlaylistListView, ListViewLibrary listViewLibrary,
-                                        TrackIndex trackIndex, String windowTitle, String menuSelection) throws IOException
+    public void showListViewInputWindow(ListView<String> artistsListView, ListView<String> playlistsListView,
+                                        TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                        TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
+                                        String windowTitle, String menuSelection) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("listview.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
-        controller.initializeData(tableViewLibrary, trackTableView, artistPlaylistListView,
-                listViewLibrary, trackIndex, windowTitle, menuSelection);
+        controller.initializeData(artistsListView, playlistsListView, trackTableView, listViewLibrary, tableViewLibrary,
+                trackIndex, windowTitle, menuSelection);
         stage.setTitle(windowTitle);
         stage.setResizable(false);
         stage.show();
@@ -88,21 +87,20 @@ public class ListViewController {
 
         switch (windowTitle) {
 
-            // Add playlist
-            case playlist -> {
+            // Create playlist
+            case createPlaylist -> {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistList().contains(userInput) ||
-                            listViewLibrary.getPlaylistArray().contains(userInput)) {
+                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
+                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
                     listViewLibrary.addPlaylist(userInput);
-                    artistPlaylistListView.getItems().clear();
-                    artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
-
-                    stage.close();
+                    playlistsListView.getItems().clear();
+                    playlistsListView.setItems(listViewLibrary.getPlaylistsObservableList());
+                    playlistsListView.refresh();
 
                 } catch (Exception e) {
                     playlistNameTextInput.clear();
@@ -112,20 +110,19 @@ public class ListViewController {
             }
 
             // Add Artist
-            case artist -> {
+            case addArtist -> {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistList().contains(userInput) ||
-                            listViewLibrary.getPlaylistArray().contains(userInput)) {
+                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
+                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
                     listViewLibrary.addArtist(userInput);
-                    artistPlaylistListView.getItems().clear();
-                    artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
-
-                    stage.close();
+                    artistsListView.getItems().clear();
+                    artistsListView.setItems(listViewLibrary.getArtistObservableList());
+                    artistsListView.refresh();
 
                 } catch (Exception e) {
                     playlistNameTextInput.clear();
@@ -134,34 +131,52 @@ public class ListViewController {
                 }
             }
 
-            case edit -> {
+            case editArtist -> {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistList().contains(userInput) ||
-                            listViewLibrary.getPlaylistArray().contains(userInput)) {
+                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
+                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
+                        throw new Exception();
+                    }
+
+                    // Edit Artist
+                    if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
+                        System.out.println("Editing artist");
+                        listViewLibrary.removeArtist(menuSelection);
+                        listViewLibrary.addArtist(userInput);
+                        artistsListView.getItems().clear();
+                        artistsListView.setItems(listViewLibrary.getArtistObservableList());
+
+                        editArtist();
+                    }
+
+                } catch (Exception e) {
+                    playlistNameTextInput.clear();
+                    playlistNameTextInput.setPromptText("Name must be unique");
+                    playlistNameTextInput.setFocusTraversable(false);
+
+                }
+            }
+
+            case editPlaylist -> {
+                try {
+                    // Throw exception if playlist is the same name as an Artist
+                    // otherwise may cause bugs when choosing to remove an artist or playlist
+                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
+                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
                     // Edit playlist
-                    if (listViewLibrary.getPlaylistArray().contains(menuSelection)) {
+                    if (listViewLibrary.getPlaylistsObservableList().contains(menuSelection)) {
                         System.out.println("Editing playlist");
                         listViewLibrary.removePlaylist(menuSelection);
                         listViewLibrary.addPlaylist(userInput);
-                        artistPlaylistListView.getItems().clear();
-                        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
+                        playlistsListView.getItems().clear();
+                        playlistsListView.setItems(listViewLibrary.getPlaylistsObservableList());
 
                         editPlaylist();
-
-                    // Edit Artist
-                    } else if (listViewLibrary.getArtistList().contains(menuSelection)) {
-                        System.out.println("Editing artist");
-                        listViewLibrary.removeArtist(menuSelection);
-                        listViewLibrary.addArtist(userInput);
-                        artistPlaylistListView.getItems().clear();
-                        artistPlaylistListView.setItems(listViewLibrary.loadListViewObservableList());
-
-                        editArtist();
                     }
 
                 } catch (Exception e) {

@@ -7,30 +7,38 @@
 <?import org.kordamp.ikonli.javafx.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
-
-    <FlowPane layoutY="87.0" prefHeight="302.0" prefWidth="675.0">
-        <ListView fx:id="artistPlaylistListView" onContextMenuRequested="#handleListViewContextMenu" onMouseClicked="#handleListViewMouseClick" prefHeight="302.0" prefWidth="139.0">
-         <FlowPane.margin>
-            <Insets left="5.0" right="2.0" />
-         </FlowPane.margin></ListView>
-        <TableView fx:id="trackTableView" onContextMenuRequested="#handleTableViewContextMenu" onMouseClicked="#handleTableViewMouseClick" prefHeight="302.0" prefWidth="524.0">
-            <columns>
-                <TableColumn fx:id="colArtistNameInvisible" visible="false" />
-                <TableColumn fx:id="colTrackFileNameInvisible" visible="false" />
-                <TableColumn fx:id="colTrackTitle" prefWidth="199.0" text="Track Title" />
-                <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="189.0" text="Album" />
-                <TableColumn fx:id="colTrackLength" prefWidth="225.0" text="Time" />
-                <TableColumn fx:id="colTrackGenre" maxWidth="1.7976931348623157E308" prefWidth="287.0" text="Genre" />
-                <TableColumn fx:id="colPlaylistInvisible" visible="false" />
-            </columns>
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-         <FlowPane.margin>
-            <Insets right="5.0" />
-         </FlowPane.margin>
-        </TableView>
-    </FlowPane>
+    <HBox layoutY="87.0" prefHeight="302.0" prefWidth="675.0">
+        <SplitPane dividerPositions="0.21842496285289748" prefHeight="302.0" prefWidth="678.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <SplitPane dividerPositions="0.75" layoutX="-8.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="286.0" prefWidth="144.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <ListView fx:id="artistsListView" onContextMenuRequested="#handleArtistsListViewContextMenu" onMouseClicked="#handleArtistsListViewMouseClick" prefHeight="139.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </ListView>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                        <ListView fx:id="playlistsListView" onContextMenuRequested="#handlePlaylistsListViewContextMenu" onMouseClicked="#handlePlaylistsListViewClick" prefHeight="146.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        </ListView>
+                    </AnchorPane>
+                </SplitPane>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="470.0">
+                <TableView fx:id="trackTableView" onContextMenuRequested="#handleTableViewContextMenu" onMouseClicked="#handleTableViewMouseClick" prefHeight="300.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="colArtistNameInvisible" visible="false" />
+                        <TableColumn fx:id="colTrackFileNameInvisible" visible="false" />
+                        <TableColumn fx:id="colTrackTitle" prefWidth="199.0" text="Track Title" />
+                        <TableColumn fx:id="colAlbumTitle" minWidth="0.0" prefWidth="189.0" text="Album" />
+                        <TableColumn fx:id="colTrackLength" prefWidth="225.0" text="Time" />
+                        <TableColumn fx:id="colTrackGenre" maxWidth="1.7976931348623157E308" prefWidth="287.0" text="Genre" />
+                        <TableColumn fx:id="colPlaylistInvisible" visible="false" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </AnchorPane>
+        </SplitPane>
+    </HBox>
     <HBox alignment="CENTER" layoutX="117.0" layoutY="419.0" prefHeight="25.0" prefWidth="524.0">
         <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefWidth="55.0">
             <graphic>

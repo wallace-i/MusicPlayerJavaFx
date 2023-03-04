@@ -6,58 +6,45 @@
  */
 package com.iandw.musicplayerjavafx;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
-public class ListViewLibrary implements Serializable {
-    private final ObservableList<String> listViewObservableList;
-    private ArrayList<String> playlistArray;
-    private final ObservableList<String> artistList;
+public class ListViewLibrary {
+    private ObservableList<String> artistsObservableList;
+    private ObservableList<String> playlistsObservableList;
+    private String noArtists = "* no artists *";
+    private String noPlaylists = "* no playlists *";
+
 
     public ListViewLibrary() throws IOException {
-        listViewObservableList = FXCollections.observableArrayList();
+        // Input artist data if file is not empty
+        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
+            artistsObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+
+        } else {
+            artistsObservableList = FXCollections.observableArrayList();
+            assert false;
+            playlistsObservableList.add(noArtists);
+        }
 
         // Input playlist data if file is not empty
         if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-            playlistArray = new ArrayList<>(PlaylistsFileIO.inputPlaylists());
+            playlistsObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
 
         } else {
-            playlistArray = new ArrayList<>();
+            playlistsObservableList = FXCollections.observableArrayList();
+            playlistsObservableList.add(noPlaylists);
         }
+    }
 
-        // Input artist data if file is not empty
-        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
-            artistList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+    public void loadObservableListsFromFile() {
+        artistsObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+        playlistsObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
 
-        } else {
-            artistList = FXCollections.observableArrayList();
-
-        }
-    };
-
-    public ObservableList<String> loadListViewObservableList() {
-
-        // Load user playlists into listview
-        listViewObservableList.add("------- Playlists -------");
-
-        if (playlistArray.isEmpty()) {
-            listViewObservableList.add("* no playlists *");
-        } else {
-            listViewObservableList.addAll(playlistArray);
-        }
-        listViewObservableList.add("------- Artists ---------");
-
-        listViewObservableList.addAll(artistList);
-
-        return listViewObservableList;
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -67,26 +54,38 @@ public class ListViewLibrary implements Serializable {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public void addArtist(String artistName) {
-        artistList.add(artistName);
-        Collections.sort(artistList);
-        ArtistlistFileIO.outputArtistNameObservableList(artistList);
+        // Remove warning if empty
+        artistsObservableList.remove(noArtists);
+
+        // Update observable list, sort, and write to file
+        artistsObservableList.add(artistName);
+        Collections.sort(artistsObservableList);
+        ArtistlistFileIO.outputArtistNameObservableList(artistsObservableList);
     }
 
     public void removeArtist(String artistName) {
-        artistList.remove(artistName);
-        ArtistlistFileIO.outputArtistNameObservableList(artistList);
+        artistsObservableList.remove(artistName);
+        ArtistlistFileIO.outputArtistNameObservableList(artistsObservableList);
     }
 
     public void addPlaylist(String playlist) {
-        playlistArray.add(playlist);
-        Collections.sort(playlistArray);
-        PlaylistsFileIO.outputPlaylists(playlistArray);
+        // Remove warning if empty
+        artistsObservableList.remove(noPlaylists);
+
+        // Update observable list, sort, and write to file
+        playlistsObservableList.add(playlist);
+        Collections.sort(playlistsObservableList);
+        PlaylistsFileIO.outputPlaylists(playlistsObservableList);
     }
     public void removePlaylist(String playlist) {
-        playlistArray.remove(playlist);
-        PlaylistsFileIO.outputPlaylists(playlistArray);
+        playlistsObservableList.remove(playlist);
+        PlaylistsFileIO.outputPlaylists(playlistsObservableList);
     }
 
+    public void clearObservableLists() {
+        artistsObservableList.clear();
+        playlistsObservableList.clear();
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -94,9 +93,8 @@ public class ListViewLibrary implements Serializable {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public ObservableList<String> getListViewObservableList() { return listViewObservableList; }
-    public ObservableList<String> getArtistList() { return artistList; }
-    public ArrayList<String> getPlaylistArray() { return playlistArray; }
-    public void setPlaylistArray(ArrayList<String> playlistArray) { this.playlistArray = playlistArray; }
-    public void clearPlaylistArray() { playlistArray.clear(); }
+    public ObservableList<String> getArtistObservableList() { return artistsObservableList; }
+    public ObservableList<String> getPlaylistsObservableList() { return playlistsObservableList; }
+
+
 }
