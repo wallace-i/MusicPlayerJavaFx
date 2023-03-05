@@ -47,6 +47,10 @@ public class ListViewLibrary {
 
     }
 
+    public void writeObservableListsToFile() {
+
+    }
+
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
      *                          ADD / REMOVE ELEMENTS

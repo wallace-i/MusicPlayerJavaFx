@@ -15,12 +15,12 @@ import java.io.IOException;
 
 public class ListViewController {
     @FXML private AnchorPane anchorPane;
-    @FXML private TextField playlistNameTextInput;
+    @FXML private TextField listViewTextInput;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
     private TableView<TrackMetadata> trackTableView;
-    private ListView<String> artistsListView;
-    private ListView<String> playlistsListView;
+    private ListView<String> artistListView;
+    private ListView<String> playlistListView;
     private ListViewLibrary listViewLibrary;
     private TableViewLibrary tableViewLibrary;
     private TrackIndex trackIndex;
@@ -34,13 +34,13 @@ public class ListViewController {
 
     public void initialize() {}
 
-    private void initializeData(ListView<String> artistsListView, ListView<String> playlistsListView,
+    private void initializeData(ListView<String> artistListView, ListView<String> playlistListView,
                                 TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                 TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
                                 String windowTitle, String menuSelection)
     {
-        this.artistsListView = artistsListView;
-        this.playlistsListView = playlistsListView;
+        this.artistListView = artistListView;
+        this.playlistListView = playlistListView;
         this.trackTableView = trackTableView;
         this.tableViewLibrary = tableViewLibrary;
         this.listViewLibrary = listViewLibrary;
@@ -49,16 +49,16 @@ public class ListViewController {
         this.menuSelection = menuSelection;
 
         switch (windowTitle) {
-            case addArtist -> playlistNameTextInput.setPromptText("add Artist");
-            case createPlaylist -> playlistNameTextInput.setPromptText("create Playlist");
-            case editArtist, editPlaylist -> playlistNameTextInput.setText(menuSelection);
+            case addArtist -> listViewTextInput.setPromptText("add Artist");
+            case createPlaylist -> listViewTextInput.setPromptText("create Playlist");
+            case editArtist, editPlaylist -> listViewTextInput.setText(menuSelection);
         }
 
-        playlistNameTextInput.setFocusTraversable(false);
+        listViewTextInput.setFocusTraversable(false);
 
     }
 
-    public void showListViewInputWindow(ListView<String> artistsListView, ListView<String> playlistsListView,
+    public void showListViewInputWindow(ListView<String> artistListView, ListView<String> playlistListView,
                                         TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                         TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
                                         String windowTitle, String menuSelection) throws IOException
@@ -67,7 +67,7 @@ public class ListViewController {
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
-        controller.initializeData(artistsListView, playlistsListView, trackTableView, listViewLibrary, tableViewLibrary,
+        controller.initializeData(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary,
                 trackIndex, windowTitle, menuSelection);
         stage.setTitle(windowTitle);
         stage.setResizable(false);
@@ -83,7 +83,7 @@ public class ListViewController {
     @FXML
     private void okButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) okButton.getScene().getWindow();
-        this.userInput = playlistNameTextInput.getText();
+        userInput = listViewTextInput.getText();
 
         switch (windowTitle) {
 
@@ -98,14 +98,12 @@ public class ListViewController {
                     }
 
                     listViewLibrary.addPlaylist(userInput);
-                    playlistsListView.getItems().clear();
-                    playlistsListView.setItems(listViewLibrary.getPlaylistsObservableList());
-                    playlistsListView.refresh();
+                    playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
 
                 } catch (Exception e) {
-                    playlistNameTextInput.clear();
-                    playlistNameTextInput.setPromptText("Playlist must be unique");
-                    playlistNameTextInput.setFocusTraversable(false);
+                    listViewTextInput.clear();
+                    listViewTextInput.setPromptText("Playlist must be unique");
+                    listViewTextInput.setFocusTraversable(false);
                 }
             }
 
@@ -120,14 +118,13 @@ public class ListViewController {
                     }
 
                     listViewLibrary.addArtist(userInput);
-                    artistsListView.getItems().clear();
-                    artistsListView.setItems(listViewLibrary.getArtistObservableList());
-                    artistsListView.refresh();
+                    artistListView.setItems(listViewLibrary.getArtistObservableList());
+                    artistListView.refresh();
 
                 } catch (Exception e) {
-                    playlistNameTextInput.clear();
-                    playlistNameTextInput.setPromptText("Artist must be unique");
-                    playlistNameTextInput.setFocusTraversable(false);
+                    listViewTextInput.clear();
+                    listViewTextInput.setPromptText("Artist must be unique");
+                    listViewTextInput.setFocusTraversable(false);
                 }
             }
 
@@ -145,16 +142,15 @@ public class ListViewController {
                         System.out.println("Editing artist");
                         listViewLibrary.removeArtist(menuSelection);
                         listViewLibrary.addArtist(userInput);
-                        artistsListView.getItems().clear();
-                        artistsListView.setItems(listViewLibrary.getArtistObservableList());
+                        artistListView.setItems(listViewLibrary.getArtistObservableList());
 
                         editArtist();
                     }
 
                 } catch (Exception e) {
-                    playlistNameTextInput.clear();
-                    playlistNameTextInput.setPromptText("Name must be unique");
-                    playlistNameTextInput.setFocusTraversable(false);
+                    listViewTextInput.clear();
+                    listViewTextInput.setPromptText("Name must be unique");
+                    listViewTextInput.setFocusTraversable(false);
 
                 }
             }
@@ -173,16 +169,15 @@ public class ListViewController {
                         System.out.println("Editing playlist");
                         listViewLibrary.removePlaylist(menuSelection);
                         listViewLibrary.addPlaylist(userInput);
-                        playlistsListView.getItems().clear();
-                        playlistsListView.setItems(listViewLibrary.getPlaylistsObservableList());
+                        playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
 
                         editPlaylist();
                     }
 
                 } catch (Exception e) {
-                    playlistNameTextInput.clear();
-                    playlistNameTextInput.setPromptText("Name must be unique");
-                    playlistNameTextInput.setFocusTraversable(false);
+                    listViewTextInput.clear();
+                    listViewTextInput.setPromptText("Name must be unique");
+                    listViewTextInput.setFocusTraversable(false);
 
                 }
             }

@@ -3,8 +3,6 @@ package com.iandw.musicplayerjavafx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -39,8 +39,8 @@ public class SettingsController extends AnchorPane {
     @FXML
     private Label themesLabel;
     private TableView<TrackMetadata> trackTableView;
-    private ListView<String> artistsListView;
-    private ListView<String> playlistsListView;
+    private ListView<String> artistListView;
+    private ListView<String> playlistListView;
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
     private ListViewLibrary listViewLibrary;
@@ -68,7 +68,7 @@ public class SettingsController extends AnchorPane {
         themeSelection();
     }
 
-    private void initializeData(ListView<String> artistsListView, ListView<String> playlistsListView,
+    private void initializeData(ListView<String> artistListView, ListView<String> playlistListView,
                                 TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                 TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
                                 UserSettings userSettings, String directoryLabel)
@@ -83,8 +83,8 @@ public class SettingsController extends AnchorPane {
             case styleDarkFileName -> themesComboBox.setValue(dark);
         }
 
-        this.artistsListView = artistsListView;
-        this.playlistsListView = playlistsListView;
+        this.artistListView = artistListView;
+        this.playlistListView = playlistListView;
         this.trackTableView = trackTableView;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -92,7 +92,7 @@ public class SettingsController extends AnchorPane {
         this.userSettings = userSettings;
     }
 
-    public void showSettingsWindow(ListView<String> artistsListView, ListView<String> playlistsListView,
+    public void showSettingsWindow(ListView<String> artistListView, ListView<String> playlistListView,
                                    TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                    TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
                                    UserSettings userSettings, String directoryLabel) throws IOException
@@ -104,7 +104,7 @@ public class SettingsController extends AnchorPane {
         SettingsController controller = loader.getController();
 
         // Initialize SettingsController object member variables
-        controller.initializeData(artistsListView, playlistsListView, trackTableView, listViewLibrary, tableViewLibrary,
+        controller.initializeData(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary,
                 musicLibrary, userSettings, directoryLabel);
 
         // Set/Show Stage
@@ -205,8 +205,8 @@ public class SettingsController extends AnchorPane {
         tableViewLibrary.loadTrackMetadataObservableListFromFile();
 
         trackTableView.refresh();
-        artistsListView.refresh();
-        playlistsListView.refresh();
+        artistListView.refresh();
+        playlistListView.refresh();
     }
 
 
@@ -235,8 +235,8 @@ public class SettingsController extends AnchorPane {
             Utils.clearSerializedFiles();
 
             // Clear listview and tableview
-            artistsListView.getItems().clear();
-            playlistsListView.getItems().clear();
+            artistListView.getItems().clear();
+            playlistListView.getItems().clear();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.createFilteredList();
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());
