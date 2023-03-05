@@ -149,8 +149,8 @@ public class MusicLibrary {
 //        }
 
         System.out.println("Writing user music library to files.");
-        ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
-        TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
+//        ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
+//        TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
 
     }
 
@@ -598,7 +598,7 @@ public class MusicLibrary {
     }
 
     public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
-
+    public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
     public TrackMetadata getImportedTrack() {
         // Get Track, clear list
         TrackMetadata trackMetadata = trackMetadataObservableList.get(0);

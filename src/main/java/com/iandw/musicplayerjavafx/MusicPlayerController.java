@@ -587,12 +587,7 @@ public class MusicPlayerController {
                 trackTableView.refresh();
             }
 
-            // Write to file
-            try {
-                tableViewLibrary.outputTrackObservableList();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            tableViewLibrary.setOutputTrackListOnClose();
         }
 
         artistListView.setItems(listViewLibrary.getArtistObservableList());
@@ -612,12 +607,7 @@ public class MusicPlayerController {
                 trackTableView.refresh();
             }
 
-            // Remove playlist from file
-            try {
-                tableViewLibrary.outputTrackObservableList();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            tableViewLibrary.setOutputTrackListOnClose();
         }
 
         playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
@@ -683,7 +673,7 @@ public class MusicPlayerController {
         MenuItem deleteTrack = new MenuItem("Delete Track");
         SeparatorMenuItem divider2 = new SeparatorMenuItem();
 
-        editTrack.getItems().addAll(editArtistName, editTrackTitle, editAlbumTitle, editTrackGenre);
+        editTrack.getItems().addAll(editArtistName, editAlbumTitle, editTrackTitle, editTrackGenre);
 
         // Explorer/Properties items
         MenuItem openInExplorer = new MenuItem("Open in Explorer");
@@ -697,11 +687,7 @@ public class MusicPlayerController {
                 trackTableView.getSelectionModel().getSelectedItem().setPlaylistStr(((MenuItem) event.getTarget()).getText());
                 System.out.printf("track playlist set to: %s%n", trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr());
                 trackTableView.refresh();
-                try {
-                    tableViewLibrary.outputTrackObservableList();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                tableViewLibrary.setOutputTrackListOnClose();
             }
         });
 
@@ -714,11 +700,7 @@ public class MusicPlayerController {
                         trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr());
                 trackTableView.getSelectionModel().getSelectedItem().setPlaylistStr("*");
                 trackTableView.refresh();
-                try {
-                    tableViewLibrary.outputTrackObservableList();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                tableViewLibrary.setOutputTrackListOnClose();
             }
         });
 
@@ -730,7 +712,7 @@ public class MusicPlayerController {
             System.out.println(currentTrackTitle);
             try {
                 editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                            artistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -746,10 +728,11 @@ public class MusicPlayerController {
             System.out.println(currentTrackTitle);
             try {
                 editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                            artistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
 
             trackTableView.refresh();
         });
@@ -762,7 +745,7 @@ public class MusicPlayerController {
             System.out.println(currentTrackAlbum);
             try {
                 editTrackController.showEditWindow(columnName, currentTrackAlbum, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                            artistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -780,7 +763,7 @@ public class MusicPlayerController {
             System.out.println(currentGenre);
             try {
                 editTrackController.showEditWindow(columnName, currentGenre, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                            artistListView, listViewLibrary, tableViewLibrary);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -793,14 +776,7 @@ public class MusicPlayerController {
             System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
                     artistListView.getSelectionModel().getSelectedItem());
             tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
-            try {
-                tableViewLibrary.outputTrackObservableList();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
             trackTableView.refresh();
-
-
         });
 
         // Open in File Explorer
@@ -810,7 +786,6 @@ public class MusicPlayerController {
                 openExplorer(file);
             }
         });
-
 
         contextMenu.getItems().addAll(addTrackToPlaylist, removeTrackFromPlaylist, divider1,
                 editTrack, deleteTrack, divider2, openInExplorer
@@ -1245,7 +1220,6 @@ public class MusicPlayerController {
     private void importArtistClicked() throws IOException {
         musicLibrary.importArtist();
         tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
-        tableViewLibrary.outputTrackObservableList();
         addArtistFromImport();
     }
 
@@ -1253,7 +1227,6 @@ public class MusicPlayerController {
     private void importAlbumClicked() throws IOException {
         musicLibrary.importAlbum();
         tableViewLibrary.getTrackObservableList().addAll(musicLibrary.getTrackObservableList());
-        tableViewLibrary.outputTrackObservableList();
         addArtistFromImport();
     }
 
@@ -1263,7 +1236,6 @@ public class MusicPlayerController {
 
         if (!musicLibrary.getTrackObservableList().isEmpty()) {
             tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
-            tableViewLibrary.outputTrackObservableList();
             addArtistFromImport();
         }
 
@@ -1275,6 +1247,9 @@ public class MusicPlayerController {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());
         }
+
+        // Write to File on close
+        tableViewLibrary.setOutputTrackListOnClose();
     }
 
     @FXML

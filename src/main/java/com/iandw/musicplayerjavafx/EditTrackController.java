@@ -39,8 +39,7 @@ public class EditTrackController {
 
     public void showEditWindow(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
                                TableView<TrackMetadata> trackTableView, ListView<String> artistPlaylistListView,
-                               ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException
-    {
+                               ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
@@ -83,6 +82,7 @@ public class EditTrackController {
                 columnName);
 
         tableViewLibrary.setTrackObservableList(trackMetadataList);
+        tableViewLibrary.setOutputTrackListOnClose();
 
         stage.close();
     }

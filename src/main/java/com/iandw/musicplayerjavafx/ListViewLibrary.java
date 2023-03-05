@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class ListViewLibrary {
+public class ListViewLibrary implements Runnable {
     private ObservableList<String> artistObservableList;
     private ObservableList<String> playlistObservableList;
     private final String noArtists = "* artists *";
@@ -23,44 +23,52 @@ public class ListViewLibrary {
 
 
     public ListViewLibrary() throws IOException {
-        // Input artist data if file is not empty
-        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
-            artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
-
-        } else {
-            artistObservableList = FXCollections.observableArrayList();
-            assert false;
-            playlistObservableList.add(noArtists);
-        }
-
-        // Input playlist data if file is not empty
-        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-            playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
-
-        } else {
-            playlistObservableList = FXCollections.observableArrayList();
-            playlistObservableList.add(noPlaylists);
-        }
+//        // Input artist data if file is not empty
+//        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
+//            artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+//
+//        } else {
+//            artistObservableList = FXCollections.observableArrayList();
+//            assert false;
+//            playlistObservableList.add(noArtists);
+//        }
+//
+//        // Input playlist data if file is not empty
+//        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
+//            playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
+//
+//        } else {
+//            playlistObservableList = FXCollections.observableArrayList();
+//            playlistObservableList.add(noPlaylists);
+//        }
     }
 
-    public void loadObservableListsFromFile() throws IOException {
+    @Override
+    public void run() {
         // Input artist data if file is not empty
-        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
-            artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+        try {
+            if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
+                artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
 
-        } else {
-            artistObservableList = FXCollections.observableArrayList();
-            assert false;
-            artistObservableList.add(noArtists);
+            } else {
+                artistObservableList = FXCollections.observableArrayList();
+                artistObservableList.add(noArtists);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         // Input playlist data if file is not empty
-        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-            playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
+        try {
+            if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
+                playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
 
-        } else {
-            playlistObservableList = FXCollections.observableArrayList();
-            playlistObservableList.add(noPlaylists);
+            } else {
+                playlistObservableList = FXCollections.observableArrayList();
+                playlistObservableList.add(noPlaylists);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -120,6 +128,9 @@ public class ListViewLibrary {
 
         artistObservableList.clear();
         playlistObservableList.clear();
+
+        artistObservableList.add(noArtists);
+        playlistObservableList.add(noPlaylists);
     }
 
     public void onClose() {
@@ -141,7 +152,9 @@ public class ListViewLibrary {
 
     public ObservableList<String> getArtistObservableList() { return artistObservableList; }
     public ObservableList<String> getPlaylistObservableList() { return playlistObservableList; }
-
+    public void setArtistObservableList(ObservableList<String> artistObservableList) {
+        this.artistObservableList = artistObservableList;
+    }
 
 
 }

@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class TableViewLibrary {
+public class TableViewLibrary implements Runnable {
     // Main list to hold all Track objects for TableView
     private ObservableList<TrackMetadata> trackMetadataObservableList;
 
@@ -17,14 +17,32 @@ public class TableViewLibrary {
 
     public TableViewLibrary() throws IOException {
 
+//        // Load trackTableView
+//        if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
+//            trackMetadataObservableList = FXCollections.observableArrayList(TracklistFileIO.inputTrackObservableList());
+//
+//        } else {
+//            trackMetadataObservableList = FXCollections.observableArrayList();
+//
+//        }
+
+    }
+
+    @Override
+    public void run() {
         // Load trackTableView
-        if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
-            trackMetadataObservableList = FXCollections.observableArrayList(TracklistFileIO.inputTrackObservableList());
+        try {
+            if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
+                trackMetadataObservableList = FXCollections.observableArrayList(TracklistFileIO.inputTrackObservableList());
 
-        } else {
-            trackMetadataObservableList = FXCollections.observableArrayList();
+            } else {
+                trackMetadataObservableList = FXCollections.observableArrayList();
 
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
 
     }
 

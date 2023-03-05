@@ -12,7 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.io.FileNotFoundException;
 import java.util.Objects;
 
@@ -29,6 +30,12 @@ public class App extends Application {
             userSettings = new UserSettings();
             listViewLibrary = new ListViewLibrary();
             tableViewLibrary = new TableViewLibrary();
+
+            // ExecutorService to manage threads
+            ExecutorService executorService = Executors.newCachedThreadPool();
+
+            executorService.execute(listViewLibrary);
+            executorService.execute(tableViewLibrary);
 
             // Pass userSettings to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));

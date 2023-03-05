@@ -21,6 +21,8 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class SettingsController extends AnchorPane {
@@ -152,7 +154,6 @@ public class SettingsController extends AnchorPane {
                 // Re-initialize with new metadata from new root directory
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
-                musicLibrary.initializeMusicLibrary();
 
                 loadLibraries();
 
@@ -182,13 +183,11 @@ public class SettingsController extends AnchorPane {
 
             // Clear current list file and observable list
             Utils.clearSerializedFiles();
-//            trackTableView.getItems().clear();
             tableViewLibrary.clearObservableList();
             listViewLibrary.clearObservableLists();
 
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
-            musicLibrary.initializeMusicLibrary();
 
             loadLibraries();
 
@@ -201,8 +200,13 @@ public class SettingsController extends AnchorPane {
 
     private void loadLibraries() throws IOException {
         // Load updated files into listViewLibrary and tableViewLibrary
-        listViewLibrary.loadObservableListsFromFile();
-        tableViewLibrary.loadTrackMetadataObservableListFromFile();
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+//
+//        executorService.execute(listViewLibrary);
+//        executorService.execute(tableViewLibrary);
+        musicLibrary.initializeMusicLibrary();
+        listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
+        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
 
         artistListView.setItems(listViewLibrary.getArtistObservableList());
         playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
