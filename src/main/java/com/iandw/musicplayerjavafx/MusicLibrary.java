@@ -345,9 +345,7 @@ public class MusicLibrary {
         artistChooser.setInitialDirectory((new File(".")));
 
         // Set Stage, show artistChooser Dialog
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
         File file = artistChooser.showDialog(stage);
 
         // Import Artist metadata into Music Library
@@ -417,9 +415,7 @@ public class MusicLibrary {
         albumChooser.setInitialDirectory((new File(".")));
 
         // Set Stage, show albumChooser Dialog
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
         File file = albumChooser.showDialog(stage);
 
         // Import Album metadata into Music Library
@@ -469,9 +465,7 @@ public class MusicLibrary {
         trackChooser.setInitialDirectory((new File(".")));
 
         // Set Stage, show trackChooser Dialog
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("musiclibrary.fxml"));
         Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
         File file = trackChooser.showOpenDialog(stage);
 
         // Import Track metadata into Music Library
@@ -510,9 +504,10 @@ public class MusicLibrary {
             importTrackMetadata();
 
             try {
-                final String trackArtist = trackMetadataObservableList.get(index).getArtistNameStr();
-                final String trackAlbum = trackMetadataObservableList.get(index).getAlbumTitleStr();
-                final String trackFileName = trackMetadataObservableList.get(index).getTrackFileNameStr();
+                // Check for slashes which could interfere with file creation
+                final String trackArtist = removeSlashs(trackMetadataObservableList.get(index).getArtistNameStr());
+                final String trackAlbum = removeSlashs(trackMetadataObservableList.get(index).getAlbumTitleStr());
+                final String trackFileName = removeSlashs(trackMetadataObservableList.get(index).getTrackFileNameStr());
                 final String source = trackPath.toString();
                 final String destination = rootDirectory + File.separator + trackArtist + File.separator +
                         trackAlbum + File.separator + trackFileName;
@@ -532,6 +527,7 @@ public class MusicLibrary {
                     }
 
                 } else {
+                    System.out.println(trackArtist);
                     // Else Create new Artist and Album Directory
                     Utils.createDirectory(rootDirectory, trackArtist);
                     Utils.createDirectory(rootDirectory + File.separator + trackArtist, trackAlbum);
@@ -575,6 +571,20 @@ public class MusicLibrary {
         }
 
         return trackTitle;
+    }
+
+    private String removeSlashs(String string) {
+        String updatedString = null;
+
+        if (string.contains("/") ) {
+            updatedString = string.replace('/', '_');
+        }
+
+        if (string.contentEquals("\\")) {
+            updatedString = string.replace('\\', '_');
+        }
+
+        return updatedString;
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

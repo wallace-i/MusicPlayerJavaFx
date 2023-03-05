@@ -93,12 +93,12 @@ public class ListViewController {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
                     if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
+                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
                     listViewLibrary.addPlaylist(userInput);
-                    playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
+                    playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
                 } catch (Exception e) {
                     listViewTextInput.clear();
@@ -113,7 +113,7 @@ public class ListViewController {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
                     if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
+                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
@@ -133,7 +133,7 @@ public class ListViewController {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
                     if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
+                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
@@ -160,16 +160,16 @@ public class ListViewController {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
                     if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistsObservableList().contains(userInput)) {
+                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
                     // Edit playlist
-                    if (listViewLibrary.getPlaylistsObservableList().contains(menuSelection)) {
+                    if (listViewLibrary.getPlaylistObservableList().contains(menuSelection)) {
                         System.out.println("Editing playlist");
                         listViewLibrary.removePlaylist(menuSelection);
                         listViewLibrary.addPlaylist(userInput);
-                        playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
+                        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
                         editPlaylist();
                     }
@@ -208,13 +208,7 @@ public class ListViewController {
                 trackTableView.refresh();
             }
 
-            try {
-                // Update trackList and Write to file
-                tableViewLibrary.outputTrackObservableList();
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            tableViewLibrary.setOutputTrackListOnClose();
         }
     }
 
@@ -229,14 +223,7 @@ public class ListViewController {
                 trackTableView.refresh();
             }
 
-
-            try {
-                // Update trackList and Write to file
-                tableViewLibrary.outputTrackObservableList();
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            tableViewLibrary.setOutputTrackListOnClose();
         }
     }
 }

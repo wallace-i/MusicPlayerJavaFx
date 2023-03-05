@@ -97,7 +97,7 @@ public class SettingsController extends AnchorPane {
                                    TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
                                    UserSettings userSettings, String directoryLabel) throws IOException
     {
-        // Load Stage and SettignsController
+        // Load Stage and Settings  Controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
@@ -182,7 +182,7 @@ public class SettingsController extends AnchorPane {
 
             // Clear current list file and observable list
             Utils.clearSerializedFiles();
-            trackTableView.getItems().clear();
+//            trackTableView.getItems().clear();
             tableViewLibrary.clearObservableList();
             listViewLibrary.clearObservableLists();
 
@@ -199,10 +199,14 @@ public class SettingsController extends AnchorPane {
         stage.setAlwaysOnTop(true);
     }
 
-    private void loadLibraries() {
+    private void loadLibraries() throws IOException {
         // Load updated files into listViewLibrary and tableViewLibrary
         listViewLibrary.loadObservableListsFromFile();
         tableViewLibrary.loadTrackMetadataObservableListFromFile();
+
+        artistListView.setItems(listViewLibrary.getArtistObservableList());
+        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+        trackTableView.setItems(musicLibrary.getTrackObservableList());
 
         trackTableView.refresh();
         artistListView.refresh();

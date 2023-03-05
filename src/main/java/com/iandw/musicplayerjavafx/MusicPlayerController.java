@@ -109,13 +109,13 @@ public class MusicPlayerController {
     private Image musicNotes;
     private MediaPlayer mediaPlayer;
     private MusicLibrary musicLibrary;
-    private TableViewLibrary tableViewLibrary;
-    private ListViewLibrary listViewLibrary;
+    private final TableViewLibrary tableViewLibrary;
+    private final ListViewLibrary listViewLibrary;
     private AutoPlay autoPlay;
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
-    private Stage stage;
 
+    private final Stage stage;
     private String artistNameString;
     private String playlistTitleString;
     private String previousArtistNameString;
@@ -127,8 +127,11 @@ public class MusicPlayerController {
 
 
     // Default Constructor
-    public MusicPlayerController(UserSettings userSettings) {
+    public MusicPlayerController(Stage stage, UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) {
+        this.stage = stage;
         this.userSettings = userSettings;
+        this.listViewLibrary = listViewLibrary;
+        this.tableViewLibrary = tableViewLibrary;
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -174,8 +177,6 @@ public class MusicPlayerController {
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
 //        musicLibrary.initializeMusicLibrary();
-        listViewLibrary = new ListViewLibrary();
-        tableViewLibrary = new TableViewLibrary();
 
         // Initialize Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
@@ -190,7 +191,7 @@ public class MusicPlayerController {
             // Else initialize data normally from .ser files
             // Playlist and Artist List Data => artistPlaylistListView
             artistListView.setItems(listViewLibrary.getArtistObservableList());
-            playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
+            playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
             // Track Metadata => trackTableView
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());
@@ -465,6 +466,7 @@ public class MusicPlayerController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         });
 
         // Remove Artist
@@ -618,7 +620,7 @@ public class MusicPlayerController {
             }
         }
 
-        playlistListView.setItems(listViewLibrary.getPlaylistsObservableList());
+        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
     }
 
     private void openExplorer(File file) {
@@ -665,7 +667,7 @@ public class MusicPlayerController {
         SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
         // Add playlists to menu
-        for (String playlist : listViewLibrary.getPlaylistsObservableList()) {
+        for (String playlist : listViewLibrary.getPlaylistObservableList()) {
             playlistMenuList.add(new MenuItem(playlist));
         }
 
@@ -765,6 +767,7 @@ public class MusicPlayerController {
                 throw new RuntimeException(e);
             }
 
+            trackTableView.setItems(tableViewLibrary.getTrackObservableList());
             trackTableView.refresh();
 
         });
@@ -1270,7 +1273,6 @@ public class MusicPlayerController {
     private void addArtistFromImport() {
         if (!listViewLibrary.getArtistObservableList().contains(musicLibrary.getArtistNameStr())) {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
-            artistListView.getItems().clear();
             artistListView.setItems(listViewLibrary.getArtistObservableList());
         }
     }
@@ -1285,8 +1287,11 @@ public class MusicPlayerController {
     }
 
     @FXML
-    private void closeClicked() {
+    private void closeClicked() throws FileNotFoundException {
         SettingsFileIO.jsonFileOutput(userSettings);
+        listViewLibrary.onClose();
+        tableViewLibrary.onClose();
+
         stage.close();
     }
 

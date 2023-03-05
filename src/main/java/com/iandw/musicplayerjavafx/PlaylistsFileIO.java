@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class PlaylistsFileIO implements Serializable {
     public static ObservableList<String> inputPlaylists() {
 
-        ArrayList<String> playlistArray;
         ObservableList<String> playlistObservableList = FXCollections.observableArrayList();
 
         try {
@@ -26,7 +25,7 @@ public class PlaylistsFileIO implements Serializable {
             System.out.println("Reading from playlists.ser");
             InputStream in = Files.newInputStream(Path.of(ResourceURLs.getPlaylistsURL()));
             ObjectInputStream ois = new ObjectInputStream(in);
-            playlistArray = (ArrayList<String>) ois.readObject();
+            ArrayList<String> playlistArray = (ArrayList<String>) ois.readObject();
             ois.close();
 
             playlistObservableList.addAll(playlistArray);

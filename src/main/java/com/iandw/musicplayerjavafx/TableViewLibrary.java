@@ -13,6 +13,7 @@ public class TableViewLibrary {
 
     // Filtered from trackObservableList from Search Bar or ListView
     private FilteredList<TrackMetadata> filteredList;
+    private boolean outputTrackListOnClose;
 
     public TableViewLibrary() throws IOException {
 
@@ -37,10 +38,12 @@ public class TableViewLibrary {
     }
 
     public void addTrack(TrackMetadata trackMetadata) {
+        outputTrackListOnClose = true;
         trackMetadataObservableList.add(trackMetadata);
     }
 
     public void removeTrack(TrackMetadata trackMetadata) {
+        outputTrackListOnClose = true;
         trackMetadataObservableList.remove(trackMetadata);
     }
 
@@ -49,6 +52,12 @@ public class TableViewLibrary {
     }
 
     public void clearObservableList() { trackMetadataObservableList.clear(); }
+
+    public void onClose() throws FileNotFoundException {
+        if (outputTrackListOnClose) {
+            TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
+        }
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -61,6 +70,7 @@ public class TableViewLibrary {
     }
     public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
     public FilteredList<TrackMetadata> getFilteredList() { return filteredList; }
+    public void setOutputTrackListOnClose() { outputTrackListOnClose = true; }
 
 
 }
