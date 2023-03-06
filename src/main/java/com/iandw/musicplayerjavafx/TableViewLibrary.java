@@ -38,21 +38,17 @@ public class TableViewLibrary implements Runnable {
         filteredList = new FilteredList<>(FXCollections.observableArrayList(trackMetadataObservableList));
     }
 
-    public void addTrack(TrackMetadata trackMetadata) {
+    public synchronized void addTrack(TrackMetadata trackMetadata) {
         outputTrackListOnClose = true;
         trackMetadataObservableList.add(trackMetadata);
     }
 
-    public void removeTrack(TrackMetadata trackMetadata) {
+    public synchronized void removeTrack(TrackMetadata trackMetadata) {
         outputTrackListOnClose = true;
         trackMetadataObservableList.remove(trackMetadata);
     }
 
-    public void outputTrackObservableList() throws FileNotFoundException {
-        TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
-    }
-
-    public void clearObservableList() { trackMetadataObservableList.clear(); }
+    public synchronized void clearObservableList() { trackMetadataObservableList.clear(); }
 
     public void onClose() throws FileNotFoundException {
         if (outputTrackListOnClose) {
@@ -66,10 +62,12 @@ public class TableViewLibrary implements Runnable {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void setTrackObservableList(ObservableList<TrackMetadata> trackMetadataObservableList) {
-        this.trackMetadataObservableList = trackMetadataObservableList;
+    public synchronized void setTrackObservableList(ObservableList<TrackMetadata> trackMetadataObservableList) {
+        ObservableList<TrackMetadata> tempList = FXCollections.observableArrayList(this.trackMetadataObservableList);
+        tempList.addAll(trackMetadataObservableList);
+        this.trackMetadataObservableList = tempList;
     }
-    public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
+    public synchronized ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
     public FilteredList<TrackMetadata> getFilteredList() { return filteredList; }
     public void setOutputTrackListOnClose() { outputTrackListOnClose = true; }
 

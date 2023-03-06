@@ -31,7 +31,7 @@ public class App extends Application {
             listViewLibrary = new ListViewLibrary();
             tableViewLibrary = new TableViewLibrary();
 
-            // ExecutorService to manage threads
+            // Input music library files and settings via ExecutorService
             ExecutorService executorService = Executors.newCachedThreadPool();
             executorService.execute(userSettings);
             executorService.execute(listViewLibrary);
@@ -44,7 +44,6 @@ public class App extends Application {
                     stage, userSettings, listViewLibrary, tableViewLibrary));
 
             Parent root = fxmlLoader.load();
-
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(
                     userSettings.getThemeFileNameString())).toExternalForm());

@@ -196,6 +196,8 @@ public class SettingsController extends AnchorPane {
 
             System.out.println("Finished Resetting.");
 
+
+
         }
 
         stage.setAlwaysOnTop(true);
@@ -204,6 +206,7 @@ public class SettingsController extends AnchorPane {
     private void loadLibraries() throws IOException {
         // reinitialize metadata and load into listViewLibrary and tableViewLibrary
         musicLibrary.initializeMusicLibrary();
+
         listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
 
@@ -237,7 +240,7 @@ public class SettingsController extends AnchorPane {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Clearing Music Library data.");
-            System.out.println("Does not remove actual music files or folders from your harddisk.");
+            System.out.println("Does not remove music files or folders from your hard-drive.");
 
             // Clear files
             Utils.clearSerializedFiles();

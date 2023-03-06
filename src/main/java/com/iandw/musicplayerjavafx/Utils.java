@@ -20,11 +20,12 @@ public class Utils {
     public static void clearSerializedFiles() throws IOException {
         PrintWriter clearTrackList = new PrintWriter(ResourceURLs.getTrackListURL());
         clearTrackList.close();
+
         PrintWriter clearArtistList = new PrintWriter(ResourceURLs.getArtistListURL());
         clearArtistList.close();
+
         PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistsURL());
         clearPlaylists.close();
-
     }
 
     /**
@@ -36,7 +37,7 @@ public class Utils {
             Files.copy(Paths.get(source), Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
 
         } else {
-            System.out.printf("Cannot copy, path %s already exists", destination);
+            System.out.printf("Cannot copy, path %s already exists%n", destination);
         }
     }
 

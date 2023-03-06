@@ -83,7 +83,8 @@ public class ListViewLibrary implements Runnable {
 
     public void addPlaylist(String playlist) {
         outputPlaylistOnClose = true;
-        // If empty remove empty message
+
+        // Remove placeholder if currently empty
         if (playlistObservableList.contains(noPlaylists)) {
             playlistObservableList.remove(0);
         }
@@ -130,11 +131,14 @@ public class ListViewLibrary implements Runnable {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public ObservableList<String> getArtistObservableList() { return artistObservableList; }
-    public ObservableList<String> getPlaylistObservableList() { return playlistObservableList; }
-    public void setArtistObservableList(ObservableList<String> artistObservableList) {
+    public synchronized ObservableList<String> getArtistObservableList() { return artistObservableList; }
+    public synchronized ObservableList<String> getPlaylistObservableList() { return playlistObservableList; }
+    public synchronized void setArtistObservableList(ObservableList<String> artistObservableList) {
         this.artistObservableList = artistObservableList;
     }
-
+    public void setOutputListsOnClose() {
+        outputArtistOnClose = true;
+        outputPlaylistOnClose = true;
+    }
 
 }

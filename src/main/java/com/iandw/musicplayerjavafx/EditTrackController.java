@@ -66,7 +66,6 @@ public class EditTrackController {
 
                 if (!artistPlaylistListView.getItems().contains(userInput)) {
                     listViewLibrary.addArtist(userInput);
-                    artistPlaylistListView.getItems().clear();
                     artistPlaylistListView.setItems(listViewLibrary.getArtistObservableList());
                 }
             }
@@ -81,8 +80,9 @@ public class EditTrackController {
         System.out.printf("Update %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
                 columnName);
 
-        tableViewLibrary.setTrackObservableList(trackMetadataList);
+//        tableViewLibrary.setTrackObservableList(trackMetadataList);
         tableViewLibrary.setOutputTrackListOnClose();
+        trackTableView.refresh();
 
         stage.close();
     }

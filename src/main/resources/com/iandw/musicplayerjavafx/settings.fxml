@@ -38,7 +38,7 @@
               </padding>
            </Label>
            <Button fx:id="clearLibrary" mnemonicParsing="false" onMouseClicked="#clearLibraryClicked" prefWidth="85.0" text="Clear Library" GridPane.rowIndex="2" />
-           <Label text="Does not remove or delete files audio files." GridPane.columnIndex="1" GridPane.rowIndex="2">
+           <Label text="Removes metadata and playlists from Library." GridPane.columnIndex="1" GridPane.rowIndex="2">
               <padding>
                   <Insets left="10.0" />
               </padding>

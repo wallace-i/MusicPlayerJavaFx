@@ -148,10 +148,6 @@ public class MusicLibrary {
 //            System.out.printf("%s %s %s %s %n",i.getTrackTitleStr(), i.getAlbumTitleStr(), i.getTrackLengthStr(), i.getTrackGenreStr());
 //        }
 
-        System.out.println("Writing user music library to files.");
-//        ArtistlistFileIO.outputArtistNameObservableList(artistNameObservableList);
-//        TracklistFileIO.outputTrackObservableList(trackMetadataObservableList);
-
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -321,7 +317,6 @@ public class MusicLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -574,7 +569,7 @@ public class MusicLibrary {
     }
 
     private String removeSlashs(String string) {
-        String updatedString = null;
+        String updatedString = string;
 
         if (string.contains("/") ) {
             updatedString = string.replace('/', '_');
@@ -597,8 +592,13 @@ public class MusicLibrary {
         this.rootMusicDirectoryString = rootMusicDirectoryString;
     }
 
-    public ObservableList<TrackMetadata> getTrackObservableList() { return trackMetadataObservableList; }
-    public ObservableList<String> getArtistNameObservableList() { return artistNameObservableList; }
+    public ObservableList<TrackMetadata> getTrackObservableList() {
+        return trackMetadataObservableList;
+    }
+    public ObservableList<String> getArtistNameObservableList() {
+        return artistNameObservableList;
+    }
+
     public TrackMetadata getImportedTrack() {
         // Get Track, clear list
         TrackMetadata trackMetadata = trackMetadataObservableList.get(0);
