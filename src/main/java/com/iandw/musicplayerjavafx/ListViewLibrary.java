@@ -21,27 +21,7 @@ public class ListViewLibrary implements Runnable {
     private boolean outputArtistOnClose;
     private boolean outputPlaylistOnClose;
 
-
-    public ListViewLibrary() throws IOException {
-//        // Input artist data if file is not empty
-//        if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
-//            artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
-//
-//        } else {
-//            artistObservableList = FXCollections.observableArrayList();
-//            assert false;
-//            playlistObservableList.add(noArtists);
-//        }
-//
-//        // Input playlist data if file is not empty
-//        if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-//            playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
-//
-//        } else {
-//            playlistObservableList = FXCollections.observableArrayList();
-//            playlistObservableList.add(noPlaylists);
-//        }
-    }
+    public ListViewLibrary() {}
 
     @Override
     public void run() {

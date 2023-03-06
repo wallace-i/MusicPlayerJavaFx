@@ -15,18 +15,7 @@ public class TableViewLibrary implements Runnable {
     private FilteredList<TrackMetadata> filteredList;
     private boolean outputTrackListOnClose;
 
-    public TableViewLibrary() throws IOException {
-
-//        // Load trackTableView
-//        if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
-//            trackMetadataObservableList = FXCollections.observableArrayList(TracklistFileIO.inputTrackObservableList());
-//
-//        } else {
-//            trackMetadataObservableList = FXCollections.observableArrayList();
-//
-//        }
-
-    }
+    public TableViewLibrary() {}
 
     @Override
     public void run() {
@@ -42,12 +31,6 @@ public class TableViewLibrary implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-    }
-
-    public void loadTrackMetadataObservableListFromFile() {
-        trackMetadataObservableList = TracklistFileIO.inputTrackObservableList();
     }
 
     public void createFilteredList() {

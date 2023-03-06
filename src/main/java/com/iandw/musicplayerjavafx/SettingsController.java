@@ -83,6 +83,9 @@ public class SettingsController extends AnchorPane {
         switch (currentTheme) {
             case styleLightFileName -> themesComboBox.setValue(light);
             case styleDarkFileName -> themesComboBox.setValue(dark);
+            case styleBlueFileName -> themesComboBox.setValue(blue);
+            case styleGreenFileName -> themesComboBox.setValue(green);
+            case stylePinkFileName -> themesComboBox.setValue(pink);
         }
 
         this.artistListView = artistListView;
@@ -199,15 +202,12 @@ public class SettingsController extends AnchorPane {
     }
 
     private void loadLibraries() throws IOException {
-        // Load updated files into listViewLibrary and tableViewLibrary
-//        ExecutorService executorService = Executors.newCachedThreadPool();
-//
-//        executorService.execute(listViewLibrary);
-//        executorService.execute(tableViewLibrary);
+        // reinitialize metadata and load into listViewLibrary and tableViewLibrary
         musicLibrary.initializeMusicLibrary();
         listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
 
+        // Set Listview and Tableview
         artistListView.setItems(listViewLibrary.getArtistObservableList());
         playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
         trackTableView.setItems(musicLibrary.getTrackObservableList());

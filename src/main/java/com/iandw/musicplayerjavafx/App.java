@@ -33,9 +33,10 @@ public class App extends Application {
 
             // ExecutorService to manage threads
             ExecutorService executorService = Executors.newCachedThreadPool();
-
+            executorService.execute(userSettings);
             executorService.execute(listViewLibrary);
             executorService.execute(tableViewLibrary);
+            executorService.shutdown();
 
             // Pass userSettings to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
@@ -72,7 +73,10 @@ public class App extends Application {
     }
 
     public void saveAndExit(Stage stage) throws FileNotFoundException {
-        SettingsFileIO.jsonFileOutput(userSettings);
+        if (userSettings.getWriteOnClose()) {
+            SettingsFileIO.jsonFileOutput(userSettings);
+        }
+
         listViewLibrary.onClose();
         tableViewLibrary.onClose();
 

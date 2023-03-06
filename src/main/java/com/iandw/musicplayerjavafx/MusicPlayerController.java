@@ -1263,7 +1263,10 @@ public class MusicPlayerController {
 
     @FXML
     private void closeClicked() throws FileNotFoundException {
-        SettingsFileIO.jsonFileOutput(userSettings);
+        if (userSettings.getWriteOnClose()) {
+            SettingsFileIO.jsonFileOutput(userSettings);
+        }
+
         listViewLibrary.onClose();
         tableViewLibrary.onClose();
 
