@@ -12,7 +12,7 @@
 
 
 /*
- *  Track Seeker
+ *  Sliders
  */
 .slider {
     -default-track-color: -fx-control-inner-background;
@@ -39,9 +39,11 @@
     -fx-background-color: transparent;
 }
 
-.delete-button:hover {
-    -fx-background-color: #DCDCDC;
+/* Icon Color */
+.delete-icon: hover {
+    -fx-icon-color: DodgerBlue;
 }
+
 
 /*
  *  Icon Color

@@ -3,10 +3,10 @@
 
     -primary: MediumSeaGreen;
     -secondary: Aquamarine;
-    -tertiary: MediumAquaMarine;
+    -tertiary: #00cc66;
     -tertiary-armed: LightSeaGreen;
 
-    -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, #a1ffce, #faffd1);
+    -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, #a1ffce, #e6ffe6);
     -hlight-gradient: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
 
 
@@ -205,21 +205,17 @@
 
 /* Sliders */
 .slider {
-    -default-track-color: -fx-control-inner-background;
-    -track-color: transparent;
+     -default-track-color: -fx-control-inner-background;
+        -track-color: -default-track-color;
 }
 
 .slider .track {
-    -fx-background-color: -primary,
+    -fx-background-color:  -fx-shadow-highlight-color,
         linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
         -fx-text-box-border), -track-color;
 }
 
 /*  Search Bar */
-.search-button {
-
-}
-
 .transparent {
     -fx-background-color: transparent;
 }
@@ -250,7 +246,7 @@
 }
 
  .icon {
-    -fx-icon-color: DarkSlateGrey;
+    -fx-icon-color: DimGrey;
  }
 
 
