@@ -290,7 +290,6 @@ public class MusicLibrary {
                 }
             }
 
-
             // Check genre metadata for null value, if true leave blank
             if (trackGenre == null) {
                 trackGenre = "";

@@ -2,13 +2,12 @@
 .root {
 
     -primary: MediumSeaGreen;
-    -secondary: LightGoldenRodYellow;
-    -tertiary: LightGreen;
-    -tertiary-armed: PaleGreen;
-    -quaternary: Aquamarine;
+    -secondary: Aquamarine;
+    -tertiary: MediumAquaMarine;
+    -tertiary-armed: LightSeaGreen;
 
-    -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, -primary, -quaternary);
-    -hlight-gradient: linear-gradient(to bottom, -quaternary, -tertiary);
+    -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, #a1ffce, #faffd1);
+    -hlight-gradient: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
 
 
 
@@ -21,17 +20,43 @@
     -fx-background-radius: 10px;
 }
 
-.button {
-    -fill: -quaternary;
+.split-pane {
+    -fx-background-color: -bg-gradient;
+    -fx-background-radius: 10px;
 
+}
+
+.split-pane: horizontal > .split-pane-divider {
+    -fx-background-color: -hlight-gradient;
+}
+
+.split-pane: vertical > .split-pane-divider {
+    -fx-background-color: -hlight-gradient;
+}
+
+.shadow-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.content-pane {
+    -fx-background-radius: 10px;
+}
+
+.anchor-pane .corner {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fill: transparent;
     -fx-background-color: -fill;
 }
 
-.button:hover {
+.button: hover {
     -fill: -tertiary;
 }
 
-.button:armed {
+.button: armed {
     -fill: -tertiary-armed;
 }
 
@@ -55,19 +80,19 @@
     -fx-border-color: transparent;
 }
 
-.table-row-cell:hover {
-    -fx-background-color: -primary;
+.table-row-cell: hover {
+    -fx-background-color: #93f9b911;
     -fx-text-background-color: -tertiary;
 }
 
-.table-row-cell:odd {
+.table-row-cell: odd {
     -fx-background-color: #93f9b911;
-    -fx-background-insets: 0, 0 0 1 0;
+
 }
 
-.table-row-cell:even {
+.table-row-cell: even {
     -fx-background-color: #1dbbdd11;
-    -fx-background-insets: 0, 0 0 1 0 ;
+
 }
 
 .table-row-cell: highlighted {
@@ -153,15 +178,39 @@
     -fx-background-insets: 2px;
 }
 
+/* List View Scroll Bar */
+.list-view .virtual-flow .scroll-bar:vertical,
+.list-view .virtual-flow .scroll-bar:vertical .track,
+.list-view .virtual-flow .scroll-bar:vertical .track-background,
+.list-view .virtual-flow .scroll-bar:horizontal,
+.list-view .virtual-flow .scroll-bar:horizontal .track,
+.list-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
 
-/*  Track Seeker */
+.list-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  -hlight-gradient;
+}
+
+.list-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color:  linear-gradient(to right, #1dbbdd44, #93f9b944);
+}
+
+.list-view .virtual-flow .scroll-bar .increment-button,
+.list-view .virtual-flow .scroll-bar .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+
+
+/* Sliders */
 .slider {
     -default-track-color: -fx-control-inner-background;
-    -track-color: -default-track-color;
+    -track-color: transparent;
 }
 
 .slider .track {
-    -fx-background-color: -fx-shadow-highlight-color,
+    -fx-background-color: -primary,
         linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
         -fx-text-box-border), -track-color;
 }
@@ -171,6 +220,23 @@
 
 }
 
+.transparent {
+    -fx-background-color: transparent;
+}
+
+.transparent-background {
+    -fx-background-color: transparent;
+}
+
+.transparent-background > .viewport {
+    -fx-background-color: transparent;
+}
+
+.highlight-rectangle {
+    -fx-background-color: derive(-primary, 50%);
+    -fx-background-radius: 5px;
+}
+
 .delete-button {
     -fx-border-color: transparent;
     -fx-border-width: 0;
@@ -178,13 +244,13 @@
     -fx-background-color: transparent;
 }
 
-.delete-button:hover {
+/* Icon Color */
+.delete-icon: hover {
     -fx-icon-color: -tertiary;
 }
 
-/* Icon Color */
  .icon {
-    -fx-icon-color: DimGrey;
+    -fx-icon-color: DarkSlateGrey;
  }
 
 

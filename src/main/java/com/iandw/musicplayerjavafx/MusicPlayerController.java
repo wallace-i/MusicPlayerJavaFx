@@ -11,6 +11,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -114,6 +116,7 @@ public class MusicPlayerController {
     private AutoPlay autoPlay;
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
+    private ExecutorService executorService;
 
     private final Stage stage;
     private String artistNameString;
@@ -127,8 +130,9 @@ public class MusicPlayerController {
 
 
     // Default Constructor
-    public MusicPlayerController(Stage stage, UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) {
+    public MusicPlayerController(Stage stage, ExecutorService executorService, UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) {
         this.stage = stage;
+        this.executorService = executorService;
         this.userSettings = userSettings;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -140,7 +144,7 @@ public class MusicPlayerController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, InterruptedException {
         // Initialize variables
         playing = false;
         stopped = true;
@@ -199,10 +203,13 @@ public class MusicPlayerController {
             // Track Metadata => trackTableView
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());
 
-            // Initialize table view via artistListView
-            artistListView.getSelectionModel().select(0);
-            trackTableView.refresh();
-            listViewSelected();
+            // Initialize table view after files are read in via executorService
+            if (executorService.awaitTermination(10000, TimeUnit.MILLISECONDS)) {
+                artistListView.getSelectionModel().select(0);
+                trackTableView.refresh();
+                listViewSelected();
+            }
+
         }
 
 
@@ -261,6 +268,7 @@ public class MusicPlayerController {
         seekSlider.valueProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
                     if (seekSlider.isPressed()) {
+                        //TODO => funky when stopped (null)
                         mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(seekSlider.getValue() / 100));
                     }
 
@@ -268,13 +276,15 @@ public class MusicPlayerController {
                     if (Double.isNaN(percentage)) {
                         percentage = 0.0;
                     }
+
+                    // Set slideSeeker css based on current style sheet
                     String style = String.format(
                             "-track-color: linear-gradient(to right, " +
-                                    "-fx-accent 0%%, " +
-                                    "-fx-accent %1$.1f%%, " +
-                                    "-default-track-color %1$.1f%%, " +
-                                    "-default-track-color 100%%);",
-                            percentage);
+                            "-fx-accent 0%%, " +
+                            "-fx-accent %1$.1f%%, " +
+                            "-default-track-color %1$.1f%%, " +
+                            "-default-track-color 100%%);", percentage);
+
                     //System.out.println(percentage);
                     seekSlider.setStyle(style);
                 }
@@ -891,7 +901,7 @@ public class MusicPlayerController {
                     playPauseButton.setGraphic(playIcon);
                     playing = false;
 
-                } else if (this.mediaPlayer == null) {
+                } else if (mediaPlayer == null) {
                     playMedia();
 
                 } else {
@@ -909,13 +919,14 @@ public class MusicPlayerController {
 
     @FXML
     private void seekSliderPressed(MouseEvent mouseClick) {
+        //TODO => funky logic when stopped
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
             try {
                 if (!playing) {
                     mediaPlayer.play();
                     playPauseButton.setGraphic(pauseIcon);
 
-                } else if (this.mediaPlayer == null) {
+                } else if (mediaPlayer == null) {
                     playMedia();
                 }
 
@@ -965,8 +976,7 @@ public class MusicPlayerController {
         {
             trackIndex.setPushCurrentTrackToStack(false);
 
-
-           trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
+            trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
 
             if (!trackIndex.getPreviousIndexStack().empty()) {
                 trackTableView.getSelectionModel().select(trackIndex.popPreviousIndexArray());
@@ -1057,6 +1067,7 @@ public class MusicPlayerController {
         playing = false;
         stopped = true;
         setNowPlayingText();
+
     }
 
     private void seekValueUpdate() {

@@ -41,7 +41,7 @@ public class App extends Application {
             // Pass userSettings to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
             fxmlLoader.setControllerFactory(musicPlayerController -> new MusicPlayerController(
-                    stage, userSettings, listViewLibrary, tableViewLibrary));
+                    stage, executorService, userSettings, listViewLibrary, tableViewLibrary));
 
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
