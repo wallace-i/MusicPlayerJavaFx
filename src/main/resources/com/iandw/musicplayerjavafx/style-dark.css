@@ -63,22 +63,21 @@
 }
 
 .button {
-    -fill: transparent;
-    -fx-background-color: -fill;
+    -fx-background-color: -quaternary;
 }
 
 .button: hover {
-    -fill: -secondary;
+    -fx-background-color: -hover-background;
 }
 
 .button: armed {
-    -fill: -secondary-armed;
+    -fx-background-color: -secondary;
 }
 
 /* Table View */
 
 .table-view,
-.table-view, .column-header,
+.table-view .column-header,
 .tableview.column-header-background .filler,
 .table-view .corner .label {
     -fx-background-color: transparent;
@@ -172,12 +171,12 @@
     -fx-background-color: transparent;
 }
 
-.list-cell {
-    -fx-text-fill: -text-normal;
+.list-view .list-cell {
     -fx-border-color: transparent;
+    -fx-text-fill: -text-normal;
 }
 
-.list-cell: hover {
+.list-view .list-cell: hover {
     -fx-text-fill: -text-hover;
     -fx-background-color: -hover-background;
     -fx-text-background-color: -secondary;
@@ -185,26 +184,29 @@
 
 .list-cell: odd {
     -fx-background-color: -odd-cell;
-    -fx-background-insets: 0, 0 0 1 0;
 }
 
 .list-cell: even {
     -fx-background-color: -even-cell;
-    -fx-background-insets: 0, 0 0 1 0 ;
 }
 
-.list-cell: highlighted {
+.list-view .list-cell: highlighted {
     -fx-background-color: -primary;
+    -fx-highlight-fill: -highlight-fill;
     -fx-background-radius: 5px;
     -fx-background-insets: 2px;
 }
 
-.list-cell: selected {
-    -fx-text-fill: -text-selected;
+.list-view .list-cell: selected {
     -fx-background-color: -secondary;
     -fx-text-background-color: -text-background-selected;
+    -fx-selected-fill: -selected-fill;
     -fx-background-radius: 5px;
     -fx-background-insets: 2px;
+}
+
+.list-view: selected .list-cell {
+    -fx-text-fill: -text-selected;
 }
 
 /* List View Scroll Bar */
@@ -231,17 +233,46 @@
     -fx-padding: 2;
 }
 
-
-/* Sliders */
+/* default slider style
 .slider {
      -default-track-color: -fx-control-inner-background;
-        -track-color: -default-track-color;
+     -track-color: transparent;
 }
 
 .slider .track {
     -fx-background-color:  -fx-shadow-highlight-color,
         linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
         -fx-text-box-border), -track-color;
+
+} */
+
+/* Sliders */
+.slider {
+    -fx-background-color: transparent;
+    -default-track-color: -tertiary;
+    -track-color: -quaternary;
+}
+
+.slider .track {
+    -fx-background-color:  -fx-shadow-highlight-color,
+            linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
+            -fx-text-box-border), -track-color;
+    -fx-border-color: -primary;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.slider .axis .axis-tick-mark,
+.slider .axis .axis-minor-tick-mark {
+    -fx-background-color: transparent;
+    -fx-stroke: -icon-color;
+}
+
+.slider .thumb {
+    -fx-background-color: -quaternary;
+    -fx-border-color: -primary;
+    -fx-background-radius: 100px;
+    -fx-border-radius: 100px;
 }
 
 /*  Search Bar */
@@ -338,6 +369,23 @@
 /* Check box */
 .check-box {
     -fx-text-fill: -text-normal;
+
+}
+
+.check-box .box {
+    -fx-background-color: -quaternary;
+}
+
+.check-box: hover .box {
+    -fx-background-color: -hover-background;
+}
+
+.check-box: selected .box {
+    -fx-background-color: -secondary;
+}
+
+.check-box: selected .mark {
+    -fx-background-color: -text-selected;
 }
 
 /* Radio Button */
@@ -345,11 +393,16 @@
     -fx-background-color: -quaternary;
 }
 
-.radio-button: focused {
+.radio-button: hover .radio {
     -fx-background-color: -hover-background;
 }
-.radio-button: selected {
+
+.radio-button: selected .radio {
     -fx-background-color: -secondary;
+}
+
+.radio-button: selected .dot {
+    -fx-background-color: -text-selected;
 }
 
 
@@ -357,17 +410,18 @@
 .delete-icon{
     -fx-icon-color: -icon-color;
 }
+
 .delete-icon: hover {
     -fx-icon-color: -text-normal;
 }
 
- .icon {
+.icon {
     -fx-icon-color: -icon-color;
- }
+}
 
  /* Labels */
- .label {
+.label {
     -fx-text-fill: -text-normal;
- }
+}
 
 

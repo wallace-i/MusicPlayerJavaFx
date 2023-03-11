@@ -116,7 +116,7 @@ public class MusicPlayerController {
     private AutoPlay autoPlay;
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     private final Stage stage;
     private String artistNameString;
@@ -212,7 +212,6 @@ public class MusicPlayerController {
 
         }
 
-
         /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
          *                        LISTENERS => MusicPlayerController.java
@@ -228,14 +227,17 @@ public class MusicPlayerController {
                     try {
                         volumeDouble = Math.pow(newValue.doubleValue(), 2) / 10000;
                         mediaPlayer.setVolume(volumeDouble);
+
                     } catch (NullPointerException e) {
                         System.out.println("mediaPlayer is null");
                     }
 
                     if (volumeSlider.getValue() >= 50) {
                         volumeIconLabel.setGraphic(volumeUp);
+
                     } else if (volumeSlider.getValue() > 0) {
                         volumeIconLabel.setGraphic(volumeDown);
+
                     } else {
                         volumeIconLabel.setGraphic(volumeOff);
                     }
@@ -250,11 +252,14 @@ public class MusicPlayerController {
 
                         if (mute.isSelected()) {
                             volumeIconLabel.setGraphic(volumeMute);
+
                         } else {
                             if (volumeSlider.getValue() >= 50) {
                                 volumeIconLabel.setGraphic(volumeUp);
+
                             } else if (volumeSlider.getValue() > 0) {
                                 volumeIconLabel.setGraphic(volumeDown);
+
                             } else {
                                 volumeIconLabel.setGraphic(volumeOff);
                             }
@@ -267,23 +272,16 @@ public class MusicPlayerController {
         // Seek time during track duration, and updating current duration on seekSlider
         seekSlider.valueProperty().addListener(
                 (observableValue, oldValue, newValue) -> {
-                    if (seekSlider.isPressed()) {
-                        //TODO => funky when stopped (null)
+                    if (seekSlider.isPressed() && !stopped) {
                         mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(seekSlider.getValue() / 100));
                     }
 
                     double percentage = 100.0 * newValue.doubleValue() / seekSlider.getMax();
-                    if (Double.isNaN(percentage)) {
-                        percentage = 0.0;
-                    }
+
+                    if (Double.isNaN(percentage)) { percentage = 0.0; }
 
                     // Set slideSeeker css based on current style sheet
-                    String style = String.format(
-                            "-track-color: linear-gradient(to right, " +
-                            "-fx-accent 0%%, " +
-                            "-fx-accent %1$.1f%%, " +
-                            "-default-track-color %1$.1f%%, " +
-                            "-default-track-color 100%%);", percentage);
+                    String style = String.format(SeekSliderStyle.getStyle(userSettings), percentage);
 
                     //System.out.println(percentage);
                     seekSlider.setStyle(style);
@@ -911,6 +909,7 @@ public class MusicPlayerController {
                     stopped = false;
                     setNowPlayingText();
                 }
+
             } catch (NullPointerException e) {
                 System.out.println("No track selected.");
             }
@@ -919,22 +918,19 @@ public class MusicPlayerController {
 
     @FXML
     private void seekSliderPressed(MouseEvent mouseClick) {
-        //TODO => funky logic when stopped
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            try {
-                if (!playing) {
-                    mediaPlayer.play();
-                    playPauseButton.setGraphic(pauseIcon);
+            if (!stopped) {
+                try {
+                    if (!playing) {
+                        mediaPlayer.play();
+                        playPauseButton.setGraphic(pauseIcon);
+                    }
 
-                } else if (mediaPlayer == null) {
-                    playMedia();
+                } catch (NullPointerException e) {
+                    System.out.println("No track selected.");
                 }
-
-            } catch (NullPointerException e) {
-                System.out.println("No track selected.");
             }
         }
-
     }
 
     @FXML

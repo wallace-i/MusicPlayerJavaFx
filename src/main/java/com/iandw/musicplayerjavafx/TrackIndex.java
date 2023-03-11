@@ -12,7 +12,7 @@ public class TrackIndex {
 
     // Holds each previous track so that user can play back previous tracks in succession.
     // Resets everytime TableView is refreshed.
-    private final Stack<Integer> previousIndexStack;// = new Stack<>();
+    private final Stack<Integer> previousIndexStack = new Stack<>();
     private int currentTrackIndex;
     private int nextTrackIndex;
     private int tableSize;
@@ -20,8 +20,6 @@ public class TrackIndex {
 
     public TrackIndex() {
         shuffleArray = new ArrayList<>();
-        previousIndexStack = new Stack<>();
-
         pushCurrentTrackToStack = false;
     }
 

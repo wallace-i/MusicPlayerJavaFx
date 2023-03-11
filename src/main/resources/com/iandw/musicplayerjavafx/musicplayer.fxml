@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane styleClass="anchor-pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
-    <HBox styleClass="tables" layoutY="87.0" prefHeight="302.0" prefWidth="675.0">
-        <SplitPane styleClass="split-pane" dividerPositions="0.21842496285289748" prefHeight="302.0" prefWidth="678.0" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
+    <HBox layoutY="87.0" prefHeight="302.0" prefWidth="675.0" styleClass="tables">
+        <SplitPane dividerPositions="0.21842496285289748" prefHeight="302.0" prefWidth="678.0" styleClass="split-pane">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                 <SplitPane dividerPositions="0.75" layoutX="-8.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="286.0" prefWidth="144.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -150,7 +150,7 @@
     </Label>
     <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="202.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="356.0" showTickMarks="true" />
     <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" />
-    <Label fx:id="volumeIconLabel" layoutX="86.0" layoutY="399.0">
+    <Label fx:id="volumeIconLabel" layoutX="92.0" layoutY="399.0">
         <graphic>
             <FontIcon fx:id="volumeUp" iconLiteral="bi-volume-up-fill" iconSize="15" styleClass="icon" />
         </graphic>
@@ -167,9 +167,9 @@
     <Label fx:id="trackDurationLabel" layoutX="563.0" layoutY="399.0" text="00:00" />
     <Label fx:id="trackCurrentTimeLabel" layoutX="168.0" layoutY="399.0" text="00:00" />
     <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" />
-    <Label fx:id="volumeLevelLabel" layoutX="109.0" layoutY="399.0" text="50" />
+    <Label fx:id="volumeLevelLabel" layoutX="110.0" layoutY="399.0" text="50" />
     <StackPane layoutX="515.0" layoutY="23.0" prefHeight="38.0" prefWidth="157.0">
-        <TextField styleClass="transparent" fx:id="searchField" prefHeight="25.0" prefWidth="197.0" promptText="search">
+        <TextField fx:id="searchField" prefHeight="25.0" prefWidth="197.0" promptText="search" styleClass="transparent">
             <padding>
                 <Insets bottom="2.0" left="25.0" right="22.0" top="2.0" />
             </padding>
@@ -191,7 +191,7 @@
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
             </padding>
         </Label>
-        <Button styleClass="delete-button" mnemonicParsing="false" onMouseClicked="#handleClearSearchText" prefHeight="25.0" prefWidth="30.0" StackPane.alignment="CENTER_RIGHT">
+        <Button mnemonicParsing="false" onMouseClicked="#handleClearSearchText" prefHeight="25.0" prefWidth="30.0" styleClass="delete-button" StackPane.alignment="CENTER_RIGHT">
             <graphic>
                 <FontIcon iconLiteral="bi-x" iconSize="20" styleClass="delete-icon" />
             </graphic>
