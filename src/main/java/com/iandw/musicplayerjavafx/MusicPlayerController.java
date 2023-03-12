@@ -122,7 +122,6 @@ public class MusicPlayerController {
     private String artistNameString;
     private String playlistTitleString;
     private String previousArtistNameString;
-    private String currentTrackTitle;
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
@@ -895,16 +894,17 @@ public class MusicPlayerController {
             trackIndex.setPushCurrentTrackToStack(true);
 
             try {
+                // Pause currently playing track
                 if (playing) {
                     mediaPlayer.pause();
                     playPauseButton.setGraphic(playIcon);
                     playing = false;
 
-                } else if (mediaPlayer == null ||
-                        !Objects.equals(currentTrackTitle, trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr()))
-                {
+                // Play from selected track if stopped or null
+                } else if (mediaPlayer == null || stopped) {
                     playMedia();
 
+                // Play from currently paused track
                 } else {
                     mediaPlayer.play();
                     playPauseButton.setGraphic(pauseIcon);
@@ -1024,7 +1024,6 @@ public class MusicPlayerController {
             imageView.setPreserveRatio(true);
             imageView.setFitWidth(albumImageWidth);
             playPauseButton.setGraphic(pauseIcon);
-            currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
             playing = true;
             stopped = false;
 

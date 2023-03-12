@@ -1,29 +1,31 @@
 /*  Root */
 .root {
 
-    -primary: #3cb45a60;
-    -secondary: #1dbbdd44;
-    -secondary-armed: #20b2aa66;
+    -primary: #3cb47860;
+    -secondary: #00c763;
+    -secondary-armed: #1fb26966;
     -tertiary: #a3ffba;
-    -quaternary:  #e6ffe6;
+    -quaternary:  #e5ffec;
 
-    -odd-cell: #93f9b911;
-    -even-cell: #1dbbdd11;
+    -odd-cell: #3cb47820;
+    -even-cell: #1ddddd11;
 
-    -text-normal: #1a1a1a;
-    -text-hover: #1a651a;
-    -text-selected: #1a651a;
+    -text-normal: #262626;
+    -text-hover: white;
+    -text-selected: white;
 
-    -hover-background: -secondary;
+    -hover-background: #1ddd7d90;
     -highlight-fill: -primary;
-    -text-background-selected: #1aa3ff;
-    -selected-fill: #b97a9c;
+    -text-background-selected: #1aff8c;
+    -selected-fill: #79b9a9;
+    -scroll-thumb: #1ddd7d44;
 
     -icon-color: #4d4d4d;
 
     -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, -tertiary, -quaternary);
     -hor-gradient: linear-gradient(to left, -quaternary, -tertiary);
-    -ver-gradient: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+    -ver-gradient: linear-gradient(to bottom, -primary, -tertiary);
+
 
 
 
@@ -46,7 +48,7 @@
 }
 
 .split-pane: vertical > .split-pane-divider {
-    -fx-background-color: -ver-gradient;
+    -fx-background-color: linear-gradient(to bottom, -quaternary, -tertiary);
     -fx-background-radius: 5px;
 }
 
@@ -151,11 +153,11 @@
 }
 
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  #1dbbdd44;
+    -fx-background-color:  -scroll-thumb;
 }
 
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  #1dbbdd44;
+    -fx-background-color:  -scroll-thumb;
 }
 
 .table-view .virtual-flow .scroll-bar .increment-button,
@@ -219,11 +221,11 @@
 }
 
 .list-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  #1dbbdd44;
+    -fx-background-color:  -scroll-thumb;
 }
 
 .list-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  #1dbbdd44;
+    -fx-background-color:  -scroll-thumb;
 }
 
 .list-view .virtual-flow .scroll-bar .increment-button,
@@ -268,8 +270,8 @@
 }
 
 .slider .thumb {
-    -fx-background-color: #8cd99f;
-    -fx-border-color: -primary;
+    -fx-background-color: -quaternary;
+    -fx-border-color: -secondary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
 }
@@ -304,7 +306,7 @@
 
 /* Menu Bar */
 .menu-bar {
-    -fx-background-color: -ver-gradient;
+    -fx-background-color: -bg-gradient;
 }
 
 .menu .menu-divider {

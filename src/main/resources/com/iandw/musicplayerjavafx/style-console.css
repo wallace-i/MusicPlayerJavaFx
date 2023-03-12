@@ -1,31 +1,28 @@
 /*  Root */
 .root {
 
-    -primary: #3c96b460;
-    -secondary: -fx-accent;
-    -secondary-armed: #1fb2b266;
-    -tertiary: #a3ffff;
-    -quaternary:  #e5f9ff;
+    -primary: #4e5254; /* dark grey */
+    -secondary: #4db34d66; /* Green */
+    -secondary-armed: LightGrey;
+    -tertiary: #222630; /* dark blue-grey */
+    -quaternary: #363840; /* medium blue-grey */
 
-    -odd-cell: #3c96b420;
-    -even-cell: #1d7ddd11;
+    -odd-cell: #292a3090;
+    -even-cell: #2f323970;
 
-    -text-normal: #262626;
-    -text-hover: white;
-    -text-selected: white;
+    -text-normal: #4db34d;
+    -text-hover: #e6e6e6;
+    -text-selected: #e6e6e6;
 
-    -hover-background: #1daddd90;
-    -highlight-fill: -primary;
-    -text-background-selected: #1a1aff;
-    -selected-fill: #7999b9;
-    -scroll-thumb: #1dbbdd44;
+    -hover-background: #93f9b911;
+    -highlight-fill: -secondary;
+    -text-background-selected: #1aa3ff;
+    -selected-fill: #b97a9c;
 
-    -icon-color: #4d4d4d;
+    -icon-color: #b3b3b3;
 
-    -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, -tertiary, -quaternary);
-    -hor-gradient: linear-gradient(to left, -quaternary, -tertiary);
-    -ver-gradient: linear-gradient(to bottom, -primary, -tertiary);
-
+    -hor-gradient: linear-gradient(to left, -tertiary, -quaternary);
+    -ver-gradient: linear-gradient(to bottom, -quaternary, -tertiary);
 
 
 
@@ -33,12 +30,12 @@
 
 /* MusicPlayerController */
 .anchor-pane {
-    -fx-background-color: -bg-gradient;
+    -fx-background-color: -tertiary;
     -fx-padding: 10px 15px;
 }
 
 .split-pane {
-    -fx-background-color: -bg-gradient;
+    -fx-background-color: -tertiary;
 
 }
 
@@ -48,7 +45,7 @@
 }
 
 .split-pane: vertical > .split-pane-divider {
-    -fx-background-color: linear-gradient(to bottom, -quaternary, -tertiary);
+    -fx-background-color: -ver-gradient;
     -fx-background-radius: 5px;
 }
 
@@ -66,7 +63,7 @@
 }
 
 .button {
-    -fx-background-color: -primary;
+    -fx-background-color: -quaternary;
 }
 
 .button: hover {
@@ -139,7 +136,7 @@
 }
 
 .table-view .column-header-background .filler {
-    -fx-background-color: transparent;
+    -fx-background-color: -tertiary;
 }
 
 /* Table View Scroll Bar */
@@ -149,15 +146,15 @@
 .table-view .virtual-flow .scroll-bar:horizontal,
 .table-view .virtual-flow .scroll-bar:horizontal .track,
 .table-view .virtual-flow .scroll-bar:horizontal .track-background {
-    -fx-background-color: transparent;
+    -fx-background-color: -tertiary;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  -scroll-thumb;
+    -fx-background-color:  -quaternary
 }
 
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  -scroll-thumb;
+    -fx-background-color:  -quaternary
 }
 
 .table-view .virtual-flow .scroll-bar .increment-button,
@@ -200,14 +197,14 @@
 .list-view .list-cell: selected {
     -fx-background-color: -secondary;
     -fx-text-background-color: -text-background-selected;
-    -fx-selected-fill: -selected-fill;
     -fx-text-fill: -text-selected;
+    -fx-selected-fill: -selected-fill;
     -fx-background-radius: 5px;
     -fx-background-insets: 2px;
 }
 
 .list-view: selected .list-cell {
-
+    -fx-text-fill: -text-selected;
 }
 
 /* List View Scroll Bar */
@@ -221,11 +218,11 @@
 }
 
 .list-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  -scroll-thumb;
+    -fx-background-color:  -quaternary
 }
 
 .list-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  -scroll-thumb;
+    -fx-background-color:  -quaternary
 }
 
 .list-view .virtual-flow .scroll-bar .increment-button,
@@ -271,7 +268,7 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -secondary;
+    -fx-border-color: -primary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
 }
@@ -306,7 +303,7 @@
 
 /* Menu Bar */
 .menu-bar {
-    -fx-background-color: -bg-gradient;
+    -fx-background-color: -ver-gradient;
 }
 
 .menu .menu-divider {
@@ -374,7 +371,7 @@
 }
 
 .check-box .box {
-    -fx-background-color: -primary;
+    -fx-background-color: -quaternary;
 }
 
 .check-box: hover .box {
@@ -391,7 +388,7 @@
 
 /* Radio Button */
 .radio-button .radio {
-    -fx-background-color: -primary;
+    -fx-background-color: -quaternary;
 }
 
 .radio-button: hover .radio {
@@ -413,7 +410,7 @@
 }
 
 .delete-icon: hover {
-    -fx-icon-color: -secondary;
+    -fx-icon-color: -text-normal;
 }
 
 .delete-button: hover {

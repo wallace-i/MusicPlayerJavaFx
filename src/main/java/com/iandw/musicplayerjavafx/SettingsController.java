@@ -21,8 +21,6 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class SettingsController extends AnchorPane {
@@ -54,6 +52,7 @@ public class SettingsController extends AnchorPane {
     final String blue = "Blue";
     final String green = "Green";
     final String pink = "Pink";
+    final String console = "Console";
 
     // CSS File Names
     final String styleLightFileName = "style-light.css";
@@ -61,10 +60,11 @@ public class SettingsController extends AnchorPane {
     final String styleBlueFileName = "style-blue.css";
     final String styleGreenFileName = "style-green.css";
     final String stylePinkFileName = "style-pink.css";
+    final String styleConsoleFileName = "style-console.css";
 
     public void initialize() {
         // Initialize ComboBox for css themes
-        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, blue, green, pink);
+        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, blue, green, pink, console);
         themesComboBox.getItems().addAll(themesList);
 
         themeSelection();
@@ -86,6 +86,7 @@ public class SettingsController extends AnchorPane {
             case styleBlueFileName -> themesComboBox.setValue(blue);
             case styleGreenFileName -> themesComboBox.setValue(green);
             case stylePinkFileName -> themesComboBox.setValue(pink);
+            case styleConsoleFileName -> themesComboBox.setValue(console);
         }
 
         this.artistListView = artistListView;
@@ -196,8 +197,6 @@ public class SettingsController extends AnchorPane {
 
             System.out.println("Finished Resetting.");
 
-
-
         }
 
         stage.setAlwaysOnTop(true);
@@ -273,11 +272,12 @@ public class SettingsController extends AnchorPane {
 
             System.out.printf("System theme changed from %s to %s.%n", userSettings.getThemeFileNameString(), selectedTheme);
             switch (selectedTheme) {
-                case light -> userSettings.setThemeFileNameString(styleLightFileName);
-                case dark -> userSettings.setThemeFileNameString(styleDarkFileName);
-                case blue -> userSettings.setThemeFileNameString(styleBlueFileName);
-                case green -> userSettings.setThemeFileNameString(styleGreenFileName);
-                case pink -> userSettings.setThemeFileNameString(stylePinkFileName);
+                case light   -> userSettings.setThemeFileNameString(styleLightFileName);
+                case dark    -> userSettings.setThemeFileNameString(styleDarkFileName);
+                case blue    -> userSettings.setThemeFileNameString(styleBlueFileName);
+                case green   -> userSettings.setThemeFileNameString(styleGreenFileName);
+                case pink    -> userSettings.setThemeFileNameString(stylePinkFileName);
+                case console -> userSettings.setThemeFileNameString(styleConsoleFileName);
             }
 
             themesLabel.setText("Restart application to apply new theme");
