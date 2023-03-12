@@ -6,20 +6,16 @@
  */
 package com.iandw.musicplayerjavafx;
 
-import java.awt.Desktop;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -360,6 +356,27 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
+     *                          TABLE VIEW
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    @FXML
+    private void handleTableViewMouseClick(MouseEvent mouseClick) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
+            if (mouseClick.getClickCount() == 2) {
+                if (playing) {
+                    mediaPlayer.stop();
+                    mediaPlayer.dispose();
+                    playing = false;
+                }
+                // Load currentPath and associated variables
+                playMedia();
+            }
+        }
+    }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
      *                          LIST VIEW MODULES
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -428,98 +445,24 @@ public class MusicPlayerController {
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          CONTEXT MENU MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     @FXML
-    private void handleArtistsListViewContextMenu() {
+    private void handleArtistListViewContextMenu() {
 
         artistNameString = artistListView.getSelectionModel().getSelectedItem();
-
 
         if (artistNameString != null) {
             // Right-clicking will update the tableview based on selection
             trackTableView.refresh();
             listViewSelected();
 
-            String selectedItem = artistListView.getSelectionModel().getSelectedItem();
-            System.out.println("Artists selected: " + selectedItem);
-
-            ContextMenu contextMenu = new ContextMenu();
-
-            // Add to list
-            MenuItem addArtist = new MenuItem("Add Artist");
-
-            // Edit List
-            MenuItem editArtist = new MenuItem("Edit");
-            SeparatorMenuItem divider1 = new SeparatorMenuItem();
-
-            // Remove from list
-            MenuItem removeListView = new MenuItem("Remove");
-            SeparatorMenuItem divider2 = new SeparatorMenuItem();
-
-            // View folder in explorer
-            MenuItem openInExplorer = new MenuItem("Open in Explorer");
-
-            // Add Artist
-            addArtist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Add Artist";
-                    String menuSelection = artistListView.getSelectionModel().getSelectedItem();
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                            listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            // Edit Artist or Playlist
-            editArtist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Edit Artist";
-                    String menuSelection = artistListView.getSelectionModel().getSelectedItem();
-
-                    if (menuSelection != null) {
-                        ListViewController listViewController = new ListViewController();
-                        listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                                listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-                    }
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            });
-
-            // Remove Artist
-            removeListView.setOnAction(event -> {
-                String menuSelection = artistListView.getSelectionModel().getSelectedItem();
-
-                if (menuSelection != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Remove Artist");
-                    alert.setHeaderText("Removing Artist deletes their tracks from Library, but does not affect files or folders.");
-                    alert.setContentText("Would you like to continue?");
-
-                    if (alert.showAndWait().get() == ButtonType.OK) {
-                        removeArtist(menuSelection);
-                    }
-                }
-
-            });
-
-            // Open in File Explorer
-            openInExplorer.setOnAction(event -> {
-                String menuSelection = artistListView.getSelectionModel().getSelectedItem();
-                File file = new File(userSettings.getRootMusicDirectoryString() + File.separator + menuSelection);
-
-                if (menuSelection != null) {
-                    openExplorer(file);
-                }
-            });
-
-            contextMenu.getItems().addAll(addArtist, editArtist, divider1, removeListView, divider2, openInExplorer);
-
-            artistListView.setContextMenu(contextMenu);
+            ContextMenuArtistList.getContextMenu(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex, userSettings);
         }
 
     }
@@ -534,317 +477,25 @@ public class MusicPlayerController {
             trackTableView.refresh();
             listViewSelected();
 
-            String selectedItem = playlistListView.getSelectionModel().getSelectedItem();
-            System.out.println("Playlist selected: " + selectedItem);
-
-            ContextMenu contextMenu = new ContextMenu();
-
-            // Add to list
-            MenuItem createPlaylist = new MenuItem("Create Playlist");
-
-            // Edit List
-            MenuItem editPlaylist = new MenuItem("Edit");
-            SeparatorMenuItem divider1 = new SeparatorMenuItem();
-
-            // Remove from list
-            MenuItem removePlaylist = new MenuItem("Remove");
-            SeparatorMenuItem divider2 = new SeparatorMenuItem();
-
-            // View folder in explorer
-            MenuItem openInExplorer = new MenuItem("Open in Explorer");
-
-            // Create Playlist
-            createPlaylist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Create Playlist";
-                    String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                            listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            editPlaylist.setOnAction(event -> {
-                try {
-                    String windowTitle = "Edit Playlist";
-                    String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-
-                    if (menuSelection != null) {
-                        ListViewController listViewController = new ListViewController();
-                        listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                                listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            removePlaylist.setOnAction(event -> {
-                String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-
-                if (menuSelection != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Remove Playlist");
-                    alert.setHeaderText("Removing playlist does not affect files or folders.");
-                    alert.setContentText("Would you like to continue?");
-
-                    if (alert.showAndWait().get() == ButtonType.OK) {
-                        removePlaylist(menuSelection);
-                    }
-                }
-            });
-
-            contextMenu.getItems().addAll(createPlaylist, editPlaylist, divider1, removePlaylist, divider2, openInExplorer);
-
-            playlistListView.setContextMenu(contextMenu);
+            ContextMenuPlaylistList.getContextMenu(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex);
         }
 
-    }
-
-    private void removeArtist(String removeArtistStr) {
-        listViewLibrary.removeArtist(removeArtistStr);
-
-        int tableSize = trackIndex.getTableSize();
-
-        if (tableSize > 0) {
-            // Remove Tracks from library
-            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
-                System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        artistListView.getSelectionModel().getSelectedItem());
-                tableViewLibrary.removeTrack(trackTableView.getItems().get(trackIndex));
-                trackTableView.refresh();
-            }
-
-            tableViewLibrary.setOutputTrackListOnClose();
-        }
-
-        artistListView.setItems(listViewLibrary.getArtistObservableList());
-
-    }
-
-    private void removePlaylist(String removePlaylistStr) {
-        listViewLibrary.removePlaylist(removePlaylistStr);
-
-        int tableSize = trackIndex.getTableSize();
-
-        if (tableSize > 0) {
-            // Alter all playlist tracks playlist to "*"
-            for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
-                System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(trackIndex).getTrackTitleStr(),
-                        artistListView.getSelectionModel().getSelectedItem());
-                trackTableView.getItems().get(trackIndex).setPlaylistStr("*");
-                trackTableView.refresh();
-            }
-
-            tableViewLibrary.setOutputTrackListOnClose();
-        }
-
-        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
-    }
-
-    private void openExplorer(File file) {
-        if (file.exists()) {
-            try {
-                Desktop.getDesktop().open(file.getParentFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     *
-     *                          TABLE VIEW MODULES
-     *
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    @FXML
-    private void handleTableViewMouseClick(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (mouseClick.getClickCount() == 2) {
-                if (playing) {
-                    mediaPlayer.stop();
-                    mediaPlayer.dispose();
-                    playing = false;
-                }
-                // Load currentPath and associated variables
-                playMedia();
-            }
-        }
     }
 
     @FXML
     private void handleTableViewContextMenu()  {
-        ContextMenu contextMenu = new ContextMenu();
+        ContextMenuTableView.getContextMenu(artistListView, trackTableView,
+                listViewLibrary, tableViewLibrary, trackIndex);
 
-        // Playlist Options
-        ArrayList<MenuItem> playlistMenuList = new ArrayList<>();
-        Menu addTrackToPlaylist = new Menu("Add to Playlist");
-        MenuItem removeTrackFromPlaylist = new MenuItem("Remove from Playlist");
-        SeparatorMenuItem divider1 = new SeparatorMenuItem();
-
-        // Add playlists to menu
-        for (String playlist : listViewLibrary.getPlaylistObservableList()) {
-            playlistMenuList.add(new MenuItem(playlist));
-        }
-
-        addTrackToPlaylist.getItems().addAll(playlistMenuList);
-
-        // Edit track data
-        Menu editTrack = new Menu("Edit Track");
-        MenuItem editArtistName = new MenuItem("Artist Name");
-        MenuItem editTrackTitle = new MenuItem("Track Title");
-        MenuItem editAlbumTitle = new MenuItem("Album Title");
-        MenuItem editTrackGenre = new MenuItem("Genre");
-
-        MenuItem deleteTrack = new MenuItem("Delete Track");
-        SeparatorMenuItem divider2 = new SeparatorMenuItem();
-
-        editTrack.getItems().addAll(editArtistName, editAlbumTitle, editTrackTitle, editTrackGenre);
-
-        // Explorer/Properties items
-        MenuItem openInExplorer = new MenuItem("Open in Explorer");
-
-        // Add track to Playlist
-        addTrackToPlaylist.setOnAction(event ->  {
-            int tableSize = trackIndex.getTableSize();
-
-            if (tableSize > 0) {
-                System.out.printf("Add %s to %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(), ((MenuItem) event.getTarget()).getText());
-                trackTableView.getSelectionModel().getSelectedItem().setPlaylistStr(((MenuItem) event.getTarget()).getText());
-                System.out.printf("track playlist set to: %s%n", trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr());
-                tableViewLibrary.setOutputTrackListOnClose();
-            }
-
-            // Refresh TableView
-            listViewSelected();
-        });
-
-        // Remove track from Playlist
-        removeTrackFromPlaylist.setOnAction(event -> {
-            int tableSize = trackIndex.getTableSize();
-
-            if (tableSize > 0 && !Objects.equals(trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr(), "*")) {
-                System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
-                        trackTableView.getSelectionModel().getSelectedItem().getPlaylistStr());
-                trackTableView.getSelectionModel().getSelectedItem().setPlaylistStr("*");
-                tableViewLibrary.setOutputTrackListOnClose();
-            }
-
-            // Refresh TableView
-            listViewSelected();
-        });
-
-        // Edit Artist Name
-        editArtistName.setOnAction(event -> {
-            EditTrackController editTrackController = new EditTrackController();
-            String columnName = "Artist Name";
-            String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
-            System.out.println(currentTrackTitle);
-            try {
-                editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                            artistListView, listViewLibrary, tableViewLibrary);
-                //TODO => refresh doesn't work here
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            trackTableView.refresh();
-        });
-
-        // Edit Album Title
-        editAlbumTitle.setOnAction(event -> {
-            EditTrackController editTrackController = new EditTrackController();
-            String columnName = "Album Title";
-            String currentTrackAlbum = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
-            System.out.println(currentTrackAlbum);
-            try {
-                editTrackController.showEditWindow(columnName, currentTrackAlbum, tableViewLibrary.getTrackObservableList(), trackTableView,
-                            artistListView, listViewLibrary, tableViewLibrary);
-                // Refresh TableView
-                listViewSelected();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            trackTableView.refresh();
-
-        });
-
-        // Edit Track Title
-        editTrackTitle.setOnAction(event -> {
-            EditTrackController editTrackController = new EditTrackController();
-            String columnName = "Track Title";
-            String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
-            System.out.println(currentTrackTitle);
-            try {
-                editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
-                // Refresh TableView
-                listViewSelected();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            trackTableView.refresh();
-        });
-
-        // Edit Genre
-        editTrackGenre.setOnAction(event -> {
-            EditTrackController editTrackController = new EditTrackController();
-            String columnName = "Genre";
-            String currentGenre = trackTableView.getSelectionModel().getSelectedItem().getTrackGenreStr();
-            System.out.println(currentGenre);
-            try {
-                editTrackController.showEditWindow(columnName, currentGenre, tableViewLibrary.getTrackObservableList(), trackTableView,
-                            artistListView, listViewLibrary, tableViewLibrary);
-                // Refresh TableView
-                listViewSelected();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            trackTableView.refresh();
-        });
-
-        // Delete Track
-        deleteTrack.setOnAction(event -> {
-            System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
-                    artistListView.getSelectionModel().getSelectedItem());
-            tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
-            trackTableView.refresh();
-        });
-
-        // Open in File Explorer
-        openInExplorer.setOnAction(event -> {
-            File file = new File(trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr());
-            if (file.exists()) {
-                openExplorer(file);
-            }
-        });
-
-        contextMenu.getItems().addAll(addTrackToPlaylist, removeTrackFromPlaylist, divider1,
-                editTrack, deleteTrack, divider2, openInExplorer
-        );
-
-        trackTableView.setContextMenu(contextMenu);
-
-        trackTableView.refresh();
-
+        // Refresh TableView
+        listViewSelected();
     }
 
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         CLEAR SEARCH BAR
+     *                         SEARCH BAR
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

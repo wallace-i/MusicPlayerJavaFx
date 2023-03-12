@@ -1,5 +1,9 @@
 package com.iandw.musicplayerjavafx;
 
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,6 +52,71 @@ public class Utils {
 
         if (!directory.exists()) {
             Files.createDirectory(Paths.get(newPath));
+        }
+    }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          CONTEXT MENU UTILITIES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+    public static void removeArtist(String removeArtistStr, ListViewLibrary listViewLibrary,
+                              TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
+                              TableView<TrackMetadata> trackTableView, ListView<String> artistListView)
+    {
+        listViewLibrary.removeArtist(removeArtistStr);
+
+        int tableSize = trackIndex.getTableSize();
+
+        if (tableSize > 0) {
+            // Remove Tracks from library
+            for (int i = 0; i < tableSize; i++) {
+                System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(i).getTrackTitleStr(),
+                        artistListView.getSelectionModel().getSelectedItem());
+                tableViewLibrary.removeTrack(trackTableView.getItems().get(i));
+                trackTableView.refresh();
+            }
+
+            tableViewLibrary.setOutputTrackListOnClose();
+        }
+
+        artistListView.setItems(listViewLibrary.getArtistObservableList());
+
+    }
+
+    public static void removePlaylist(String removePlaylistStr, ListViewLibrary listViewLibrary,
+                                TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
+                                TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
+                                ListView<String> playlistListView)
+    {
+        listViewLibrary.removePlaylist(removePlaylistStr);
+
+        int tableSize = trackIndex.getTableSize();
+
+        if (tableSize > 0) {
+            // Alter all playlist tracks playlist to "*"
+            for (int i = 0; i < tableSize; i++) {
+                System.out.printf("Removing %s from %s%n", trackTableView.getItems().get(i).getTrackTitleStr(),
+                        artistListView.getSelectionModel().getSelectedItem());
+                trackTableView.getItems().get(i).setPlaylistStr("*");
+                trackTableView.refresh();
+            }
+
+            tableViewLibrary.setOutputTrackListOnClose();
+        }
+
+        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+    }
+
+    public static void openExplorer(File file) {
+        if (file.exists()) {
+            try {
+                Desktop.getDesktop().open(file.getParentFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
