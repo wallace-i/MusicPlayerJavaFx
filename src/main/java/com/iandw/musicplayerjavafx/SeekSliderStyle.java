@@ -11,10 +11,10 @@ public class SeekSliderStyle {
 
     private static final String greenStyle =
             "-track-color: linear-gradient(to right, " +
-            "-fx-accent 0%%, " +
-            "-fx-accent %1$.1f%%, " +
-            "transparent %1$.1f%%, " +
-            "transparent 100%%);";
+            "#3CB371 0%%, " +
+            "#3CB371 %1$.1f%%, " +
+            "#e6ffe6 %1$.1f%%, " +
+            "#e6ffe6 100%%);";
 
     private static final String darkStyle =
             "-track-color: linear-gradient(to right, " +

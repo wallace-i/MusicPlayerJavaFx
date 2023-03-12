@@ -98,20 +98,18 @@
     -fx-text-fill: -text-normal;
 }
 
-.table-row-cell: hover .table-cell {
-    -fx-text-fill: -text-hover;
-    -fx-background-color: -hover-background;
-    -fx-text-background-color: -secondary;
-}
-
 .table-row-cell: odd {
     -fx-background-color: -odd-cell;
-
 }
 
 .table-row-cell: even {
     -fx-background-color: -even-cell;
+}
 
+.table-row-cell: hover .table-cell {
+    -fx-text-fill: -text-hover;
+    -fx-background-color: -hover-background;
+    -fx-text-background-color: -secondary;
 }
 
 .table-row-cell: highlighted {
@@ -166,8 +164,7 @@
 }
 
 /* List View */
-.list-view,
-.list-view .corner {
+.list-view {
     -fx-background-color: transparent;
 }
 
@@ -176,18 +173,18 @@
     -fx-text-fill: -text-normal;
 }
 
-.list-view .list-cell: hover {
-    -fx-text-fill: -text-hover;
-    -fx-background-color: -hover-background;
-    -fx-text-background-color: -secondary;
-}
-
 .list-cell: odd {
     -fx-background-color: -odd-cell;
 }
 
 .list-cell: even {
     -fx-background-color: -even-cell;
+}
+
+.list-view .list-cell: hover {
+    -fx-text-fill: -text-hover;
+    -fx-background-color: -hover-background;
+    -fx-text-background-color: -secondary;
 }
 
 .list-view .list-cell: highlighted {
