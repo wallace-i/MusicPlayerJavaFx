@@ -122,6 +122,7 @@ public class MusicPlayerController {
     private String artistNameString;
     private String playlistTitleString;
     private String previousArtistNameString;
+    private String currentTrackTitle;
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
@@ -899,7 +900,9 @@ public class MusicPlayerController {
                     playPauseButton.setGraphic(playIcon);
                     playing = false;
 
-                } else if (mediaPlayer == null) {
+                } else if (mediaPlayer == null ||
+                        !Objects.equals(currentTrackTitle, trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr()))
+                {
                     playMedia();
 
                 } else {
@@ -1021,6 +1024,7 @@ public class MusicPlayerController {
             imageView.setPreserveRatio(true);
             imageView.setFitWidth(albumImageWidth);
             playPauseButton.setGraphic(pauseIcon);
+            currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
             playing = true;
             stopped = false;
 
@@ -1085,6 +1089,13 @@ public class MusicPlayerController {
             byLabel.setText("");
             albumIcon.setOpacity(0);
             artistIcon.setOpacity(0);
+
+        } else if (trackTableView.getSelectionModel().getSelectedIndex() != trackIndex.getCurrentTrackIndex()) {
+            albumIcon.setOpacity(100);
+            artistIcon.setOpacity(100);
+            playingLabel.setText(" " + trackTableView.getItems().get(trackIndex.getCurrentTrackIndex()).getTrackTitleStr());
+            albumLabel.setText(" " + trackTableView.getItems().get(trackIndex.getCurrentTrackIndex()).getAlbumTitleStr());
+            byLabel.setText(" " + trackTableView.getItems().get(trackIndex.getCurrentTrackIndex()).getArtistNameStr());
 
         } else {
             albumIcon.setOpacity(100);

@@ -412,6 +412,10 @@
     -fx-icon-color: -text-normal;
 }
 
+.delete-button: hover {
+    -fx-background-color: transparent;
+}
+
 .icon {
     -fx-icon-color: -icon-color;
 }
