@@ -16,7 +16,7 @@ public class EditTrackController {
     @FXML private TextField editTextField;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
-    private ListView<String> artistPlaylistListView;
+    private ListView<String> artistListView;
     private ListViewLibrary listViewLibrary;
     private TableViewLibrary tableViewLibrary;
     private TableView<TrackMetadata> trackTableView;
@@ -24,11 +24,11 @@ public class EditTrackController {
     private String columnName;
 
     private void initializeData(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
-                                TableView<TrackMetadata> trackTableView, ListView<String> artistPlaylistListView,
+                                TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
                                 ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
     {
         this.columnName = columnName;
-        this.artistPlaylistListView = artistPlaylistListView;
+        this.artistListView = artistListView;
         this.trackMetadataList = trackMetadataList;
         this.trackTableView = trackTableView;
         this.listViewLibrary = listViewLibrary;
@@ -38,13 +38,13 @@ public class EditTrackController {
     }
 
     public void showEditWindow(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
-                               TableView<TrackMetadata> trackTableView, ListView<String> artistPlaylistListView,
+                               TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
                                ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
-        controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistPlaylistListView,
+        controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistListView,
                 listViewLibrary, tableViewLibrary);
         stage.setTitle("Edit");
         stage.setResizable(false);
@@ -64,9 +64,9 @@ public class EditTrackController {
             case artistName -> {
                 trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(userInput);
 
-                if (!artistPlaylistListView.getItems().contains(userInput)) {
+                if (!artistListView.getItems().contains(userInput)) {
                     listViewLibrary.addArtist(userInput);
-                    artistPlaylistListView.setItems(listViewLibrary.getArtistObservableList());
+                    artistListView.setItems(listViewLibrary.getArtistObservableList());
                 }
             }
 
@@ -80,8 +80,9 @@ public class EditTrackController {
         System.out.printf("Update %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
                 columnName);
 
-//        tableViewLibrary.setTrackObservableList(trackMetadataList);
+        // Write to file on close
         tableViewLibrary.setOutputTrackListOnClose();
+
         trackTableView.refresh();
 
         stage.close();

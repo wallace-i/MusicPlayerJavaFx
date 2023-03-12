@@ -1,6 +1,6 @@
 package com.iandw.musicplayerjavafx;
 
-public class SeekSliderStyle {
+public class SeekSliderColor {
 
     private static final String lightStyle =
             "-track-color: linear-gradient(to right, " +
