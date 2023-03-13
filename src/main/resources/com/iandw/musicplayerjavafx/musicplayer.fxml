@@ -203,6 +203,6 @@
             </padding>
         </Button>
     </StackPane>
-    <ImageView fx:id="imageView" fitHeight="55.0" fitWidth="55.0" layoutX="614.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="imageView" fitHeight="55.0" fitWidth="55.0" layoutX="616.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true" />
 
 </AnchorPane>

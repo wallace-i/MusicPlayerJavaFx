@@ -104,7 +104,7 @@ public class MusicPlayerController {
     @FXML
     private ImageView imageView;
 
-    private Image musicNotes;
+    private Image defaultAlbumImage;
     private MediaPlayer mediaPlayer;
     private MusicLibrary musicLibrary;
     private final TableViewLibrary tableViewLibrary;
@@ -148,7 +148,7 @@ public class MusicPlayerController {
         artistsListSelected = true;
         searchTableView = new SearchTableView();
         currentTheme = userSettings.getThemeFileNameString();
-        ColorImage colorImage = new ColorImage(currentTheme);
+        ImageFileLogic imageFileLogic = new ImageFileLogic(currentTheme);
         playPauseButton.setGraphic(playIcon);
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
@@ -170,13 +170,13 @@ public class MusicPlayerController {
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
 
         // Change color to match theme
-        autoPlayIcon.setEffect(colorImage.getLighting());
+        autoPlayIcon.setEffect(imageFileLogic.getLighting());
         autoButton.setGraphic(autoPlayIcon);
         autoButton.getGraphic().setTranslateX(2.0);
 
         // Album Art default graphic
-        musicNotes = new Image(ResourceURLs.getMusicnotesURL());
-        imageView.setImage(musicNotes);
+        defaultAlbumImage = new Image(imageFileLogic.getAlbumImage());
+        imageView.setImage(defaultAlbumImage);
         imageView.setOpacity(.9);
         imageView.setCache(true);
         imageView.setVisible(true);
@@ -207,6 +207,7 @@ public class MusicPlayerController {
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());
 
             // Initialize table view after files are read in via executorService
+            // Max wait for 10 seconds (for reference, 200gb music files should take ~4 seconds)
             if (executorService.awaitTermination(10000, TimeUnit.MILLISECONDS)) {
                 artistListView.getSelectionModel().select(0);
                 trackTableView.refresh();
@@ -217,7 +218,7 @@ public class MusicPlayerController {
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
-         *                        LISTENERS MusicPlayerController.java
+         *                        LISTENERS
          *
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -652,7 +653,7 @@ public class MusicPlayerController {
             mediaPlayer.play();
 
             if (mediaPlayer.getMedia().getMetadata().get("image") == null) {
-                imageView.setImage(musicNotes);
+                imageView.setImage(defaultAlbumImage);
             } else {
                 imageView.setImage((Image) mediaPlayer.getMedia().getMetadata().get("image"));
             }

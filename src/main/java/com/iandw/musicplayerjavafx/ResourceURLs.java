@@ -30,21 +30,54 @@ public class ResourceURLs {
             Objects.requireNonNull(SettingsController.class.getResource(
                     "autoplay2.png")).toString().substring(6));
 
-    private static final String musicnotesURL = Objects.requireNonNull(
+
+    /**
+     *
+     *                      DEFAULT ALBUM ART FILES
+     *
+     */
+
+    private static final String musicnoteslightURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "musicnotes.png")).toString().substring(6));
+                    "musicnotes-light.png")).toString().substring(6));
 
-    private static final String styledefaultURL = Objects.requireNonNull(
+    private static final String musicnotesdarkURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "style-light.css")).toString().substring(6));
+                    "musicnotes-dark.png")).toString().substring(6));
+
+    private static final String musicnotesgreenURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "musicnotes-green.png")).toString().substring(6));
+
+    private static final String musicnotesblueURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "musicnotes-blue.png")).toString().substring(6));
+
+    private static final String musicnotespinkURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "musicnotes-pink.png")).toString().substring(6));
+
+    private static final String musicnotesconsoleURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "musicnotes-console.png")).toString().substring(6));
 
 
-    // Getters
+    /**
+     *
+     *                      GETTERS
+     *
+     */
+
     public static String getSettingsURL() { return settingsURL; }
     public static String getArtistListURL() { return artistlistURL; }
     public static String getTrackListURL() { return tracklistURL; }
     public static String getPlaylistsURL() { return playlistsURL; }
     public static String getAutoplayiconURL() { return autoplayiconURL; }
-    public static String getStyledefaultURL() { return styledefaultURL; }
-    public static String getMusicnotesURL() { return musicnotesURL; }
+    public static String getMusicnotesLightURL() { return musicnoteslightURL; }
+    public static String getMusicnotesDarkURL() { return musicnotesdarkURL; }
+    public static String getMusicnotesGreenURL() { return musicnotesgreenURL; }
+    public static String getMusicnotesBlueURL() { return musicnotesblueURL; }
+    public static String getMusicnotesPinkURL() { return musicnotespinkURL; }
+    public static String getMusicnotesConsoleURL() { return musicnotesconsoleURL; }
+
 }
