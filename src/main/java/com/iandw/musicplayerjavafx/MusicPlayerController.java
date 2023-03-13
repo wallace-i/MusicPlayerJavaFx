@@ -148,6 +148,7 @@ public class MusicPlayerController {
         artistsListSelected = true;
         searchTableView = new SearchTableView();
         currentTheme = userSettings.getThemeFileNameString();
+        ColorImage colorImage = new ColorImage(currentTheme);
         playPauseButton.setGraphic(playIcon);
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
@@ -167,19 +168,22 @@ public class MusicPlayerController {
 
         // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());
+
+        // Change color to match theme
+        autoPlayIcon.setEffect(colorImage.getLighting());
         autoButton.setGraphic(autoPlayIcon);
         autoButton.getGraphic().setTranslateX(2.0);
-        autoButton.getGraphic().setOpacity(.65);
 
         // Album Art default graphic
         musicNotes = new Image(ResourceURLs.getMusicnotesURL());
         imageView.setImage(musicNotes);
+        imageView.setOpacity(.9);
         imageView.setCache(true);
         imageView.setVisible(true);
 
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
-//        musicLibrary.initializeMusicLibrary();
+//        musicLibrary.initializeMusicLibrary();  // Hard re-initialize music library
 
         // Initialize Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
