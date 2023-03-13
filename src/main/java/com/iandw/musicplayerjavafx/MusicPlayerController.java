@@ -211,9 +211,9 @@ public class MusicPlayerController {
 
         }
 
-        /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
-         *                        LISTENERS => MusicPlayerController.java
+         *                        LISTENERS MusicPlayerController.java
          *
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -385,7 +385,9 @@ public class MusicPlayerController {
 
     @FXML
     private void handleArtistsListViewMouseClick(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && artistListView != null) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && artistListView != null &&
+                artistListView.getSelectionModel().getSelectedItem() != null)
+        {
             playlistListView.getSelectionModel().clearSelection();
             artistListView.requestFocus();
             artistsListSelected = true;
@@ -396,7 +398,9 @@ public class MusicPlayerController {
 
     @FXML
     private void handlePlaylistsListViewClick(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)  && playlistListView != null) {
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && playlistListView != null &&
+                playlistListView.getSelectionModel().getSelectedItem() != null)
+        {
             artistListView.getSelectionModel().clearSelection();
             playlistListView.requestFocus();
             artistsListSelected = false;
@@ -414,16 +418,15 @@ public class MusicPlayerController {
 
         // Check artistsObservableList for artist name, call artist list predicate if true.
         // Else call the playlistListView predicate
-        if (artistsListSelected && (artistNameString != null)) {
+        if (artistsListSelected && artistNameString != null) {
             tableViewLibrary.getFilteredList().setPredicate(searchTableView.createArtistsListPredicate(
                     artistNameString, artistListView));
 
-        } else {
+        } else if (playlistTitleString != null) {
             // Remove null pointer exceptions from predicate search
-            if (playlistTitleString != null) {
-                tableViewLibrary.getFilteredList().setPredicate(searchTableView.createPlaylistsListPredicate(
-                        playlistTitleString, playlistListView));
-            }
+            tableViewLibrary.getFilteredList().setPredicate(searchTableView.createPlaylistsListPredicate(
+                    playlistTitleString, playlistListView));
+
         }
 
         trackTableView.setItems(tableViewLibrary.getFilteredList());
