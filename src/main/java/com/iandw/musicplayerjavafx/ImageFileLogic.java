@@ -92,7 +92,7 @@ public class ImageFileLogic {
             case styleDarkFileName    -> albumImageFile = ResourceURLs.getMusicnotesDarkURL();
             case styleBlueFileName    -> albumImageFile = ResourceURLs.getMusicnotesBlueURL();
             case styleGreenFileName   -> albumImageFile = ResourceURLs.getMusicnotesGreenURL();
-            case styleRedFileName     -> albumImageFile = ResourceURLs.getMusicnotesLightURL();
+            case styleRedFileName     -> albumImageFile = ResourceURLs.getMusicnotesRedURL();
             case stylePinkFileName    -> albumImageFile = ResourceURLs.getMusicnotesPinkURL();
             case styleConsoleFileName -> albumImageFile = ResourceURLs.getMusicnotesConsoleURL();
 

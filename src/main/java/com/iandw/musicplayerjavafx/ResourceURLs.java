@@ -53,6 +53,10 @@ public class ResourceURLs {
             Objects.requireNonNull(SettingsController.class.getResource(
                     "musicnotes-blue.png")).toString().substring(6));
 
+    private static final String musicnotesredURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "musicnotes-red.png")).toString().substring(6));
+
     private static final String musicnotespinkURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
                     "musicnotes-pink.png")).toString().substring(6));
@@ -72,11 +76,14 @@ public class ResourceURLs {
     public static String getArtistListURL() { return artistlistURL; }
     public static String getTrackListURL() { return tracklistURL; }
     public static String getPlaylistsURL() { return playlistsURL; }
+
+    // Image urls
     public static String getAutoplayiconURL() { return autoplayiconURL; }
     public static String getMusicnotesLightURL() { return musicnoteslightURL; }
     public static String getMusicnotesDarkURL() { return musicnotesdarkURL; }
     public static String getMusicnotesGreenURL() { return musicnotesgreenURL; }
     public static String getMusicnotesBlueURL() { return musicnotesblueURL; }
+    public static String getMusicnotesRedURL() { return musicnotesredURL; }
     public static String getMusicnotesPinkURL() { return musicnotespinkURL; }
     public static String getMusicnotesConsoleURL() { return musicnotesconsoleURL; }
 
