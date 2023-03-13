@@ -19,7 +19,7 @@
     -text-background-selected: #1aa3ff;
     -selected-fill: #b97a9c;
 
-    -icon-color: #b3b3b3;
+    -icon-color: #4db34d;
 
     -hor-gradient: linear-gradient(to left, -tertiary, -quaternary);
     -ver-gradient: linear-gradient(to bottom, -quaternary, -tertiary);
@@ -315,6 +315,7 @@
 .menu: showing {
     -fx-background-color: -primary;
     -fx-border-color: transparent;
+    -fx-border-stroke: 0px;
     -fx-highlight-fill: -highlight-fill;
 }
 
@@ -334,6 +335,7 @@
 .menu-item {
     -fx-background-color: -tertiary;
     -fx-border-color: transparent;
+    -fx-border-stroke: 0px;
 
 }
 
@@ -343,13 +345,13 @@
 
 
 .menu-item: focused, .menu-item: hovered {
-    -fx-background-color: -secondary;
+    -fx-background-color: -tertiary;
 
 }
 
-.menu-item: selected {
+.menu-item: selected .label {
     -fx-text-fill: -text-selected;
-    -fx-background-color: -secondary;
+    -fx-background-color: -tertiary;
     -fx-text-background-color: -text-background-selected;
 }
 
@@ -410,7 +412,7 @@
 }
 
 .delete-icon: hover {
-    -fx-icon-color: -text-normal;
+    -fx-icon-color: -secondary-armed;
 }
 
 .delete-button: hover {

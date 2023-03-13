@@ -20,7 +20,7 @@
     -selected-fill: #b979a9;
     -scroll-thumb: #ad1ddd44;
 
-    -icon-color: #4d4d4d;
+    -icon-color: #862d86;
 
     -bg-gradient: linear-gradient(from 25px 25px to 500px 300px, -tertiary, -quaternary);
     -hor-gradient: linear-gradient(to left, -quaternary, -tertiary);
@@ -350,7 +350,7 @@
 
 }
 
-.menu-item: selected {
+.menu-item: selected .label {
     -fx-text-fill: -text-selected;
     -fx-background-color: -secondary;
     -fx-text-background-color: -text-background-selected;

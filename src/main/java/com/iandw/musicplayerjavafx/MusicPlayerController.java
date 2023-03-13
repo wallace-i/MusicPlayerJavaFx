@@ -119,6 +119,7 @@ public class MusicPlayerController {
     private String artistNameString;
     private String playlistTitleString;
     private String previousArtistNameString;
+    private String currentTheme;
     private double volumeDouble;
     private boolean playing;
     private boolean stopped;
@@ -146,6 +147,7 @@ public class MusicPlayerController {
         stopped = true;
         artistsListSelected = true;
         searchTableView = new SearchTableView();
+        currentTheme = userSettings.getThemeFileNameString();
         playPauseButton.setGraphic(playIcon);
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
@@ -278,7 +280,7 @@ public class MusicPlayerController {
                     if (Double.isNaN(percentage)) { percentage = 0.0; }
 
                     // Set slideSeeker css based on current style sheet
-                    String style = String.format(SeekSliderColor.getStyle(userSettings), percentage);
+                    String style = String.format(SeekSliderColor.getStyle(currentTheme), percentage);
 
                     //System.out.println(percentage);
                     seekSlider.setStyle(style);

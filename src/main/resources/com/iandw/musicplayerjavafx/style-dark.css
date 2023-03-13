@@ -2,7 +2,7 @@
 .root {
 
     -primary: #4e5254; /* dark grey */
-    -secondary: #214283; /* blue */
+    -secondary: #1152d4; /* blue */
     -secondary-armed: LightGrey;
     -tertiary: #222630; /* dark blue-grey */
     -quaternary: #363840; /* medium blue-grey */
@@ -198,6 +198,7 @@
     -fx-background-color: -secondary;
     -fx-text-background-color: -text-background-selected;
     -fx-selected-fill: -selected-fill;
+    -fx-text-fill: -text-selected;
     -fx-background-radius: 5px;
     -fx-background-insets: 2px;
 }

@@ -11,8 +11,8 @@ public class SeekSliderColor {
 
     private static final String darkStyle =
             "-track-color: linear-gradient(to right, " +
-                    "#214283 0%%, " +
-                    "#214283 %1$.1f%%, " +
+                    "#004de6 0%%, " +
+                    "#004de6 %1$.1f%%, " +
                     "#363840 %1$.1f%%, " +
                     "#363840 100%%);";
 
@@ -45,7 +45,7 @@ public class SeekSliderColor {
                     "#363840 100%%);";
 
 
-    public static String getStyle(UserSettings userSettings) {
+    public static String getStyle(String currentTheme) {
         final String light = "style-light.css";
         final String dark = "style-dark.css";
         final String green = "style-green.css";
@@ -53,7 +53,7 @@ public class SeekSliderColor {
         final String pink = "style-pink.css";
         final String console = "style-console.css";
 
-        switch (userSettings.getThemeFileNameString()) {
+        switch (currentTheme) {
             case light -> { return lightStyle; }
             case dark  -> { return darkStyle;  }
             case green -> { return greenStyle; }
