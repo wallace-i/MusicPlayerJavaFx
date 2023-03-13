@@ -12,6 +12,7 @@ public class ImageFileLogic {
     private final String styleDarkFileName = "style-dark.css";
     private final String styleBlueFileName = "style-blue.css";
     private final String styleGreenFileName = "style-green.css";
+    private final String styleRedFileName = "style-red.css";
     private final String stylePinkFileName = "style-pink.css";
     private final String styleConsoleFileName = "style-console.css";
 
@@ -55,6 +56,14 @@ public class ImageFileLogic {
 
             }
 
+            case styleRedFileName -> {
+                lighting = new Lighting(new Light.Distant(45, 90, Color.rgb(134, 67, 45)));
+                ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
+                lighting.setContentInput(bright);
+                lighting.setSurfaceScale(0.0);
+
+            }
+
             case stylePinkFileName -> {
                 lighting = new Lighting(new Light.Distant(45, 90, Color.rgb(125, 54, 125)));
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
@@ -83,6 +92,7 @@ public class ImageFileLogic {
             case styleDarkFileName    -> albumImageFile = ResourceURLs.getMusicnotesDarkURL();
             case styleBlueFileName    -> albumImageFile = ResourceURLs.getMusicnotesBlueURL();
             case styleGreenFileName   -> albumImageFile = ResourceURLs.getMusicnotesGreenURL();
+            case styleRedFileName     -> albumImageFile = ResourceURLs.getMusicnotesLightURL();
             case stylePinkFileName    -> albumImageFile = ResourceURLs.getMusicnotesPinkURL();
             case styleConsoleFileName -> albumImageFile = ResourceURLs.getMusicnotesConsoleURL();
 

@@ -198,7 +198,7 @@
 }
 
 .list-view .list-cell: selected {
-    -fx-background-color: -secondary;
+    -fx-background-color: -hover-background;
     -fx-text-background-color: -text-background-selected;
     -fx-selected-fill: -selected-fill;
     -fx-text-fill: -text-selected;

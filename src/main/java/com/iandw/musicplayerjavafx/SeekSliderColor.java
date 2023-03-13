@@ -30,6 +30,13 @@ public class SeekSliderColor {
                     "#e5f9ff %1$.1f%%, " +
                     "#e5f9ff 100%%);";
 
+    private static final String redStyle =
+            "-track-color: linear-gradient(to right, " +
+                    "#c70000 0%%, " +
+                    "#c70000 %1$.1f%%, " +
+                    "#ffe5e5 %1$.1f%%, " +
+                    "#ffe5e5 100%%);";
+
     private static final String pinkStyle =
             "-track-color: linear-gradient(to right, " +
                     "#b43cb4 0%%, " +
@@ -50,6 +57,7 @@ public class SeekSliderColor {
         final String dark = "style-dark.css";
         final String green = "style-green.css";
         final String blue = "style-blue.css";
+        final String red = "style-red.css";
         final String pink = "style-pink.css";
         final String console = "style-console.css";
 
@@ -58,6 +66,7 @@ public class SeekSliderColor {
             case dark  -> { return darkStyle;  }
             case green -> { return greenStyle; }
             case blue  -> { return blueStyle;  }
+            case red   -> { return redStyle; }
             case pink  -> { return pinkStyle;  }
             case console -> { return consoleStyle; }
         }

@@ -49,22 +49,24 @@ public class SettingsController extends AnchorPane {
     // ComboBox variables
     final String light = "Light";
     final String dark = "Dark";
+    final String console = "Console";
     final String blue = "Blue";
     final String green = "Green";
+    final String red = "Red";
     final String pink = "Pink";
-    final String console = "Console";
 
     // CSS File Names
     final String styleLightFileName = "style-light.css";
     final String styleDarkFileName = "style-dark.css";
     final String styleBlueFileName = "style-blue.css";
     final String styleGreenFileName = "style-green.css";
+    final String styleRedFileName = "style-red.css";
     final String stylePinkFileName = "style-pink.css";
     final String styleConsoleFileName = "style-console.css";
 
     public void initialize() {
         // Initialize ComboBox for css themes
-        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, blue, green, pink, console);
+        ObservableList<String> themesList = FXCollections.observableArrayList(light, dark, console, blue, green, red, pink );
         themesComboBox.getItems().addAll(themesList);
 
         themeSelection();
@@ -85,6 +87,7 @@ public class SettingsController extends AnchorPane {
             case styleDarkFileName -> themesComboBox.setValue(dark);
             case styleBlueFileName -> themesComboBox.setValue(blue);
             case styleGreenFileName -> themesComboBox.setValue(green);
+            case styleRedFileName -> themesComboBox.setValue(red);
             case stylePinkFileName -> themesComboBox.setValue(pink);
             case styleConsoleFileName -> themesComboBox.setValue(console);
         }
@@ -276,6 +279,7 @@ public class SettingsController extends AnchorPane {
                 case dark    -> userSettings.setThemeFileNameString(styleDarkFileName);
                 case blue    -> userSettings.setThemeFileNameString(styleBlueFileName);
                 case green   -> userSettings.setThemeFileNameString(styleGreenFileName);
+                case red     -> userSettings.setThemeFileNameString(styleRedFileName);
                 case pink    -> userSettings.setThemeFileNameString(stylePinkFileName);
                 case console -> userSettings.setThemeFileNameString(styleConsoleFileName);
             }
