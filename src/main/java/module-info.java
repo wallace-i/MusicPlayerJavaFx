@@ -10,6 +10,7 @@ module com.iandw.musicplayerjavafx {
     requires json.simple;
     requires jaudiotagger;
     requires javafx.web;
+    requires org.jsoup;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;

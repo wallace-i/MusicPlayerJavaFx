@@ -12,6 +12,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class ViewTextController {
     @FXML private TextArea textArea;
@@ -21,7 +25,7 @@ public class ViewTextController {
 
     public void initialize() {}
 
-    public void initializeData(String menuChoice, ByteArrayOutputStream newConsole) {
+    public void initializeData(String menuChoice, ByteArrayOutputStream newConsole) throws IOException {
         this.menuChoice = menuChoice;
         this.newConsole = newConsole;
 
@@ -43,7 +47,7 @@ public class ViewTextController {
 
     }
 
-    private void fillTextArea() {
+    private void fillTextArea() throws IOException {
         final String consoleLog = "Console Log";
         final String about = "About";
 
@@ -60,9 +64,12 @@ public class ViewTextController {
         textArea.setFocusTraversable(false);
     }
 
-    private void viewAbout() {
+    private void viewAbout() throws IOException {
+        Document doc = Jsoup.connect("https://raw.githubusercontent.com/wallace-i/MusicPlayerJavaFx/master/README.md").get();
+        Elements body = doc.getElementsByTag("body");
 
-
+        textArea.setText(body.text());
+        textArea.setFocusTraversable(false);
 
     }
 
