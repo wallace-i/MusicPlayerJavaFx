@@ -40,7 +40,7 @@ public class App extends Application {
             executorService.execute(tableViewLibrary);
             executorService.shutdown();
 
-            // Set console to output text for user logging
+            // Set console to output text for user to view via Help menu
             ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
             System.setOut(new PrintStream(consoleOutput));
 
