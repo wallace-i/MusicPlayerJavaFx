@@ -105,6 +105,7 @@ public class MusicPlayerController {
     private ImageView imageView;
 
     private Image defaultAlbumImage;
+    private ImageFileLogic imageFileLogic;
     private MediaPlayer mediaPlayer;
     private MusicLibrary musicLibrary;
     private final TableViewLibrary tableViewLibrary;
@@ -114,6 +115,7 @@ public class MusicPlayerController {
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
     private final ExecutorService executorService;
+    private ByteArrayOutputStream newConsole;
 
     private final Stage stage;
     private String artistNameString;
@@ -127,9 +129,12 @@ public class MusicPlayerController {
     private int albumImageWidth;
 
     // Constructor
-    public MusicPlayerController(Stage stage, ExecutorService executorService, UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) {
+    public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream newConsole,
+                                 UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
+    {
         this.stage = stage;
         this.executorService = executorService;
+        this.newConsole = newConsole;
         this.userSettings = userSettings;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -148,7 +153,7 @@ public class MusicPlayerController {
         artistsListSelected = true;
         searchTableView = new SearchTableView();
         currentTheme = userSettings.getThemeFileNameString();
-        ImageFileLogic imageFileLogic = new ImageFileLogic(currentTheme);
+        imageFileLogic = new ImageFileLogic(currentTheme);
         playPauseButton.setGraphic(playIcon);
         volumeIconLabel.setGraphic(volumeUp);
         albumIcon.setOpacity(0);
@@ -886,7 +891,6 @@ public class MusicPlayerController {
         musicLibrary.importAlbum();
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
         addArtistFromImport();
-
     }
 
     @FXML
@@ -897,7 +901,6 @@ public class MusicPlayerController {
             tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
             addArtistFromImport();
         }
-
     }
 
     // Add artist name to list view and save to file if not available
@@ -917,8 +920,51 @@ public class MusicPlayerController {
         SettingsController settingsController = new SettingsController();
         settingsController.showSettingsWindow(artistListView, playlistListView, trackTableView, listViewLibrary,
                 tableViewLibrary, musicLibrary, userSettings, directoryLabel);
+    }
+
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         HELP MENU MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    @FXML
+    private void aboutClicked() throws IOException {
+        final String about = "About";
+        ViewTextController viewTextController = new ViewTextController();
+        viewTextController.showViewTextWindow(about, newConsole);
+
 
     }
+
+    @FXML
+    private void gitHubClicked() {
+        // open github page
+        // add github icon
+
+    }
+
+    @FXML
+    private void consoleLogClicked() throws IOException {
+        final String consoleLog = "Console Log";
+        ViewTextController viewTextController = new ViewTextController();
+        viewTextController.showViewTextWindow(consoleLog, newConsole);
+
+    }
+
+    @FXML
+    private void reportBugClicked() {
+        // send email w/ console log
+
+    }
+
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         ON CLOSE
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
     private void closeClicked() throws FileNotFoundException {

@@ -129,8 +129,10 @@
             <MenuItem mnemonicParsing="false" text="Delete" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About" />
-            <MenuItem mnemonicParsing="false" text="Report Bug" />
+            <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />
+            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub" />
+            <MenuItem mnemonicParsing="false" onAction="#consoleLogClicked" text="Console Log" />
+            <MenuItem mnemonicParsing="false" onAction="#reportBugClicked" text="Report Bug" />
         </Menu>
     </MenuBar>
     <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="-">

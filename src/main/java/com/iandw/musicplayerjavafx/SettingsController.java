@@ -38,6 +38,7 @@ public class SettingsController extends AnchorPane {
     private Label rootDirectoryLabel;
     @FXML
     private Label themesLabel;
+
     private TableView<TrackMetadata> trackTableView;
     private ListView<String> artistListView;
     private ListView<String> playlistListView;
@@ -274,6 +275,7 @@ public class SettingsController extends AnchorPane {
             String selectedTheme = themesComboBox.getSelectionModel().getSelectedItem();
 
             System.out.printf("System theme changed from %s to %s.%n", userSettings.getThemeFileNameString(), selectedTheme);
+
             switch (selectedTheme) {
                 case light   -> userSettings.setThemeFileNameString(styleLightFileName);
                 case dark    -> userSettings.setThemeFileNameString(styleDarkFileName);

@@ -20,6 +20,7 @@ public class ImageFileLogic {
         this.userTheme = userTheme;
     }
 
+    // For 'masking' autoplay icon to correct hue
     public Lighting getLighting() {
         Lighting lighting = null;
 
@@ -84,6 +85,7 @@ public class ImageFileLogic {
         return lighting;
     }
 
+    // Gets correct album image file depending on theme
     public String getAlbumImage() {
         String albumImageFile = null;
 

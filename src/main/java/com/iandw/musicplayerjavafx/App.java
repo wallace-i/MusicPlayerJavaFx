@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.io.FileNotFoundException;
@@ -38,10 +40,14 @@ public class App extends Application {
             executorService.execute(tableViewLibrary);
             executorService.shutdown();
 
+            // Set console to output text for user logging
+            ByteArrayOutputStream newConsole = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(newConsole));
+
             // Pass userSettings to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
             fxmlLoader.setControllerFactory(musicPlayerController -> new MusicPlayerController(
-                    stage, executorService, userSettings, listViewLibrary, tableViewLibrary));
+                    stage, executorService, newConsole, userSettings, listViewLibrary, tableViewLibrary));
 
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -67,8 +73,6 @@ public class App extends Application {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void saveAndExit(Stage stage) throws FileNotFoundException {

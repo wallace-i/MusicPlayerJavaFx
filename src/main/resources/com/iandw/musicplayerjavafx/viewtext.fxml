@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="290.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.ViewTextController">
+   <children>
+      <TextArea fx:id="textArea" editable="false" layoutX="10.0" layoutY="10.0" prefHeight="240.0" prefWidth="380.0" />
+      <HBox alignment="CENTER_RIGHT" layoutX="8.0" layoutY="250.0" prefHeight="37.0" prefWidth="380.0">
+         <children>
+            <Button fx:id="copyToClipboard" onAction="#copyClicked" mnemonicParsing="false" text="Copy to Clipboard" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
