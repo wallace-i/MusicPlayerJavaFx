@@ -12,33 +12,35 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
 
 public class ViewTextController {
     @FXML private TextArea textArea;
     @FXML private Button copyToClipboard;
-    ByteArrayOutputStream newConsole;
+    private ByteArrayOutputStream consoleOutput;
     private String menuChoice;
 
     public void initialize() {}
 
-    public void initializeData(String menuChoice, ByteArrayOutputStream newConsole) throws IOException {
+    public void initializeData(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
         this.menuChoice = menuChoice;
-        this.newConsole = newConsole;
+        this.consoleOutput = consoleOutput;
 
         fillTextArea();
     }
 
-    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream newConsole) throws IOException {
+    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("viewtext.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ViewTextController controller = loader.getController();
 
-        controller.initializeData(menuChoice, newConsole);
+        controller.initializeData(menuChoice, consoleOutput);
 
         stage.setAlwaysOnTop(true);
         stage.setTitle(menuChoice);
@@ -60,15 +62,17 @@ public class ViewTextController {
     }
 
     private void viewConsoleLog() {
-        textArea.setText(newConsole.toString());
+        textArea.setText(consoleOutput.toString());
         textArea.setFocusTraversable(false);
     }
 
     private void viewAbout() throws IOException {
+        // Parse README.md from github readme raw file
         Document doc = Jsoup.connect("https://raw.githubusercontent.com/wallace-i/MusicPlayerJavaFx/master/README.md").get();
-        Elements body = doc.getElementsByTag("body");
+        String htmlString = doc.toString();
+        String cleanString = Jsoup.parse(htmlString).wholeText();
 
-        textArea.setText(body.text());
+        textArea.setText(cleanString);
         textArea.setFocusTraversable(false);
 
     }

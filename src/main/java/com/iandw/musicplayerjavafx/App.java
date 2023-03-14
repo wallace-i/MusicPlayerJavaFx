@@ -41,13 +41,13 @@ public class App extends Application {
             executorService.shutdown();
 
             // Set console to output text for user logging
-            ByteArrayOutputStream newConsole = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(newConsole));
+            ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(consoleOutput));
 
             // Pass userSettings to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
             fxmlLoader.setControllerFactory(musicPlayerController -> new MusicPlayerController(
-                    stage, executorService, newConsole, userSettings, listViewLibrary, tableViewLibrary));
+                    stage, executorService, consoleOutput, userSettings, listViewLibrary, tableViewLibrary));
 
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

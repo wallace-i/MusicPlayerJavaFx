@@ -214,6 +214,9 @@ public class MusicLibrary {
 
             trackMetadataObservableList.add(trackMetadata);
 
+            System.out.printf("Importing: %s%n", trackFileName);
+            System.out.printf(tag.toString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -312,6 +315,9 @@ public class MusicLibrary {
             );
 
             trackMetadataObservableList.add(trackMetadata);
+
+            System.out.printf("Importing: %s%n", trackFileName);
+            System.out.printf(tag.toString());
 
         } catch (Exception e) {
             e.printStackTrace();

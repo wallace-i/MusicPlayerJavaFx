@@ -115,7 +115,7 @@ public class MusicPlayerController {
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
     private final ExecutorService executorService;
-    private ByteArrayOutputStream newConsole;
+    private ByteArrayOutputStream consoleOutput;
 
     private final Stage stage;
     private String artistNameString;
@@ -129,12 +129,12 @@ public class MusicPlayerController {
     private int albumImageWidth;
 
     // Constructor
-    public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream newConsole,
+    public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream consoleOutput,
                                  UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
     {
         this.stage = stage;
         this.executorService = executorService;
-        this.newConsole = newConsole;
+        this.consoleOutput = consoleOutput;
         this.userSettings = userSettings;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -933,7 +933,7 @@ public class MusicPlayerController {
     private void aboutClicked() throws IOException {
         final String about = "About";
         ViewTextController viewTextController = new ViewTextController();
-        viewTextController.showViewTextWindow(about, newConsole);
+        viewTextController.showViewTextWindow(about, consoleOutput);
 
 
     }
@@ -949,7 +949,7 @@ public class MusicPlayerController {
     private void consoleLogClicked() throws IOException {
         final String consoleLog = "Console Log";
         ViewTextController viewTextController = new ViewTextController();
-        viewTextController.showViewTextWindow(consoleLog, newConsole);
+        viewTextController.showViewTextWindow(consoleLog, consoleOutput);
 
     }
 
