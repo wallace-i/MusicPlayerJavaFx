@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
@@ -935,14 +937,12 @@ public class MusicPlayerController {
         ViewTextController viewTextController = new ViewTextController();
         viewTextController.showViewTextWindow(about, consoleOutput);
 
-
     }
 
     @FXML
     private void gitHubClicked() {
-        // open github page
-        // add github icon
-
+        final String gitHubUrl = "https://github.com/wallace-i/MusicPlayerJavaFx";
+        ViewGitHub.viewGitHub(gitHubUrl);
     }
 
     @FXML

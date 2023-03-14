@@ -6,18 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Safelist;
-import org.jsoup.select.Elements;
+
 
 public class ViewTextController {
     @FXML private TextArea textArea;
@@ -57,8 +53,6 @@ public class ViewTextController {
             case consoleLog -> viewConsoleLog();
             case about -> viewAbout();
         }
-
-
     }
 
     private void viewConsoleLog() {
