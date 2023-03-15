@@ -126,7 +126,8 @@
             <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Delete" />
+            <MenuItem mnemonicParsing="false" onAction="#addArtistClicked" text="Add Artist" />
+            <MenuItem mnemonicParsing="false" onAction="#createPlaylistClicked" text="Create Playlist" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />

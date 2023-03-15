@@ -30,52 +30,80 @@ public class ContextMenuPlaylistList {
 
         // Create Playlist
         createPlaylist.setOnAction(event -> {
-            try {
-                String windowTitle = "Create Playlist";
-                String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-                ListViewController listViewController = new ListViewController();
-                listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                        listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            createPlaylist(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex);
         });
 
         editPlaylist.setOnAction(event -> {
-            try {
-                String windowTitle = "Edit Playlist";
-                String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-
-                if (menuSelection != null) {
-                    ListViewController listViewController = new ListViewController();
-                    listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
-                            listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            editPlaylist(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex);
         });
 
         removePlaylist.setOnAction(event -> {
-            String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
-
-            if (menuSelection != null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Remove Playlist");
-                alert.setHeaderText("Removing playlist does not affect files or folders.");
-                alert.setContentText("Would you like to continue?");
-
-                if (alert.showAndWait().get() == ButtonType.OK) {
-                    Utils.removePlaylist(menuSelection, listViewLibrary, tableViewLibrary, trackIndex,
-                            trackTableView, artistListView, playlistListView);
-                }
-            }
+            removePlaylist(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex);
         });
 
         contextMenu.getItems().addAll(createPlaylist, editPlaylist, divider1, removePlaylist, divider2, openInExplorer);
 
         playlistListView.setContextMenu(contextMenu);
+
+    }
+
+
+    public static void createPlaylist(ListView<String> artistListView, ListView<String> playlistListView,
+                               TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                               TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
+    {
+        try {
+            String windowTitle = "Create Playlist";
+            String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
+            ListViewController listViewController = new ListViewController();
+            listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
+                    listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private static void editPlaylist(ListView<String> artistListView, ListView<String> playlistListView,
+                                     TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                     TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
+    {
+        try {
+            String windowTitle = "Edit Playlist";
+            String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
+
+            if (menuSelection != null) {
+                ListViewController listViewController = new ListViewController();
+                listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
+                        listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private static void removePlaylist(ListView<String> artistListView, ListView<String> playlistListView,
+                                       TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
+                                       TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
+    {
+        String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
+
+        if (menuSelection != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Remove Playlist");
+            alert.setHeaderText("Removing playlist does not affect files or folders.");
+            alert.setContentText("Would you like to continue?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                Utils.removePlaylist(menuSelection, listViewLibrary, tableViewLibrary, trackIndex,
+                        trackTableView, artistListView, playlistListView);
+            }
+        }
 
     }
 }

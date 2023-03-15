@@ -8,6 +8,7 @@
 package com.iandw.musicplayerjavafx;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,7 +45,11 @@ public class App extends Application {
             ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
             System.setOut(new PrintStream(consoleOutput));
 
-            // Pass userSettings to MusicPlayerController object via fxmlLoader
+            // HostServices for accessing program GitHub page.
+            HostServices hostServices = getHostServices();
+            stage.getProperties().put("hostServices", this.getHostServices());
+
+            // Pass top level objects to MusicPlayerController object via fxmlLoader
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("musicplayer.fxml")));
             fxmlLoader.setControllerFactory(musicPlayerController -> new MusicPlayerController(
                     stage, executorService, consoleOutput, userSettings, listViewLibrary, tableViewLibrary));

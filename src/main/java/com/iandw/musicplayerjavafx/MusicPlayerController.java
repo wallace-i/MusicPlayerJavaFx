@@ -924,6 +924,25 @@ public class MusicPlayerController {
                 tableViewLibrary, musicLibrary, userSettings, directoryLabel);
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                         EDIT MENU MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    @FXML
+    private void addArtistClicked() {
+
+
+    }
+
+    @FXML
+    private void createPlaylistClicked() {
+        ContextMenuPlaylistList.createPlaylist(artistListView, playlistListView, trackTableView,
+                listViewLibrary, tableViewLibrary, trackIndex);
+
+    }
+
+
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -942,7 +961,9 @@ public class MusicPlayerController {
     @FXML
     private void gitHubClicked() {
         final String gitHubUrl = "https://github.com/wallace-i/MusicPlayerJavaFx";
-        ViewGitHub.viewGitHub(gitHubUrl);
+        HostServices hostServices = (HostServices) stage.getProperties().get("hostServices");
+        hostServices.showDocument(gitHubUrl);
+
     }
 
     @FXML
@@ -950,6 +971,8 @@ public class MusicPlayerController {
         final String consoleLog = "Console Log";
         ViewTextController viewTextController = new ViewTextController();
         viewTextController.showViewTextWindow(consoleLog, consoleOutput);
+
+        // write to file on close
 
     }
 
