@@ -39,17 +39,27 @@
     -fx-background-color: transparent;
 }
 
-/* Icon Color */
+/* Delete Icon Color */
 .delete-icon: hover {
     -fx-icon-color: DodgerBlue;
 }
 
-
-/*
- *  Icon Color
- */
+/*  Icon Color */
  .icon {
     -fx-icon-color: DimGrey;
  }
+
+
+ /* Menu Icon */
+ .menu-icon: {
+    -fx-icon-color: DimGrey;
+ }
+
+ .menu-icon: hover {
+    -fx-icon-color: white;
+ }
+
+
+
 
 

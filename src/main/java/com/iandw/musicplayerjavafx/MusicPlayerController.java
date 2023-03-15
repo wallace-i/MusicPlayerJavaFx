@@ -931,7 +931,8 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     @FXML
     private void addArtistClicked() {
-
+        ContextMenuArtistList.addArtist(artistListView, playlistListView, trackTableView,
+                listViewLibrary, tableViewLibrary, trackIndex);
 
     }
 
@@ -941,8 +942,6 @@ public class MusicPlayerController {
                 listViewLibrary, tableViewLibrary, trackIndex);
 
     }
-
-
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
