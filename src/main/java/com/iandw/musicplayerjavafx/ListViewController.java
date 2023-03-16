@@ -132,8 +132,7 @@ public class ListViewController {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
+                    if ( listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
@@ -141,7 +140,11 @@ public class ListViewController {
                     if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
                         System.out.println("Editing artist");
                         listViewLibrary.removeArtist(menuSelection);
-                        listViewLibrary.addArtist(userInput);
+
+                        if (!listViewLibrary.getArtistObservableList().contains(userInput)) {
+                            listViewLibrary.addArtist(userInput);
+                        }
+
                         artistListView.setItems(listViewLibrary.getArtistObservableList());
 
                         editArtist();
