@@ -189,7 +189,7 @@ public class MusicPlayerController {
 
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
-        musicLibrary.initializeMusicLibrary();  // Hard re-initialize music library
+//        musicLibrary.initializeMusicLibrary();  // Hard re-initialize music library
 
         // Initialize Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
@@ -881,31 +881,12 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    private void importArtistClicked() throws IOException {
-        musicLibrary.importArtist();
+    private void importFiles() throws IOException {
+        //TODO => import erases listview
+        musicLibrary.importFiles();
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
-        addArtistFromImport();
-    }
 
-    @FXML
-    private void importAlbumClicked() throws IOException {
-        musicLibrary.importAlbum();
-        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
-        addArtistFromImport();
-    }
-
-    @FXML
-    private void importTrackClicked() throws IOException {
-        musicLibrary.importTrack();
-
-        if (!musicLibrary.getTrackObservableList().isEmpty()) {
-            tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
-            addArtistFromImport();
-        }
-    }
-
-    // Add artist name to list view and save to file if not available
-    private void addArtistFromImport() {
+        // Add artist name to list view and save to file if not available
         if (!listViewLibrary.getArtistObservableList().contains(musicLibrary.getArtistNameStr())) {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());

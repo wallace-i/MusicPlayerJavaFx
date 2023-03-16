@@ -15,7 +15,6 @@ import java.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -28,14 +27,13 @@ public class MusicLibrary {
     private final ObservableList<TrackMetadata> trackMetadataObservableList;
     private final ObservableList<String> artistNameObservableList;
     private final List<String> supportedFileTypes;
-    private String artistNameStr;
-    private String albumDirectoryStr;
     private String trackPathStr;
     private String trackFileName;
+    private String trackArtist;
     private String trackContainerType;
     private int index;
-    private ImportCatagory importCatagory;
     private String rootMusicDirectoryString;
+    private boolean importFile;
 
     public MusicLibrary(UserSettings userSettings) {
         rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
@@ -62,6 +60,8 @@ public class MusicLibrary {
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
 
+        importFile = false;
+
         if (Files.exists(rootPath)) {
             if (Files.isDirectory(rootPath)) {
 
@@ -86,10 +86,10 @@ public class MusicLibrary {
 
     }
 
-    private Collection<TrackMetadata> listFileTree(File dir) {
+    private Collection<TrackMetadata> listFileTree(File dir) throws IOException {
         Set<TrackMetadata> fileTree = new HashSet<>();
 
-        if (dir==null || dir.listFiles() == null) {
+        if (dir == null || dir.listFiles() == null) {
             return fileTree;
         }
 
@@ -97,7 +97,19 @@ public class MusicLibrary {
             if (entry.isFile()) {
                 trackPathStr = entry.getAbsolutePath();
                 trackFileName = entry.getName();
-                parseMetadata();
+                trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+
+                if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+
+                    if (importFile) {
+                        importTrackLogic(Path.of(trackPathStr), rootMusicDirectoryString);
+                    }
+
+                    parseMetadata();
+
+                } else {
+                    System.out.printf("%s is not a compatible file type.", trackFileName);
+                }
 
             } else {
                 fileTree.addAll(listFileTree(entry));
@@ -108,9 +120,10 @@ public class MusicLibrary {
 
     }
 
+
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          TRACK METADATA MODULES
+     *                          PARSE TRACK METADATA
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -119,11 +132,9 @@ public class MusicLibrary {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();
-            String trackArtist;
             String trackAlbum;
             String trackTitle = trackFileName;
             String trackGenre = tag.getFirst(FieldKey.GENRE);
-            String trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
             final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
             final String playlist = "*";
 
@@ -197,18 +208,60 @@ public class MusicLibrary {
         }
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          TRACK METADATA MODULES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    public void importFiles() throws IOException {
+        // Clear list to write to
+        trackMetadataObservableList.clear();
+        artistNameObservableList.clear();
+
+        importFile = true;
+
+        //TODO => bring up window to import file or folder
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Artist Folder");
+        directoryChooser.setInitialDirectory((new File(".")));
+
+        // Set Stage, show artistChooser Dialog
+        Stage stage = new Stage();
+        File file = directoryChooser.showDialog(stage);
+
+        if (file != null) {
+            Path filePath = file.toPath();
+
+            if (Files.exists(filePath)) {
+                trackMetadataObservableList.addAll(listFileTree(file));
+
+            } else {
+                System.out.printf("%s does not exist%n", filePath);
+            }
+
+        } else {
+            System.out.printf("Selected File is null value%n");
+        }
+
+
+    }
+
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          COPY/MOVE FILES WHEN IMPORTING
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
     private void importTrackLogic(Path trackPath, String rootDirectory) throws IOException {
-        trackPathStr = trackPath.toAbsolutePath().toString();
         trackFileName = trackPath.getFileName().toString();
         trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
 
         // Check for playable file container
         if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-
-            parseMetadata();
-
             try {
                 // Check for slashes which could interfere with file creation
                 final String trackArtist = removeSlashs(trackMetadataObservableList.get(index).getArtistNameStr());
@@ -318,6 +371,6 @@ public class MusicLibrary {
         return trackMetadata;
     }
 
-    public String getArtistNameStr() { return artistNameStr; }
+    public String getArtistNameStr() { return trackArtist; }
 
 }

@@ -117,26 +117,11 @@
     </HBox>
     <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
         <Menu mnemonicParsing="false" text="File">
-            <Menu mnemonicParsing="false" text="Import">
-                <MenuItem mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" >
-                    <graphic>
-                        <FontIcon iconLiteral="bi-person-fill" iconSize="12" styleClass="menu-icon" />
-                    </graphic>
-                </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" >
-                    <graphic>
-                        <FontIcon iconLiteral="bi-disc" iconSize="12" styleClass="menu-icon" />
-                    </graphic>
-                </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#importTrackClicked" text="Track" >
-                    <graphic>
-                        <FontIcon iconLiteral="bi-music-note" iconSize="12" styleClass="menu-icon" />
-                    </graphic>
-                </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#importFiles" text="Import Files">
                 <graphic>
                     <FontIcon iconLiteral="bi-folder-plus" iconSize="12" styleClass="menu-icon" />
                 </graphic>
-            </Menu>
+            </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#settingsClicked" text="Settings">
                 <graphic>
                     <FontIcon iconLiteral="bi-gear-fill" iconSize="12" styleClass="menu-icon" />
