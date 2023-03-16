@@ -424,6 +424,19 @@
     -fx-icon-color: -icon-color;
 }
 
+/* Menu Icons */
+ .menu-icon {
+    -fx-icon-color: -icon-color;
+ }
+
+.menu-item: hover .menu-icon {
+    -fx-icon-color: -text-selected;
+}
+
+.menu-item: selected .menu-icon {
+    -fx-icon-color: -text-selected;
+}
+
  /* Labels */
 .label {
     -fx-text-fill: -text-normal;

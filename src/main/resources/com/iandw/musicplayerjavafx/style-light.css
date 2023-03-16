@@ -51,13 +51,17 @@
 
 
  /* Menu Icon */
- .menu-icon: {
+ .menu-icon {
     -fx-icon-color: DimGrey;
  }
 
- .menu-icon: hover {
+.menu-item: hover .menu-icon {
     -fx-icon-color: white;
- }
+}
+
+.menu-item: selected .menu-icon {
+    -fx-icon-color: white;
+}
 
 
 
