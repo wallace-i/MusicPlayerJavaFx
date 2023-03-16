@@ -136,6 +136,8 @@ public class ListViewController {
                         throw new Exception();
                     }
 
+                   // listViewLibrary.getArtistObservableList().remove(userInput);
+
                     // Edit Artist
                     if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
                         System.out.println("Editing artist");

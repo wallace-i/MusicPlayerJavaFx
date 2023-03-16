@@ -4,7 +4,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 
-public class ContextMenuPlaylistList {
+public class PlaylistContextMenu {
     public static void getContextMenu(ListView<String> artistListView, ListView<String> playlistListView,
                                       TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                       TableViewLibrary tableViewLibrary, TrackIndex trackIndex)

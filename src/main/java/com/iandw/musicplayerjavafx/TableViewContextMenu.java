@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ContextMenuTableView {
+public class TableViewContextMenu {
 
     public static void getContextMenu(ListView<String> artistListView, TableView<TrackMetadata> trackTableView,
                                       ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
