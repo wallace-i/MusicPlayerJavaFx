@@ -140,6 +140,8 @@ public class SettingsController extends AnchorPane {
         rootMusicDirectoryChooser.setTitle("Select Music Folder");
         rootMusicDirectoryChooser.setInitialDirectory((new File(".")));
 
+        //TODO => recursive initialization?
+
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File file = rootMusicDirectoryChooser.showDialog(stage);
 
@@ -155,7 +157,6 @@ public class SettingsController extends AnchorPane {
 
                 // Clear current list file and observable list
                 Utils.clearSerializedFiles();
-                tableViewLibrary.clearObservableList();
                 tableViewLibrary.clearObservableList();
                 listViewLibrary.clearObservableLists();
 

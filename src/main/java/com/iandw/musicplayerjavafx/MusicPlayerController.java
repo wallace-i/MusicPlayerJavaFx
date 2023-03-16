@@ -24,7 +24,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
@@ -478,7 +477,7 @@ public class MusicPlayerController {
             trackTableView.refresh();
             listViewSelected();
 
-            ContextMenuArtistList.getContextMenu(artistListView, playlistListView, trackTableView,
+            ArtistListContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
                     listViewLibrary, tableViewLibrary, trackIndex, userSettings);
         }
 
@@ -494,7 +493,7 @@ public class MusicPlayerController {
             trackTableView.refresh();
             listViewSelected();
 
-            ContextMenuPlaylistList.getContextMenu(artistListView, playlistListView, trackTableView,
+            PlaylistContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
                     listViewLibrary, tableViewLibrary, trackIndex);
         }
 
@@ -502,7 +501,7 @@ public class MusicPlayerController {
 
     @FXML
     private void handleTableViewContextMenu()  {
-        ContextMenuTableView.getContextMenu(artistListView, trackTableView,
+        TableViewContexMenu.getContextMenu(artistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
         // Refresh TableView
@@ -931,14 +930,14 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     @FXML
     private void addArtistClicked() {
-        ContextMenuArtistList.addArtist(artistListView, playlistListView, trackTableView,
+        ArtistListContextMenu.addArtist(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
     }
 
     @FXML
     private void createPlaylistClicked() {
-        ContextMenuPlaylistList.createPlaylist(artistListView, playlistListView, trackTableView,
+        PlaylistContextMenu.createPlaylist(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
     }
