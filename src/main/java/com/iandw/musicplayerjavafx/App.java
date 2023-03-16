@@ -46,7 +46,6 @@ public class App extends Application {
             System.setOut(new PrintStream(consoleOutput));
 
             // HostServices for accessing program GitHub page.
-            HostServices hostServices = getHostServices();
             stage.getProperties().put("hostServices", this.getHostServices());
 
             // Pass top level objects to MusicPlayerController object via fxmlLoader

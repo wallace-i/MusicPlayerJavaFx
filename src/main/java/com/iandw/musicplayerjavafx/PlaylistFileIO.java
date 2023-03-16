@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class PlaylistsFileIO implements Serializable {
+public class PlaylistFileIO implements Serializable {
     public static ObservableList<String> inputPlaylists() {
 
         ObservableList<String> playlistObservableList = FXCollections.observableArrayList();

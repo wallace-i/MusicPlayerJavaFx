@@ -41,7 +41,7 @@ public class ListViewLibrary implements Runnable {
         // Input playlist data if file is not empty
         try {
             if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-                playlistObservableList = FXCollections.observableArrayList(PlaylistsFileIO.inputPlaylists());
+                playlistObservableList = FXCollections.observableArrayList(PlaylistFileIO.inputPlaylists());
 
             } else {
                 playlistObservableList = FXCollections.observableArrayList();
@@ -120,7 +120,7 @@ public class ListViewLibrary implements Runnable {
         }
 
         if (outputPlaylistOnClose) {
-            PlaylistsFileIO.outputPlaylists(playlistObservableList);
+            PlaylistFileIO.outputPlaylists(playlistObservableList);
         }
 
     }
