@@ -158,9 +158,21 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />
-            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub" />
-            <MenuItem mnemonicParsing="false" onAction="#consoleLogClicked" text="Console Log" />
-            <MenuItem mnemonicParsing="false" onAction="#reportBugClicked" text="Report Bug" />
+            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub">
+                <graphic>
+                    <FontIcon iconLiteral="bi-github" iconSize="12" styleClass="menu-icon" />
+                </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#consoleLogClicked" text="Console Log">
+                <graphic>
+                    <FontIcon iconLiteral="bi-terminal-fill" iconSize="12" styleClass="menu-icon" />
+                </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#reportBugClicked" text="Report Bug">
+                <graphic>
+                    <FontIcon iconLiteral="bi-bug-fill" iconSize="12" styleClass="menu-icon" />
+                </graphic>
+            </MenuItem>
         </Menu>
     </MenuBar>
     <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="-">

@@ -990,12 +990,16 @@ public class MusicPlayerController {
 
     @FXML
     private void closeClicked() throws FileNotFoundException {
+        // Output to file on close if files data has been altered
         if (userSettings.getWriteOnClose()) {
             SettingsFileIO.jsonFileOutput(userSettings);
         }
 
         listViewLibrary.onClose();
         tableViewLibrary.onClose();
+
+        // Write console log to file
+        ConsoleLogFileIO.outputConsoleLog(consoleOutput.toString());
 
         stage.close();
     }

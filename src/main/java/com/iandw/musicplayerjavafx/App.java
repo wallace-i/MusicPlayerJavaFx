@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.io.FileNotFoundException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class App extends Application {
     private UserSettings userSettings;
@@ -68,9 +69,9 @@ public class App extends Application {
             stage.setOnCloseRequest(event -> {
                 event.consume();
                 try {
-                    saveAndExit(stage);
+                    saveAndExit(stage, consoleOutput);
 
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -80,13 +81,17 @@ public class App extends Application {
         }
     }
 
-    public void saveAndExit(Stage stage) throws FileNotFoundException {
+    public void saveAndExit(Stage stage, ByteArrayOutputStream consoleOutput) throws FileNotFoundException, InterruptedException {
+        // Output to file on close if files data has been altered
         if (userSettings.getWriteOnClose()) {
             SettingsFileIO.jsonFileOutput(userSettings);
         }
 
         listViewLibrary.onClose();
         tableViewLibrary.onClose();
+
+        // Write console log to file
+        ConsoleLogFileIO.outputConsoleLog(consoleOutput.toString());
 
         stage.close();
     }
