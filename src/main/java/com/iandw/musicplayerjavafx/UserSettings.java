@@ -3,8 +3,6 @@ package com.iandw.musicplayerjavafx;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.Objects;
-
 public class UserSettings implements Runnable {
     private String rootMusicDirectoryString;
     private String themeFileNameString;
