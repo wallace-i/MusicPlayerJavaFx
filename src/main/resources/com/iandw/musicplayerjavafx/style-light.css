@@ -55,9 +55,14 @@
     -fx-icon-color: DimGrey;
  }
 
-.menu-item: focused, menu-item: hovered .menu-icon {
+.menu-item: hover .menu-icon {
     -fx-icon-color: white;
 }
+
+.menu-item: selected .menu-icon {
+    -fx-icon-color: white;
+}
+
 
 
 

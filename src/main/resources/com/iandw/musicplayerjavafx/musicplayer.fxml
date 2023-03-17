@@ -117,11 +117,26 @@
     </HBox>
     <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#importFiles" text="Import Files">
+            <Menu mnemonicParsing="false" text="Import">
+                <MenuItem mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" >
+                    <graphic>
+                        <FontIcon iconLiteral="bi-person-fill" iconSize="12" styleClass="menu-icon" />
+                    </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" >
+                    <graphic>
+                        <FontIcon iconLiteral="bi-disc" iconSize="12" styleClass="menu-icon" />
+                    </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#importTrackClicked" text="Track" >
+                    <graphic>
+                        <FontIcon iconLiteral="bi-music-note" iconSize="12" styleClass="menu-icon" />
+                    </graphic>
+                </MenuItem>
                 <graphic>
                     <FontIcon iconLiteral="bi-folder-plus" iconSize="12" styleClass="menu-icon" />
                 </graphic>
-            </MenuItem>
+            </Menu>
             <MenuItem mnemonicParsing="false" onAction="#settingsClicked" text="Settings">
                 <graphic>
                     <FontIcon iconLiteral="bi-gear-fill" iconSize="12" styleClass="menu-icon" />
@@ -143,7 +158,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />
-            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub" >
+            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub">
                 <graphic>
                     <FontIcon iconLiteral="bi-github" iconSize="12" styleClass="menu-icon" />
                 </graphic>

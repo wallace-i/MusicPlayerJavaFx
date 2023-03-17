@@ -62,8 +62,8 @@ public class ListViewLibrary implements Runnable {
     public void addArtist(String artistName) {
         outputArtistOnClose = true;
         // If empty remove empty message
-        if (playlistObservableList.contains(noPlaylists)) {
-            playlistObservableList.remove(0);
+        if (artistObservableList.contains(noPlaylists)) {
+            artistObservableList.remove(0);
         }
 
         // Update observable list, sort, and write to file

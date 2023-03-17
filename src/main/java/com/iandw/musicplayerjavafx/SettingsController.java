@@ -17,10 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 
 public class SettingsController extends AnchorPane {
@@ -135,54 +131,21 @@ public class SettingsController extends AnchorPane {
 
     @FXML
     public void rootDirectoryClicked(MouseEvent mouseClick) throws IOException {
-        // Create DirectoryChooser for root Music Directory
-        DirectoryChooser rootMusicDirectoryChooser = new DirectoryChooser();
-        rootMusicDirectoryChooser.setTitle("Select Music Folder");
-        rootMusicDirectoryChooser.setInitialDirectory((new File(".")));
 
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
-        File file = rootMusicDirectoryChooser.showDialog(stage);
+        // Standard or Recursive initialization chooser
+        InitializeSelectionController initializeSelectionController = new InitializeSelectionController();
+        initializeSelectionController.showInitializationWindow(musicLibrary, tableViewLibrary, listViewLibrary, userSettings,
+                artistListView, playlistListView, trackTableView,  rootDirectoryLabel);
 
-        if (file != null) {
-            Path rootDirectoryPath = file.toPath();
-
-            if (Files.exists(rootDirectoryPath)) {
-                rootDirectoryLabel.setText(rootDirectoryPath.toString());
-
-                userSettings.setRootMusicDirectoryString(rootDirectoryPath.toString());
-
-                System.out.println("Initializing metadata");
-
-                // Clear current list file and observable list
-                Utils.clearSerializedFiles();
-                tableViewLibrary.clearObservableList();
-                tableViewLibrary.clearObservableList();
-                listViewLibrary.clearObservableLists();
-
-                // Re-initialize with new metadata from new root directory
-                musicLibrary.clearMusicLibrary();
-                musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
-
-                loadLibraries();
-
-                System.out.println("Finished initializing.");
-                System.out.printf("updated root directory: %s%n", rootDirectoryPath);
-
-            }
-
-        } else {
-            rootDirectoryLabel.setText("Select file or directory");
-        }
     }
 
     @FXML
     public void resetLibraryClicked(MouseEvent mouseClick) throws IOException {
-
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setAlwaysOnTop(false);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Clear Library");
+        alert.setTitle("Reset Library");
         alert.setHeaderText("You are about to reset your track metadata and clear playlists.");
         alert.setContentText("Would you like to continue?");
 
@@ -197,7 +160,24 @@ public class SettingsController extends AnchorPane {
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
 
-            loadLibraries();
+            if (userSettings.getInitalizationString().equals("recursive")) {
+                musicLibrary.recursiveInitialization();
+
+            } else {
+                musicLibrary.initializeMusicLibrary();
+            }
+
+            listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
+            tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+
+            // Set Listview and Tableview
+            artistListView.setItems(listViewLibrary.getArtistObservableList());
+            playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+            trackTableView.setItems(musicLibrary.getTrackObservableList());
+
+            trackTableView.refresh();
+            artistListView.refresh();
+            playlistListView.refresh();
 
             System.out.println("Finished Resetting.");
 
@@ -205,24 +185,6 @@ public class SettingsController extends AnchorPane {
 
         stage.setAlwaysOnTop(true);
     }
-
-    private void loadLibraries() throws IOException {
-        // reinitialize metadata and load into listViewLibrary and tableViewLibrary
-        musicLibrary.initializeMusicLibrary();
-
-        listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
-        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
-
-        // Set Listview and Tableview
-        artistListView.setItems(listViewLibrary.getArtistObservableList());
-        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
-        trackTableView.setItems(musicLibrary.getTrackObservableList());
-
-        trackTableView.refresh();
-        artistListView.refresh();
-        playlistListView.refresh();
-    }
-
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *

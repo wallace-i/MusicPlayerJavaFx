@@ -26,6 +26,10 @@ public class ResourceURLs {
             Objects.requireNonNull(SettingsController.class.getResource(
                     "playlists.ser")).toString().substring(6));
 
+    private static final String consolelogURL = Objects.requireNonNull(
+            Objects.requireNonNull(SettingsController.class.getResource(
+                    "consolelog.txt")).toString().substring(6));
+
     private static final String autoplayiconURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(
                     "autoplay2.png")).toString().substring(6));
@@ -76,7 +80,7 @@ public class ResourceURLs {
     public static String getArtistListURL() { return artistlistURL; }
     public static String getTrackListURL() { return tracklistURL; }
     public static String getPlaylistsURL() { return playlistsURL; }
-
+    public static String getConsolelogURL() { return consolelogURL; }
     // Image urls
     public static String getAutoplayiconURL() { return autoplayiconURL; }
     public static String getMusicnotesLightURL() { return musicnoteslightURL; }

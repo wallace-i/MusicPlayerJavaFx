@@ -501,7 +501,7 @@ public class MusicPlayerController {
 
     @FXML
     private void handleTableViewContextMenu()  {
-        TableViewContextMenu.getContextMenu(artistListView, trackTableView,
+        TableViewContexMenu.getContextMenu(artistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
         // Refresh TableView
@@ -881,12 +881,31 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    private void importFiles() throws IOException {
-        //TODO => import erases listview
-        musicLibrary.importFiles();
+    private void importArtistClicked() throws IOException {
+        musicLibrary.importArtist();
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+        addArtistFromImport();
+    }
 
-        // Add artist name to list view and save to file if not available
+    @FXML
+    private void importAlbumClicked() throws IOException {
+        musicLibrary.importAlbum();
+        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+        addArtistFromImport();
+    }
+
+    @FXML
+    private void importTrackClicked() throws IOException {
+        musicLibrary.importTrack();
+
+        if (!musicLibrary.getTrackObservableList().isEmpty()) {
+            tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
+            addArtistFromImport();
+        }
+    }
+
+    // Add artist name to list view and save to file if not available
+    private void addArtistFromImport() {
         if (!listViewLibrary.getArtistObservableList().contains(musicLibrary.getArtistNameStr())) {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());
@@ -942,6 +961,7 @@ public class MusicPlayerController {
         final String gitHubUrl = "https://github.com/wallace-i/MusicPlayerJavaFx";
         HostServices hostServices = (HostServices) stage.getProperties().get("hostServices");
         hostServices.showDocument(gitHubUrl);
+
     }
 
     @FXML
@@ -969,12 +989,16 @@ public class MusicPlayerController {
 
     @FXML
     private void closeClicked() throws FileNotFoundException {
+        // Output to file on close if files data has been altered
         if (userSettings.getWriteOnClose()) {
             SettingsFileIO.jsonFileOutput(userSettings);
         }
 
         listViewLibrary.onClose();
         tableViewLibrary.onClose();
+
+        // Write console log to file
+        ConsoleLogFileIO.outputConsoleLog(consoleOutput.toString());
 
         stage.close();
     }

@@ -42,10 +42,12 @@ public class SettingsFileIO {
     public static void jsonFileOutput(UserSettings userSettings) {
         final String rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
         final String themeFileNameString = userSettings.getThemeFileNameString();
+        final String initializationString = userSettings.getInitalizationString();
 
         JSONObject userSettingsDetails = new JSONObject();
         userSettingsDetails.put("musicLibrary", rootMusicDirectoryString);
         userSettingsDetails.put("themeFileName", themeFileNameString);
+        userSettingsDetails.put("initialization", initializationString);
 
         JSONObject userSettingsObject = new JSONObject();
         userSettingsObject.put("userSettings", userSettingsDetails);
