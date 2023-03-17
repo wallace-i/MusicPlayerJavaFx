@@ -2,7 +2,8 @@
   {
     "userSettings": {
       "musicLibrary": "C:\\dev\\DemoMusic",
-      "themeFileName": "style-light.css"
+      "themeFileName": "style-light.css",
+      "initialization": "standard"
     }
   }
 ]

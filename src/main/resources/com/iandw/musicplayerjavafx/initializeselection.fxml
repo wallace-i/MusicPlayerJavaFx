@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="296.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.InitializeSelectionController">
+   <children>
+      <GridPane prefHeight="296.0" prefWidth="430.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="263.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="45.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="141.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="160.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="standardButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#standardClicked" prefWidth="66.0" text="Standard">
+               <GridPane.margin>
+                  <Insets bottom="50.0" left="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="recursiveButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#recursiveClicked" text="Recursive" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="50.0" left="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="standardLabel" alignment="TOP_CENTER" text="Label" wrapText="true" GridPane.columnIndex="1">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="recursiveLabel" alignment="TOP_CENTER" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -585,147 +585,147 @@ public class MusicLibrary {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//    public void recursiveInitialization() throws IOException {
-//        System.out.println("Initializing observable list");
-//
-//        Utils.clearSerializedFiles();
-//
-//        Path rootPath = Paths.get(rootMusicDirectoryString);
-//
-//        if (Files.exists(rootPath)) {
-//            if (Files.isDirectory(rootPath)) {
-//
-//                File rootDirectory = new File(rootMusicDirectoryString);
-//
-//                trackMetadataObservableList.addAll(listFileTree(rootDirectory));
-//
-//
-//
-//            } else {
-//                System.out.printf("%s is not a directory%n", rootPath);
-//            }
-//
-//        } else {
-//            System.out.printf("%s does not exist%n", rootPath);
-//        }
-//
-//    }
-//
-//
-//
-//    private Collection<TrackMetadata> listFileTree(File dir) {
-//        Set<TrackMetadata> fileTree = new HashSet<>();
-//
-//        if (dir == null || dir.listFiles() == null) {
-//            return fileTree;
-//        }
-//
-//        for (File entry : Objects.requireNonNull(dir.listFiles())) {
-//            if (entry.isFile()) {
-//                trackPathStr = entry.getAbsolutePath();
-//                trackFileName = entry.getName();
-//                trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
-//
-//                if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-//
-//                    recursiveParse();
-//
-//                } else {
-//                    System.out.printf("%s is not a compatible file type.", trackFileName);
-//                }
-//
-//            } else {
-//                fileTree.addAll(listFileTree(entry));
-//            }
-//        }
-//
-//        return fileTree;
-//
-//    }
-//
-//
-//
-//    private void recursiveParse() {
-//        try {
-//            AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
-//            Tag tag = audioFile.getTag();
-//            String trackArtist;
-//            String trackAlbum;
-//            String trackTitle = trackFileName;
-//            String trackGenre = tag.getFirst(FieldKey.GENRE);
-//            final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
-//            final String playlist = "*";
-//
-//            // Get Track Artist Name
-//            if (tag.getFirst(FieldKey.ALBUM_ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM_ARTIST), "")){
-//                if (tag.getFirst(FieldKey.ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ARTIST), "")) {
-//                    trackArtist = "Unknown";
-//                } else {
-//                    trackArtist = tag.getFirst(FieldKey.ARTIST);
-//                }
-//            } else {
-//                trackArtist = tag.getFirst(FieldKey.ALBUM_ARTIST);
-//            }
-//
-//            // Check album metadata for null value, if true replace with directory name
-//            if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
-//                trackAlbum = "Unknown";
-//            } else {
-//                trackAlbum = tag.getFirst(FieldKey.ALBUM);
-//            }
-//
-//            // Get Track Title
-//            // Check title metadata for null value, if true replace with file name substring
-//            if (tag.getFirst(FieldKey.TITLE) == null || Objects.equals(tag.getFirst(FieldKey.TITLE), "")) {
-//                trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
-//
-//                if (Character.isDigit(trackTitle.charAt(0))) {
-//                    trackTitle = filterDigitsFromTitle(trackTitle);
-//                }
-//
-//            } else {
-//                trackTitle = tag.getFirst(FieldKey.TITLE);
-//            }
-//
-//            // If still null replace with trackFileName (Redundancy)
-//            if (trackTitle == null) {
-//                trackTitle = trackFileName;
-//            }
-//
-//            // Check genre metadata for null value, if true leave blank
-//            if (trackGenre == null) {
-//                trackGenre = "";
-//            } else if (trackGenre.startsWith("(")) {
-//                String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
-//                trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
-//            }
-//
-//            // Populate Track object
-//            TrackMetadata trackMetadata = new TrackMetadata(
-//                    trackArtist,
-//                    trackFileName,
-//                    trackContainerType,
-//                    trackTitle,
-//                    trackAlbum,
-//                    trackGenre,
-//                    duration,
-//                    trackPathStr,
-//                    playlist
-//            );
-//
-//            trackMetadataObservableList.add(trackMetadata);
-//
-//            if (!artistNameObservableList.contains(trackArtist)) {
-//                artistNameObservableList.add(trackArtist);
-//            }
-//
-//            System.out.printf("Importing: %s%n", trackFileName);
-//            System.out.printf(tag.toString());
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void recursiveInitialization() throws IOException {
+        System.out.println("Initializing observable list");
+
+        Utils.clearSerializedFiles();
+
+        Path rootPath = Paths.get(rootMusicDirectoryString);
+
+        if (Files.exists(rootPath)) {
+            if (Files.isDirectory(rootPath)) {
+
+                File rootDirectory = new File(rootMusicDirectoryString);
+
+                trackMetadataObservableList.addAll(listFileTree(rootDirectory));
+
+
+
+            } else {
+                System.out.printf("%s is not a directory%n", rootPath);
+            }
+
+        } else {
+            System.out.printf("%s does not exist%n", rootPath);
+        }
+
+    }
+
+
+
+    private Collection<TrackMetadata> listFileTree(File dir) {
+        Set<TrackMetadata> fileTree = new HashSet<>();
+
+        if (dir == null || dir.listFiles() == null) {
+            return fileTree;
+        }
+
+        for (File entry : Objects.requireNonNull(dir.listFiles())) {
+            if (entry.isFile()) {
+                trackPathStr = entry.getAbsolutePath();
+                trackFileName = entry.getName();
+                trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+
+                if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+
+                    recursiveParse();
+
+                } else {
+                    System.out.printf("%s is not a compatible file type.", trackFileName);
+                }
+
+            } else {
+                fileTree.addAll(listFileTree(entry));
+            }
+        }
+
+        return fileTree;
+
+    }
+
+
+
+    private void recursiveParse() {
+        try {
+            AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
+            Tag tag = audioFile.getTag();
+            String trackArtist;
+            String trackAlbum;
+            String trackTitle = trackFileName;
+            String trackGenre = tag.getFirst(FieldKey.GENRE);
+            final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
+            final String playlist = "*";
+
+            // Get Track Artist Name
+            if (tag.getFirst(FieldKey.ALBUM_ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM_ARTIST), "")){
+                if (tag.getFirst(FieldKey.ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ARTIST), "")) {
+                    trackArtist = "Unknown";
+                } else {
+                    trackArtist = tag.getFirst(FieldKey.ARTIST);
+                }
+            } else {
+                trackArtist = tag.getFirst(FieldKey.ALBUM_ARTIST);
+            }
+
+            // Check album metadata for null value, if true replace with directory name
+            if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
+                trackAlbum = "Unknown";
+            } else {
+                trackAlbum = tag.getFirst(FieldKey.ALBUM);
+            }
+
+            // Get Track Title
+            // Check title metadata for null value, if true replace with file name substring
+            if (tag.getFirst(FieldKey.TITLE) == null || Objects.equals(tag.getFirst(FieldKey.TITLE), "")) {
+                trackTitle = trackFileName.substring(0, trackTitle.indexOf('.'));
+
+                if (Character.isDigit(trackTitle.charAt(0))) {
+                    trackTitle = filterDigitsFromTitle(trackTitle);
+                }
+
+            } else {
+                trackTitle = tag.getFirst(FieldKey.TITLE);
+            }
+
+            // If still null replace with trackFileName (Redundancy)
+            if (trackTitle == null) {
+                trackTitle = trackFileName;
+            }
+
+            // Check genre metadata for null value, if true leave blank
+            if (trackGenre == null) {
+                trackGenre = "";
+            } else if (trackGenre.startsWith("(")) {
+                String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
+                trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
+            }
+
+            // Populate Track object
+            TrackMetadata trackMetadata = new TrackMetadata(
+                    trackArtist,
+                    trackFileName,
+                    trackContainerType,
+                    trackTitle,
+                    trackAlbum,
+                    trackGenre,
+                    duration,
+                    trackPathStr,
+                    playlist
+            );
+
+            trackMetadataObservableList.add(trackMetadata);
+
+            if (!artistNameObservableList.contains(trackArtist)) {
+                artistNameObservableList.add(trackArtist);
+            }
+
+            System.out.printf("Importing: %s%n", trackFileName);
+            System.out.printf(tag.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
