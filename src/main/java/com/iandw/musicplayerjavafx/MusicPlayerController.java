@@ -219,6 +219,7 @@ public class MusicPlayerController {
                 trackTableView.refresh();
                 listViewSelected();
             }
+
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
