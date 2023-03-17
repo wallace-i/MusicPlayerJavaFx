@@ -137,6 +137,9 @@ public class SettingsController extends AnchorPane {
         initializeSelectionController.showInitializationWindow(musicLibrary, tableViewLibrary, listViewLibrary, userSettings,
                 artistListView, playlistListView, trackTableView,  rootDirectoryLabel);
 
+        // write files on close
+        listViewLibrary.setOutputListsOnClose();
+        tableViewLibrary.setOutputTrackListOnClose();
     }
 
     @FXML
@@ -178,6 +181,10 @@ public class SettingsController extends AnchorPane {
             trackTableView.refresh();
             artistListView.refresh();
             playlistListView.refresh();
+
+            // Write files on close
+            listViewLibrary.setOutputListsOnClose();
+            tableViewLibrary.setOutputTrackListOnClose();
 
             System.out.println("Finished Resetting.");
 
