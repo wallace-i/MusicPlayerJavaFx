@@ -29,7 +29,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
 
 public class MusicPlayerController {
-    // FXML ids
     @FXML
     private ListView<String> artistListView;
     @FXML
