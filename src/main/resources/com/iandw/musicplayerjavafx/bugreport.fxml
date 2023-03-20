@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane prefHeight="305.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.BugReportController">
+   <children>
+      <VBox prefHeight="300.0" prefWidth="400.0">
+         <children>
+            <HBox prefHeight="35.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="devEmailField" prefHeight="25.0" prefWidth="250.0" text="iandw@spectrallines.dev">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="userEmailField" prefHeight="25.0" prefWidth="250.0" promptText="from">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></TextField>
+                  <Label>
+                     <graphic>
+                        <FontIcon iconLiteral="bi-bug-fill" iconSize="20" styleClass="icon" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="50.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="subjectField" prefHeight="25.0" prefWidth="250.0" promptText="subject">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></TextField>
+               </children>
+            </HBox>
+            <TextArea fx:id="textArea" prefHeight="184.0" prefWidth="400.0" wrapText="true">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding></TextArea>
+            <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="400.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="337.0">
+                     <children>
+                        <Button fx:id="consoleLogButton" onAction="#insertConsoleLogClicked" mnemonicParsing="false" text="Insert Console Log" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="sendButton" onAction="#sendClicked" mnemonicParsing="false" text="Send">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

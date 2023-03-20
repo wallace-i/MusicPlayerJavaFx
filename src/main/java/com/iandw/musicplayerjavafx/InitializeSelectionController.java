@@ -21,10 +21,15 @@ public class InitializeSelectionController {
     private AnchorPane anchorPane;
     @FXML private Button standardButton;
     @FXML private Button recursiveButton;
-    @FXML private Button cancelButton;
-    @FXML private Label standardLabel;
-    @FXML private Label recursiveLabel;
-
+    @FXML private Label standardA;
+    @FXML private Label standardB;
+    @FXML private Label standardC;
+    @FXML private Label standardD;
+    @FXML private Label standardE;
+    @FXML private Label recursiveA;
+    @FXML private Label recursiveB;
+    @FXML private Label recursiveC;
+    @FXML private Label recursiveD;
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
     private ListViewLibrary listViewLibrary;
@@ -73,15 +78,17 @@ public class InitializeSelectionController {
     }
 
     private void setLabelText() {
-        standardLabel.setText("Best for organized music libraries that follow the file structure: " +
-                "Music Folder -> Artist Folder -> Album Folder -> Track.mp3 or " +
-                "Music Folder -> Artist Folder -> Track.mp3. " +
-                "Gets names and titles from folder and file names.");
+        // Set selection information text
+        standardA.setText("Best for organized music libraries that follow the file structure:");
+        standardB.setText("Music Folder -> Artist Folder -> Album Folder -> Track.mp3");
+        standardC.setText("-or-");
+        standardD.setText("Music Folder -> Artist Folder -> Track.mp3");
+        standardE.setText("Gets names and titles from folder and file names.");
 
-        recursiveLabel.setText("Best for unorganized music libraries that can follow any file structure: " +
-                "Music Folder -> Folder A -> Folder B -> Folder n -> Track.mp3. " +
-                "Gets all track data from the file's metadata. May be inaccurate or missing.");
-
+        recursiveA.setText("Best for unorganized music libraries that can follow any file structure:");
+        recursiveB.setText("Music Folder -> Folder A -> Folder B -> Folder n -> Track.mp3");
+        recursiveC.setText("Gets all track data from the file's metadata.");
+        recursiveD.setText("Note: metadata may be inaccurate or missing.");
     }
 
     @FXML
@@ -174,12 +181,6 @@ public class InitializeSelectionController {
             rootDirectoryLabel.setText("Select file or directory");
         }
 
-        stage.close();
-    }
-
-    @FXML
-    private void cancelClicked() {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 

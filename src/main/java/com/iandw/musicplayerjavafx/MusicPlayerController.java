@@ -472,14 +472,19 @@ public class MusicPlayerController {
 
         artistNameString = artistListView.getSelectionModel().getSelectedItem();
 
-        if (artistNameString != null) {
-            // Right-clicking will update the tableview based on selection
-            trackTableView.refresh();
-            listViewSelected();
+        try {
+            if (artistNameString != null) {
+                // Right-clicking will update the tableview based on selection
+                trackTableView.refresh();
+                listViewSelected();
 
-            ArtistListContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
-                    listViewLibrary, tableViewLibrary, trackIndex, userSettings);
+                ArtistListContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
+                        listViewLibrary, tableViewLibrary, trackIndex, userSettings);
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
+
 
     }
 
@@ -489,12 +494,17 @@ public class MusicPlayerController {
         playlistTitleString = playlistListView.getSelectionModel().getSelectedItem();
 
         // Right-clicking will update the tableview based on selection
-        if (playlistTitleString != null) {
-            trackTableView.refresh();
-            listViewSelected();
+        try {
+            if (playlistTitleString != null) {
+                trackTableView.refresh();
+                listViewSelected();
 
-            PlaylistContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
-                    listViewLibrary, tableViewLibrary, trackIndex);
+                PlaylistContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
+                        listViewLibrary, tableViewLibrary, trackIndex);
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -514,15 +524,12 @@ public class MusicPlayerController {
      *                         SEARCH BAR
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
     @FXML
     private void handleClearSearchText(MouseEvent mouseClick) {
         searchField.setText("");
         listViewSelected();
         mouseClick.consume();
     }
-
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
@@ -569,6 +576,8 @@ public class MusicPlayerController {
                 try {
                     if (!playing) {
                         mediaPlayer.play();
+                        playing = true;
+                        stopped = false;
                         playPauseButton.setGraphic(pauseIcon);
                     }
 
@@ -791,7 +800,6 @@ public class MusicPlayerController {
             case AUTO_PLAY  -> autoButton.setSelected(false);
             case SHUFFLE    -> shuffleButton.setSelected(false);
             case REPEAT     -> repeatButton.setSelected(false);
-
         }
     }
 
@@ -807,6 +815,7 @@ public class MusicPlayerController {
 
         if (trackIndex.getCurrentTrackIndex() == trackIndex.getTableSize() - 1) {
             trackIndex.setNextTrackIndex(0);
+
         } else {
             trackIndex.setNextTrackIndex(trackIndex.getCurrentTrackIndex() + 1);
         }
@@ -975,8 +984,9 @@ public class MusicPlayerController {
     }
 
     @FXML
-    private void reportBugClicked() {
-        // send email w/ console log
+    private void reportBugClicked() throws IOException {
+        BugReportController bugReportController = new BugReportController();
+        bugReportController.showBugReportWindow(consoleOutput);
 
     }
 
