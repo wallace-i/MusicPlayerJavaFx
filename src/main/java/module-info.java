@@ -11,6 +11,9 @@ module com.iandw.musicplayerjavafx {
     requires jaudiotagger;
     requires javafx.web;
     requires org.jsoup;
+    requires jakarta.mail;
+    requires io.github.cdimascio.dotenv.java;
+    requires org.eclipse.angus.activation;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;
