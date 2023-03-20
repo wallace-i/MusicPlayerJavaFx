@@ -71,6 +71,7 @@ public class BugReportController {
 
         Session session = Session.getInstance(props, authenticator);
 
+
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(userEmailField.getText()));
