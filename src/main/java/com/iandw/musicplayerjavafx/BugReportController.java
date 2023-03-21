@@ -1,8 +1,10 @@
 package com.iandw.musicplayerjavafx;
 
 import jakarta.mail.internet.MimeMessage;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,9 +17,12 @@ import javafx.stage.Stage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Properties;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.mail.*;
+
+import javax.swing.text.StyledEditorKit;
 
 public class BugReportController {
     @FXML private AnchorPane anchorPane;
@@ -51,9 +56,11 @@ public class BugReportController {
 
     }
 
+
     private void setTextFieldFocus() {
         final BooleanProperty firstTime = new SimpleBooleanProperty(true);
 
+        // Keeps prompt text readable in text fields
         userNameField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue && firstTime.get()) {
                 anchorPane.requestFocus();
@@ -70,53 +77,72 @@ public class BugReportController {
 
     @FXML
     private void sendClicked() {
-        statusLabel.setText("Sending message...");
 
-        Dotenv dotenv = Dotenv.configure().load();
-        final String devEmail = dotenv.get("BUG_REPORT_EMAIL");
-        final String token = dotenv.get("TOKEN");
+        // Update UI on background thread
+        Task<Void> task = new Task<>() {
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.starttls.enable", "true"); //TLS
-        props.put("mail.smtp.auth", "true");
+            @Override
+            protected Void call() {
+                Platform.runLater(() -> statusLabel.setText("Sending message..."));
+                Dotenv dotenv = Dotenv.configure().load();
+                final String devEmail = dotenv.get("BUG_REPORT_EMAIL");
+                final String token = dotenv.get("TOKEN");
 
-        // Authenticates via dev bugreport gmail account
-        Authenticator authenticator = new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(devEmail, token);
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.port", "587");
+                props.put("mail.smtp.starttls.enable", "true"); //TLS
+                props.put("mail.smtp.auth", "true");
+
+                // Authenticates via dev bugreport gmail account
+                Authenticator authenticator = new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(devEmail, token);
+                    }
+                };
+
+                Session session = Session.getInstance(props, authenticator);
+
+                try {
+                    // Create message
+                    MimeMessage message = new MimeMessage(session);
+                    message.setRecipients(Message.RecipientType.TO, devEmail);
+                    message.setSubject(subjectField.getText());
+                    message.setSentDate(new Date());
+
+                    // Add user email to top of bug report
+                    message.setText(
+                            "From: " + userNameField.getText() + '\n' +
+                                    "Email: " + userEmailField.getText() + '\n' +
+                                    "App: MusicPlayer" + '\n' +
+                                    textArea.getText()
+                    );
+
+                    // Send it
+                    Transport.send(message);
+
+                    // Update UI on a background thread
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Message sent!");
+                        sendButton.disableProperty().set(true);
+                        setTextFieldFocus();
+                    });
+
+                } catch (MessagingException mex) {
+                    // Update UI on a background thread
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Send failed.");
+                        System.out.println("send failed, exception: " + mex);
+                        sendButton.disableProperty().set(false);
+                    });
+                }
+
+                return null;
             }
         };
 
-        Session session = Session.getInstance(props, authenticator);
-
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setRecipients(Message.RecipientType.TO, devEmail);
-            message.setSubject(subjectField.getText());
-            message.setSentDate(new Date());
-
-            // Add user email to top of bug report
-            message.setText(
-                    "From: " + userNameField.getText() + '\n' +
-                    "Email: " + userEmailField.getText() + '\n' +
-                    "App: MusicPlayer" + '\n' +
-                    textArea.getText()
-            );
-
-            // Send
-            Transport.send(message);
-
-            statusLabel.setText("Message sent!");
-            sendButton.disableProperty().set(true);
-            setTextFieldFocus();
-
-        } catch (MessagingException mex) {
-            statusLabel.setText("Send failed.");
-            System.out.println("send failed, exception: " + mex);
-            sendButton.disableProperty().set(false);
-        }
+        Thread thread = new Thread(task);
+        thread.start();
 
     }
 
