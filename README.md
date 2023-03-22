@@ -4,19 +4,19 @@ A light-weight music player and library assistant by Ian Wallace. <br>
 <br>
 ## Keyboard Shortcuts: <br>
 Play/Pause      Space<br>
-Next Track      Right Arrow<br>
-Previous Track  Left Arrow<br>
-Stop            Ctrl + Space<br>
+Next Track      Period<br>
+Previous Track  Comma<br>
+Stop            Slash<br>
 <br>
-Vol Up          Minus<br>
-Vol Down        Plus<br>
+Volume Up       Minus<br>
+Volume Down     Plus<br>
 Mute            0<br>
 <br>
-AutoPlay        B<br>
-Shuffle         N<br>
-Repeat          M<br>
-
-Menu Items:
+AutoPlay        1<br>
+Shuffle         2<br>
+Repeat          3<br>
+<br>
+Menu Items:<br>
 Settings        Ctrl + S<br>
 Exit            Ctrl + E<br>
 Import Artist   Ctrl + I<br>

@@ -263,16 +263,61 @@ public class MusicPlayerController {
         reportBugMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
 
         // GUI Button and Slider key bindings
+        // Play/Pause
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {
                 playPauseButton();
             }
         });
 
+        // Stop Track
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.SLASH) {
+                stopButton();
+            }
+        });
+
+        // Next Track
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.PERIOD && mediaPlayer != null) {
+                nextButton();
+            }
+        });
+
+        // Previous Track
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.COMMA && mediaPlayer != null &&
+                    trackTableView.getSelectionModel().getSelectedItem() != null) {
+                previousButton();
+            }
+        });
+
+
+        // Auto Play
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.DIGIT1) {
+                autoButton.selectedProperty().set(!autoButton.selectedProperty().getValue());
+            }
+        });
+
+        // Shuffle
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.DIGIT2) {
+                shuffleButton.selectedProperty().set(!shuffleButton.selectedProperty().getValue());
+            }
+        });
+
+        // Repeat
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.DIGIT3) {
+                repeatButton.selectedProperty().set(!repeatButton.selectedProperty().getValue());
+            }
+        });
+
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
-         *                        LISTENERS
+         *                        GUI LISTENERS
          *
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -640,35 +685,45 @@ public class MusicPlayerController {
         }
     }
 
+
     @FXML
     private void stopButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            try {
-                if (playing && (Objects.equals(artistNameString, artistListView.getSelectionModel().getSelectedItem()))) {
-                    stopMedia(false);
-
-                } else {
-                    stopMedia(playing);
-                }
-
-            } catch (NullPointerException e) {
-                System.out.println("No track selected.");
-            }
+            stopButton();
         }
+    }
+
+    private void stopButton() {
+        try {
+            if (playing && (Objects.equals(artistNameString, artistListView.getSelectionModel().getSelectedItem()))) {
+                stopMedia(false);
+
+            } else {
+                stopMedia(playing);
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("No track selected.");
+        }
+
     }
 
     @FXML
     private void nextButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null) {
-            trackIndex.setPushCurrentTrackToStack(true);
-            if (shuffleButton.isSelected()) {
-                shuffleSelected();
+            nextButton();
+        }
+    }
 
-            } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
-                trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
-                stopMedia(true);
-                playMedia();
-            }
+    private void nextButton() {
+        trackIndex.setPushCurrentTrackToStack(true);
+        if (shuffleButton.isSelected()) {
+            shuffleSelected();
+
+        } else if (trackTableView.getSelectionModel().getSelectedItem() != null) {
+            trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
+            stopMedia(true);
+            playMedia();
         }
     }
 
@@ -677,17 +732,21 @@ public class MusicPlayerController {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mediaPlayer != null &&
             trackTableView.getSelectionModel().getSelectedItem() != null)
         {
-            trackIndex.setPushCurrentTrackToStack(false);
-
-            trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
-
-            if (!trackIndex.getPreviousIndexStack().empty()) {
-                trackTableView.getSelectionModel().select(trackIndex.popPreviousIndexArray());
-            }
-
-            stopMedia(true);
-            playMedia();
+            previousButton();
         }
+    }
+
+    private void previousButton() {
+        trackIndex.setPushCurrentTrackToStack(false);
+
+        trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
+
+        if (!trackIndex.getPreviousIndexStack().empty()) {
+            trackTableView.getSelectionModel().select(trackIndex.popPreviousIndexArray());
+        }
+
+        stopMedia(true);
+        playMedia();
     }
 
 
