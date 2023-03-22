@@ -17,22 +17,27 @@ import javafx.stage.Stage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Properties;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.mail.*;
 
-import javax.swing.text.StyledEditorKit;
-
 public class BugReportController {
-    @FXML private AnchorPane anchorPane;
-    @FXML private TextField userNameField;
-    @FXML private TextField userEmailField;
-    @FXML private TextField subjectField;
-    @FXML private TextArea textArea;
-    @FXML private Button sendButton;
-    @FXML private Button consoleLogButton;
-    @FXML private Label statusLabel;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private TextField userNameField;
+    @FXML
+    private TextField userEmailField;
+    @FXML
+    private TextField subjectField;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Button sendButton;
+    @FXML
+    private Button consoleLogButton;
+    @FXML
+    private Label statusLabel;
     private ByteArrayOutputStream consoleOutput;
 
 

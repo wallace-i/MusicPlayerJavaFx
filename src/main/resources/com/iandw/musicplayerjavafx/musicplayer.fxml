@@ -118,17 +118,17 @@
     <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
         <Menu mnemonicParsing="false" text="File">
             <Menu mnemonicParsing="false" text="Import">
-                <MenuItem mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" >
+                <MenuItem fx:id="importArtistMenuItem" mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" >
                     <graphic>
                         <FontIcon iconLiteral="bi-person-fill" iconSize="12" styleClass="menu-icon" />
                     </graphic>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" >
+                <MenuItem fx:id="importAlbumMenuItem" mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" >
                     <graphic>
                         <FontIcon iconLiteral="bi-disc" iconSize="12" styleClass="menu-icon" />
                     </graphic>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#importTrackClicked" text="Track" >
+                <MenuItem fx:id="importTrackMenuItem" mnemonicParsing="false" onAction="#importTrackClicked" text="Track" >
                     <graphic>
                         <FontIcon iconLiteral="bi-music-note" iconSize="12" styleClass="menu-icon" />
                     </graphic>
@@ -137,38 +137,38 @@
                     <FontIcon iconLiteral="bi-folder-plus" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </Menu>
-            <MenuItem mnemonicParsing="false" onAction="#settingsClicked" text="Settings">
+            <MenuItem fx:id="settingsMenuItem" mnemonicParsing="false" onAction="#settingsClicked" text="Settings">
                 <graphic>
                     <FontIcon iconLiteral="bi-gear-fill" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
+            <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitClicked" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" onAction="#addArtistClicked" text="Add Artist">
+            <MenuItem fx:id="addArtistMenuItem" mnemonicParsing="false" onAction="#addArtistClicked" text="Add Artist">
                 <graphic>
                     <FontIcon iconLiteral="bi-person-plus-fill" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#createPlaylistClicked" text="Create Playlist">
+            <MenuItem fx:id="createPlaylistMenuItem" mnemonicParsing="false" onAction="#createPlaylistClicked" text="Create Playlist">
                 <graphic>
                     <FontIcon iconLiteral="bi-music-note-list" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </MenuItem>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />
-            <MenuItem mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub">
+            <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#aboutClicked" text="About" />
+            <MenuItem fx:id="gitHubMenuItem" mnemonicParsing="false" onAction="#gitHubClicked" text="GitHub">
                 <graphic>
                     <FontIcon iconLiteral="bi-github" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#consoleLogClicked" text="Console Log">
+            <MenuItem fx:id="consoleLogMenuItem" mnemonicParsing="false" onAction="#consoleLogClicked" text="Console Log">
                 <graphic>
                     <FontIcon iconLiteral="bi-terminal-fill" iconSize="12" styleClass="menu-icon" />
                 </graphic>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#reportBugClicked" text="Report Bug">
+            <MenuItem fx:id="reportBugMenuItem" mnemonicParsing="false" onAction="#reportBugClicked" text="Report Bug">
                 <graphic>
                     <FontIcon iconLiteral="bi-bug-fill" iconSize="12" styleClass="menu-icon" />
                 </graphic>

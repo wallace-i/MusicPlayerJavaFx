@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.HostServices;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -20,8 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -103,7 +104,28 @@ public class MusicPlayerController {
     private FontIcon artistIcon;
     @FXML
     private ImageView imageView;
-
+    @FXML
+    private MenuItem settingsMenuItem;
+    @FXML
+    private MenuItem exitMenuItem;
+    @FXML
+    private MenuItem importArtistMenuItem;
+    @FXML
+    private MenuItem importAlbumMenuItem;
+    @FXML
+    private MenuItem importTrackMenuItem;
+    @FXML
+    private MenuItem addArtistMenuItem;
+    @FXML
+    private MenuItem createPlaylistMenuItem;
+    @FXML
+    private MenuItem aboutMenuItem;
+    @FXML
+    private MenuItem gitHubMenuItem;
+    @FXML
+    private MenuItem consoleLogMenuItem;
+    @FXML
+    private MenuItem reportBugMenuItem;
     private Image defaultAlbumImage;
     private ImageFileLogic imageFileLogic;
     private MediaPlayer mediaPlayer;
@@ -220,6 +242,33 @@ public class MusicPlayerController {
             }
 
         }
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *
+         *                        KEY BINDINGS
+         *
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        // Menu Items
+        importArtistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.I, KeyCombination.CONTROL_DOWN));
+        importAlbumMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        importTrackMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN));
+        settingsMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        addArtistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
+        createPlaylistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN));
+        aboutMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        gitHubMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
+        consoleLogMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN));
+        reportBugMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
+
+        // GUI Button and Slider key bindings
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.SPACE) {
+                playPauseButton();
+            }
+        });
+
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
@@ -540,31 +589,35 @@ public class MusicPlayerController {
     @FXML
     private void playPauseButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            trackIndex.setPushCurrentTrackToStack(true);
+            playPauseButton();
+        }
+    }
 
-            try {
-                // Pause currently playing track
-                if (playing) {
-                    mediaPlayer.pause();
-                    playPauseButton.setGraphic(playIcon);
-                    playing = false;
+    private void playPauseButton() {
+        trackIndex.setPushCurrentTrackToStack(true);
+
+        try {
+            // Pause currently playing track
+            if (playing) {
+                mediaPlayer.pause();
+                playPauseButton.setGraphic(playIcon);
+                playing = false;
 
                 // Play from selected track if stopped or null
-                } else if (mediaPlayer == null || stopped) {
-                    playMedia();
+            } else if (mediaPlayer == null || stopped) {
+                playMedia();
 
                 // Play from currently paused track
-                } else {
-                    mediaPlayer.play();
-                    playPauseButton.setGraphic(pauseIcon);
-                    playing = true;
-                    stopped = false;
-                    setNowPlayingText();
-                }
-
-            } catch (NullPointerException e) {
-                System.out.println("No track selected.");
+            } else {
+                mediaPlayer.play();
+                playPauseButton.setGraphic(pauseIcon);
+                playing = true;
+                stopped = false;
+                setNowPlayingText();
             }
+
+        } catch (NullPointerException e) {
+            System.out.println("No track selected.");
         }
     }
 
@@ -940,7 +993,6 @@ public class MusicPlayerController {
     private void addArtistClicked() {
         ArtistListContextMenu.addArtist(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
-
     }
 
     @FXML
@@ -997,7 +1049,7 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    private void closeClicked() throws FileNotFoundException {
+    private void exitClicked() throws FileNotFoundException {
         // Output to file on close if files data has been altered
         if (userSettings.getWriteOnClose()) {
             SettingsFileIO.jsonFileOutput(userSettings);
