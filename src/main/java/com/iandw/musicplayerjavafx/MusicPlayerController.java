@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.HostServices;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -145,6 +147,7 @@ public class MusicPlayerController {
     private String previousArtistNameString;
     private String currentTheme;
     private double volumeDouble;
+    private int volumeInt;
     private boolean playing;
     private boolean stopped;
     private boolean artistsListSelected;
@@ -314,6 +317,26 @@ public class MusicPlayerController {
             }
         });
 
+        // Volume Up
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.EQUALS) {
+                volumeSlider.setValue(volumeSlider.getValue() + 1);
+            }
+        });
+
+        // Volume Down
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.MINUS) {
+                volumeSlider.setValue(volumeSlider.getValue() - 1);
+            }
+        });
+
+        // Mute
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.DIGIT0) {
+                mute.selectedProperty().set(!mute.selectedProperty().getValue());
+            }
+        });
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
@@ -1077,7 +1100,8 @@ public class MusicPlayerController {
 
     @FXML
     private void gitHubClicked() {
-        final String gitHubUrl = "https://github.com/wallace-i/MusicPlayerJavaFx";
+        Dotenv dotenv = Dotenv.configure().load();
+        final String gitHubUrl = dotenv.get("GITHUB");
         HostServices hostServices = (HostServices) stage.getProperties().get("hostServices");
         hostServices.showDocument(gitHubUrl);
 

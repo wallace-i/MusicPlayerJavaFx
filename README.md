@@ -3,10 +3,10 @@ A light-weight music player and library assistant by Ian Wallace. <br>
 <br>
 <br>
 ## Keyboard Shortcuts: <br>
-Play/Pause      Space<br>
-Next Track      Period<br>
-Previous Track  Comma<br>
-Stop            Slash<br>
+Play/Pause&emsp&emsp      Space<br>
+Next Track&emsp&emsp      Period<br>
+Previous Track&emsp&emsp  Comma<br>
+Stop      &emsp&emsp      Slash<br>
 <br>
 Volume Up       Minus<br>
 Volume Down     Plus<br>
