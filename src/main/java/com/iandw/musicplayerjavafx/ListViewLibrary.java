@@ -61,6 +61,7 @@ public class ListViewLibrary implements Runnable {
 
     public void addArtist(String artistName) {
         outputArtistOnClose = true;
+
         // If empty remove empty message
         if (artistObservableList.contains(noPlaylists)) {
             artistObservableList.remove(0);

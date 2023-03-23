@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,9 +25,10 @@ public class EditTrackController {
     private ObservableList<TrackMetadata> trackMetadataList;
     private String columnName;
 
+
     private void initializeData(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
                                 TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
-                                ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
+                                ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary, Stage stage)
     {
         this.columnName = columnName;
         this.artistListView = artistListView;
@@ -35,6 +38,19 @@ public class EditTrackController {
         this.tableViewLibrary = tableViewLibrary;
         editTextField.setText(mutableTrackData);
         editTextField.setFocusTraversable(false);
+
+        // Key Bindings
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                okButton(stage);
+            }
+        });
+
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                cancelButton(stage);
+            }
+        });
     }
 
     public void showEditWindow(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
@@ -45,15 +61,19 @@ public class EditTrackController {
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
         controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistListView,
-                listViewLibrary, tableViewLibrary);
+                listViewLibrary, tableViewLibrary, stage);
         stage.setTitle("Edit");
         stage.setResizable(false);
         stage.show();
     }
 
     @FXML
-    private void okButtonClicked(MouseEvent mouseClick) throws IOException {
+    private void okButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) okButton.getScene().getWindow();
+        okButton(stage);
+    }
+
+    private void okButton(Stage stage) {
         String userInput = editTextField.getText();
         final String artistName = "Artist Name";
         final String trackTitle = "Track Title";
@@ -92,6 +112,9 @@ public class EditTrackController {
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
 
+    private void cancelButton(Stage stage) {
+        stage.close();
     }
 }

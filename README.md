@@ -1,32 +1,32 @@
-## TeaSound <br>
+# mpTeaPlayer <br>
 A light-weight music player and library assistant by Ian Wallace. <br>
 <br>
 <br>
-## Keyboard Shortcuts: <br>
-Play/Pause&emsp&emsp      Space<br>
-Next Track&emsp&emsp      Period<br>
-Previous Track&emsp&emsp  Comma<br>
-Stop      &emsp&emsp      Slash<br>
+## Keyboard Shortcuts:<br>
+### Player Controls:<br>
+Play/Pause:&ensp;Space<br>
+Next Track:&ensp;.<br>
+Prev. Track:&ensp;,<br>
+Stop:&ensp;/<br>
 <br>
-Volume Up       Minus<br>
-Volume Down     Plus<br>
-Mute            0<br>
+Vol. Up:&ensp;=<br>
+Vol. Down:&ensp;-<br>
+Mute:&ensp;0<br>
 <br>
-AutoPlay        1<br>
-Shuffle         2<br>
-Repeat          3<br>
+AutoPlay:&ensp;1<br>
+Shuffle:&ensp;2<br>
+Repeat:&ensp;3<br>
 <br>
-Menu Items:<br>
-Settings        Ctrl + S<br>
-Exit            Ctrl + E<br>
-Import Artist   Ctrl + I<br>
-Import Album    Ctrl + L<br>
-Import Track    Ctrl + T<br>
-Add Artist      Ctrl + A<br>
-Create Playlist Ctrl + P<br>
-About           Ctrl + O<br>
-GitHub          Ctrl + G<br>
-Console Log     Ctrl + C<br>
-Report Bug      Ctrl + R<br>
-
+### Menu Bar:<br>
+Settings:&ensp;Ctrl + S<br>
+Exit:&ensp;Ctrl + E<br>
+Import Artist:&ensp;Ctrl + I<br>
+Import Album:&ensp;Ctrl + L<br>
+Import Track:&ensp;Ctrl + T<br>
+Add Artist:&ensp;Ctrl + A<br>
+Create Playlist:&ensp;Ctrl + P<br>
+About:&ensp;Ctrl + O<br>
+GitHub:&ensp;Ctrl + G<br>
+Console Log:&ensp;Ctrl + C<br>
+Report Bug:&ensp;Ctrl + R<br>
 

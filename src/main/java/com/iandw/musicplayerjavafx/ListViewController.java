@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -32,12 +34,10 @@ public class ListViewController {
     final private String createPlaylist = "Create Playlist";
     final private String editPlaylist = "Edit Playlist";
 
-    public void initialize() {}
-
     private void initializeData(ListView<String> artistListView, ListView<String> playlistListView,
                                 TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                 TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
-                                String windowTitle, String menuSelection)
+                                String windowTitle, String menuSelection, Stage stage)
     {
         this.artistListView = artistListView;
         this.playlistListView = playlistListView;
@@ -56,6 +56,19 @@ public class ListViewController {
 
         listViewTextInput.setFocusTraversable(false);
 
+        // Key Bindings
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                okButton(stage);
+            }
+        });
+
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                cancelButton(stage);
+            }
+        });
+
     }
 
     public void showListViewInputWindow(ListView<String> artistListView, ListView<String> playlistListView,
@@ -67,10 +80,13 @@ public class ListViewController {
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         ListViewController controller = loader.getController();
+
         controller.initializeData(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary,
-                trackIndex, windowTitle, menuSelection);
+                trackIndex, windowTitle, menuSelection, stage);
+
         stage.setTitle(windowTitle);
         stage.setResizable(false);
+        stage.isAlwaysOnTop();
         stage.show();
     }
 
@@ -83,7 +99,12 @@ public class ListViewController {
     @FXML
     private void okButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) okButton.getScene().getWindow();
+        okButton(stage);
+    }
+
+    private void okButton(Stage stage) {
         userInput = listViewTextInput.getText();
+        boolean closeFlag = true;
 
         switch (windowTitle) {
 
@@ -101,9 +122,11 @@ public class ListViewController {
                     playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
                 } catch (Exception e) {
+                    closeFlag = false;
                     listViewTextInput.clear();
                     listViewTextInput.setPromptText("Playlist must be unique");
                     listViewTextInput.setFocusTraversable(false);
+                    anchorPane.requestFocus();
                 }
             }
 
@@ -122,9 +145,11 @@ public class ListViewController {
                     artistListView.refresh();
 
                 } catch (Exception e) {
+                    closeFlag = false;
                     listViewTextInput.clear();
                     listViewTextInput.setPromptText("Artist must be unique");
                     listViewTextInput.setFocusTraversable(false);
+                    anchorPane.requestFocus();
                 }
             }
 
@@ -136,7 +161,7 @@ public class ListViewController {
                         throw new Exception();
                     }
 
-                   // listViewLibrary.getArtistObservableList().remove(userInput);
+                    // listViewLibrary.getArtistObservableList().remove(userInput);
 
                     // Edit Artist
                     if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
@@ -153,10 +178,11 @@ public class ListViewController {
                     }
 
                 } catch (Exception e) {
+                    closeFlag = false;
                     listViewTextInput.clear();
                     listViewTextInput.setPromptText("Name must be unique");
                     listViewTextInput.setFocusTraversable(false);
-
+                    anchorPane.requestFocus();
                 }
             }
 
@@ -180,20 +206,27 @@ public class ListViewController {
                     }
 
                 } catch (Exception e) {
+                    closeFlag = false;
                     listViewTextInput.clear();
                     listViewTextInput.setPromptText("Name must be unique");
                     listViewTextInput.setFocusTraversable(false);
-
+                    anchorPane.requestFocus();
                 }
             }
         }
 
-        stage.close();
+        if (closeFlag) {
+            stage.close();
+        }
     }
 
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
+
+    private void cancelButton(Stage stage) {
         stage.close();
     }
 
