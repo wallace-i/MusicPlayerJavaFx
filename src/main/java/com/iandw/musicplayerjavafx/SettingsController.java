@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -72,7 +74,7 @@ public class SettingsController extends AnchorPane {
     private void initializeData(ListView<String> artistListView, ListView<String> playlistListView,
                                 TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                 TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
-                                UserSettings userSettings, String directoryLabel)
+                                UserSettings userSettings, String directoryLabel, Stage stage)
     {
         rootDirectoryLabel.setText(directoryLabel);
         themesLabel.setText("Music Player Appearance.");
@@ -96,6 +98,13 @@ public class SettingsController extends AnchorPane {
         this.tableViewLibrary = tableViewLibrary;
         this.musicLibrary = musicLibrary;
         this.userSettings = userSettings;
+
+        // Close key binding
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                stage.close();
+            }
+        });
     }
 
     public void showSettingsWindow(ListView<String> artistListView, ListView<String> playlistListView,
@@ -111,7 +120,7 @@ public class SettingsController extends AnchorPane {
 
         // Initialize SettingsController object member variables
         controller.initializeData(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary,
-                musicLibrary, userSettings, directoryLabel);
+                musicLibrary, userSettings, directoryLabel, stage);
 
         // Set/Show Stage
         stage.setAlwaysOnTop(true);

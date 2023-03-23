@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ListViewController {
@@ -65,7 +64,7 @@ public class ListViewController {
 
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                cancelButton(stage);
+                stage.close();
             }
         });
 
@@ -132,6 +131,7 @@ public class ListViewController {
 
             // Add Artist
             case addArtist -> {
+                System.out.println("adding artist");
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
@@ -161,7 +161,8 @@ public class ListViewController {
                         throw new Exception();
                     }
 
-                    // listViewLibrary.getArtistObservableList().remove(userInput);
+                    //TODO => remove this line?
+                    //listViewLibrary.getArtistObservableList().remove(userInput);
 
                     // Edit Artist
                     if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
@@ -223,10 +224,6 @@ public class ListViewController {
     @FXML
     private void cancelButtonClicked(MouseEvent mouseClick) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
-    }
-
-    private void cancelButton(Stage stage) {
         stage.close();
     }
 

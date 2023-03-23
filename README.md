@@ -23,10 +23,10 @@ Exit:&ensp;Ctrl + E<br>
 Import Artist:&ensp;Ctrl + I<br>
 Import Album:&ensp;Ctrl + L<br>
 Import Track:&ensp;Ctrl + T<br>
-Add Artist:&ensp;Ctrl + A<br>
+Add Artist:&ensp;Ctrl + R<br>
 Create Playlist:&ensp;Ctrl + P<br>
 About:&ensp;Ctrl + O<br>
 GitHub:&ensp;Ctrl + G<br>
 Console Log:&ensp;Ctrl + C<br>
-Report Bug:&ensp;Ctrl + R<br>
+Report Bug:&ensp;Ctrl + B<br>
 

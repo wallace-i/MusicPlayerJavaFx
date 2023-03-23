@@ -67,10 +67,12 @@ public class ListViewLibrary implements Runnable {
             artistObservableList.remove(0);
         }
 
-        // Update observable list, sort, and write to file
-        artistObservableList.add(artistName);
+        if (artistName != null) {
+            // Update observable list, sort, and write to file
+            artistObservableList.add(artistName);
 
-        Collections.sort(artistObservableList);
+            Collections.sort(artistObservableList);
+        }
     }
 
     public void removeArtist(String artistName) {

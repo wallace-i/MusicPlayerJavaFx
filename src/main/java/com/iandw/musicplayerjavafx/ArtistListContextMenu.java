@@ -18,7 +18,7 @@ public class ArtistListContextMenu {
         // Add to list
         MenuItem addArtist = new MenuItem("Add Artist");
 
-        // Edit List
+        // Edit list
         MenuItem editArtist = new MenuItem("Edit");
         SeparatorMenuItem divider1 = new SeparatorMenuItem();
 

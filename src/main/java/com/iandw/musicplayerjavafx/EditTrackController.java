@@ -48,7 +48,7 @@ public class EditTrackController {
 
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                cancelButton(stage);
+                stage.close();
             }
         });
     }
@@ -114,7 +114,4 @@ public class EditTrackController {
         stage.close();
     }
 
-    private void cancelButton(Stage stage) {
-        stage.close();
-    }
 }

@@ -258,14 +258,14 @@ public class MusicPlayerController {
         importTrackMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN));
         settingsMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
-        addArtistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
+        addArtistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
         createPlaylistMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN));
         aboutMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         gitHubMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.G, KeyCombination.CONTROL_DOWN));
         consoleLogMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN));
-        reportBugMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
+        reportBugMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN));
 
-        // GUI Button and Slider key bindings
+        // Buttons and Vol. Slider
         // Play/Pause
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {
@@ -1049,7 +1049,9 @@ public class MusicPlayerController {
 
     // Add artist name to list view and save to file if not available
     private void addArtistFromImport() {
-        if (!listViewLibrary.getArtistObservableList().contains(musicLibrary.getArtistNameStr())) {
+        if (!listViewLibrary.getArtistObservableList().contains(musicLibrary.getArtistNameStr()) &&
+            musicLibrary.getArtistNameStr() != null)
+        {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());
         }

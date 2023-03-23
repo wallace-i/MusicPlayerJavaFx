@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -23,11 +25,18 @@ public class ViewTextController {
 
     public void initialize() {}
 
-    public void initializeData(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
+    public void initializeData(String menuChoice, ByteArrayOutputStream consoleOutput, Stage stage) throws IOException {
         this.menuChoice = menuChoice;
         this.consoleOutput = consoleOutput;
 
         fillTextArea();
+
+        // Close key binding
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                stage.close();
+            }
+        });
     }
 
     public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
@@ -36,7 +45,7 @@ public class ViewTextController {
         stage.setScene(new Scene(loader.load()));
         ViewTextController controller = loader.getController();
 
-        controller.initializeData(menuChoice, consoleOutput);
+        controller.initializeData(menuChoice, consoleOutput, stage);
 
         stage.setAlwaysOnTop(true);
         stage.setTitle(menuChoice);

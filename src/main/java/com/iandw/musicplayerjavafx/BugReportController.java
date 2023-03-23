@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.ByteArrayOutputStream;
@@ -41,9 +43,16 @@ public class BugReportController {
     private ByteArrayOutputStream consoleOutput;
 
 
-    public void initializeData(ByteArrayOutputStream consoleOutput) {
+    public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage) {
         this.consoleOutput = consoleOutput;
         setTextFieldFocus();
+
+        // Close key binding
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                stage.close();
+            }
+        });
     }
 
     public void showBugReportWindow(ByteArrayOutputStream consoleOutput) throws IOException {
@@ -52,7 +61,7 @@ public class BugReportController {
         stage.setScene(new Scene(loader.load()));
         BugReportController controller = loader.getController();
 
-        controller.initializeData(consoleOutput);
+        controller.initializeData(consoleOutput, stage);
 
         stage.setAlwaysOnTop(true);
         stage.setTitle("Bug Report");
