@@ -2,7 +2,7 @@
 .root {
 
     -primary: #4e5254; /* dark grey */
-    -secondary: #1152d4; /* blue */
+    -secondary: #144bb8; /* blue */
     -secondary-armed: LightGrey;
     -tertiary: #222630; /* dark blue-grey */
     -quaternary: #363840; /* medium blue-grey */
@@ -14,7 +14,7 @@
     -text-hover: #e6e6e6;
     -text-selected: #e6e6e6;
 
-    -hover-background: #93f9b911;
+    -hover-background: #2662d950;
     -highlight-fill: -secondary;
     -text-background-selected: #1aa3ff;
     -selected-fill: #b97a9c;
@@ -41,12 +41,12 @@
 
 .split-pane: horizontal > .split-pane-divider {
     -fx-background-color: -hor-gradient;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 2px;
 }
 
 .split-pane: vertical > .split-pane-divider {
     -fx-background-color: -ver-gradient;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 2px;
 }
 
 .shadow-pane {
@@ -89,7 +89,7 @@
 
 .table-view .column-header-background {
     -fx-background-color: -ver-gradient;
-    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-radius: 0px 0px 0px 0px;
     -fx-background-insets: 0 11px 0 0;
 }
 
@@ -119,8 +119,16 @@
     -fx-background-insets: 2px;
 }
 
-.table-row-cell: selected {
+.table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell:filled:selected {
     -fx-background-color: -secondary;
+    -fx-text-background-color: -text-background-selected;
+    -fx-selected-fill: -selected-fill;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: -hover-background;
     -fx-text-background-color: -text-background-selected;
     -fx-selected-fill: -selected-fill;
     -fx-background-radius: 5px;
@@ -194,8 +202,8 @@
     -fx-background-insets: 2px;
 }
 
-.list-view .list-cell: selected {
-    -fx-background-color: -hover-background;
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background-color: -secondary;
     -fx-text-background-color: -text-background-selected;
     -fx-selected-fill: -selected-fill;
     -fx-text-fill: -text-selected;
@@ -203,8 +211,13 @@
     -fx-background-insets: 2px;
 }
 
-.list-view: selected .list-cell {
+.list-view .list-cell:filled:selected  {
+    -fx-background-color: -hover-background;
+    -fx-text-background-color: -text-background-selected;
+    -fx-selected-fill: -selected-fill;
     -fx-text-fill: -text-selected;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
 }
 
 /* List View Scroll Bar */
@@ -231,19 +244,6 @@
     -fx-padding: 2;
 }
 
-/* default slider style
-.slider {
-     -default-track-color: -fx-control-inner-background;
-     -track-color: transparent;
-}
-
-.slider .track {
-    -fx-background-color:  -fx-shadow-highlight-color,
-        linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
-        -fx-text-box-border), -track-color;
-
-} */
-
 /* Sliders */
 .slider {
     -fx-background-color: transparent;
@@ -268,7 +268,7 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -primary;
+    -fx-border-color: -icon-color;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
 }
@@ -344,7 +344,6 @@
 
 .menu-item: focused, .menu-item: hovered {
     -fx-background-color: -secondary;
-
 }
 
 .menu-item: selected {
@@ -353,15 +352,22 @@
     -fx-text-background-color: -text-background-selected;
 }
 
+.menu-item: focused .label {
+    -fx-text-fill: -text-selected;
+}
 
-.menu-item: hover .label {
+.menu-item: focused .label {
     -fx-text-fill: -text-hover;
-
 }
 
 /* Context Menu */
-.context-menu > .separator {
-    -fx-background-color: -quaternary;
+.context-menu {
+    -fx-background-color: -tertiary;
+}
+
+.context-menu > * > .separator > .line {
+    -fx-border-color: -quaternary;
+    -fx-border-insets: 5px;
 }
 
 /* Check box */
@@ -426,7 +432,7 @@
     -fx-icon-color: -icon-color;
  }
 
-.menu-item: hover .menu-icon {
+.menu-item: focused .menu-icon {
     -fx-icon-color: -text-selected;
 }
 

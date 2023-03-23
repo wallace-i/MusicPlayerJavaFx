@@ -6,13 +6,13 @@ public class SeekSliderColor {
             "-track-color: linear-gradient(to right, " +
                     "-fx-accent 0%%, " +
                     "-fx-accent %1$.1f%%, " +
-                    "transparent %1$.1f%%, " +
-                    "transparent 100%%);";
+                    "white %1$.1f%%, " +
+                    "white 100%%);";
 
     private static final String darkStyle =
             "-track-color: linear-gradient(to right, " +
-                    "#004de6 0%%, " +
-                    "#004de6 %1$.1f%%, " +
+                    "#1f3d7a 0%%, " +
+                    "#1f3d7a %1$.1f%%, " +
                     "#363840 %1$.1f%%, " +
                     "#363840 100%%);";
 
@@ -46,8 +46,8 @@ public class SeekSliderColor {
 
     private static final String consoleStyle =
             "-track-color: linear-gradient(to right, " +
-                    "#267326 0%%, " +
-                    "#267326 %1$.1f%%, " +
+                    "#367d36 0%%, " +
+                    "#367d36 %1$.1f%%, " +
                     "#363840 %1$.1f%%, " +
                     "#363840 100%%);";
 

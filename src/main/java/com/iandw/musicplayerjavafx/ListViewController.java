@@ -53,7 +53,8 @@ public class ListViewController {
             case editArtist, editPlaylist -> listViewTextInput.setText(menuSelection);
         }
 
-        listViewTextInput.setFocusTraversable(false);
+        //listViewTextInput.setFocusTraversable(false);
+        anchorPane.requestFocus();
 
         // Key Bindings
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
@@ -153,7 +154,6 @@ public class ListViewController {
                 }
             }
 
-
             case editArtist -> {
                 try {
                     // Throw exception if playlist is the same name as an Artist
@@ -192,16 +192,6 @@ public class ListViewController {
                     if (listViewLibrary.getArtistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
-
-//                    // Edit playlist
-//                    if (listViewLibrary.getPlaylistObservableList().contains(menuSelection)) {
-//                        System.out.println("Editing playlist");
-//                        listViewLibrary.removePlaylist(menuSelection);
-//                        listViewLibrary.addPlaylist(userInput);
-//                        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
-//
-//                        editPlaylist();
-//                    }
 
                     // Edit Playlist
                     if (listViewLibrary.getPlaylistObservableList().contains(menuSelection)) {

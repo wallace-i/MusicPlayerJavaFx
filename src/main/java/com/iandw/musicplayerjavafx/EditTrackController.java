@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class EditTrackController {
     @FXML
-    private AnchorPane anchorPane; //TODO => Delete?
+    private AnchorPane anchorPane;
     @FXML private TextField editTextField;
     @FXML private Button okButton;
     @FXML private Button cancelButton;
@@ -37,7 +37,7 @@ public class EditTrackController {
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
         editTextField.setText(mutableTrackData);
-        editTextField.setFocusTraversable(false);
+        anchorPane.requestFocus();
 
         // Key Bindings
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
@@ -60,8 +60,10 @@ public class EditTrackController {
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
+
         controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistListView,
                 listViewLibrary, tableViewLibrary, stage);
+
         stage.setTitle("Edit");
         stage.setResizable(false);
         stage.show();

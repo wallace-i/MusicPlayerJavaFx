@@ -41,12 +41,12 @@
 
 .split-pane: horizontal > .split-pane-divider {
     -fx-background-color: -hor-gradient;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 2px;
 }
 
 .split-pane: vertical > .split-pane-divider {
     -fx-background-color: -ver-gradient;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 2px;
 }
 
 .shadow-pane {
@@ -89,7 +89,7 @@
 
 .table-view .column-header-background {
     -fx-background-color: -ver-gradient;
-    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-radius: 0px 0px 0px 0px;
     -fx-background-insets: 0 11px 0 0;
 }
 
@@ -231,19 +231,6 @@
     -fx-padding: 2;
 }
 
-/* default slider style
-.slider {
-     -default-track-color: -fx-control-inner-background;
-     -track-color: transparent;
-}
-
-.slider .track {
-    -fx-background-color:  -fx-shadow-highlight-color,
-        linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
-        -fx-text-box-border), -track-color;
-
-} */
-
 /* Sliders */
 .slider {
     -fx-background-color: transparent;
@@ -268,7 +255,7 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -primary;
+    -fx-border-color: #367d36;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
 }
@@ -362,8 +349,13 @@
 }
 
 /* Context Menu */
-.context-menu > .separator {
-    -fx-background-color: -quaternary;
+.context-menu {
+    -fx-background-color: -tertiary;
+}
+
+.context-menu > * > .separator > .line {
+    -fx-border-color: -hover-background;
+    -fx-border-insets: 5px;
 }
 
 /* Check box */
@@ -405,7 +397,6 @@
     -fx-background-color: -text-selected;
 }
 
-
 /* Icon Color */
 .delete-icon{
     -fx-icon-color: -icon-color;
@@ -428,8 +419,12 @@
     -fx-icon-color: -icon-color;
  }
 
-.menu-item: hover .menu-icon {
+.menu-item: focused .menu-icon {
     -fx-icon-color: -text-selected;
+}
+
+.menu-item: focused .label {
+    -fx-text-fill: -text-selected;
 }
 
 .menu-item: selected .menu-icon {
