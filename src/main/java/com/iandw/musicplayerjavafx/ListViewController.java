@@ -107,28 +107,6 @@ public class ListViewController {
 
         switch (windowTitle) {
 
-            // Create playlist
-            case createPlaylist -> {
-                try {
-                    // Throw exception if playlist is the same name as an Artist
-                    // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
-                        throw new Exception();
-                    }
-
-                    listViewLibrary.addPlaylist(userInput);
-                    playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
-
-                } catch (Exception e) {
-                    closeFlag = false;
-                    listViewTextInput.clear();
-                    listViewTextInput.setPromptText("Playlist must be unique");
-                    listViewTextInput.setFocusTraversable(false);
-                    anchorPane.requestFocus();
-                }
-            }
-
             // Add Artist
             case addArtist -> {
                 System.out.println("adding artist");
@@ -153,20 +131,40 @@ public class ListViewController {
                 }
             }
 
+            // Create playlist
+            case createPlaylist -> {
+                try {
+                    // Throw exception if playlist is the same name as an Artist
+                    // otherwise may cause bugs when choosing to remove an artist or playlist
+                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
+                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
+                        throw new Exception();
+                    }
+
+                    listViewLibrary.addPlaylist(userInput);
+                    playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+
+                } catch (Exception e) {
+                    closeFlag = false;
+                    listViewTextInput.clear();
+                    listViewTextInput.setPromptText("Playlist must be unique");
+                    listViewTextInput.setFocusTraversable(false);
+                    anchorPane.requestFocus();
+                }
+            }
+
+
             case editArtist -> {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if ( listViewLibrary.getPlaylistObservableList().contains(userInput)) {
+                    if (listViewLibrary.getPlaylistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
-                    //TODO => remove this line?
-                    //listViewLibrary.getArtistObservableList().remove(userInput);
-
                     // Edit Artist
                     if (listViewLibrary.getArtistObservableList().contains(menuSelection)) {
-                        System.out.println("Editing artist");
+                        System.out.printf("Editing artist %s to %s.", menuSelection, userInput);
                         listViewLibrary.removeArtist(menuSelection);
 
                         if (!listViewLibrary.getArtistObservableList().contains(userInput)) {
@@ -191,16 +189,29 @@ public class ListViewController {
                 try {
                     // Throw exception if playlist is the same name as an Artist
                     // otherwise may cause bugs when choosing to remove an artist or playlist
-                    if (listViewLibrary.getArtistObservableList().contains(userInput) ||
-                            listViewLibrary.getPlaylistObservableList().contains(userInput)) {
+                    if (listViewLibrary.getArtistObservableList().contains(userInput)) {
                         throw new Exception();
                     }
 
-                    // Edit playlist
+//                    // Edit playlist
+//                    if (listViewLibrary.getPlaylistObservableList().contains(menuSelection)) {
+//                        System.out.println("Editing playlist");
+//                        listViewLibrary.removePlaylist(menuSelection);
+//                        listViewLibrary.addPlaylist(userInput);
+//                        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+//
+//                        editPlaylist();
+//                    }
+
+                    // Edit Playlist
                     if (listViewLibrary.getPlaylistObservableList().contains(menuSelection)) {
-                        System.out.println("Editing playlist");
+                        System.out.printf("Editing playlist %s to %s.", menuSelection, userInput);
                         listViewLibrary.removePlaylist(menuSelection);
-                        listViewLibrary.addPlaylist(userInput);
+
+                        if (!listViewLibrary.getPlaylistObservableList().contains(userInput)) {
+                            listViewLibrary.addPlaylist(userInput);
+                        }
+
                         playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
                         editPlaylist();

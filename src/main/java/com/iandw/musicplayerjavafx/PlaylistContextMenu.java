@@ -3,8 +3,12 @@ package com.iandw.musicplayerjavafx;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class PlaylistContextMenu {
+
+    private static final String emptyPlaylist = "* playlists *";
+
     public static void getContextMenu(ListView<String> artistListView, ListView<String> playlistListView,
                                       TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                       TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
@@ -76,7 +80,7 @@ public class PlaylistContextMenu {
             String windowTitle = "Edit Playlist";
             String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
 
-            if (menuSelection != null) {
+            if (menuSelection != null && !Objects.equals(menuSelection, emptyPlaylist)) {
                 ListViewController listViewController = new ListViewController();
                 listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
                         listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
@@ -93,7 +97,7 @@ public class PlaylistContextMenu {
     {
         String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
 
-        if (menuSelection != null) {
+        if (menuSelection != null && !Objects.equals(menuSelection, emptyPlaylist)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Remove Playlist");
             alert.setHeaderText("Removing playlist does not affect files or folders.");

@@ -17,11 +17,14 @@ public class TableViewContexMenu {
         ArrayList<MenuItem> playlistMenuList = new ArrayList<>();
         Menu addTrackToPlaylist = new Menu("Add to Playlist");
         MenuItem removeTrackFromPlaylist = new MenuItem("Remove from Playlist");
+        final String emptyPlaylist = "* playlists *";
         SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
         // Add playlists to menu
         for (String playlist : listViewLibrary.getPlaylistObservableList()) {
-            playlistMenuList.add(new MenuItem(playlist));
+            if (!Objects.equals(playlist, emptyPlaylist)) {
+                playlistMenuList.add(new MenuItem(playlist));
+            }
         }
 
         addTrackToPlaylist.getItems().addAll(playlistMenuList);
