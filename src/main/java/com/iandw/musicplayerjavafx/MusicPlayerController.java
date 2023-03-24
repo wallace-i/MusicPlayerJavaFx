@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.HostServices;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -184,7 +182,7 @@ public class MusicPlayerController {
         albumIcon.setOpacity(0);
         artistIcon.setOpacity(0);
         albumImageWidth = 55;
-        volumeDouble = 0.25;
+        volumeDouble = .25;
         autoPlay = AutoPlay.OFF;
         trackIndex = new TrackIndex();
         artistNameString = "";
@@ -210,6 +208,10 @@ public class MusicPlayerController {
         imageView.setOpacity(.9);
         imageView.setCache(true);
         imageView.setVisible(true);
+
+        // Initialize vol slider fill
+        String initStyle = String.format(SliderFillColor.getStyle(currentTheme), (Math.sqrt(volumeDouble) * 100));
+        volumeSlider.setStyle(initStyle);
 
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
@@ -367,6 +369,17 @@ public class MusicPlayerController {
                     } else {
                         volumeIconLabel.setGraphic(volumeOff);
                     }
+
+                    // Slider css fill
+                    double percentage = 100.0 * newValue.doubleValue() / volumeSlider.getMax();
+
+                    if (Double.isNaN(percentage)) { percentage = 0.0; }
+
+                    // Set slideSeeker css based on current style sheet
+                    String style = String.format(SliderFillColor.getStyle(currentTheme), percentage);
+
+                    //System.out.println(percentage);
+                    volumeSlider.setStyle(style);
                 }
         );
 
@@ -402,12 +415,13 @@ public class MusicPlayerController {
                         mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(seekSlider.getValue() / 100));
                     }
 
+                    // Slider CSS fill
                     double percentage = 100.0 * newValue.doubleValue() / seekSlider.getMax();
 
                     if (Double.isNaN(percentage)) { percentage = 0.0; }
 
                     // Set slideSeeker css based on current style sheet
-                    String style = String.format(SeekSliderColor.getStyle(currentTheme), percentage);
+                    String style = String.format(SliderFillColor.getStyle(currentTheme), percentage);
 
                     //System.out.println(percentage);
                     seekSlider.setStyle(style);

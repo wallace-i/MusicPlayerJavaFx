@@ -74,6 +74,11 @@
     -fx-background-color: -secondary;
 }
 
+.button: focused {
+    -fx-border-color: -secondary;
+    -fx-border-radius: 3px, 3px, 2px, 1px;
+}
+
 /* Table View */
 
 .table-view,
@@ -249,13 +254,14 @@
     -fx-background-color: transparent;
     -default-track-color: -tertiary;
     -track-color: -quaternary;
+    -fx-shadow-highlight-color: -quaternary;
 }
 
 .slider .track {
     -fx-background-color:  -fx-shadow-highlight-color,
             linear-gradient(to bottom, derive(-fx-text-box-border, -10%),
             -fx-text-box-border), -track-color;
-    -fx-border-color: -primary;
+    -fx-border-color: -quaternary;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
 }
@@ -268,9 +274,13 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -icon-color;
+    -fx-border-color: -primary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
+}
+
+.slider: focused .thumb {
+    -fx-border-color: -secondary;
 }
 
 /*  Search Bar */
@@ -373,7 +383,6 @@
 /* Check box */
 .check-box {
     -fx-text-fill: -text-normal;
-
 }
 
 .check-box .box {
@@ -408,7 +417,6 @@
 .radio-button: selected .dot {
     -fx-background-color: -text-selected;
 }
-
 
 /* Icon Color */
 .delete-icon{

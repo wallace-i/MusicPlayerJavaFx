@@ -57,10 +57,6 @@
     -fx-padding: 10px;
 }
 
-.content-pane {
-
-}
-
 .anchor-pane .corner {
     -fx-background-color: transparent;
 }
@@ -77,8 +73,13 @@
     -fx-background-color: -secondary;
 }
 
-/* Table View */
+.button: focused {
+    -fx-border-color: -secondary;
+    -fx-border-radius: 3px, 3px, 2px, 1px;
+}
 
+
+/* Table View */
 .table-view,
 .table-view .column-header,
 .tableview.column-header-background .filler,
@@ -271,9 +272,13 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -secondary;
+    -fx-border-color: -primary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
+}
+
+.slider: focused .thumb {
+    -fx-border-color: -secondary;
 }
 
 /*  Search Bar */

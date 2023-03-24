@@ -54,10 +54,6 @@
     -fx-padding: 10px;
 }
 
-.content-pane {
-
-}
-
 .anchor-pane .corner {
     -fx-background-color: transparent;
 }
@@ -73,6 +69,12 @@
 .button: armed {
     -fx-background-color: -secondary;
 }
+
+.button: focused {
+    -fx-border-color: -secondary;
+    -fx-border-radius: 3px, 3px, 2px, 1px;
+}
+
 
 /* Table View */
 
@@ -236,6 +238,7 @@
     -fx-background-color: transparent;
     -default-track-color: -tertiary;
     -track-color: -quaternary;
+    -fx-shadow-highlight-color: -quaternary;
 }
 
 .slider .track {
@@ -255,9 +258,13 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: #367d36;
+    -fx-border-color: -primary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
+}
+
+.slider: focused .thumb {
+    -fx-border-color: -secondary;
 }
 
 /*  Search Bar */

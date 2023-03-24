@@ -77,6 +77,12 @@
     -fx-background-color: -secondary;
 }
 
+.button: focused {
+    -fx-border-color: -secondary;
+    -fx-border-radius: 3px, 3px, 2px, 1px;
+}
+
+
 /* Table View */
 
 .table-view,
@@ -275,9 +281,13 @@
 
 .slider .thumb {
     -fx-background-color: -quaternary;
-    -fx-border-color: -secondary;
+    -fx-border-color: -primary;
     -fx-background-radius: 100px;
     -fx-border-radius: 100px;
+}
+
+.slider: focused .thumb {
+    -fx-border-color: -secondary;
 }
 
 /*  Search Bar */
