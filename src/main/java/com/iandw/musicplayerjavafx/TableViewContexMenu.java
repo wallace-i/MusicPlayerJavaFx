@@ -141,10 +141,26 @@ public class TableViewContexMenu {
 
         // Delete Track
         deleteTrack.setOnAction(event -> {
-            System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
-                    artistListView.getSelectionModel().getSelectedItem());
-            tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
-            trackTableView.refresh();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Track");
+            alert.setHeaderText("You are about to delete " + trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr());
+            alert.setContentText("Would you like to continue?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                // Get current artist selected
+                String selectedArtist = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
+
+                // Delete Track
+                System.out.printf("Removing %s from %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
+                        artistListView.getSelectionModel().getSelectedItem());
+
+                tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
+
+                // Refocus on current artist for tableview to refresh
+                //TODO => refresh doesn't work here
+                artistListView.getSelectionModel().select(selectedArtist);
+                trackTableView.refresh();
+            }
         });
 
         // Open in File Explorer
@@ -155,9 +171,7 @@ public class TableViewContexMenu {
             }
         });
 
-        contextMenu.getItems().addAll(addTrackToPlaylist, removeTrackFromPlaylist, divider1,
-                editTrack, deleteTrack, divider2, openInExplorer
-        );
+        contextMenu.getItems().addAll(addTrackToPlaylist, removeTrackFromPlaylist, divider1, editTrack, deleteTrack, divider2, openInExplorer);
 
         trackTableView.setContextMenu(contextMenu);
 

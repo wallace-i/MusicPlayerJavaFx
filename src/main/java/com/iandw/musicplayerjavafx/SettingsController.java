@@ -158,8 +158,8 @@ public class SettingsController extends AnchorPane {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reset Library");
-        alert.setHeaderText("You are about to reset your track metadata and clear playlists.");
-        alert.setContentText("Would you like to continue?");
+        alert.setHeaderText("You are about to reinitialize your music library metadata and clear custom playlists.");
+        alert.setContentText("Doing so will not affect your files in any way. Would you like to continue?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Resetting Music Library.");
@@ -172,11 +172,12 @@ public class SettingsController extends AnchorPane {
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
 
+            //TODO => update with progress bar
             if (userSettings.getInitalizationString().equals("recursive")) {
                 musicLibrary.recursiveInitialization();
 
             } else {
-                musicLibrary.initializeMusicLibrary();
+                //musicLibrary.initializeMusicLibrary();
             }
 
             listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());

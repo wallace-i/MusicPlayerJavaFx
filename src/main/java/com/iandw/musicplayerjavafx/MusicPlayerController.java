@@ -145,7 +145,6 @@ public class MusicPlayerController {
     private String previousArtistNameString;
     private String currentTheme;
     private double volumeDouble;
-    private int volumeInt;
     private boolean playing;
     private boolean stopped;
     private boolean artistsListSelected;
@@ -165,7 +164,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          INITIALIZE CONTROLLER ON STARTUP
+     *                          INITIALIZE GUI, LIST, & TABLE VIEWS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -520,7 +519,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          LIST VIEW MODULES
+     *                          LIST VIEW
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -557,6 +556,9 @@ public class MusicPlayerController {
         // Create a filtered list for trackTableView
         tableViewLibrary.createFilteredList();
 
+        System.out.println("artistListSelected: " + artistsListSelected);
+        System.out.println("artistNameString: " + artistNameString);
+
         // Check artistsObservableList for artist name, call artist list predicate if true.
         // Else call the playlistListView predicate
         if (artistsListSelected && artistNameString != null) {
@@ -567,7 +569,6 @@ public class MusicPlayerController {
             // Remove null pointer exceptions from predicate search
             tableViewLibrary.getFilteredList().setPredicate(searchTableView.createPlaylistsListPredicate(
                     playlistTitleString, playlistListView));
-
         }
 
         trackTableView.setItems(tableViewLibrary.getFilteredList());
@@ -593,7 +594,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          CONTEXT MENU MODULES
+     *                          CONTEXT MENUS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -611,11 +612,10 @@ public class MusicPlayerController {
                 ArtistListContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
                         listViewLibrary, tableViewLibrary, trackIndex, userSettings);
             }
+
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 
     @FXML
@@ -636,7 +636,6 @@ public class MusicPlayerController {
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     @FXML
@@ -663,7 +662,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                 PLAY/PAUSE/PREVIOUS/NEXT/STOP BUTTON MODULES
+     *                 PLAY/PAUSE/PREVIOUS/NEXT/STOP BUTTONS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -722,7 +721,6 @@ public class MusicPlayerController {
         }
     }
 
-
     @FXML
     private void stopButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
@@ -742,7 +740,6 @@ public class MusicPlayerController {
         } catch (NullPointerException e) {
             System.out.println("No track selected.");
         }
-
     }
 
     @FXML
@@ -789,7 +786,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         PLAY/STOP/PAUSE MEDIA MODULES
+     *                         PLAY/STOP/PAUSE MEDIA LOGIC
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -907,7 +904,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         TRACK AUTOPLAY/SHUFFLE/REPEAT MODULES
+     *                         TRACK AUTOPLAY/SHUFFLE/REPEAT LOGIC
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -1033,7 +1030,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         FILE MENU MODULES
+     *                         FILE MENUS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -1084,7 +1081,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         EDIT MENU MODULES
+     *                         EDIT MENUS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     @FXML
@@ -1102,7 +1099,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         HELP MENU MODULES
+     *                         HELP MENUS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -1128,16 +1125,12 @@ public class MusicPlayerController {
         final String consoleLog = "Console Log";
         ViewTextController viewTextController = new ViewTextController();
         viewTextController.showViewTextWindow(consoleLog, consoleOutput);
-
-        // write to file on close
-
     }
 
     @FXML
     private void reportBugClicked() throws IOException {
         BugReportController bugReportController = new BugReportController();
         bugReportController.showBugReportWindow(consoleOutput);
-
     }
 
 

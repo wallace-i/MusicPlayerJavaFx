@@ -1,20 +1,23 @@
 package com.iandw.musicplayerjavafx;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class InitializeSelectionController {
     @FXML
@@ -30,6 +33,7 @@ public class InitializeSelectionController {
     @FXML private Label recursiveB;
     @FXML private Label recursiveC;
     @FXML private Label recursiveD;
+
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
     private ListViewLibrary listViewLibrary;
@@ -40,6 +44,9 @@ public class InitializeSelectionController {
 
     @FXML
     private Label rootDirectoryLabel;
+
+
+
     public void initializeData(MusicLibrary musicLibrary, TableViewLibrary tableViewLibrary,
                                ListViewLibrary listViewLibrary, UserSettings userSettings,
                                ListView<String> artistListView, ListView<String> playlistListView,
@@ -60,7 +67,8 @@ public class InitializeSelectionController {
     public void showInitializationWindow(MusicLibrary musicLibrary, TableViewLibrary tableViewLibrary,
                                          ListViewLibrary listViewLibrary, UserSettings userSettings,
                                          ListView<String> artistListView, ListView<String> playlistListView,
-                                         TableView<TrackMetadata> trackTableView,  Label rootDirectoryLabel) throws IOException {
+                                         TableView<TrackMetadata> trackTableView,  Label rootDirectoryLabel) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("initializeselection.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
@@ -116,17 +124,36 @@ public class InitializeSelectionController {
                 tableViewLibrary.clearObservableList();
                 listViewLibrary.clearObservableLists();
 
+                stage.close();
+
+                // Holds data for progressbar to update to
+                ProgressBarData progressBarData = new ProgressBarData(userSettings.getRootMusicDirectoryString());
+
+                // Run initializeMusicLibrary on separate thread to free up Application Thread
+                // for ProgressBarController
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        musicLibrary.initializeMusicLibrary(progressBarData);
+                        Platform.runLater(() -> loadLibraries());
+
+                        System.out.println("Finished initializing.");
+                        System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+                        return null;
+                    }
+                };
+
+                // Open progress bar window
+                ProgressBarController progressBarController = new ProgressBarController(progressBarData);
+                progressBarController.showProgressBarWindow();
+
                 // Re-initialize with new metadata from new root directory
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
 
-                // Initialize library by either 'standard' or 'recursive' means.
-                musicLibrary.initializeMusicLibrary();
-
-                loadLibraries();
-
-                System.out.println("Finished initializing.");
-                System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+                // Start initializeMusicLibrary() thread
+                Thread thread = new Thread(task);
+                thread.start();
 
             }
 
@@ -166,8 +193,6 @@ public class InitializeSelectionController {
                 // Re-initialize with new metadata from new root directory
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
-
-                // Initialize library by either 'standard' or 'recursive' means.
                 musicLibrary.recursiveInitialization();
 
                 loadLibraries();

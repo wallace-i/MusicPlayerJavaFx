@@ -7,12 +7,20 @@
 
 package com.iandw.musicplayerjavafx;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -36,12 +44,14 @@ public class MusicLibrary {
     private int index;
     private ImportCatagory importCatagory;
     private String rootMusicDirectoryString;
+    private Boolean continueInitializing;
 
     public MusicLibrary(UserSettings userSettings) {
         rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
         trackMetadataObservableList = FXCollections.observableArrayList();
         artistNameObservableList = FXCollections.observableArrayList();
         supportedFileTypes = Arrays.asList(".aif", ".aiff", ".mp3", "mp4", ".m4a", ".wav");
+        continueInitializing = true;
     }
 
     public void clearMusicLibrary() {
@@ -55,7 +65,7 @@ public class MusicLibrary {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void initializeMusicLibrary() throws IOException {
+    public void initializeMusicLibrary(ProgressBarData progressBarData) throws IOException {
         System.out.println("Initializing observable list");
 
         Utils.clearSerializedFiles();
@@ -82,7 +92,7 @@ public class MusicLibrary {
                             Path albumDirectoryPath = albumFolder.toAbsolutePath();
                             albumDirectoryStr = albumDirectoryPath.toString().substring(albumDirectoryPath.toString().lastIndexOf(File.separator) + 1);
 
-                            if (Files.isDirectory(albumFolder)) {
+                            if (Files.isDirectory(albumFolder )) {
                                 DirectoryStream<Path> albumDirPath = Files.newDirectoryStream(albumDirectoryPath);
 
                                 // ALBUM DIRECTORY => LOOP THROUGH TRACK FILES
@@ -97,15 +107,18 @@ public class MusicLibrary {
                                             if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
                                                 parseMetadata();
+                                                progressBarData.increaseProgress(trackPathStr);
 
                                             } else {
                                                 System.out.printf("%s is not a compatible file type.", trackFileName);
+
                                             }
                                         }
                                     } else {
                                         System.out.printf("%s is not a file%n", trackPath);
                                     }
                                 }
+
                             } else {
                                 // ARTIST DIRECTORY => LOOP THROUGH TRACK FILES
                                 // Used when no album folder exists
@@ -123,6 +136,8 @@ public class MusicLibrary {
                                     } else {
                                         System.out.printf("%s is not a compatible file type.", trackFileName);
                                     }
+                                } else {
+                                    System.out.printf("%s does not exist%n", albumDirectoryPath);
                                 }
                             }
                         }
@@ -138,6 +153,7 @@ public class MusicLibrary {
         } else {
             System.out.printf("%s does not exist%n", rootPath);
         }
+
 
     }
 
