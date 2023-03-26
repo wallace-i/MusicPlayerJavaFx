@@ -151,6 +151,8 @@ public class InitializeSelectionController {
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
 
+                task.setOnSucceeded(evt -> progressBarController.close());
+
                 // Start initializeMusicLibrary() thread
                 Thread thread = new Thread(task);
                 thread.start();
@@ -190,16 +192,38 @@ public class InitializeSelectionController {
                 tableViewLibrary.clearObservableList();
                 listViewLibrary.clearObservableLists();
 
+                stage.close();
+
+                // Holds data for progressbar to update to
+                ProgressBarData progressBarData = new ProgressBarData(userSettings.getRootMusicDirectoryString());
+
+                // Run initializeMusicLibrary on separate thread to free up Application Thread
+                // for ProgressBarController
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        musicLibrary.recursiveInitialization(progressBarData);
+                        Platform.runLater(() -> loadLibraries());
+
+                        System.out.println("Finished initializing.");
+                        System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+                        return null;
+                    }
+                };
+
+                // Open progress bar window
+                ProgressBarController progressBarController = new ProgressBarController(progressBarData);
+                progressBarController.showProgressBarWindow();
+
                 // Re-initialize with new metadata from new root directory
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
-                musicLibrary.recursiveInitialization();
 
-                loadLibraries();
+                task.setOnSucceeded(evt -> progressBarController.close());
 
-                System.out.println("Finished initializing.");
-                System.out.printf("updated root directory: %s%n", rootDirectoryPath);
-
+                // Start initializeMusicLibrary() thread
+                Thread thread = new Thread(task);
+                thread.start();
             }
 
         } else {

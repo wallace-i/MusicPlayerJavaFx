@@ -20,18 +20,15 @@ public class ProgressBarData implements java.io.Serializable {
         fileAmount = (double) Files.find(Paths.get(rootDirectory),
                 3, (path, attributes) -> attributes.isRegularFile()).count() - 1;
 
-        System.out.println(fileAmount);
+        System.out.println("Total Files: " + fileAmount);
         fileIndex = 0.0;
         progressDouble = 0.0;
-
     }
 
     public void increaseProgress(String trackPathStr) {
         fileIndex++;
         setProgressDouble(fileIndex / fileAmount);
         setTrackPathStr(trackPathStr);
-//        System.out.println(fileIndex);
-//        System.out.println(progressDouble);
     }
 
     public void setTrackPathStr(String newValue) {
@@ -47,9 +44,7 @@ public class ProgressBarData implements java.io.Serializable {
     public void setProgressDouble(double newValue) {
         double oldValue = progressDouble;
         progressDouble = newValue;
-//        System.out.println("new value" + newValue);
         propertySupport.firePropertyChange("progressDouble", oldValue, newValue);
-
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

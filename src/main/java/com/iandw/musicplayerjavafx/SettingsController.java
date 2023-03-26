@@ -7,8 +7,10 @@
 
 package com.iandw.musicplayerjavafx;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -172,35 +174,59 @@ public class SettingsController extends AnchorPane {
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
 
-            //TODO => update with progress bar
-            if (userSettings.getInitalizationString().equals("recursive")) {
-                musicLibrary.recursiveInitialization();
+            // Holds data for progressbar to update to
+            ProgressBarData progressBarData = new ProgressBarData(userSettings.getRootMusicDirectoryString());
 
-            } else {
-                //musicLibrary.initializeMusicLibrary();
-            }
+            // Run initializeMusicLibrary on separate thread to free up Application Thread
+            // for ProgressBarController
+            Task<Void> task = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    if (userSettings.getInitalizationString().equals("recursive")) {
+                          musicLibrary.recursiveInitialization(progressBarData);
 
-            listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
-            tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+                    } else {
+                        musicLibrary.initializeMusicLibrary(progressBarData);
+                    }
 
-            // Set Listview and Tableview
-            artistListView.setItems(listViewLibrary.getArtistObservableList());
-            playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
-            trackTableView.setItems(musicLibrary.getTrackObservableList());
+                    Platform.runLater(() -> loadLibraries());
+                    System.out.println("Finished re-initializing.");
+                    return null;
+                }
+            };
 
-            trackTableView.refresh();
-            artistListView.refresh();
-            playlistListView.refresh();
+            // Open progress bar window
+            ProgressBarController progressBarController = new ProgressBarController(progressBarData);
+            progressBarController.showProgressBarWindow();
 
-            // Write files on close
-            listViewLibrary.setOutputListsOnClose();
-            tableViewLibrary.setOutputTrackListOnClose();
+            // Re-initialize with new metadata from new root directory
+            musicLibrary.clearMusicLibrary();
 
-            System.out.println("Finished Resetting.");
+            task.setOnSucceeded(evt -> progressBarController.close());
+
+            // Start initializeMusicLibrary() thread
+            Thread thread = new Thread(task);
+            thread.start();
 
         }
+    }
 
-        stage.setAlwaysOnTop(true);
+    private void loadLibraries() {
+        listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
+        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+
+        // Set Listview and Tableview
+        artistListView.setItems(listViewLibrary.getArtistObservableList());
+        playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+        trackTableView.setItems(musicLibrary.getTrackObservableList());
+
+        trackTableView.refresh();
+        artistListView.refresh();
+        playlistListView.refresh();
+
+        // Write files on close
+        listViewLibrary.setOutputListsOnClose();
+        tableViewLibrary.setOutputTrackListOnClose();
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

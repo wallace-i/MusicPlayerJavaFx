@@ -26,6 +26,7 @@ public class ProgressBarController implements Initializable {
     @FXML
     private Button cancelButton;
 
+    private Stage stage;
     private boolean continueInitialization;
     private final ProgressBarData progressBarData;
 
@@ -69,6 +70,8 @@ public class ProgressBarController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
 
+        setStage(stage);
+
         // Set/Show Stage
         stage.setAlwaysOnTop(true);
         stage.setTitle("Initialize Library");
@@ -88,5 +91,9 @@ public class ProgressBarController implements Initializable {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
+    private void setStage(Stage stage) { this.stage = stage; }
+
+    public void close() { stage.close(); }
 
 }

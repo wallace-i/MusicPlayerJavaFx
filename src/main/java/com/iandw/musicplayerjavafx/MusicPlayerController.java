@@ -137,7 +137,7 @@ public class MusicPlayerController {
     private TrackIndex trackIndex;
     private final UserSettings userSettings;
     private final ExecutorService executorService;
-    private ByteArrayOutputStream consoleOutput;
+    private final ByteArrayOutputStream consoleOutput;
 
     private final Stage stage;
     private String artistNameString;
@@ -149,6 +149,9 @@ public class MusicPlayerController {
     private boolean stopped;
     private boolean artistsListSelected;
     private int albumImageWidth;
+
+    // Max size for Text Areas in ViewTextController and BugReportController.
+    private final int maxConsoleLogOutputSize = 6000000;
 
     // Constructor
     public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream consoleOutput,
@@ -216,7 +219,7 @@ public class MusicPlayerController {
         musicLibrary = new MusicLibrary(userSettings);
 //        musicLibrary.initializeMusicLibrary();  // Hard re-initialize music library
 
-        // Initialize Library if tracklist.ser is empty
+        // Send user to Settings if tracklist.ser is empty to initialize Music Library
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
             // Choose Root Directory for Music Library
             String directoryLabel = "Welcome, press 'Music Folder' to initialize.";
@@ -1106,6 +1109,7 @@ public class MusicPlayerController {
     @FXML
     private void aboutClicked() throws IOException {
         final String about = "About";
+
         ViewTextController viewTextController = new ViewTextController();
         viewTextController.showViewTextWindow(about, consoleOutput);
 
@@ -1115,6 +1119,7 @@ public class MusicPlayerController {
     private void gitHubClicked() {
         Dotenv dotenv = Dotenv.configure().load();
         final String gitHubUrl = dotenv.get("GITHUB");
+
         HostServices hostServices = (HostServices) stage.getProperties().get("hostServices");
         hostServices.showDocument(gitHubUrl);
 
@@ -1123,14 +1128,20 @@ public class MusicPlayerController {
     @FXML
     private void consoleLogClicked() throws IOException {
         final String consoleLog = "Console Log";
+
         ViewTextController viewTextController = new ViewTextController();
-        viewTextController.showViewTextWindow(consoleLog, consoleOutput);
+
+        if (consoleOutput.size() < maxConsoleLogOutputSize) {
+            viewTextController.showViewTextWindow(consoleLog, consoleOutput);
+        } else {
+            System.out.println("File size too large");
+        }
     }
 
     @FXML
     private void reportBugClicked() throws IOException {
         BugReportController bugReportController = new BugReportController();
-        bugReportController.showBugReportWindow(consoleOutput);
+        bugReportController.showBugReportWindow(consoleOutput, maxConsoleLogOutputSize);
     }
 
 

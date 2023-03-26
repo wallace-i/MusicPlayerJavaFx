@@ -41,10 +41,12 @@ public class BugReportController {
     @FXML
     private Label statusLabel;
     private ByteArrayOutputStream consoleOutput;
+    private int maxConsoleLogOutputSize;
 
 
-    public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage) {
+    public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage, int maxConsoleLogOutputSize) {
         this.consoleOutput = consoleOutput;
+        this.maxConsoleLogOutputSize = maxConsoleLogOutputSize;
         setTextFieldFocus();
 
         // Close key binding
@@ -55,13 +57,13 @@ public class BugReportController {
         });
     }
 
-    public void showBugReportWindow(ByteArrayOutputStream consoleOutput) throws IOException {
+    public void showBugReportWindow(ByteArrayOutputStream consoleOutput, int maxConsoleLogOutputSize) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("bugreport.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         BugReportController controller = loader.getController();
 
-        controller.initializeData(consoleOutput, stage);
+        controller.initializeData(consoleOutput, stage, maxConsoleLogOutputSize);
 
         stage.setAlwaysOnTop(true);
         stage.setTitle("Bug Report");
@@ -86,7 +88,11 @@ public class BugReportController {
     @FXML
     private void insertConsoleLogClicked() {
         // Add console log to bottom of text area
-        textArea.setText(textArea.getText() + '\n' + consoleOutput.toString());
+        if (consoleOutput.size() < maxConsoleLogOutputSize) {
+            textArea.setText(textArea.getText() + '\n' + consoleOutput.toString());
+        } else {
+            System.out.println("File size too large");
+        }
     }
 
     @FXML

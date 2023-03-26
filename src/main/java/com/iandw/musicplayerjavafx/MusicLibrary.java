@@ -170,7 +170,7 @@ public class MusicLibrary {
             Tag tag = audioFile.getTag();
             String trackTitle = trackFileName;
             String trackAlbum;
-            String trackGenre = tag.getFirst(FieldKey.GENRE);
+            String trackGenre;
             final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
             final String playlist = "*";
 
@@ -194,14 +194,21 @@ public class MusicLibrary {
             // Check album metadata for null value, if true replace with directory name
             if (tag.getFirst(FieldKey.ALBUM) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM), "")) {
                 trackAlbum = albumDirectoryStr;
+
             } else {
                 trackAlbum = tag.getFirst(FieldKey.ALBUM);
             }
 
             // Check genre metadata for null value, if true leave blank
-            if (trackGenre == null) {
-                trackGenre = "";
-            } else if (trackGenre.startsWith("(")) {
+            if (tag.getFirst(FieldKey.GENRE) == null) {
+                trackGenre = null;
+
+            } else {
+                trackGenre = tag.getFirst(FieldKey.GENRE);
+            }
+
+            assert trackGenre != null;
+            if (trackGenre.startsWith("(")) {
                 String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
                 trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
             }
@@ -221,11 +228,12 @@ public class MusicLibrary {
 
             trackMetadataObservableList.add(trackMetadata);
 
-            System.out.printf("Importing: %s%n", trackFileName);
-            System.out.printf(tag.toString());
+            System.out.println("Importing: " + trackFileName);
+            System.out.println(tag);
+
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -235,7 +243,7 @@ public class MusicLibrary {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();
             String trackTitle = trackFileName;
-            String trackGenre = tag.getFirst(FieldKey.GENRE);
+            String trackGenre;
             final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
             final String playlist = "*";
             final String unknown = "Unknown";
@@ -301,12 +309,19 @@ public class MusicLibrary {
             }
 
             // Check genre metadata for null value, if true leave blank
-            if (trackGenre == null) {
-                trackGenre = "";
-            } else if (trackGenre.startsWith("(")) {
+            if (tag.getFirst(FieldKey.GENRE) == null) {
+                trackGenre = null;
+
+            } else {
+                trackGenre = tag.getFirst(FieldKey.GENRE);
+            }
+
+            assert trackGenre != null;
+            if (trackGenre.startsWith("(")) {
                 String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
                 trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
             }
+
 
             // Populate Track object
             TrackMetadata trackMetadata = new TrackMetadata(
@@ -323,8 +338,8 @@ public class MusicLibrary {
 
             trackMetadataObservableList.add(trackMetadata);
 
-            System.out.printf("Importing: %s%n", trackFileName);
-            System.out.printf(tag.toString());
+            System.out.println("Importing: " + trackFileName);
+            System.out.println(tag);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -601,7 +616,7 @@ public class MusicLibrary {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    public void recursiveInitialization() throws IOException {
+    public void recursiveInitialization(ProgressBarData progressBarData) throws IOException {
         System.out.println("Initializing observable list");
 
         Utils.clearSerializedFiles();
@@ -613,7 +628,7 @@ public class MusicLibrary {
 
                 File rootDirectory = new File(rootMusicDirectoryString);
 
-                trackMetadataObservableList.addAll(listFileTree(rootDirectory));
+                trackMetadataObservableList.addAll(listFileTree(rootDirectory, progressBarData));
 
 
 
@@ -629,7 +644,7 @@ public class MusicLibrary {
 
 
 
-    private Collection<TrackMetadata> listFileTree(File dir) {
+    private Collection<TrackMetadata> listFileTree(File dir, ProgressBarData progressBarData) {
         Set<TrackMetadata> fileTree = new HashSet<>();
 
         if (dir == null || dir.listFiles() == null) {
@@ -645,21 +660,20 @@ public class MusicLibrary {
                 if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
                     recursiveParse();
+                    progressBarData.increaseProgress(trackPathStr);
 
                 } else {
                     System.out.printf("%s is not a compatible file type.", trackFileName);
                 }
 
             } else {
-                fileTree.addAll(listFileTree(entry));
+                fileTree.addAll(listFileTree(entry, progressBarData));
             }
         }
 
         return fileTree;
 
     }
-
-
 
     private void recursiveParse() {
         try {
@@ -668,7 +682,7 @@ public class MusicLibrary {
             String trackArtist;
             String trackAlbum;
             String trackTitle = trackFileName;
-            String trackGenre = tag.getFirst(FieldKey.GENRE);
+            String trackGenre;
             final String duration = Utils.formatSeconds(audioFile.getAudioHeader().getTrackLength());
             final String playlist = "*";
 
@@ -709,12 +723,19 @@ public class MusicLibrary {
             }
 
             // Check genre metadata for null value, if true leave blank
-            if (trackGenre == null) {
-                trackGenre = "";
-            } else if (trackGenre.startsWith("(")) {
+            if (tag.getFirst(FieldKey.GENRE) == null) {
+                trackGenre = null;
+
+            } else {
+                trackGenre = tag.getFirst(FieldKey.GENRE);
+            }
+
+            assert trackGenre != null;
+            if (trackGenre.startsWith("(")) {
                 String trackGenreID = trackGenre.substring(trackGenre.indexOf('(') + 1, trackGenre.indexOf(')'));
                 trackGenre = ID3v1Genres.getGenre(Integer.parseInt(trackGenreID));
             }
+
 
             // Populate Track object
             TrackMetadata trackMetadata = new TrackMetadata(
@@ -735,8 +756,8 @@ public class MusicLibrary {
                 artistNameObservableList.add(trackArtist);
             }
 
-            System.out.printf("Importing: %s%n", trackFileName);
-            System.out.printf(tag.toString());
+            System.out.println("Importing: " + trackFileName);
+            System.out.println(tag);
 
         } catch (Exception e) {
             e.printStackTrace();
