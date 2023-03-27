@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 public class ProgressBarData implements java.io.Serializable {
     private double progressDouble;
     private String trackPathStr;
+    private boolean continueInitialization;
     private final PropertyChangeSupport propertySupport;
     private final double fileAmount;
     private double fileIndex;
@@ -23,6 +24,7 @@ public class ProgressBarData implements java.io.Serializable {
         System.out.println("Total Files: " + fileAmount);
         fileIndex = 0.0;
         progressDouble = 0.0;
+        continueInitialization = true;
     }
 
     public void increaseProgress(String trackPathStr) {
@@ -37,14 +39,16 @@ public class ProgressBarData implements java.io.Serializable {
         propertySupport.firePropertyChange("trackPathStr", oldValue, newValue);
     }
 
-    public double getProgressDouble() {
-        return progressDouble;
-    }
-
     public void setProgressDouble(double newValue) {
         double oldValue = progressDouble;
         progressDouble = newValue;
         propertySupport.firePropertyChange("progressDouble", oldValue, newValue);
+    }
+
+    public void setContinueInitialization(boolean newValue) {
+        boolean oldValue = continueInitialization;
+        continueInitialization = newValue;
+        propertySupport.firePropertyChange("continueInitialization", oldValue, newValue);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -55,5 +59,7 @@ public class ProgressBarData implements java.io.Serializable {
         propertySupport.removePropertyChangeListener(listener);
     }
 
-
+    public double getProgressDouble() {
+        return progressDouble;
+    }
 }

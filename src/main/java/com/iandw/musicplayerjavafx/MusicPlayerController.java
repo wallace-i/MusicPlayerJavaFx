@@ -866,7 +866,6 @@ public class MusicPlayerController {
         playing = false;
         stopped = true;
         setNowPlayingText();
-
     }
 
     private void seekValueUpdate() {
@@ -1097,7 +1096,6 @@ public class MusicPlayerController {
     private void createPlaylistClicked() {
         PlaylistContextMenu.createPlaylist(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
-
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

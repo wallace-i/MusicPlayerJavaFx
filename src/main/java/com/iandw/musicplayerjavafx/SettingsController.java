@@ -20,6 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.io.InterruptedIOException;
+
 import javafx.scene.layout.AnchorPane;
 
 
@@ -160,8 +162,8 @@ public class SettingsController extends AnchorPane {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reset Library");
-        alert.setHeaderText("You are about to reinitialize your music library metadata and clear custom playlists.");
-        alert.setContentText("Doing so will not affect your files in any way. Would you like to continue?");
+        alert.setHeaderText("This will only reset the application data and will not affect your files or folders.");
+        alert.setContentText("Would you like to continue?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Resetting Music Library.");
@@ -182,15 +184,24 @@ public class SettingsController extends AnchorPane {
             Task<Void> task = new Task<>() {
                 @Override
                 protected Void call() throws Exception {
-                    if (userSettings.getInitalizationString().equals("recursive")) {
-                          musicLibrary.recursiveInitialization(progressBarData);
+                    try {
+                        if (userSettings.getInitalizationString().equals("recursive")) {
+                            musicLibrary.recursiveInitialization(progressBarData);
+                        } else {
+                            musicLibrary.initializeMusicLibrary(progressBarData);
+                        }
 
-                    } else {
-                        musicLibrary.initializeMusicLibrary(progressBarData);
+                        if (Thread.currentThread().isInterrupted()) {
+                            throw new InterruptedIOException();
+                        }
+
+                        Platform.runLater(() -> loadLibraries());
+                        System.out.println("Finished initializing.");
+
+                    } catch (InterruptedIOException consumed) {
+                        System.out.println("Cancelled Library Initialization.");
                     }
 
-                    Platform.runLater(() -> loadLibraries());
-                    System.out.println("Finished re-initializing.");
                     return null;
                 }
             };
@@ -202,12 +213,28 @@ public class SettingsController extends AnchorPane {
             // Re-initialize with new metadata from new root directory
             musicLibrary.clearMusicLibrary();
 
+            // Cancel task thread on Cancel Button clicked
+            progressBarData.addPropertyChangeListener(evt -> {
+                if (evt.getPropertyName().equals("continueInitialization")) {
+                    boolean continueInitialization = (boolean) evt.getNewValue();
+                    Platform.runLater(() -> {
+                        if (!continueInitialization) {
+                            task.cancel();
+                            task.setOnCancelled(null);
+                        }
+                    });
+                }
+            });
+
             task.setOnSucceeded(evt -> progressBarController.close());
+            task.setOnFailed(evt -> {
+                System.out.println("Initialization Failed.");
+                progressBarController.close();
+            });
 
             // Start initializeMusicLibrary() thread
             Thread thread = new Thread(task);
             thread.start();
-
         }
     }
 
@@ -242,13 +269,12 @@ public class SettingsController extends AnchorPane {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Clear Library");
-        alert.setHeaderText("You are about to clear all track metadata and playlists.");
+        alert.setHeaderText("This will only clear the application data and will not affect your files or folders.");
         alert.setContentText("Would you like to continue?");
 
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Clearing Music Library data.");
-            System.out.println("Does not remove music files or folders from your hard-drive.");
 
             // Clear files
             Utils.clearSerializedFiles();
@@ -263,7 +289,6 @@ public class SettingsController extends AnchorPane {
         }
 
         stage.setAlwaysOnTop(true);
-
     }
 
 

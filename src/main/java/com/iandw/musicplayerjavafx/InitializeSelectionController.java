@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,17 +23,14 @@ import java.util.ResourceBundle;
 public class InitializeSelectionController {
     @FXML
     private AnchorPane anchorPane;
-    @FXML private Button standardButton;
-    @FXML private Button recursiveButton;
-    @FXML private Label standardA;
-    @FXML private Label standardB;
-    @FXML private Label standardC;
-    @FXML private Label standardD;
-    @FXML private Label standardE;
-    @FXML private Label recursiveA;
-    @FXML private Label recursiveB;
-    @FXML private Label recursiveC;
-    @FXML private Label recursiveD;
+    @FXML
+    private Button standardButton;
+    @FXML
+    private Button recursiveButton;
+    @FXML
+    private TextArea textAreaStandard;
+    @FXML
+    private TextArea textAreaRecursive;
 
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
@@ -87,16 +85,18 @@ public class InitializeSelectionController {
 
     private void setLabelText() {
         // Set selection information text
-        standardA.setText("Best for organized music libraries that follow the file structure:");
-        standardB.setText("Music Folder -> Artist Folder -> Album Folder -> Track.mp3");
-        standardC.setText("-or-");
-        standardD.setText("Music Folder -> Artist Folder -> Track.mp3");
-        standardE.setText("Gets names and titles from folder and file names.");
+        textAreaStandard.setText("""
+                Best for organized music libraries that follow the file structure:
+                Music Folder -> Artist Folder -> Album Folder -> Track.mp3
+                -or-
+                Music Folder -> Artist Folder -> Track.mp3
+                Names and titles are obtained from folder and file names.""");
 
-        recursiveA.setText("Best for unorganized music libraries that can follow any file structure:");
-        recursiveB.setText("Music Folder -> Folder A -> Folder B -> Folder n -> Track.mp3");
-        recursiveC.setText("Gets all track data from the file's metadata.");
-        recursiveD.setText("Note: metadata may be inaccurate or missing.");
+        textAreaRecursive.setText("""
+                Best for unorganized music libraries that can follow any file structure:
+                Music Folder -> Folder A -> Folder B -> Folder n -> Track.mp3
+                All track data is obtained from the file's metadata.
+                Note: file metadata may be inaccurate, incomplete, or missing.""");
     }
 
     @FXML
@@ -134,11 +134,21 @@ public class InitializeSelectionController {
                 Task<Void> task = new Task<>() {
                     @Override
                     protected Void call() throws Exception {
-                        musicLibrary.initializeMusicLibrary(progressBarData);
-                        Platform.runLater(() -> loadLibraries());
+                        try {
+                            musicLibrary.initializeMusicLibrary(progressBarData);
 
-                        System.out.println("Finished initializing.");
-                        System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+                            if (Thread.currentThread().isInterrupted()) {
+                                throw new InterruptedIOException();
+                            }
+
+                            Platform.runLater(() -> loadLibraries());
+                            System.out.println("Finished initializing.");
+                            System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+
+                        } catch (InterruptedIOException consumed) {
+                            System.out.println("Cancelled Library Initialization.");
+                        }
+
                         return null;
                     }
                 };
@@ -151,12 +161,28 @@ public class InitializeSelectionController {
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
 
+                // Cancel task thread on Cancel Button clicked
+                progressBarData.addPropertyChangeListener(evt -> {
+                    if (evt.getPropertyName().equals("continueInitialization")) {
+                        boolean continueInitialization = (boolean) evt.getNewValue();
+                        Platform.runLater(() -> {
+                            if (!continueInitialization) {
+                                task.cancel();
+                                task.setOnCancelled(null);
+                            }
+                        });
+                    }
+                });
+
                 task.setOnSucceeded(evt -> progressBarController.close());
+                task.setOnFailed(evt -> {
+                    System.out.println("Initialization Failed.");
+                    progressBarController.close();
+                });
 
                 // Start initializeMusicLibrary() thread
                 Thread thread = new Thread(task);
                 thread.start();
-
             }
 
         } else {
@@ -202,11 +228,21 @@ public class InitializeSelectionController {
                 Task<Void> task = new Task<>() {
                     @Override
                     protected Void call() throws Exception {
-                        musicLibrary.recursiveInitialization(progressBarData);
-                        Platform.runLater(() -> loadLibraries());
+                        try {
+                            musicLibrary.recursiveInitialization(progressBarData);
 
-                        System.out.println("Finished initializing.");
-                        System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+                            if (Thread.currentThread().isInterrupted()) {
+                                throw new InterruptedIOException();
+                            }
+
+                            Platform.runLater(() -> loadLibraries());
+                            System.out.println("Finished initializing.");
+                            System.out.printf("updated root directory: %s%n", rootDirectoryPath);
+
+                        } catch (InterruptedIOException consumed) {
+                            System.out.println("Cancelled Library Initialization.");
+                        }
+
                         return null;
                     }
                 };
@@ -219,7 +255,24 @@ public class InitializeSelectionController {
                 musicLibrary.clearMusicLibrary();
                 musicLibrary.setRootMusicDirectoryString(rootDirectoryPath.toString());
 
+                // Cancel task thread on Cancel Button clicked
+                progressBarData.addPropertyChangeListener(evt -> {
+                    if (evt.getPropertyName().equals("continueInitialization")) {
+                        boolean continueInitialization = (boolean) evt.getNewValue();
+                        Platform.runLater(() -> {
+                            if (!continueInitialization) {
+                                task.cancel();
+                                task.setOnCancelled(null);
+                            }
+                        });
+                    }
+                });
+
                 task.setOnSucceeded(evt -> progressBarController.close());
+                task.setOnFailed(evt -> {
+                    System.out.println("Initialization Failed.");
+                    progressBarController.close();
+                });
 
                 // Start initializeMusicLibrary() thread
                 Thread thread = new Thread(task);

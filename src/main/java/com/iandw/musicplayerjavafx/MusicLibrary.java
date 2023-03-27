@@ -78,6 +78,13 @@ public class MusicLibrary {
 
                 // MUSIC DIRECTORY => LOOP THROUGH ARTIST FOLDERS
                 for (Path artistFolder : musicDir) {
+
+                    // Break on Cancel Button Clicked
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("Cancelling gracefully...");
+                        break;
+                    }
+
                     Path artistDirectoryPath = artistFolder.toAbsolutePath();
                     artistNameStr = artistDirectoryPath.toString().substring(artistDirectoryPath.toString().lastIndexOf(File.separator) + 1);
 
@@ -89,31 +96,36 @@ public class MusicLibrary {
 
                         // ARTIST DIRECTORY => LOOP THROUGH ALBUM FOLDERS
                         for (Path albumFolder : artistDir) {
+
+                            // Break on Cancel Button Clicked
+                            if (Thread.currentThread().isInterrupted()) {
+                                System.out.println("Cancelling gracefully...");
+                                break;
+                            }
+
                             Path albumDirectoryPath = albumFolder.toAbsolutePath();
                             albumDirectoryStr = albumDirectoryPath.toString().substring(albumDirectoryPath.toString().lastIndexOf(File.separator) + 1);
 
-                            if (Files.isDirectory(albumFolder )) {
+                            if (Files.isDirectory(albumFolder)) {
                                 DirectoryStream<Path> albumDirPath = Files.newDirectoryStream(albumDirectoryPath);
 
                                 // ALBUM DIRECTORY => LOOP THROUGH TRACK FILES
                                 for (Path trackPath : albumDirPath) {
-                                    if (Files.isRegularFile(trackPath)) {
-                                        if (Files.exists(trackPath)) {
-                                            trackPathStr = trackPath.toAbsolutePath().toString();
-                                            trackFileName = trackPath.getFileName().toString();
-                                            trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
+                                    if (Files.isRegularFile(trackPath) && Files.exists(trackPath) ) {
+                                        trackPathStr = trackPath.toAbsolutePath().toString();
+                                        trackFileName = trackPath.getFileName().toString();
+                                        trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
 
-                                            // Check for playable file container
-                                            if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+                                        // Check for playable file container
+                                        if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+                                            parseMetadata();
+                                            progressBarData.increaseProgress(trackPathStr);
 
-                                                parseMetadata();
-                                                progressBarData.increaseProgress(trackPathStr);
+                                        } else {
+                                            System.out.printf("%s is not a compatible file type.%n", trackFileName);
 
-                                            } else {
-                                                System.out.printf("%s is not a compatible file type.", trackFileName);
-
-                                            }
                                         }
+
                                     } else {
                                         System.out.printf("%s is not a file%n", trackPath);
                                     }
@@ -130,8 +142,8 @@ public class MusicLibrary {
 
                                     // Check for playable file container
                                     if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-
                                         parseMetadata();
+                                        progressBarData.increaseProgress(trackPathStr);
 
                                     } else {
                                         System.out.printf("%s is not a compatible file type.", trackFileName);
@@ -625,12 +637,9 @@ public class MusicLibrary {
 
         if (Files.exists(rootPath)) {
             if (Files.isDirectory(rootPath)) {
-
                 File rootDirectory = new File(rootMusicDirectoryString);
 
                 trackMetadataObservableList.addAll(listFileTree(rootDirectory, progressBarData));
-
-
 
             } else {
                 System.out.printf("%s is not a directory%n", rootPath);
@@ -639,7 +648,6 @@ public class MusicLibrary {
         } else {
             System.out.printf("%s does not exist%n", rootPath);
         }
-
     }
 
 
@@ -651,14 +659,25 @@ public class MusicLibrary {
             return fileTree;
         }
 
+        // Return on Cancel Button Clicked
+        if (Thread.currentThread().isInterrupted()) {
+            System.out.println("Cancelling gracefully...");
+            return fileTree;
+        }
+
         for (File entry : Objects.requireNonNull(dir.listFiles())) {
             if (entry.isFile()) {
                 trackPathStr = entry.getAbsolutePath();
                 trackFileName = entry.getName();
                 trackContainerType = trackPathStr.substring(trackPathStr.lastIndexOf('.'));
 
-                if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
+                // Break on Cancel Button Clicked
+                if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("Cancelling gracefully...");
+                    break;
+                }
 
+                if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
                     recursiveParse();
                     progressBarData.increaseProgress(trackPathStr);
 
@@ -672,7 +691,6 @@ public class MusicLibrary {
         }
 
         return fileTree;
-
     }
 
     private void recursiveParse() {
@@ -712,7 +730,6 @@ public class MusicLibrary {
                 if (Character.isDigit(trackTitle.charAt(0))) {
                     trackTitle = filterDigitsFromTitle(trackTitle);
                 }
-
             } else {
                 trackTitle = tag.getFirst(FieldKey.TITLE);
             }

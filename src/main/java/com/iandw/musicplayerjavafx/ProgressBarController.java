@@ -27,7 +27,6 @@ public class ProgressBarController implements Initializable {
     private Button cancelButton;
 
     private Stage stage;
-    private boolean continueInitialization;
     private final ProgressBarData progressBarData;
 
     public ProgressBarController(ProgressBarData progressBarData) {
@@ -80,14 +79,14 @@ public class ProgressBarController implements Initializable {
 
         stage.setOnCloseRequest(event -> {
             event.consume();
-            continueInitialization = false;
+            progressBarData.setContinueInitialization(false);
             stage.close();
         });
     }
 
     @FXML
     private void cancelButtonClicked() {
-        continueInitialization = false;
+        progressBarData.setContinueInitialization(false);
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
