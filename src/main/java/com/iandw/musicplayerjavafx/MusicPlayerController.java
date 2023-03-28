@@ -528,6 +528,10 @@ public class MusicPlayerController {
                     mediaPlayer.dispose();
                     playing = false;
                 }
+
+                // Push any tracks selected by mouse to prev index stack.
+                trackIndex.setPushCurrentTrackToStack(true);
+
                 // Load currentPath and associated variables
                 playMedia();
             }

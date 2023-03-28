@@ -33,7 +33,7 @@ public class TrackIndex {
         if (pushCurrentTrackToStack) {
             previousIndexStack.push(currentTrackIndex);
         }
-
+        
         pushCurrentTrackToStack = true;
     }
 
