@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -130,6 +131,7 @@ public class SettingsController extends AnchorPane {
         stage.setAlwaysOnTop(true);
         stage.setTitle("Settings");
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
 
     }
@@ -144,6 +146,7 @@ public class SettingsController extends AnchorPane {
 
     @FXML
     public void rootDirectoryClicked(MouseEvent mouseClick) throws IOException {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
 
         // Standard or Recursive initialization chooser
         InitializeSelectionController initializeSelectionController = new InitializeSelectionController();
@@ -153,6 +156,8 @@ public class SettingsController extends AnchorPane {
         // write files on close
         listViewLibrary.setOutputListsOnClose();
         tableViewLibrary.setOutputTrackListOnClose();
+
+        stage.setAlwaysOnTop(true);
     }
 
     @FXML
@@ -221,15 +226,21 @@ public class SettingsController extends AnchorPane {
                         if (!continueInitialization) {
                             task.cancel();
                             task.setOnCancelled(null);
+                            stage.setAlwaysOnTop(true);
                         }
                     });
                 }
             });
 
-            task.setOnSucceeded(evt -> progressBarController.close());
+            task.setOnSucceeded(evt -> {
+                progressBarController.close();
+                stage.setAlwaysOnTop(true);
+            });
+
             task.setOnFailed(evt -> {
                 System.out.println("Initialization Failed.");
                 progressBarController.close();
+                stage.setAlwaysOnTop(true);
             });
 
             // Start initializeMusicLibrary() thread
@@ -290,9 +301,6 @@ public class SettingsController extends AnchorPane {
 
         stage.setAlwaysOnTop(true);
     }
-
-
-
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *

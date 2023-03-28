@@ -150,9 +150,6 @@ public class MusicPlayerController {
     private boolean artistsListSelected;
     private int albumImageWidth;
 
-    // Max size for Text Areas in ViewTextController and BugReportController.
-    private final int maxConsoleLogOutputSize = 6000000;
-
     // Constructor
     public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream consoleOutput,
                                  UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
@@ -789,7 +786,7 @@ public class MusicPlayerController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                         PLAY/STOP/PAUSE MEDIA LOGIC
+     *                         PLAY/PAUSE/STOP MEDIA PLAYER LOGIC
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -1129,17 +1126,23 @@ public class MusicPlayerController {
 
         ViewTextController viewTextController = new ViewTextController();
 
-        if (consoleOutput.size() < maxConsoleLogOutputSize) {
+        if (consoleOutput.size() < Utils.maxTextAreaSize()) {
             viewTextController.showViewTextWindow(consoleLog, consoleOutput);
         } else {
             System.out.println("File size too large");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Console Log");
+            alert.setHeaderText("Console Log size > 1MB.");
+            alert.setContentText("Check the consolelog.txt file after closing application to check the console log report.");
+            alert.showAndWait();
         }
     }
 
     @FXML
     private void reportBugClicked() throws IOException {
         BugReportController bugReportController = new BugReportController();
-        bugReportController.showBugReportWindow(consoleOutput, maxConsoleLogOutputSize);
+        bugReportController.showBugReportWindow(consoleOutput);
     }
 
 

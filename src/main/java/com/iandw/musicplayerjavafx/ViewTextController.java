@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -47,9 +48,10 @@ public class ViewTextController {
 
         controller.initializeData(menuChoice, consoleOutput, stage);
 
-        stage.setAlwaysOnTop(true);
         stage.setTitle(menuChoice);
+        stage.setAlwaysOnTop(false);
         stage.setResizable(false);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
 
     }

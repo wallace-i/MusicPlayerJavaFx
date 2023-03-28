@@ -13,6 +13,11 @@ import java.nio.file.StandardCopyOption;
 
 public class Utils {
 
+    public static int maxTextAreaSize() {
+        // Return in bytes max amount of text (1MB) from buffer to keep the App from locking up
+        return 1000000;
+    }
+
     public static String formatSeconds(int seconds) {
         if (seconds >= 3600) {
             return String.format("%02d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60);
@@ -20,6 +25,12 @@ public class Utils {
 
         return String.format("%02d:%02d", (seconds / 60) % 60, seconds % 60);
     }
+
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          File UTILITIES
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public static void clearSerializedFiles() throws IOException {
         PrintWriter clearTrackList = new PrintWriter(ResourceURLs.getTrackListURL());
@@ -32,9 +43,9 @@ public class Utils {
         clearPlaylists.close();
     }
 
-    /**
-     *      CopyFile & createDirectory
-     *      Used for importing artist/album/track data by MusicLibrary
+    /*
+     * CopyFile & createDirectory
+     * Used for importing artist/album/track data by MusicLibrary
      */
     public static void copyFile(String source, String destination) throws IOException {
         if (!Files.exists(Paths.get(destination))) {
@@ -83,7 +94,6 @@ public class Utils {
         }
 
         artistListView.setItems(listViewLibrary.getArtistObservableList());
-
     }
 
     public static void removePlaylist(String removePlaylistStr, ListViewLibrary listViewLibrary,

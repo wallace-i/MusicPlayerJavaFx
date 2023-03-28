@@ -8,13 +8,11 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,12 +39,10 @@ public class BugReportController {
     @FXML
     private Label statusLabel;
     private ByteArrayOutputStream consoleOutput;
-    private int maxConsoleLogOutputSize;
 
 
-    public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage, int maxConsoleLogOutputSize) {
+    public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage) {
         this.consoleOutput = consoleOutput;
-        this.maxConsoleLogOutputSize = maxConsoleLogOutputSize;
         setTextFieldFocus();
 
         // Close key binding
@@ -57,17 +53,18 @@ public class BugReportController {
         });
     }
 
-    public void showBugReportWindow(ByteArrayOutputStream consoleOutput, int maxConsoleLogOutputSize) throws IOException {
+    public void showBugReportWindow(ByteArrayOutputStream consoleOutput) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("bugreport.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         BugReportController controller = loader.getController();
 
-        controller.initializeData(consoleOutput, stage, maxConsoleLogOutputSize);
+        controller.initializeData(consoleOutput, stage);
 
-        stage.setAlwaysOnTop(true);
         stage.setTitle("Bug Report");
+        stage.setAlwaysOnTop(false);
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
 
     }
@@ -88,10 +85,22 @@ public class BugReportController {
     @FXML
     private void insertConsoleLogClicked() {
         // Add console log to bottom of text area
-        if (consoleOutput.size() < maxConsoleLogOutputSize) {
+        if (consoleOutput.size() < Utils.maxTextAreaSize()) {
             textArea.setText(textArea.getText() + '\n' + consoleOutput.toString());
         } else {
+            Stage stage = (Stage) anchorPane.getScene().getWindow();
+            stage.setAlwaysOnTop(false);
+            Dotenv dotenv = Dotenv.configure().load();
+            final String devEmail = dotenv.get("BUG_REPORT_EMAIL");
+
             System.out.println("File size too large");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Console Log");
+            alert.setHeaderText("Console Log size > 1MB.");
+            alert.setContentText("Please e-mail consolelog.txt as an attachment to " + devEmail +
+                    " after closing the application.");
+            alert.showAndWait();
+            alert.onCloseRequestProperty().addListener(observable -> stage.setAlwaysOnTop(true));
         }
     }
 

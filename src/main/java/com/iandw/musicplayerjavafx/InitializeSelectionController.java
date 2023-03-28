@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.io.InterruptedIOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -31,6 +33,8 @@ public class InitializeSelectionController {
     private TextArea textAreaStandard;
     @FXML
     private TextArea textAreaRecursive;
+    @FXML
+    private Label rootDirectoryLabel;
 
     private MusicLibrary musicLibrary;
     private TableViewLibrary tableViewLibrary;
@@ -39,9 +43,6 @@ public class InitializeSelectionController {
     private ListView<String> artistListView;
     private ListView<String> playlistListView;
     private TableView<TrackMetadata> trackTableView;
-
-    @FXML
-    private Label rootDirectoryLabel;
 
 
 
@@ -77,8 +78,10 @@ public class InitializeSelectionController {
 
         // Set/Show Stage
         stage.setAlwaysOnTop(true);
+        stage.requestFocus();
         stage.setTitle("Initialize Library");
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
 
     }
@@ -236,6 +239,7 @@ public class InitializeSelectionController {
                             }
 
                             Platform.runLater(() -> loadLibraries());
+                            Platform.runLater(() -> Collections.sort(listViewLibrary.getArtistObservableList()));
                             System.out.println("Finished initializing.");
                             System.out.printf("updated root directory: %s%n", rootDirectoryPath);
 

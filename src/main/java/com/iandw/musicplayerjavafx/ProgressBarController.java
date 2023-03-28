@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
@@ -75,6 +76,7 @@ public class ProgressBarController implements Initializable {
         stage.setAlwaysOnTop(true);
         stage.setTitle("Initialize Library");
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
 
         stage.setOnCloseRequest(event -> {
