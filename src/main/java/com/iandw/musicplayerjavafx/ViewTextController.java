@@ -2,6 +2,7 @@ package com.iandw.musicplayerjavafx;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -14,6 +15,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
+
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 
@@ -40,12 +43,16 @@ public class ViewTextController {
         });
     }
 
-    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
+    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput, UserSettings userSettings) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("viewtext.fxml"));
+//        Parent root = loader.load();
         Stage stage = new Stage();
+//        Scene scene = new Scene(root);
         stage.setScene(new Scene(loader.load()));
-        ViewTextController controller = loader.getController();
+//        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(
+//                userSettings.getThemeFileNameString())).toExternalForm());
 
+        ViewTextController controller = loader.getController();
         controller.initializeData(menuChoice, consoleOutput, stage);
 
         stage.setTitle(menuChoice);
@@ -53,7 +60,6 @@ public class ViewTextController {
         stage.setResizable(false);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
-
     }
 
     private void fillTextArea() throws IOException {
@@ -79,7 +85,6 @@ public class ViewTextController {
 
         textArea.setText(cleanString);
         textArea.setFocusTraversable(false);
-
     }
 
     @FXML
@@ -89,5 +94,4 @@ public class ViewTextController {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
     }
-
 }

@@ -124,8 +124,10 @@ public class Utils {
         if (file.exists()) {
             try {
                 Desktop.getDesktop().open(file.getParentFile());
+
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }

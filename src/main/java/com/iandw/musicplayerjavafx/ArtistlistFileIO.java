@@ -26,6 +26,8 @@ public class ArtistlistFileIO {
             artistNameObservableList.addAll(artistNameArrayList);
 
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -46,7 +48,7 @@ public class ArtistlistFileIO {
 
         } catch (IOException e){
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-
     }
 }

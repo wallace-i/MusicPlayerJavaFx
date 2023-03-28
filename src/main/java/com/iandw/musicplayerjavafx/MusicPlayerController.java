@@ -271,6 +271,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {
                 playPauseButton();
+                keyEvent.consume();
             }
         });
 
@@ -278,6 +279,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SLASH) {
                 stopButton();
+                keyEvent.consume();
             }
         });
 
@@ -285,6 +287,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.PERIOD && mediaPlayer != null) {
                 nextButton();
+                keyEvent.consume();
             }
         });
 
@@ -293,6 +296,7 @@ public class MusicPlayerController {
             if (keyEvent.getCode() == KeyCode.COMMA && mediaPlayer != null &&
                     trackTableView.getSelectionModel().getSelectedItem() != null) {
                 previousButton();
+                keyEvent.consume();
             }
         });
 
@@ -301,6 +305,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DIGIT1) {
                 autoButton.selectedProperty().set(!autoButton.selectedProperty().getValue());
+                keyEvent.consume();
             }
         });
 
@@ -308,6 +313,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DIGIT2) {
                 shuffleButton.selectedProperty().set(!shuffleButton.selectedProperty().getValue());
+                keyEvent.consume();
             }
         });
 
@@ -315,6 +321,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DIGIT3) {
                 repeatButton.selectedProperty().set(!repeatButton.selectedProperty().getValue());
+                keyEvent.consume();
             }
         });
 
@@ -322,6 +329,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.EQUALS) {
                 volumeSlider.setValue(volumeSlider.getValue() + 1);
+                keyEvent.consume();
             }
         });
 
@@ -329,6 +337,7 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.MINUS) {
                 volumeSlider.setValue(volumeSlider.getValue() - 1);
+                keyEvent.consume();
             }
         });
 
@@ -336,8 +345,16 @@ public class MusicPlayerController {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.DIGIT0) {
                 mute.selectedProperty().set(!mute.selectedProperty().getValue());
+                keyEvent.consume();
             }
         });
+
+        // Search Bar
+//        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+//           if (keyEvent.getCode() == KeyCode.TAB) {
+//               searchField.setFocusTraversable(!searchField.isFocused());
+//           }
+//        });
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
@@ -556,9 +573,6 @@ public class MusicPlayerController {
         // Create a filtered list for trackTableView
         tableViewLibrary.createFilteredList();
 
-        System.out.println("artistListSelected: " + artistsListSelected);
-        System.out.println("artistNameString: " + artistNameString);
-
         // Check artistsObservableList for artist name, call artist list predicate if true.
         // Else call the playlistListView predicate
         if (artistsListSelected && artistNameString != null) {
@@ -614,6 +628,7 @@ public class MusicPlayerController {
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
@@ -634,6 +649,7 @@ public class MusicPlayerController {
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
@@ -739,6 +755,8 @@ public class MusicPlayerController {
 
         } catch (NullPointerException e) {
             System.out.println("No track selected.");
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -957,17 +975,13 @@ public class MusicPlayerController {
         trackIndex.setCurrentTrackIndex(trackTableView.getItems().indexOf(
                 trackTableView.getSelectionModel().getSelectedItem()));
 
+        // If last track set next track to beginning (0).
         if (trackIndex.getCurrentTrackIndex() == trackIndex.getTableSize() - 1) {
             trackIndex.setNextTrackIndex(0);
 
         } else {
             trackIndex.setNextTrackIndex(trackIndex.getCurrentTrackIndex() + 1);
         }
-//        Index Debugger
-//        System.out.printf("curIndex:%d%n", trackIndex.getCurrentTrackIndex());
-//        System.out.printf("nextIndex:%d%n", trackIndex.getNextTrackIndex());
-//        System.out.printf("prevIndex:%d%n", trackIndex.peekPreviousIndexArray());
-//        System.out.printf("lastIndex:%d%n", trackIndex.getTableSize() - 1);
     }
 
     private void autoPlaySelected() {
@@ -1106,7 +1120,7 @@ public class MusicPlayerController {
         final String about = "About";
 
         ViewTextController viewTextController = new ViewTextController();
-        viewTextController.showViewTextWindow(about, consoleOutput);
+        viewTextController.showViewTextWindow(about, consoleOutput, userSettings);
 
     }
 
@@ -1127,7 +1141,8 @@ public class MusicPlayerController {
         ViewTextController viewTextController = new ViewTextController();
 
         if (consoleOutput.size() < Utils.maxTextAreaSize()) {
-            viewTextController.showViewTextWindow(consoleLog, consoleOutput);
+            viewTextController.showViewTextWindow(consoleLog, consoleOutput, userSettings);
+
         } else {
             System.out.println("File size too large");
 

@@ -55,11 +55,11 @@ public class ProgressBarData implements java.io.Serializable {
         propertySupport.addPropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(listener);
-    }
-
-    public double getProgressDouble() {
-        return progressDouble;
-    }
+//    public void removePropertyChangeListener(PropertyChangeListener listener) {
+//        propertySupport.removePropertyChangeListener(listener);
+//    }
+//
+//    public double getProgressDouble() {
+//        return progressDouble;
+//    }
 }

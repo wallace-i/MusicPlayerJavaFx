@@ -31,6 +31,8 @@ public class PlaylistFileIO implements Serializable {
             playlistObservableList.addAll(playlistArray);
 
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -52,6 +54,7 @@ public class PlaylistFileIO implements Serializable {
 
         } catch (IOException e){
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

@@ -101,7 +101,5 @@ public class ImageFileLogic {
         }
 
         return albumImageFile;
-
     }
-
 }

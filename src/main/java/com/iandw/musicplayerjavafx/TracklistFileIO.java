@@ -37,6 +37,8 @@ public class TracklistFileIO {
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -73,6 +75,7 @@ public class TracklistFileIO {
 
         } catch (IOException e){
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -7,20 +7,13 @@
 
 package com.iandw.musicplayerjavafx;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -355,6 +348,7 @@ public class MusicLibrary {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -539,9 +533,9 @@ public class MusicLibrary {
 
             try {
                 // Check for slashes which could interfere with file creation
-                final String trackArtist = removeSlashs(trackMetadataObservableList.get(index).getArtistNameStr());
-                final String trackAlbum = removeSlashs(trackMetadataObservableList.get(index).getAlbumTitleStr());
-                final String trackFileName = removeSlashs(trackMetadataObservableList.get(index).getTrackFileNameStr());
+                final String trackArtist = removeSlashes(trackMetadataObservableList.get(index).getArtistNameStr());
+                final String trackAlbum = removeSlashes(trackMetadataObservableList.get(index).getAlbumTitleStr());
+                final String trackFileName = removeSlashes(trackMetadataObservableList.get(index).getTrackFileNameStr());
                 final String source = trackPath.toString();
                 final String destination = rootDirectory + File.separator + trackArtist + File.separator +
                         trackAlbum + File.separator + trackFileName;
@@ -572,9 +566,10 @@ public class MusicLibrary {
                 trackMetadataObservableList.get(index).setTrackPathStr(destination);
                 index++;
 
-            }catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println("Import failed");
                 e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.printf("%s is not a compatible file type.", trackFileName);
@@ -607,7 +602,7 @@ public class MusicLibrary {
         return trackTitle;
     }
 
-    private String removeSlashs(String string) {
+    private String removeSlashes(String string) {
         String updatedString = string;
 
         if (string.contains("/") ) {
@@ -778,6 +773,7 @@ public class MusicLibrary {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

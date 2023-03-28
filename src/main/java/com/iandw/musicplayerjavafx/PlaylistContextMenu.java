@@ -67,6 +67,8 @@ public class PlaylistContextMenu {
                     listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
 
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -86,6 +88,8 @@ public class PlaylistContextMenu {
                         listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 

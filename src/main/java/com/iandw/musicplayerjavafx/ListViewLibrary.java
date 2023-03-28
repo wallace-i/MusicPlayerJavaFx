@@ -35,6 +35,8 @@ public class ListViewLibrary implements Runnable {
                 artistObservableList.add(noArtists);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -48,6 +50,8 @@ public class ListViewLibrary implements Runnable {
                 playlistObservableList.add(noPlaylists);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 

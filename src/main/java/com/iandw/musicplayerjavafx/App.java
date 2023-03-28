@@ -77,6 +77,7 @@ public class App extends Application {
 
         } catch(Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

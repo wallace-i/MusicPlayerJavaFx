@@ -40,7 +40,6 @@ public class BugReportController {
     private Label statusLabel;
     private ByteArrayOutputStream consoleOutput;
 
-
     public void initializeData(ByteArrayOutputStream consoleOutput, Stage stage) {
         this.consoleOutput = consoleOutput;
         setTextFieldFocus();
@@ -172,7 +171,5 @@ public class BugReportController {
 
         Thread thread = new Thread(task);
         thread.start();
-
     }
-
 }

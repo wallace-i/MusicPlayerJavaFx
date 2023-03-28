@@ -29,6 +29,8 @@ public class TableViewLibrary implements Runnable {
 
             }
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

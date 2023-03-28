@@ -8,7 +8,7 @@ import java.util.Stack;
 public class TrackIndex {
     // Holds each current track index in succession so that no track currently in TableView is played
     // twice while SHUFFLE is ON.
-    private final List<Integer> shuffleArray;// = new ArrayList<>();
+    private final List<Integer> shuffleArray = new ArrayList<>();
 
     // Holds each previous track so that user can play back previous tracks in succession.
     // Resets everytime TableView is refreshed.
@@ -18,10 +18,6 @@ public class TrackIndex {
     private int tableSize;
     private boolean pushCurrentTrackToStack;
 
-    public TrackIndex() {
-        shuffleArray = new ArrayList<>();
-        pushCurrentTrackToStack = false;
-    }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *

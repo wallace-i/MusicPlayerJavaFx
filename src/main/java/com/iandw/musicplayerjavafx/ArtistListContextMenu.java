@@ -74,9 +74,10 @@ public class ArtistListContextMenu {
                     listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
 
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
     private static void editArtist(ListView<String> artistListView, ListView<String> playlistListView,
@@ -94,9 +95,10 @@ public class ArtistListContextMenu {
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-
     }
 
     private static void removeArtist(ListView<String> artistListView, TableView<TrackMetadata> trackTableView,
@@ -114,7 +116,5 @@ public class ArtistListContextMenu {
                 Utils.removeArtist(menuSelection, listViewLibrary, tableViewLibrary, trackIndex, trackTableView, artistListView);
             }
         }
-
-
     }
 }

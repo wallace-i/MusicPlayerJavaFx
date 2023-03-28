@@ -81,6 +81,8 @@ public class TableViewContexMenu {
                 //TODO => refresh doesn't work here
 
             } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
 
@@ -98,6 +100,8 @@ public class TableViewContexMenu {
                         artistListView, listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
 
@@ -116,6 +120,8 @@ public class TableViewContexMenu {
                         artistListView, listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
 
@@ -133,6 +139,8 @@ public class TableViewContexMenu {
                         artistListView, listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
 

@@ -32,6 +32,7 @@ public class SettingsFileIO {
 
         } catch (ParseException | IOException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return (JSONArray) obj;
@@ -62,6 +63,7 @@ public class SettingsFileIO {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
