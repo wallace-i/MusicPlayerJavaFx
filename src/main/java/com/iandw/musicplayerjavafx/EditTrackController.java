@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -82,6 +83,9 @@ public class EditTrackController {
         final String albumTitle = "Album Title";
         final String genre = "Genre";
 
+        System.out.printf("Updating %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
+                columnName);
+
         switch (columnName) {
             case artistName -> {
                 trackTableView.getSelectionModel().getSelectedItem().setArtistNameStr(userInput);
@@ -89,6 +93,13 @@ public class EditTrackController {
                 if (!artistListView.getItems().contains(userInput)) {
                     listViewLibrary.addArtist(userInput);
                     artistListView.setItems(listViewLibrary.getArtistObservableList());
+                }
+
+                // Simulate mouse click to update tableview
+                if (artistListView.getSelectionModel().getSelectedItem() != null) {
+                    MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                            false, false, false, false, true, false, false, true, false, false, null);
+                    artistListView.fireEvent(mouseEvent);
                 }
             }
 
@@ -98,9 +109,6 @@ public class EditTrackController {
 
             case genre -> trackTableView.getSelectionModel().getSelectedItem().setTrackGenreStr(userInput);
         }
-
-        System.out.printf("Update %s %s%n", trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr(),
-                columnName);
 
         // Write to file on close
         tableViewLibrary.setOutputTrackListOnClose();

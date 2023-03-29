@@ -247,7 +247,6 @@ public class MusicPlayerController {
                 trackTableView.refresh();
                 listViewSelected();
             }
-
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -302,7 +301,6 @@ public class MusicPlayerController {
                 keyEvent.consume();
             }
         });
-
 
         // Auto Play
         stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
@@ -469,9 +467,11 @@ public class MusicPlayerController {
 
                         if (shuffleButton.isSelected() || repeatButton.isSelected()) {
                             radioButtonActive();
+
                         } else {
                             radioButtonOff();
                         }
+
                     } else {
                         autoPlay = AutoPlay.OFF;
                         deselectRadioButton();
@@ -491,6 +491,7 @@ public class MusicPlayerController {
                         } else {
                             radioButtonOff();
                         }
+
                     } else {
                         autoPlay = AutoPlay.OFF;
                         deselectRadioButton();
@@ -510,6 +511,7 @@ public class MusicPlayerController {
                         } else {
                             radioButtonOff();
                         }
+
                     } else {
                         autoPlay = AutoPlay.OFF;
                         deselectRadioButton();
@@ -538,20 +540,18 @@ public class MusicPlayerController {
 
     @FXML
     private void handleTableViewMouseClick(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (mouseClick.getClickCount() == 2) {
-                if (playing) {
-                    mediaPlayer.stop();
-                    mediaPlayer.dispose();
-                    playing = false;
-                }
-
-                // Push any tracks selected by mouse to prev index stack.
-                trackIndex.setPushCurrentTrackToStack(true);
-
-                // Load currentPath and associated variables
-                playMedia();
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && mouseClick.getClickCount() == 2) {
+            if (playing) {
+                mediaPlayer.stop();
+                mediaPlayer.dispose();
+                playing = false;
             }
+
+            // Push any tracks selected by mouse to prev index stack.
+            trackIndex.setPushCurrentTrackToStack(true);
+
+            // Load currentPath and associated variables
+            playMedia();
         }
     }
 
@@ -674,7 +674,7 @@ public class MusicPlayerController {
     }
 
     private void handleTableViewContextMenu()  {
-        TableViewContexMenu.getContextMenu(artistListView, trackTableView,
+        TableViewContextMenu.getContextMenu(artistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
         // Refresh TableView
@@ -718,11 +718,11 @@ public class MusicPlayerController {
                 playPauseButton.setGraphic(playIcon);
                 playing = false;
 
-                // Play from selected track if stopped or null
+            // Play from selected track if stopped or null
             } else if (mediaPlayer == null || stopped) {
                 playMedia();
 
-                // Play from currently paused track
+            // Play from currently paused track
             } else {
                 mediaPlayer.play();
                 playPauseButton.setGraphic(pauseIcon);
@@ -850,6 +850,7 @@ public class MusicPlayerController {
 
             if (mediaPlayer.getMedia().getMetadata().get("image") == null) {
                 imageView.setImage(defaultAlbumImage);
+
             } else {
                 imageView.setImage((Image) mediaPlayer.getMedia().getMetadata().get("image"));
             }

@@ -1,12 +1,15 @@
 package com.iandw.musicplayerjavafx;
 
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class TableViewContexMenu {
+public class TableViewContextMenu {
 
     public static void getContextMenu(ListView<String> artistListView, TableView<TrackMetadata> trackTableView,
                                       ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
@@ -73,12 +76,13 @@ public class TableViewContexMenu {
             EditTrackController editTrackController = new EditTrackController();
             String columnName = "Artist Name";
             String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
+            String selectedArtist = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
+            artistListView.getSelectionModel().select(selectedArtist);
             System.out.println(currentTrackTitle);
+
             try {
                 editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
                         artistListView, listViewLibrary, tableViewLibrary);
-
-                //TODO => refresh doesn't work here
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -95,6 +99,7 @@ public class TableViewContexMenu {
             String columnName = "Album Title";
             String currentTrackAlbum = trackTableView.getSelectionModel().getSelectedItem().getAlbumTitleStr();
             System.out.println(currentTrackAlbum);
+
             try {
                 editTrackController.showEditWindow(columnName, currentTrackAlbum, tableViewLibrary.getTrackObservableList(), trackTableView,
                         artistListView, listViewLibrary, tableViewLibrary);
@@ -115,6 +120,7 @@ public class TableViewContexMenu {
             String columnName = "Track Title";
             String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getTrackTitleStr();
             System.out.println(currentTrackTitle);
+
             try {
                 editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
                         artistListView, listViewLibrary, tableViewLibrary);
@@ -134,6 +140,7 @@ public class TableViewContexMenu {
             String columnName = "Genre";
             String currentGenre = trackTableView.getSelectionModel().getSelectedItem().getTrackGenreStr();
             System.out.println(currentGenre);
+
             try {
                 editTrackController.showEditWindow(columnName, currentGenre, tableViewLibrary.getTrackObservableList(), trackTableView,
                         artistListView, listViewLibrary, tableViewLibrary);
@@ -165,8 +172,15 @@ public class TableViewContexMenu {
                 tableViewLibrary.removeTrack(trackTableView.getSelectionModel().getSelectedItem());
 
                 // Refocus on current artist for tableview to refresh
-                //TODO => refresh doesn't work here
                 artistListView.getSelectionModel().select(selectedArtist);
+
+                // Simulate mouse click to update tableview
+                if (artistListView.getSelectionModel().getSelectedItem() != null) {
+                    MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                            false, false, false, false, true, false, false, true, false, false, null);
+                    artistListView.fireEvent(mouseEvent);
+                }
+
                 trackTableView.refresh();
             }
         });
