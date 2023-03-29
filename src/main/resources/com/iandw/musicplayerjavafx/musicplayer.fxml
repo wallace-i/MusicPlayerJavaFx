@@ -6,23 +6,23 @@
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
     <HBox layoutY="87.0" prefHeight="302.0" prefWidth="675.0" styleClass="tables">
         <SplitPane dividerPositions="0.21842496285289748" prefHeight="302.0" prefWidth="678.0" styleClass="split-pane">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                 <SplitPane dividerPositions="0.75" layoutX="-8.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="286.0" prefWidth="144.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                        <ListView fx:id="artistListView" onContextMenuRequested="#handleArtistListViewContextMenu" onMouseClicked="#handleArtistsListViewMouseClick" prefHeight="139.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ListView fx:id="artistListView" onMouseClicked="#handleArtistsListViewMouseClick" prefHeight="139.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         </ListView>
                     </AnchorPane>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                        <ListView fx:id="playlistListView" onContextMenuRequested="#handlePlaylistsListViewContextMenu" onMouseClicked="#handlePlaylistsListViewClick" prefHeight="146.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ListView fx:id="playlistListView" onMouseClicked="#handlePlaylistsListViewClick" prefHeight="146.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         </ListView>
                     </AnchorPane>
                 </SplitPane>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="470.0">
-                <TableView fx:id="trackTableView" onContextMenuRequested="#handleTableViewContextMenu" onMouseClicked="#handleTableViewMouseClick" prefHeight="300.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <TableView fx:id="trackTableView" onMouseClicked="#handleTableViewMouseClick" prefHeight="300.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                         <TableColumn fx:id="colArtistNameInvisible" visible="false" />
                         <TableColumn fx:id="colTrackFileNameInvisible" visible="false" />

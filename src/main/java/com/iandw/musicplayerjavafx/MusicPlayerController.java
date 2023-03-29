@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -30,6 +31,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
 
 public class MusicPlayerController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private ListView<String> artistListView;
     @FXML
@@ -349,12 +352,26 @@ public class MusicPlayerController {
             }
         });
 
-        // Search Bar
-//        stage.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-//           if (keyEvent.getCode() == KeyCode.TAB) {
-//               searchField.setFocusTraversable(!searchField.isFocused());
-//           }
-//        });
+        // ArtistList Context Menu
+        artistListView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseClick -> {
+            if (mouseClick.getButton() == MouseButton.SECONDARY) {
+                handleArtistListViewContextMenu();
+            }
+        });
+
+        // Playlists Context Menu
+        playlistListView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseClick -> {
+            if (mouseClick.getButton() == MouseButton.SECONDARY) {
+                handlePlaylistsListViewContextMenu();
+            }
+        });
+
+        // TrackTableView Context Menu
+        trackTableView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseClick -> {
+            if (mouseClick.getButton() == MouseButton.SECONDARY) {
+                handleTableViewContextMenu();
+            }
+        });
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          *
@@ -616,7 +633,6 @@ public class MusicPlayerController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    @FXML
     private void handleArtistListViewContextMenu() {
 
         artistNameString = artistListView.getSelectionModel().getSelectedItem();
@@ -637,7 +653,6 @@ public class MusicPlayerController {
         }
     }
 
-    @FXML
     private void handlePlaylistsListViewContextMenu() {
 
         playlistTitleString = playlistListView.getSelectionModel().getSelectedItem();
@@ -658,7 +673,6 @@ public class MusicPlayerController {
         }
     }
 
-    @FXML
     private void handleTableViewContextMenu()  {
         TableViewContexMenu.getContextMenu(artistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
