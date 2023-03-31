@@ -7,8 +7,9 @@
 
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.FileIO.ConsoleLogFileIO;
+import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
 import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +20,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.io.FileNotFoundException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class App extends Application {
     private UserSettings userSettings;

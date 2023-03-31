@@ -94,7 +94,7 @@
 
 .table-view .column-header-background {
     -fx-background-color: -ver-gradient;
-    -fx-background-radius: 0px 0px 0px 0px;
+    -fx-background-radius: 7px 7px 0px 0px;
     -fx-background-insets: 0 11px 0 0;
 }
 

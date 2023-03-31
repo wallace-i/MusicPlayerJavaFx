@@ -10,9 +10,9 @@ package com.iandw.musicplayerjavafx;
 import java.util.Objects;
 
 public class ResourceURLs {
-    private static final String settingsURL = Objects.requireNonNull(
+    private static final String settingsURL =
             Objects.requireNonNull(SettingsController.class.getResource(
-                    "settings.json")).toString().substring(6));
+                    "settings.json")).toString().substring(6);
 
     private static final String artistlistURL = Objects.requireNonNull(
             Objects.requireNonNull(SettingsController.class.getResource(

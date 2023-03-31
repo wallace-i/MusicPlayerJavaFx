@@ -17,4 +17,10 @@ module com.iandw.musicplayerjavafx {
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;
+    exports com.iandw.musicplayerjavafx.utilities;
+    opens com.iandw.musicplayerjavafx.utilities to javafx.fxml;
+    exports com.iandw.musicplayerjavafx.FileIO;
+    opens com.iandw.musicplayerjavafx.FileIO to javafx.fxml;
+    exports com.iandw.musicplayerjavafx.ContextMenus;
+    opens com.iandw.musicplayerjavafx.ContextMenus to javafx.fxml;
 }

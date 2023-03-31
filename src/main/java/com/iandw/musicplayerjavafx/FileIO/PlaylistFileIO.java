@@ -5,8 +5,9 @@
  *      Notes:
  */
 
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.FileIO;
 
+import com.iandw.musicplayerjavafx.ResourceURLs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

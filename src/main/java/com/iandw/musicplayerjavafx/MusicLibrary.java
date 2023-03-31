@@ -7,6 +7,9 @@
 
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.utilities.ID3v1Genres;
+import com.iandw.musicplayerjavafx.utilities.ImportCatagory;
+import com.iandw.musicplayerjavafx.utilities.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;

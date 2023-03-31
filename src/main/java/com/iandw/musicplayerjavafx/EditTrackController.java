@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -65,6 +66,7 @@ public class EditTrackController {
         controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistListView,
                 listViewLibrary, tableViewLibrary, stage);
 
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit");
         stage.setResizable(false);
         stage.show();

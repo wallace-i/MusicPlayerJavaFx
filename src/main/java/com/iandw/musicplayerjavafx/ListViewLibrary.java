@@ -6,6 +6,8 @@
  */
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.FileIO.ArtistlistFileIO;
+import com.iandw.musicplayerjavafx.FileIO.PlaylistFileIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;

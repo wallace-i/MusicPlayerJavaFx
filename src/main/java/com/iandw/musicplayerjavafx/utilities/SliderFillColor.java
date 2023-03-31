@@ -1,4 +1,4 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.utilities;
 
 public class SliderFillColor {
 

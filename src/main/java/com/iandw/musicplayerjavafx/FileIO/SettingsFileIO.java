@@ -5,8 +5,10 @@
  *      Notes:
  */
 
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.FileIO;
 
+import com.iandw.musicplayerjavafx.ResourceURLs;
+import com.iandw.musicplayerjavafx.UserSettings;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

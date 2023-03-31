@@ -7,6 +7,7 @@
 
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.utilities.Utils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

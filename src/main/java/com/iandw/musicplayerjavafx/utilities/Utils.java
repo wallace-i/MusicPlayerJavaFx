@@ -1,5 +1,6 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.utilities;
 
+import com.iandw.musicplayerjavafx.*;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 
@@ -74,8 +75,8 @@ public class Utils {
 
 
     public static void removeArtist(String removeArtistStr, ListViewLibrary listViewLibrary,
-                              TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
-                              TableView<TrackMetadata> trackTableView, ListView<String> artistListView)
+                                    TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
+                                    TableView<TrackMetadata> trackTableView, ListView<String> artistListView)
     {
         listViewLibrary.removeArtist(removeArtistStr);
 

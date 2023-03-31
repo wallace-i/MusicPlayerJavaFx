@@ -1,4 +1,6 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.FileIO;
+
+import com.iandw.musicplayerjavafx.ResourceURLs;
 
 import java.io.FileWriter;
 import java.io.IOException;

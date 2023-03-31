@@ -1,5 +1,8 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.FileIO;
 
+import com.iandw.musicplayerjavafx.ResourceURLs;
+import com.iandw.musicplayerjavafx.TrackMetadata;
+import com.iandw.musicplayerjavafx.TrackSerializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;

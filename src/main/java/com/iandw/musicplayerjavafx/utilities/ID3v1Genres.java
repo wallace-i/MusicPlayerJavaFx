@@ -5,7 +5,7 @@
  *      Notes:
  */
 
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.utilities;
 
 public class ID3v1Genres {
     static final String[] genres = {

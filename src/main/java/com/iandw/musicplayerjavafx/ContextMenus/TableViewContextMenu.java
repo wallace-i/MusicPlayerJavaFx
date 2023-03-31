@@ -1,5 +1,7 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.ContextMenus;
 
+import com.iandw.musicplayerjavafx.*;
+import com.iandw.musicplayerjavafx.utilities.Utils;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -73,21 +75,26 @@ public class TableViewContextMenu {
 
         // Edit Artist Name
         editArtistName.setOnAction(event -> {
-            EditTrackController editTrackController = new EditTrackController();
-            String columnName = "Artist Name";
-            String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
-            String selectedArtist = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
-            artistListView.getSelectionModel().select(selectedArtist);
-            System.out.println(currentTrackTitle);
-
             try {
-                editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                EditTrackController editTrackController = new EditTrackController();
+                String columnName = "Artist Name";
+                String currentTrackTitle = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
+                String selectedArtist = trackTableView.getSelectionModel().getSelectedItem().getArtistNameStr();
+                artistListView.getSelectionModel().select(selectedArtist);
+                System.out.println(currentTrackTitle);
 
-            } catch (IOException e) {
+                try {
+                    editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
+                            artistListView, listViewLibrary, tableViewLibrary);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            } catch (NullPointerException e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
-                throw new RuntimeException(e);
             }
 
             trackTableView.refresh();

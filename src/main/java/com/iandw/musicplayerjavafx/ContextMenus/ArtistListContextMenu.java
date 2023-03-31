@@ -1,5 +1,7 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.ContextMenus;
 
+import com.iandw.musicplayerjavafx.*;
+import com.iandw.musicplayerjavafx.utilities.Utils;
 import javafx.scene.control.*;
 
 import java.io.File;

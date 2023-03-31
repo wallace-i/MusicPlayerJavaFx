@@ -13,6 +13,15 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.iandw.musicplayerjavafx.ContextMenus.ArtistListContextMenu;
+import com.iandw.musicplayerjavafx.ContextMenus.PlaylistContextMenu;
+import com.iandw.musicplayerjavafx.ContextMenus.TableViewContextMenu;
+import com.iandw.musicplayerjavafx.FileIO.ConsoleLogFileIO;
+import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
+import com.iandw.musicplayerjavafx.utilities.AutoPlay;
+import com.iandw.musicplayerjavafx.utilities.ImageFileLogic;
+import com.iandw.musicplayerjavafx.utilities.SliderFillColor;
+import com.iandw.musicplayerjavafx.utilities.Utils;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
@@ -165,7 +174,7 @@ public class MusicPlayerController {
         this.tableViewLibrary = tableViewLibrary;
     }
 
-    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
      *                          INITIALIZE GUI, LIST, & TABLE VIEWS
      *
@@ -217,7 +226,6 @@ public class MusicPlayerController {
 
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
-//        musicLibrary.initializeMusicLibrary();  // Hard re-initialize music library
 
         // Send user to Settings if tracklist.ser is empty to initialize Music Library
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
@@ -231,8 +239,8 @@ public class MusicPlayerController {
             listViewLibrary.setOutputListsOnClose();
             tableViewLibrary.setOutputTrackListOnClose();
 
+        // Else initialize data normally from .ser files
         } else {
-            // Else initialize data normally from .ser files
             // Playlist and Artist List Data => artistPlaylistListView
             artistListView.setItems(listViewLibrary.getArtistObservableList());
             playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
