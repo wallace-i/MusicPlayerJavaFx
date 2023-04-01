@@ -1,8 +1,17 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: EditTrackController.java
+ *      Notes: Handles small popup window to let user edit track metadata.
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
 import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
-import javafx.collections.ObservableList;
+
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
+
 
 public class EditTrackController {
     @FXML
@@ -26,17 +35,15 @@ public class EditTrackController {
     private ListViewLibrary listViewLibrary;
     private TableViewLibrary tableViewLibrary;
     private TableView<TrackMetadata> trackTableView;
-    private ObservableList<TrackMetadata> trackMetadataList;
     private String columnName;
 
 
-    private void initializeData(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
-                                TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
-                                ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary, Stage stage)
+    private void initializeData(String columnName, String mutableTrackData, TableView<TrackMetadata> trackTableView,
+                                ListView<String> artistListView, ListViewLibrary listViewLibrary,
+                                TableViewLibrary tableViewLibrary, Stage stage)
     {
         this.columnName = columnName;
         this.artistListView = artistListView;
-        this.trackMetadataList = trackMetadataList;
         this.trackTableView = trackTableView;
         this.listViewLibrary = listViewLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -57,19 +64,31 @@ public class EditTrackController {
         });
     }
 
-    public void showEditWindow(String columnName, String mutableTrackData, ObservableList<TrackMetadata> trackMetadataList,
-                               TableView<TrackMetadata> trackTableView, ListView<String> artistListView,
-                               ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary) throws IOException {
+    /**
+     * showEditWindow() - entry point to track metadata editing popup module
+     *
+     * @param columnName => Switch selection logic - how to edit track
+     * @param mutableTrackData => Current Table View cell string data
+     * @param trackTableView => Allows user to access TrackMetadata objects from Table View
+     * @param artistListView => Updates List View when artist name is edited
+     * @param listViewLibrary => Adds new artist to list on artist name edit
+     * @param tableViewLibrary => Flags write on close when track data is edited
+     * @throws IOException
+     */
+    public void showEditWindow(String columnName, String mutableTrackData, TableView<TrackMetadata> trackTableView,
+                               ListView<String> artistListView, ListViewLibrary listViewLibrary,
+                               TableViewLibrary tableViewLibrary) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edittrack.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
         EditTrackController controller = loader.getController();
 
-        controller.initializeData(columnName, mutableTrackData, trackMetadataList, trackTableView, artistListView,
-                listViewLibrary, tableViewLibrary, stage);
+        controller.initializeData(columnName, mutableTrackData, trackTableView, artistListView, listViewLibrary,
+                tableViewLibrary, stage);
 
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.show();
     }

@@ -87,8 +87,8 @@ public class TableViewContextMenu {
                 System.out.println(currentTrackTitle);
 
                 try {
-                    editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                            artistListView, listViewLibrary, tableViewLibrary);
+                    editTrackController.showEditWindow(columnName, currentTrackTitle, trackTableView, artistListView,
+                            listViewLibrary, tableViewLibrary);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -111,8 +111,8 @@ public class TableViewContextMenu {
             System.out.println(currentTrackAlbum);
 
             try {
-                editTrackController.showEditWindow(columnName, currentTrackAlbum, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentTrackAlbum, trackTableView, artistListView,
+                        listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -132,8 +132,8 @@ public class TableViewContextMenu {
             System.out.println(currentTrackTitle);
 
             try {
-                editTrackController.showEditWindow(columnName, currentTrackTitle, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentTrackTitle, trackTableView, artistListView,
+                        listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -152,8 +152,8 @@ public class TableViewContextMenu {
             System.out.println(currentGenre);
 
             try {
-                editTrackController.showEditWindow(columnName, currentGenre, tableViewLibrary.getTrackObservableList(), trackTableView,
-                        artistListView, listViewLibrary, tableViewLibrary);
+                editTrackController.showEditWindow(columnName, currentGenre, trackTableView, artistListView,
+                        listViewLibrary, tableViewLibrary);
 
             } catch (IOException e) {
                 e.printStackTrace();

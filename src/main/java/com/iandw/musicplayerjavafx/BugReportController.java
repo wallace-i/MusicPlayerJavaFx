@@ -1,7 +1,23 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: BugReportController.java
+ *      Notes: Handles Window for sending Dev a bug report (via jakarta.mail)
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.Utilities.Utils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Properties;
+
+import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
+import io.github.cdimascio.dotenv.Dotenv;
+
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -15,12 +31,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Properties;
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.mail.*;
 
 public class BugReportController {
     @FXML
@@ -53,6 +63,13 @@ public class BugReportController {
         });
     }
 
+
+    /**
+     * showBugReportWindow() - entry point to bug report module
+     *
+     * @param consoleOutput => Allow user to 'attach' console log in bug report
+     * @throws IOException
+     */
     public void showBugReportWindow(ByteArrayOutputStream consoleOutput) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("bugreport.fxml"));
         Stage stage = new Stage();

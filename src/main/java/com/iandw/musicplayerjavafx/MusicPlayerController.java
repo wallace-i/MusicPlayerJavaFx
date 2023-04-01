@@ -7,13 +7,6 @@
 
 package com.iandw.musicplayerjavafx;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import com.iandw.musicplayerjavafx.ContextMenus.ArtistListContextMenu;
 import com.iandw.musicplayerjavafx.ContextMenus.PlaylistContextMenu;
 import com.iandw.musicplayerjavafx.ContextMenus.TableViewContextMenu;
@@ -23,7 +16,17 @@ import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
 import com.iandw.musicplayerjavafx.Libraries.MusicLibrary;
 import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.Utilities.*;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import io.github.cdimascio.dotenv.Dotenv;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -37,7 +40,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.ImageView;
 
 public class MusicPlayerController {

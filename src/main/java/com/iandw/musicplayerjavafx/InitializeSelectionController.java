@@ -1,3 +1,11 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: InitializeSelectionController.java
+ *      Notes: Allows User to choose between Standard and Recursive Music Library Initialization
+ *          methods based on user's file structure or preference.
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
@@ -6,6 +14,14 @@ import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
 import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import com.iandw.musicplayerjavafx.Utilities.Utils;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
+
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -16,13 +32,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collections;
 
 public class InitializeSelectionController {
     @FXML
@@ -65,10 +74,23 @@ public class InitializeSelectionController {
         setLabelText();
     }
 
+    /**
+     * showInitializationWindow() - entry point to Music Library initialization modules
+     *
+     * @param musicLibrary => Accesses and processes user audio file data
+     * @param tableViewLibrary => Access Observable List
+     * @param listViewLibrary => Access Observable Lists
+     * @param userSettings => Access rootDirectoryString and initialization type variables
+     * @param artistListView => Set Artist name data on initialization
+     * @param playlistListView => Set Playlist data on initialization
+     * @param trackTableView => Set track metadata on initialization
+     * @param rootDirectoryLabel => Update label text on initialization
+     * @throws IOException
+     */
     public void showInitializationWindow(MusicLibrary musicLibrary, TableViewLibrary tableViewLibrary,
                                          ListViewLibrary listViewLibrary, UserSettings userSettings,
                                          ListView<String> artistListView, ListView<String> playlistListView,
-                                         TableView<TrackMetadata> trackTableView,  Label rootDirectoryLabel) throws IOException
+                                         TableView<TrackMetadata> trackTableView, Label rootDirectoryLabel) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("initializeselection.fxml"));
         Stage stage = new Stage();
@@ -78,14 +100,12 @@ public class InitializeSelectionController {
         controller.initializeData(musicLibrary, tableViewLibrary, listViewLibrary, userSettings,
                 artistListView, playlistListView, trackTableView, rootDirectoryLabel);
 
-        // Set/Show Stage
+        stage.setTitle("Initialize Library");
         stage.setAlwaysOnTop(true);
         stage.requestFocus();
-        stage.setTitle("Initialize Library");
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-
     }
 
     private void setLabelText() {
