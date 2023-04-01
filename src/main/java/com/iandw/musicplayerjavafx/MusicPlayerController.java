@@ -1162,7 +1162,7 @@ public class MusicPlayerController {
         final String about = "About";
 
         ViewTextController viewTextController = new ViewTextController();
-        viewTextController.showViewTextWindow(about, consoleOutput, userSettings);
+        viewTextController.showViewTextWindow(about, consoleOutput);
 
     }
 
@@ -1183,7 +1183,7 @@ public class MusicPlayerController {
 
         // Check the size to keep TextArea object from locking up Application
         if (consoleOutput.size() < Utils.maxTextAreaSize()) {
-            viewTextController.showViewTextWindow(consoleLog, consoleOutput, userSettings);
+            viewTextController.showViewTextWindow(consoleLog, consoleOutput);
 
         } else {
             System.out.println("File size too large");

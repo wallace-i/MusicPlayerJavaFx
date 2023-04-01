@@ -1,8 +1,8 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class:
- *      Notes:
+ *      Class: SettingsController.java
+ *      Notes: Handles GUI to allow user to modify their Music Library and application skin themes
  */
 
 package com.iandw.musicplayerjavafx;
@@ -13,6 +13,10 @@ import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
 import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import com.iandw.musicplayerjavafx.Utilities.Utils;
+
+import java.io.IOException;
+import java.io.InterruptedIOException;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,11 +30,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-
 import javafx.scene.layout.AnchorPane;
-
 
 public class SettingsController extends AnchorPane {
     @FXML
@@ -118,6 +118,23 @@ public class SettingsController extends AnchorPane {
         });
     }
 
+    /**
+     * showSettingsWindow() - entry point to Settings GUI
+     *
+     * @param artistListView => Sets List View on Music Library initialization or reset
+     * @param playlistListView => Sets List View on Music Library initialization or reset
+     * @param trackTableView => Sets Table View on Music Library initialization or reset
+     * @param listViewLibrary => Sets artistListView Observable List with user artist name Strings
+     *                        gained via Music Library initialization
+     * @param tableViewLibrary => Sets trackMetadata Observable List with user Track Metadata
+     *                         gained via Music Library initialization
+     * @param musicLibrary => Handles bridge between user files on hard disk and App data structures
+     *                     (ObservableList Arrays). Used to initialize Application data with user audio files.
+     * @param userSettings => Saves Standard or Recursive Initialization settings, along with the music folder path
+     *                     (rootDirectoryString) and Application style.css pages
+     * @param directoryLabel => Updates Label based on rootDirectoryString (or lack thereof)
+     * @throws IOException
+     */
     public void showSettingsWindow(ListView<String> artistListView, ListView<String> playlistListView,
                                    TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                    TableViewLibrary tableViewLibrary, MusicLibrary musicLibrary,
@@ -256,6 +273,7 @@ public class SettingsController extends AnchorPane {
     }
 
     private void loadLibraries() {
+        // Set Library object ObservableList Arrays from Music Library TrackMetadata objects arrays
         listViewLibrary.setArtistObservableList(musicLibrary.getArtistNameObservableList());
         tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
 

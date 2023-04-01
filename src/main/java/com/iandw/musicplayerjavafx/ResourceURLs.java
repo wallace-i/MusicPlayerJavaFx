@@ -1,8 +1,8 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class:
- *      Notes:
+ *      Class: ResourceURLs.java
+ *      Notes: Holds static String objects for quick file location anywhere in the Application
  */
 
 package com.iandw.musicplayerjavafx;

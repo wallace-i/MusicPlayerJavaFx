@@ -1,16 +1,12 @@
+/**
+ *      Author: Ian Wallace copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ViewTextController.java
+ *      Notes: Handles popup window for About and Console Log Menu Items
+ */
+
 package com.iandw.musicplayerjavafx;
 
-import com.iandw.musicplayerjavafx.Utilities.UserSettings;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -23,6 +19,16 @@ import java.net.UnknownHostException;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ViewTextController {
     @FXML private TextArea textArea;
@@ -48,7 +54,14 @@ public class ViewTextController {
         });
     }
 
-    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput, UserSettings userSettings) throws IOException {
+    /**
+     * showViewTextWindow() - entry point for GUI to hold plain text
+     *
+     * @param menuChoice => User selected Menu Item from Menu Bar
+     * @param consoleOutput => Access object to output all System.out... to Text Area
+     * @throws IOException
+     */
+    public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("viewtext.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
@@ -98,7 +111,6 @@ public class ViewTextController {
             alert.showAndWait();
             stage.close();
         }
-
     }
 
     @FXML

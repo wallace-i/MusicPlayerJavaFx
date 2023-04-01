@@ -1,8 +1,18 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ListViewController.java
+ *      Notes: Handles popup windows relating to List View Context Menu items
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
 import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.Utilities.TrackIndex;
+
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,8 +24,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
+
 
 public class ListViewController {
     @FXML private AnchorPane anchorPane;
@@ -74,6 +85,19 @@ public class ListViewController {
 
     }
 
+    /**
+     * showListViewInputWindow() - entry point to edit items in List View objects
+     *
+     * @param artistListView => Updates List View when artist name is added or edited
+     * @param playlistListView => Updates List View when playlist names are added or edited
+     * @param trackTableView => Access Table View to edit all visible tracks related to List View selection
+     * @param listViewLibrary => Access artist list and playlist data
+     * @param tableViewLibrary => Access track metadata
+     * @param trackIndex => Get Table View table size for editing modules
+     * @param windowTitle => Switch based on Context Menu Item selection
+     * @param menuSelection => String from List View selection model (Artist name or Playlist)
+     * @throws IOException
+     */
     public void showListViewInputWindow(ListView<String> artistListView, ListView<String> playlistListView,
                                         TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                         TableViewLibrary tableViewLibrary, TrackIndex trackIndex,
@@ -88,6 +112,7 @@ public class ListViewController {
                 trackIndex, windowTitle, menuSelection, stage);
 
         stage.setTitle(windowTitle);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.isAlwaysOnTop();
         stage.show();
@@ -240,6 +265,7 @@ public class ListViewController {
         int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
+            // Edit every track metadata object visible in trackTableView
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Editing %s playlist to %s%n",
                         trackTableView.getItems().get(trackIndex).getTrackTitleStr(), userInput);
@@ -247,6 +273,7 @@ public class ListViewController {
                 trackTableView.refresh();
             }
 
+            // Write on close flag
             tableViewLibrary.setOutputTrackListOnClose();
         }
     }
@@ -255,6 +282,7 @@ public class ListViewController {
         int tableSize = trackIndex.getTableSize();
 
         if (tableSize > 0) {
+            // Edit every track metadata object visible in trackTableView
             for (int trackIndex = 0; trackIndex < tableSize; trackIndex++) {
                 System.out.printf("Editing %s artist to %s%n",
                         trackTableView.getItems().get(trackIndex).getTrackTitleStr(), userInput);
@@ -262,6 +290,7 @@ public class ListViewController {
                 trackTableView.refresh();
             }
 
+            // Write on close flag
             tableViewLibrary.setOutputTrackListOnClose();
         }
     }

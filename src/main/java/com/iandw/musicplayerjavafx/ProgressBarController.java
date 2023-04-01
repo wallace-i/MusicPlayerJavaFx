@@ -1,6 +1,18 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ProgressBarController.java
+ *      Notes: Handles progress bar GUI window
+ */
+
 package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
+
+import java.io.*;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +24,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ProgressBarController implements Initializable {
     @FXML
@@ -31,6 +40,11 @@ public class ProgressBarController implements Initializable {
     private Stage stage;
     private final ProgressBarData progressBarData;
 
+    /**
+     * ProgressBarController - constructor
+     * @param progressBarData => References ProgressBarData object so that the GUI can be continuously
+     *                        informed of changes to member variable data during Music Library Initialization
+     */
     public ProgressBarController(ProgressBarData progressBarData) {
         this.progressBarData = progressBarData;
     }
@@ -53,6 +67,7 @@ public class ProgressBarController implements Initializable {
             }
         });
 
+        // Listener to populate systemTextLabel with processed file path
         progressBarData.addPropertyChangeListener(evt -> {
             if (evt.getPropertyName().equals("trackPathStr")) {
                 String trackPathStr = (String) evt.getNewValue();
@@ -64,6 +79,10 @@ public class ProgressBarController implements Initializable {
 
     }
 
+    /**
+     * showProgressBarWindow() - entry point to Progress Bar GUI on Music Library Initialization
+     * @throws IOException
+     */
     public void showProgressBarWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("progressbar.fxml"));
         loader.setControllerFactory(progressBarController -> new ProgressBarController(progressBarData));
