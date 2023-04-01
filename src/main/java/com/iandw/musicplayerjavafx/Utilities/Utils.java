@@ -1,6 +1,9 @@
-package com.iandw.musicplayerjavafx.utilities;
+package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.*;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.TrackMetadata;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 

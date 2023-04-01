@@ -1,8 +1,10 @@
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -14,6 +16,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
@@ -24,12 +29,14 @@ public class ViewTextController {
     @FXML private Button copyToClipboard;
     private ByteArrayOutputStream consoleOutput;
     private String menuChoice;
+    private Stage stage;
 
     public void initialize() {}
 
     public void initializeData(String menuChoice, ByteArrayOutputStream consoleOutput, Stage stage) throws IOException {
         this.menuChoice = menuChoice;
         this.consoleOutput = consoleOutput;
+        this.stage = stage;
 
         fillTextArea();
 
@@ -43,12 +50,8 @@ public class ViewTextController {
 
     public void showViewTextWindow(String menuChoice, ByteArrayOutputStream consoleOutput, UserSettings userSettings) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("viewtext.fxml"));
-//        Parent root = loader.load();
         Stage stage = new Stage();
-//        Scene scene = new Scene(root);
         stage.setScene(new Scene(loader.load()));
-//        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(
-//                userSettings.getThemeFileNameString())).toExternalForm());
 
         ViewTextController controller = loader.getController();
         controller.initializeData(menuChoice, consoleOutput, stage);
@@ -76,13 +79,26 @@ public class ViewTextController {
     }
 
     private void viewAbout() throws IOException {
-        // Parse README.md from github readme raw file
-        Document doc = Jsoup.connect("https://raw.githubusercontent.com/wallace-i/MusicPlayerJavaFx/master/README.md").get();
-        String htmlString = doc.toString();
-        String cleanString = Jsoup.parse(htmlString).wholeText();
+        try {
+            Document doc = Jsoup.connect("https://raw.githubusercontent.com/wallace-i/MusicPlayerJavaFx/master/README.md").get();
+            // Parse README.md from github readme raw file
+            String htmlString = doc.toString();
+            String cleanString = Jsoup.parse(htmlString).wholeText();
 
-        textArea.setText(cleanString);
-        textArea.setFocusTraversable(false);
+            textArea.setText(cleanString);
+            textArea.setFocusTraversable(false);
+
+        } catch (RuntimeException | UnknownHostException | ConnectException | SocketTimeoutException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Connection Issues");
+            alert.setContentText("Could not connect to 'raw.githubusercontent.com',\n please check the GitHub to view README.md for information");
+            alert.showAndWait();
+            stage.close();
+        }
+
     }
 
     @FXML

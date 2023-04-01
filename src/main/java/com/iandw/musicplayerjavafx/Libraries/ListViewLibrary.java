@@ -4,10 +4,11 @@
  *      Class: MusicLibrary
  *      Notes: Initializes Root Directory for music files to be located
  */
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Libraries;
 
 import com.iandw.musicplayerjavafx.FileIO.ArtistlistFileIO;
 import com.iandw.musicplayerjavafx.FileIO.PlaylistFileIO;
+import com.iandw.musicplayerjavafx.ResourceURLs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
@@ -142,9 +143,11 @@ public class ListViewLibrary implements Runnable {
 
     public synchronized ObservableList<String> getArtistObservableList() { return artistObservableList; }
     public synchronized ObservableList<String> getPlaylistObservableList() { return playlistObservableList; }
+
     public synchronized void setArtistObservableList(ObservableList<String> artistObservableList) {
         this.artistObservableList = artistObservableList;
     }
+
     public void setOutputListsOnClose() {
         outputArtistOnClose = true;
         outputPlaylistOnClose = true;

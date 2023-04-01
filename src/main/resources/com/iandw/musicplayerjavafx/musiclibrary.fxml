@@ -4,7 +4,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.iandw.musicplayerjavafx.MusicLibrary"
+            fx:controller="com.iandw.musicplayerjavafx.Libraries.MusicLibrary"
             prefHeight="130.0" prefWidth="275.0">
 
 

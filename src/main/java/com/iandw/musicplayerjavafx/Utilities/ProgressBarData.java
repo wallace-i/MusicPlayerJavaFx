@@ -1,4 +1,4 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Utilities;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -55,11 +55,4 @@ public class ProgressBarData implements java.io.Serializable {
         propertySupport.addPropertyChangeListener(listener);
     }
 
-//    public void removePropertyChangeListener(PropertyChangeListener listener) {
-//        propertySupport.removePropertyChangeListener(listener);
-//    }
-//
-//    public double getProgressDouble() {
-//        return progressDouble;
-//    }
 }

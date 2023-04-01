@@ -7,7 +7,12 @@
 
 package com.iandw.musicplayerjavafx;
 
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.MusicLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -168,7 +173,7 @@ public class SettingsController extends AnchorPane {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reset Library");
-        alert.setHeaderText("This will only reset the application data and will not affect your files or folders.");
+        alert.setHeaderText("This will only reset the application data\n and will not affect your files or folders.");
         alert.setContentText("Would you like to continue?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
@@ -281,7 +286,7 @@ public class SettingsController extends AnchorPane {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Clear Library");
-        alert.setHeaderText("This will only clear the application data and will not affect your files or folders.");
+        alert.setHeaderText("This will only clear the application data\n and will not affect your files or folders.");
         alert.setContentText("Would you like to continue?");
 
 

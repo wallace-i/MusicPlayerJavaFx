@@ -1,5 +1,8 @@
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.Utilities.TrackIndex;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

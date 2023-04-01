@@ -5,11 +5,14 @@
  *      Notes:
  */
 
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Libraries;
 
-import com.iandw.musicplayerjavafx.utilities.ID3v1Genres;
-import com.iandw.musicplayerjavafx.utilities.ImportCatagory;
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
+import com.iandw.musicplayerjavafx.TrackMetadata;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
+import com.iandw.musicplayerjavafx.Utilities.ID3v1Genres;
+import com.iandw.musicplayerjavafx.Utilities.ImportCatagory;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
@@ -144,11 +147,13 @@ public class MusicLibrary {
                                     } else {
                                         System.out.printf("%s is not a compatible file type.", trackFileName);
                                     }
+
                                 } else {
                                     System.out.printf("%s does not exist%n", albumDirectoryPath);
                                 }
                             }
                         }
+
                     } else {
                         System.out.printf("%s is not an artist directory%n", artistDirectoryPath);
                     }
@@ -574,6 +579,7 @@ public class MusicLibrary {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
             }
+
         } else {
             System.out.printf("%s is not a compatible file type.", trackFileName);
         }
@@ -589,6 +595,7 @@ public class MusicLibrary {
         if (trackTitle.contains(".")) {
             if (trackTitle.contains(" - ")) {
                 trackTitle = trackTitle.substring(trackTitle.indexOf('-') + 2,  trackTitle.lastIndexOf('.'));
+
             } else {
                 trackTitle = trackTitle.substring(trackTitle.indexOf(' ') + 1, trackTitle.lastIndexOf('.'));
             }

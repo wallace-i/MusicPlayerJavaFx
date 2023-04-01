@@ -1,7 +1,12 @@
 package com.iandw.musicplayerjavafx.ContextMenus;
 
 import com.iandw.musicplayerjavafx.*;
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.TrackMetadata;
+import com.iandw.musicplayerjavafx.Utilities.TrackIndex;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.scene.control.*;
 
 import java.io.File;
@@ -111,7 +116,7 @@ public class ArtistListContextMenu {
         if (menuSelection != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Remove Artist");
-            alert.setHeaderText("Removing Artist deletes their tracks from Library, but does not affect files or folders.");
+            alert.setHeaderText("Removing Artist deletes their tracks from Library,\n but does not affect files or folders.");
             alert.setContentText("Would you like to continue?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {

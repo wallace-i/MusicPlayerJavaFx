@@ -1,6 +1,6 @@
 package com.iandw.musicplayerjavafx;
 
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import jakarta.mail.internet.MimeMessage;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;

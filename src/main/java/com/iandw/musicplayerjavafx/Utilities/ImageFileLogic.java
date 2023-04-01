@@ -1,4 +1,4 @@
-package com.iandw.musicplayerjavafx.utilities;
+package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.ResourceURLs;
 import javafx.scene.effect.ColorAdjust;

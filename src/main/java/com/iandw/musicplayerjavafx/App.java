@@ -9,6 +9,9 @@ package com.iandw.musicplayerjavafx;
 
 import com.iandw.musicplayerjavafx.FileIO.ConsoleLogFileIO;
 import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,6 +1,11 @@
 package com.iandw.musicplayerjavafx;
 
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.MusicLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;

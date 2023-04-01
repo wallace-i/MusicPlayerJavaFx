@@ -1,5 +1,6 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Utilities;
 
+import com.iandw.musicplayerjavafx.TrackMetadata;
 import javafx.scene.control.ListView;
 import java.util.function.Predicate;
 

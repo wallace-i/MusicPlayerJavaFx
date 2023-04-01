@@ -8,7 +8,7 @@
 package com.iandw.musicplayerjavafx.FileIO;
 
 import com.iandw.musicplayerjavafx.ResourceURLs;
-import com.iandw.musicplayerjavafx.UserSettings;
+import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

@@ -1,7 +1,11 @@
 package com.iandw.musicplayerjavafx.ContextMenus;
 
 import com.iandw.musicplayerjavafx.*;
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.TrackMetadata;
+import com.iandw.musicplayerjavafx.Utilities.TrackIndex;
+import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.scene.control.*;
 
 import java.io.IOException;

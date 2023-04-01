@@ -1,5 +1,6 @@
 package com.iandw.musicplayerjavafx;
 
+import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

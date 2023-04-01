@@ -1,4 +1,4 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
 import org.json.simple.JSONArray;

@@ -1,9 +1,10 @@
 /**
  *      Author: Ian Wallace, copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class: MusicPlayerController
- *      Notes: Contains FXML member variables and controls program interface
+ *      Class: MusicPlayerController.java
+ *      Notes: Main app controller - controls MusicPlayer, TableView, and ListView GUI objects.
  */
+
 package com.iandw.musicplayerjavafx;
 
 import java.io.*;
@@ -18,10 +19,10 @@ import com.iandw.musicplayerjavafx.ContextMenus.PlaylistContextMenu;
 import com.iandw.musicplayerjavafx.ContextMenus.TableViewContextMenu;
 import com.iandw.musicplayerjavafx.FileIO.ConsoleLogFileIO;
 import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
-import com.iandw.musicplayerjavafx.utilities.AutoPlay;
-import com.iandw.musicplayerjavafx.utilities.ImageFileLogic;
-import com.iandw.musicplayerjavafx.utilities.SliderFillColor;
-import com.iandw.musicplayerjavafx.utilities.Utils;
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
+import com.iandw.musicplayerjavafx.Libraries.MusicLibrary;
+import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
+import com.iandw.musicplayerjavafx.Utilities.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
@@ -162,7 +163,16 @@ public class MusicPlayerController {
     private boolean artistsListSelected;
     private int albumImageWidth;
 
-    // Constructor
+    /**
+     * MusicPlayerController.java => constructor
+     *
+     * @param stage => Close the Application from the File Menu
+     * @param executorService => Call AwaitTermination() to wait for file input threads to end
+     * @param consoleOutput => Pass ByteArrayOS object to update buffer from System.out... statements
+     * @param userSettings => Allows changes to UserSettings Object after initialization
+     * @param listViewLibrary => Initialize App with Artist and Playlist data
+     * @param tableViewLibrary => Initialize App with Track Metadata
+     */
     public MusicPlayerController(Stage stage, ExecutorService executorService, ByteArrayOutputStream consoleOutput,
                                  UserSettings userSettings, ListViewLibrary listViewLibrary, TableViewLibrary tableViewLibrary)
     {
@@ -174,7 +184,7 @@ public class MusicPlayerController {
         this.tableViewLibrary = tableViewLibrary;
     }
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
      *                          INITIALIZE GUI, LIST, & TABLE VIEWS
      *
@@ -227,7 +237,7 @@ public class MusicPlayerController {
         // Initialize main app objects for Music Library, ListView, and TableView
         musicLibrary = new MusicLibrary(userSettings);
 
-        // Send user to Settings if tracklist.ser is empty to initialize Music Library
+        // Send user to Settings to initialize Music Library if tracklist.ser is empty
         if (Files.size(Paths.get(ResourceURLs.getTrackListURL())) == 0) {
             // Choose Root Directory for Music Library
             String directoryLabel = "Welcome, press 'Music Folder' to initialize.";
@@ -249,7 +259,7 @@ public class MusicPlayerController {
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());
 
             // Initialize table view after files are read in via executorService
-            // Max wait for 10 seconds (for reference, 200gb music files should take ~4 seconds)
+            // Wait for maximum of 10 seconds (for reference, 200gb music files should take ~4 seconds)
             if (executorService.awaitTermination(10000, TimeUnit.MILLISECONDS)) {
                 artistListView.getSelectionModel().select(0);
                 trackTableView.refresh();
@@ -629,10 +639,6 @@ public class MusicPlayerController {
         colTrackLength.setCellValueFactory(new PropertyValueFactory<>("trackDurationStr"));
         colTrackGenre.setCellValueFactory(new PropertyValueFactory<>("trackGenreStr"));
         colPlaylistInvisible.setCellValueFactory(new PropertyValueFactory<>("playlistStr"));
-
-//              Debugger
-//              System.out.printf("currentPath: %s%n", currentPath);
-
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -708,7 +714,7 @@ public class MusicPlayerController {
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    // Toggle media playback and the text on the playPauseButton
+    // Toggle media playback and the icon on the playPauseButton
     @FXML
     private void playPauseButtonPressed(MouseEvent mouseClick) {
         if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
@@ -746,19 +752,18 @@ public class MusicPlayerController {
 
     @FXML
     private void seekSliderPressed(MouseEvent mouseClick) {
-        if (mouseClick.getButton().equals(MouseButton.PRIMARY)) {
-            if (!stopped) {
-                try {
-                    if (!playing) {
-                        mediaPlayer.play();
-                        playing = true;
-                        stopped = false;
-                        playPauseButton.setGraphic(pauseIcon);
-                    }
-
-                } catch (NullPointerException e) {
-                    System.out.println("No track selected.");
+        // Allow clicking on the seekSlider to play the selected track
+        if (mouseClick.getButton().equals(MouseButton.PRIMARY) && !stopped) {
+            try {
+                if (!playing) {
+                    mediaPlayer.play();
+                    playing = true;
+                    stopped = false;
+                    playPauseButton.setGraphic(pauseIcon);
                 }
+
+            } catch (NullPointerException e) {
+                System.out.println("No track selected.");
             }
         }
     }
@@ -816,7 +821,6 @@ public class MusicPlayerController {
 
     private void previousButton() {
         trackIndex.setPushCurrentTrackToStack(false);
-
         trackTableView.scrollTo(trackIndex.peekPreviousIndexArray());
 
         if (!trackIndex.getPreviousIndexStack().empty()) {
@@ -835,12 +839,12 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     private void playMedia() {
-        final String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
 
-        // Debugger
+        // Get the filepath of the currently selected track
+        final String currentPath = trackTableView.getSelectionModel().getSelectedItem().getTrackPathStr();
         System.out.printf("currentPath: %s%n", currentPath);
 
-        // Create Media Object
+        // Create Media Object for audio file playback
         Media audioFile = new Media(new File(currentPath).toURI().toString());
         mediaPlayer = new MediaPlayer(audioFile);
 
@@ -850,9 +854,9 @@ public class MusicPlayerController {
         // Set Seeker slider
         mediaPlayer.currentTimeProperty().addListener(observable -> seekValueUpdate());
 
-        // Play media
         mediaPlayer.setVolume(volumeDouble);
 
+        // Play media
         mediaPlayer.setOnReady(() -> {
             mediaPlayer.play();
 
@@ -873,7 +877,7 @@ public class MusicPlayerController {
             setNowPlayingText();
         });
 
-        // Autoplay or stop media player after current track is finished
+        // Auto select or stop media player after current track is finished
         mediaPlayer.setOnEndOfMedia(() -> {
             if (trackTableView.getSelectionModel().getSelectedItem() != null) {
                 System.out.println(autoPlay);
@@ -910,11 +914,13 @@ public class MusicPlayerController {
         setNowPlayingText();
     }
 
+    // Updates the time values of the seekSlider
     private void seekValueUpdate() {
         if (mediaPlayer == null) {
             trackDurationLabel.setText("");
             trackCurrentTimeLabel.setText("");
         }
+
         trackDurationLabel.setText(Utils.formatSeconds(
                 (int) mediaPlayer.getTotalDuration().toSeconds() - (int) mediaPlayer.getCurrentTime().toSeconds()));
         trackCurrentTimeLabel.setText(Utils.formatSeconds((int) mediaPlayer.getCurrentTime().toSeconds()));
@@ -922,6 +928,7 @@ public class MusicPlayerController {
                 mediaPlayer.getTotalDuration().toMillis() * 100);
     }
 
+    // Handles icons and label text for top left corner of the Application
     private void setNowPlayingText() {
         if (stopped) {
             playingLabel.setText("-");
@@ -976,6 +983,8 @@ public class MusicPlayerController {
             }
         }
     }
+
+    // Allow user to de-select Radio Buttons
     private void radioButtonOff() {
         switch (autoPlay) {
             case AUTO_PLAY  -> autoButton.setSelected(true);
@@ -992,6 +1001,7 @@ public class MusicPlayerController {
         }
     }
 
+    // Handles row index navigation of trackTableView
     private void trackIndexTracker() {
         // If prev button is continually pressed, do not add current track to stack.
         // Will add current track to stack when true, while next, auto, user selection, or shuffle are selected.
@@ -1011,6 +1021,7 @@ public class MusicPlayerController {
         }
     }
 
+    // When selected automatically goes to next track in trackTableView
     private void autoPlaySelected() {
         trackIndex.setPushCurrentTrackToStack(true);
         trackTableView.getSelectionModel().select(trackIndex.getNextTrackIndex());
@@ -1019,6 +1030,7 @@ public class MusicPlayerController {
         playMedia();
     }
 
+    // When selected chooses a random track currently visible in trackTableView
     private void shuffleSelected() {
         int tableSize = trackIndex.getTableSize();
         trackIndex.setPushCurrentTrackToStack(true);
@@ -1061,6 +1073,7 @@ public class MusicPlayerController {
         playMedia();
     }
 
+    // When selected repeats current track
     private void repeatSelected() {
         trackIndex.setPushCurrentTrackToStack(false);
         trackTableView.getSelectionModel().select(trackIndex.getCurrentTrackIndex());
@@ -1158,7 +1171,6 @@ public class MusicPlayerController {
 
         HostServices hostServices = (HostServices) stage.getProperties().get("hostServices");
         hostServices.showDocument(gitHubUrl);
-
     }
 
     @FXML
@@ -1167,6 +1179,7 @@ public class MusicPlayerController {
 
         ViewTextController viewTextController = new ViewTextController();
 
+        // Check the size to keep TextArea object from locking up Application
         if (consoleOutput.size() < Utils.maxTextAreaSize()) {
             viewTextController.showViewTextWindow(consoleLog, consoleOutput, userSettings);
 
@@ -1176,7 +1189,7 @@ public class MusicPlayerController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Console Log");
             alert.setHeaderText("Console Log size > 1MB.");
-            alert.setContentText("Check the consolelog.txt file after closing application to check the console log report.");
+            alert.setContentText("Check the consolelog.txt file after closing application\n to check the console log report.");
             alert.showAndWait();
         }
     }

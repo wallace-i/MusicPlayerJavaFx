@@ -1,4 +1,4 @@
-package com.iandw.musicplayerjavafx;
+package com.iandw.musicplayerjavafx.Utilities;
 
 import javafx.scene.control.TableView;
 import java.util.ArrayList;
