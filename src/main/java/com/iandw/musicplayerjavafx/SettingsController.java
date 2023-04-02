@@ -315,8 +315,7 @@ public class SettingsController extends AnchorPane {
             Utils.clearSerializedFiles();
 
             // Clear listview and tableview
-            artistListView.getItems().clear();
-            playlistListView.getItems().clear();
+            listViewLibrary.clearObservableLists();
             tableViewLibrary.clearObservableList();
             tableViewLibrary.createFilteredList();
             trackTableView.setItems(tableViewLibrary.getTrackObservableList());

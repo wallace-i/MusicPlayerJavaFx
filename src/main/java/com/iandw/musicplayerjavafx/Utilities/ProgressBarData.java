@@ -1,3 +1,13 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ProgressBarData.java
+ *      Notes: Holds variable data for ProgressBarController. Provides the user with a
+ *          percentage of audio files initialized and the file paths being processed.
+ *          Also bridges the ProgressBarController with the MusicLibrary via a
+ *          PropertyChangeListener.
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 import java.beans.PropertyChangeListener;
@@ -27,6 +37,7 @@ public class ProgressBarData implements java.io.Serializable {
         continueInitialization = true;
     }
 
+    // Increments every time a file is processed in the innermost folder
     public void increaseProgress(String trackPathStr) {
         fileIndex++;
         setProgressDouble(fileIndex / fileAmount);

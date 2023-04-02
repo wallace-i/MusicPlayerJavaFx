@@ -1,11 +1,16 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: Utils.java
+ *      Notes: Various static functions for processing data or creating/copying directories.
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.*;
 import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
 import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.TrackMetadata;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 
 import java.awt.*;
 import java.io.File;
@@ -14,6 +19,9 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 
 public class Utils {
 

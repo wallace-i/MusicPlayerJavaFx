@@ -1,3 +1,13 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: UserSettings.java
+ *      Notes: Holds user setting data parsed from JSON file:
+ *              - user's root directory path
+ *              - currently selected App Theme
+ *              - Music Library initialization choice (when resetting the library)
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;

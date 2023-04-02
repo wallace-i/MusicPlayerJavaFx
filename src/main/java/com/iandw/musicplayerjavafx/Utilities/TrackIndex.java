@@ -1,6 +1,12 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: TrackIndex.java
+ *      Notes: Contains trackTableView indexing logic and data for MusicPlayerController.
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
-import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;

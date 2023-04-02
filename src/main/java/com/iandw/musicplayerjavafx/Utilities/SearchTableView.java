@@ -1,27 +1,40 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: SearchTableView.java
+ *      Notes: Contains search logic for List View and Text Field objects.
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.TrackMetadata;
-import javafx.scene.control.ListView;
+
 import java.util.function.Predicate;
 
 public class SearchTableView {
     private String artistNameString;
     private String playlistTitleString;
-    private ListView<String> artistListView;
-    private ListView<String> playlistListView;
 
     public SearchTableView() {}
 
-    public Predicate<TrackMetadata> createArtistsListPredicate(String artistNameString, ListView<String> artistListView) {
+    /**
+     * createArtistsListPredicate() - handles trackTableView search for ArtistListView
+     * @param artistNameString => Search parameter
+     * @return => Boolean, if search parameter is in the Table View Observable List
+     */
+    public Predicate<TrackMetadata> createArtistListPredicate(String artistNameString) {
         this.artistNameString = artistNameString;
-        this.artistListView = artistListView;
 
         return this::artistsListTrackSearch;
     }
 
-    public Predicate<TrackMetadata> createPlaylistsListPredicate(String playlistTitleString, ListView<String> playlistListView) {
+    /**
+     * createPlaylistsListPredicate() - handles trackTableView search for PlaylistListView
+     * @param playlistTitleString => Search parameter
+     * @return => Boolean, if search parameter is in the Table View Observable List
+     */
+    public Predicate<TrackMetadata> createPlaylistListPredicate(String playlistTitleString) {
         this.playlistTitleString = playlistTitleString;
-        this.playlistListView = playlistListView;
 
         return this::playlistsListTrackSearch;
     }
@@ -37,8 +50,8 @@ public class SearchTableView {
     }
 
     private boolean artistsListTrackSearch(TrackMetadata trackMetadata) {
-        if (trackMetadata.getArtistNameStr().contains(artistNameString) && artistListView != null) {
-            return trackMetadata.getArtistNameStr().contains(artistListView.getSelectionModel().getSelectedItem());
+        if (trackMetadata.getArtistNameStr().contains(artistNameString)) {
+            return trackMetadata.getArtistNameStr().contains(artistNameString);
         }
 
         return false;
@@ -46,12 +59,13 @@ public class SearchTableView {
 
     private boolean playlistsListTrackSearch(TrackMetadata trackMetadata) {
         if (trackMetadata.getPlaylistStr().contains(playlistTitleString)) {
-            return trackMetadata.getPlaylistStr().contains(playlistListView.getSelectionModel().getSelectedItem());
+            return trackMetadata.getPlaylistStr().contains(playlistTitleString);
         }
 
         return false;
     }
 
+    // Check trackMetadata objects for searchText matches
     private boolean searchMetadata(TrackMetadata trackMetadata, String searchText) {
         return (trackMetadata.getTrackTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||
                 trackMetadata.getAlbumTitleStr().toLowerCase().contains(searchText.toLowerCase()) ||

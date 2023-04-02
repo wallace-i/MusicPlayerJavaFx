@@ -1,14 +1,15 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class:
- *      Notes:
+ *      Class: ID3v1Genres.java
+ *      Notes: String array of ID3v1 Genre tags used in track metadata files. Used when
+ *           initializing audio files and saving the data in a TrackMetadata object.
  */
 
 package com.iandw.musicplayerjavafx.Utilities;
 
 public class ID3v1Genres {
-    static final String[] genres = {
+    private static final String[] genres = {
             "Blues",
             "Classic Rock",
             "Country",

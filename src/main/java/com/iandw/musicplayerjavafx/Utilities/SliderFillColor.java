@@ -1,3 +1,11 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: SliderFillColor.java
+ *      Notes: Fills slider track objects (volume and seekSlider) with a color up to
+ *              the slider's thumb.
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 public class SliderFillColor {

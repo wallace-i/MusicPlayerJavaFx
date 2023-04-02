@@ -1,3 +1,12 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ImageFileLogic.java
+ *      Notes: Object has two functions:
+ *              1. To color AutoPlay icon the correct shade based on current App Theme
+ *              2. Load default album art .png file into ImageView in MusicPlayerController
+ */
+
 package com.iandw.musicplayerjavafx.Utilities;
 
 import com.iandw.musicplayerjavafx.ResourceURLs;
@@ -31,7 +40,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case styleDarkFileName -> {
@@ -39,7 +47,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case styleBlueFileName -> {
@@ -47,7 +54,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case styleGreenFileName -> {
@@ -55,7 +61,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case styleRedFileName -> {
@@ -63,7 +68,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case stylePinkFileName -> {
@@ -71,7 +75,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
 
             case styleConsoleFileName -> {
@@ -79,7 +82,6 @@ public class ImageFileLogic {
                 ColorAdjust bright = new ColorAdjust(0, 1, 1, 1);
                 lighting.setContentInput(bright);
                 lighting.setSurfaceScale(0.0);
-
             }
         }
 

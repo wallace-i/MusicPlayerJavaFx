@@ -1,20 +1,25 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class: MusicLibrary
- *      Notes: Initializes Root Directory for music files to be located
+ *      Class: ListViewLibrary.java
+ *      Notes: This object holds all the necessary data for ArtistListView and PlaylistListView
+ *              to function as lists of Strings, used to search the Table View Object when selected.
  */
+
 package com.iandw.musicplayerjavafx.Libraries;
 
 import com.iandw.musicplayerjavafx.FileIO.ArtistlistFileIO;
 import com.iandw.musicplayerjavafx.FileIO.PlaylistFileIO;
 import com.iandw.musicplayerjavafx.ResourceURLs;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 
 public class ListViewLibrary implements Runnable {
     private ObservableList<String> artistObservableList;
@@ -62,7 +67,7 @@ public class ListViewLibrary implements Runnable {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          ADD / REMOVE ELEMENTS
+     *                          ADD / REMOVE MODULES
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -113,6 +118,8 @@ public class ListViewLibrary implements Runnable {
 
     }
 
+    // Clears both List View objects of String data and applies
+    // the "empty List" notification
     public void clearObservableLists() {
         outputArtistOnClose = true;
         outputPlaylistOnClose = true;
@@ -132,7 +139,6 @@ public class ListViewLibrary implements Runnable {
         if (outputPlaylistOnClose) {
             PlaylistFileIO.outputPlaylists(playlistObservableList);
         }
-
     }
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

@@ -11,7 +11,7 @@ import com.iandw.musicplayerjavafx.Utilities.ProgressBarData;
 import com.iandw.musicplayerjavafx.TrackMetadata;
 import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 import com.iandw.musicplayerjavafx.Utilities.ID3v1Genres;
-import com.iandw.musicplayerjavafx.Utilities.ImportCatagory;
+import com.iandw.musicplayerjavafx.Utilities.ImportCategory;
 import com.iandw.musicplayerjavafx.Utilities.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,7 +41,7 @@ public class MusicLibrary {
     private String trackFileName;
     private String trackContainerType;
     private int index;
-    private ImportCatagory importCatagory;
+    private ImportCategory importCategory;
     private String rootMusicDirectoryString;
     private Boolean continueInitializing;
 
@@ -280,14 +280,13 @@ public class MusicLibrary {
                 trackTitle = trackFileName;
             }
 
-            switch (importCatagory) {
+            switch (importCategory) {
                 case ARTIST -> {
                     trackArtist = artistNameStr;
                     trackAlbum = albumDirectoryStr;
                 }
 
                 case ALBUM -> {
-
                     if (tag.getFirst(FieldKey.ALBUM_ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM_ARTIST), "")){
                         if (tag.getFirst(FieldKey.ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ARTIST), "")) {
                             trackArtist = unknown;
@@ -303,7 +302,6 @@ public class MusicLibrary {
                 }
 
                 case TRACK -> {
-
                     if (tag.getFirst(FieldKey.ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ARTIST), "")){
                         if (tag.getFirst(FieldKey.ALBUM_ARTIST) == null || Objects.equals(tag.getFirst(FieldKey.ALBUM_ARTIST), "")) {
                             trackArtist = unknown;
@@ -370,7 +368,7 @@ public class MusicLibrary {
     //      IMPORT ARTIST
     //
     public void importArtist() throws IOException {
-        importCatagory = ImportCatagory.ARTIST;
+        importCategory = ImportCategory.ARTIST;
 
         // Clear list to write Artist's tracks
         trackMetadataObservableList.clear();
@@ -440,7 +438,7 @@ public class MusicLibrary {
     //      IMPORT ALBUM
     //
     public void importAlbum() throws IOException {
-        importCatagory = ImportCatagory.ALBUM;
+        importCategory = ImportCategory.ALBUM;
 
         // Clear list to write album
         trackMetadataObservableList.clear();
@@ -490,7 +488,7 @@ public class MusicLibrary {
     //      IMPORT TRACK
     //
     public void importTrack() throws IOException {
-        importCatagory = ImportCatagory.TRACK;
+        importCategory = ImportCategory.TRACK;
 
         // Clear list to write track
         trackMetadataObservableList.clear();

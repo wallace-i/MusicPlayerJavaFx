@@ -617,13 +617,11 @@ public class MusicPlayerController {
         // Check artistsObservableList for artist name, call artist list predicate if true.
         // Else call the playlistListView predicate
         if (artistsListSelected && artistNameString != null) {
-            tableViewLibrary.getFilteredList().setPredicate(searchTableView.createArtistsListPredicate(
-                    artistNameString, artistListView));
+            tableViewLibrary.getFilteredList().setPredicate(searchTableView.createArtistListPredicate(artistNameString));
 
         } else if (playlistTitleString != null) {
             // Remove null pointer exceptions from predicate search
-            tableViewLibrary.getFilteredList().setPredicate(searchTableView.createPlaylistsListPredicate(
-                    playlistTitleString, playlistListView));
+            tableViewLibrary.getFilteredList().setPredicate(searchTableView.createPlaylistListPredicate(playlistTitleString));
         }
 
         trackTableView.setItems(tableViewLibrary.getFilteredList());
