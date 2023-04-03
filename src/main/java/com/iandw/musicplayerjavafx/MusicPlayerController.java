@@ -691,8 +691,12 @@ public class MusicPlayerController {
         TableViewContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
-        // Refresh TableView
-        listViewSelected();
+        // If artist or playlist name is edited, keeps tableview from selecting nothing
+        if (!Objects.equals(previousArtistNameString, artistNameString)) {
+            // Refresh TableView
+            listViewSelected();
+        }
+
     }
 
 
