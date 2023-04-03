@@ -52,5 +52,6 @@ took about 2/3 of the project development time. I have no experience using winAm
 wanted to design this program to be as lightweight, simple, and accessible as possible.
 
 The release of this program is subject to update based on user interest, feedback, and bug reports.
-If you enjoy using the App and would like to support in developing it further along with new applications
-consider subscribing to my Patrion at _______ or donating directly to my Paypal at ________.</p>
+If you enjoy using the App and would like to support in developing it further along with new applications,
+please consider subscribing to my Patrion at _______ or donating directly to my Paypal at ________.
+Any donation is greatly appreciate. Thanks for being a user!</p>
