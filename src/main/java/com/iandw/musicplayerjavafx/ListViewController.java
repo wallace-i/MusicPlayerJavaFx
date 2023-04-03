@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -149,6 +150,18 @@ public class ListViewController {
 
                     listViewLibrary.addArtist(userInput);
                     artistListView.setItems(listViewLibrary.getArtistObservableList());
+
+                    artistListView.getSelectionModel().select(userInput);
+
+                    // Simulate mouse click to update tableview
+                    if (artistListView.getSelectionModel().getSelectedItem() != null) {
+                        MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false,
+                                false, true, false, false, null);
+
+                        artistListView.fireEvent(mouseEvent);
+                    }
+
                     artistListView.refresh();
 
                 } catch (Exception e) {
@@ -172,6 +185,17 @@ public class ListViewController {
 
                     listViewLibrary.addPlaylist(userInput);
                     playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
+
+                    playlistListView.getSelectionModel().select(userInput);
+
+                    // Simulate mouse click to update tableview
+                    if (playlistListView.getSelectionModel().getSelectedItem() != null) {
+                        MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false,
+                                false, true, false, false, null);
+
+                        playlistListView.fireEvent(mouseEvent);
+                    }
 
                 } catch (Exception e) {
                     closeFlag = false;
@@ -202,6 +226,8 @@ public class ListViewController {
                         artistListView.setItems(listViewLibrary.getArtistObservableList());
 
                         editArtist();
+
+                        artistListView.getSelectionModel().select(userInput);
                     }
 
                 } catch (Exception e) {
@@ -233,6 +259,8 @@ public class ListViewController {
                         playlistListView.setItems(listViewLibrary.getPlaylistObservableList());
 
                         editPlaylist();
+
+                        playlistListView.getSelectionModel().select(userInput);
                     }
 
                 } catch (Exception e) {

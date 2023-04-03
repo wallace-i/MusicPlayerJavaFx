@@ -1,15 +1,31 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: ArtistListFileIO.java
+ *      Notes: Handles all file input/output from artistlist.ser located in resources.
+ *              Observable Lists do not serialize so all String objects are transferred to and
+ *              from an ArrayList for serialization.
+ */
+
 package com.iandw.musicplayerjavafx.FileIO;
 
 import com.iandw.musicplayerjavafx.ResourceURLs;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class ArtistlistFileIO {
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+
+public class ArtistListFileIO {
+
+    /**
+     * inputArtistNameObservableList() - read Artist names from artistlist.ser
+     * @return => ObservableList for artistListObservableList (ListViewLibrary) to handle.
+     */
     public static ObservableList<String> inputArtistNameObservableList() {
 
         ArrayList<String> artistNameArrayList;
@@ -35,6 +51,10 @@ public class ArtistlistFileIO {
         return artistNameObservableList;
     }
 
+    /**
+     * outputArtistNameObservableList() - write ArtistName String objects to artistlist.ser
+     * @param artistNameObservableList => Observable List to be output to file
+     */
     public static void outputArtistNameObservableList(ObservableList<String> artistNameObservableList) {
 
         ArrayList<String> artistNameArrayList = new ArrayList<>(artistNameObservableList);

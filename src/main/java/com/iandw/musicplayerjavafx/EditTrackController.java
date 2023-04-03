@@ -122,6 +122,7 @@ public class EditTrackController {
                 if (artistListView.getSelectionModel().getSelectedItem() != null) {
                     MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
                             false, false, false, false, true, false, false, true, false, false, null);
+
                     artistListView.fireEvent(mouseEvent);
                 }
             }

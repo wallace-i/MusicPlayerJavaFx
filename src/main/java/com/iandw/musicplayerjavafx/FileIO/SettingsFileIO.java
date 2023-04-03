@@ -1,27 +1,37 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class:
- *      Notes:
+ *      Class: SettingsFileIO.java
+ *      Notes: Handles all File I/O for user settings. Accesses the JSON file settings.json
+ *              located in resources.
  */
 
 package com.iandw.musicplayerjavafx.FileIO;
 
 import com.iandw.musicplayerjavafx.ResourceURLs;
 import com.iandw.musicplayerjavafx.Utilities.UserSettings;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class SettingsFileIO {
 
-    // Input
+    /**
+     * jsonFileInput() - read JSON objects from file
+     * @return => JSONArray object containing all saved user settings
+     *              UserSettings include:
+     *              1. Root File Directory for user's music library
+     *              2. Application Theme selection
+     *              3. Music Library initialization type (Standard or Recursive)
+     */
     public static JSONArray jsonFileInput() {
 
         System.out.println("Reading user settings from JSON file.");
@@ -38,10 +48,12 @@ public class SettingsFileIO {
         }
 
         return (JSONArray) obj;
-
     }
 
-    // Output
+    /**
+     * jsonFileOutput() - writes userSettings to file if the user makes any changes
+     * @param userSettings => UserSettings object encapsulating all user settings
+     */
     public static void jsonFileOutput(UserSettings userSettings) {
         final String rootMusicDirectoryString = userSettings.getRootMusicDirectoryString();
         final String themeFileNameString = userSettings.getThemeFileNameString();

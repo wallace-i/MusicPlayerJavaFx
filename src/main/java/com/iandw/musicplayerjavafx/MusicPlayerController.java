@@ -688,7 +688,7 @@ public class MusicPlayerController {
     }
 
     private void handleTableViewContextMenu()  {
-        TableViewContextMenu.getContextMenu(artistListView, trackTableView,
+        TableViewContextMenu.getContextMenu(artistListView, playlistListView, trackTableView,
                 listViewLibrary, tableViewLibrary, trackIndex);
 
         // Refresh TableView

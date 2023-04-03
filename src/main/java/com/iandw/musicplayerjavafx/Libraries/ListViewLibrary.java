@@ -8,7 +8,7 @@
 
 package com.iandw.musicplayerjavafx.Libraries;
 
-import com.iandw.musicplayerjavafx.FileIO.ArtistlistFileIO;
+import com.iandw.musicplayerjavafx.FileIO.ArtistListFileIO;
 import com.iandw.musicplayerjavafx.FileIO.PlaylistFileIO;
 import com.iandw.musicplayerjavafx.ResourceURLs;
 
@@ -36,7 +36,7 @@ public class ListViewLibrary implements Runnable {
         // Input artist data if file is not empty
         try {
             if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
-                artistObservableList = FXCollections.observableArrayList(ArtistlistFileIO.inputArtistNameObservableList());
+                artistObservableList = FXCollections.observableArrayList(ArtistListFileIO.inputArtistNameObservableList());
 
             } else {
                 artistObservableList = FXCollections.observableArrayList();
@@ -51,7 +51,7 @@ public class ListViewLibrary implements Runnable {
         // Input playlist data if file is not empty
         try {
             if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
-                playlistObservableList = FXCollections.observableArrayList(PlaylistFileIO.inputPlaylists());
+                playlistObservableList = FXCollections.observableArrayList(PlaylistFileIO.inputPlaylistObservableList());
 
             } else {
                 playlistObservableList = FXCollections.observableArrayList();
@@ -133,11 +133,11 @@ public class ListViewLibrary implements Runnable {
 
     public void onClose() {
         if (outputArtistOnClose) {
-            ArtistlistFileIO.outputArtistNameObservableList(artistObservableList);
+            ArtistListFileIO.outputArtistNameObservableList(artistObservableList);
         }
 
         if (outputPlaylistOnClose) {
-            PlaylistFileIO.outputPlaylists(playlistObservableList);
+            PlaylistFileIO.outputPlaylistObservableList(playlistObservableList);
         }
     }
 

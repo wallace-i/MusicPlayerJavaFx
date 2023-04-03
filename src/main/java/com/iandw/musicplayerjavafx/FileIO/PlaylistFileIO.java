@@ -1,8 +1,10 @@
 /**
  *      Author: Ian Wallace copyright 2022 all rights reserved.
  *      Application: MusicPlayer
- *      Class:
- *      Notes:
+ *      Class: PlaylistFileIO.java
+ *      Notes: Handles all file input/output from playlists.ser located in resources.
+ *             Observable Lists do not serialize so all String objects are transferred to and
+ *             from an ArrayList for serialization.
  */
 
 package com.iandw.musicplayerjavafx.FileIO;
@@ -17,7 +19,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class PlaylistFileIO implements Serializable {
-    public static ObservableList<String> inputPlaylists() {
+    /**
+     * inputPlaylistObservableList() - read Artist names from artistlist.ser
+     * @return => ObservableList for playlistObservableList (ListViewLibrary) to handle.
+     */
+    public static ObservableList<String> inputPlaylistObservableList() {
 
         ObservableList<String> playlistObservableList = FXCollections.observableArrayList();
 
@@ -41,7 +47,11 @@ public class PlaylistFileIO implements Serializable {
 
     }
 
-    public static void outputPlaylists(ObservableList<String> playlistsObservableList) {
+    /**
+     * outputPlaylistObservableList() - write Playlist String objects to playlists.ser
+     * @param playlistsObservableList => Observable List to be output to file
+     */
+    public static void outputPlaylistObservableList(ObservableList<String> playlistsObservableList) {
 
         ArrayList<String> playlistsArrayList = new ArrayList<>(playlistsObservableList);
 

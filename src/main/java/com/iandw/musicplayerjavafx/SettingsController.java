@@ -216,7 +216,7 @@ public class SettingsController extends AnchorPane {
                         if (userSettings.getInitalizationString().equals("recursive")) {
                             musicLibrary.recursiveInitialization(progressBarData);
                         } else {
-                            musicLibrary.initializeMusicLibrary(progressBarData);
+                            musicLibrary.standardInitialization(progressBarData);
                         }
 
                         if (Thread.currentThread().isInterrupted()) {

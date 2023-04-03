@@ -1,3 +1,10 @@
+/**
+ *      Author: Ian Wallace, copyright 2022 all rights reserved.
+ *      Application: MusicPlayer
+ *      Class: PlaylistContextMenu.java
+ *      Notes: Handles all Context Menu Requests for playlistListView object
+ */
+
 package com.iandw.musicplayerjavafx.ContextMenus;
 
 import com.iandw.musicplayerjavafx.*;
@@ -6,15 +13,28 @@ import com.iandw.musicplayerjavafx.Libraries.TableViewLibrary;
 import com.iandw.musicplayerjavafx.TrackMetadata;
 import com.iandw.musicplayerjavafx.Utilities.TrackIndex;
 import com.iandw.musicplayerjavafx.Utilities.Utils;
-import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class PlaylistContextMenu {
 
     private static final String emptyPlaylist = "* playlists *";
 
+    /**
+     * getContextMenu() - context menu entry point
+     *
+     * @param artistListView => updates List View based on any changes made to Artist Name
+     * @param playlistListView => updates List View based on any changes made to Playlist title
+     * @param trackTableView => updates trackTableView Observable List when playlist titles are edited or removed
+     * @param listViewLibrary => encapsulates Artist and Playlist ObservableList arrays for changes to object data
+     * @param tableViewLibrary => encapsulates Track Metadata ObservableList for changes to object data
+     * @param trackIndex => used to access currently viewed Table View cells
+     */
     public static void getContextMenu(ListView<String> artistListView, ListView<String> playlistListView,
                                       TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                       TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
@@ -40,18 +60,17 @@ public class PlaylistContextMenu {
 
         // Create Playlist
         createPlaylist.setOnAction(event -> {
-            createPlaylist(artistListView, playlistListView, trackTableView,
-                    listViewLibrary, tableViewLibrary, trackIndex);
+            createPlaylist(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary, trackIndex);
         });
 
+        // Edit Playlist title
         editPlaylist.setOnAction(event -> {
-            editPlaylist(artistListView, playlistListView, trackTableView,
-                    listViewLibrary, tableViewLibrary, trackIndex);
+            editPlaylist(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary, trackIndex);
         });
 
+        // Remove selected playlist
         removePlaylist.setOnAction(event -> {
-            removePlaylist(artistListView, playlistListView, trackTableView,
-                    listViewLibrary, tableViewLibrary, trackIndex);
+            removePlaylist(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary, trackIndex);
         });
 
         contextMenu.getItems().addAll(createPlaylist, editPlaylist, divider1, removePlaylist, divider2, openInExplorer);
@@ -60,6 +79,11 @@ public class PlaylistContextMenu {
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          CREATE PLAYLIST
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     public static void createPlaylist(ListView<String> artistListView, ListView<String> playlistListView,
                                TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
@@ -68,6 +92,7 @@ public class PlaylistContextMenu {
         try {
             String windowTitle = "Create Playlist";
             String menuSelection = playlistListView.getSelectionModel().getSelectedItem();
+
             ListViewController listViewController = new ListViewController();
             listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
                     listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
@@ -80,6 +105,11 @@ public class PlaylistContextMenu {
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          EDIT PLAYLIST
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private static void editPlaylist(ListView<String> artistListView, ListView<String> playlistListView,
                                      TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                      TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
@@ -93,6 +123,7 @@ public class PlaylistContextMenu {
                 listViewController.showListViewInputWindow(artistListView, playlistListView, trackTableView,
                         listViewLibrary, tableViewLibrary, trackIndex, windowTitle, menuSelection);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -101,6 +132,11 @@ public class PlaylistContextMenu {
 
     }
 
+    /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                          REMOVE PLAYLIST
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private static void removePlaylist(ListView<String> artistListView, ListView<String> playlistListView,
                                        TableView<TrackMetadata> trackTableView, ListViewLibrary listViewLibrary,
                                        TableViewLibrary tableViewLibrary, TrackIndex trackIndex)
@@ -119,5 +155,18 @@ public class PlaylistContextMenu {
             }
         }
 
+        playlistListView.getSelectionModel().select(0);
+
+        // Simulate mouse click to update tableview
+        if (playlistListView.getSelectionModel().getSelectedItem() != null) {
+            MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                    false, false, false, false, true, false,
+                    false, true, false, false, null);
+
+            playlistListView.fireEvent(mouseEvent);
+        }
+
+        trackTableView.refresh();
     }
+
 }

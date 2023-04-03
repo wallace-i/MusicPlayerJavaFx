@@ -160,7 +160,7 @@ public class InitializeSelectionController {
                     @Override
                     protected Void call() throws Exception {
                         try {
-                            musicLibrary.initializeMusicLibrary(progressBarData);
+                            musicLibrary.standardInitialization(progressBarData);
 
                             if (Thread.currentThread().isInterrupted()) {
                                 throw new InterruptedIOException();
