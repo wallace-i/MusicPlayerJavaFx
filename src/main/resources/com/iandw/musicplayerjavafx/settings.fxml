@@ -24,7 +24,7 @@
                   <Insets left="10.0" />
               </padding>
            </Label>
-           <Button fx:id="musicFolder" mnemonicParsing="false" onMouseClicked="#rootDirectoryClicked" prefHeight="25.0" prefWidth="85.0" text="Music Folder" />
+           <Button fx:id="musicFolder" mnemonicParsing="false" onMouseClicked="#musicFolderClicked" prefHeight="25.0" prefWidth="85.0" text="Music Folder" />
            <Button fx:id="resetLibrary" mnemonicParsing="false" onMouseClicked="#resetLibraryClicked" prefWidth="85.0" text="Reset Library" GridPane.rowIndex="1" />
            <Label prefHeight="17.0" prefWidth="258.0" text="Use current root directory to re-initialize." GridPane.columnIndex="1" GridPane.rowIndex="1">
               <padding>

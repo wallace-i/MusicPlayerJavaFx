@@ -37,6 +37,7 @@ import com.iandw.musicplayerjavafx.Utilities.ID3v1Genres;
 import com.iandw.musicplayerjavafx.Utilities.ImportCategory;
 import com.iandw.musicplayerjavafx.Utilities.Utils;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
@@ -45,12 +46,16 @@ import java.util.*;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.FieldKey;
 
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jaudiotagger.tag.TagException;
 
 public class MusicLibrary {
     private final ObservableList<TrackMetadata> trackMetadataObservableList;
@@ -102,7 +107,7 @@ public class MusicLibrary {
      */
     public void standardInitialization(ProgressBarData progressBarData) throws IOException {
         System.out.println("Initializing observable list");
-
+        ArrayList<String> tempArtistArray = new ArrayList<>();
         Utils.clearSerializedFiles();
 
         Path rootPath = Paths.get(rootMusicDirectoryString);
@@ -121,10 +126,15 @@ public class MusicLibrary {
                     }
 
                     Path artistDirectoryPath = artistFolder.toAbsolutePath();
+
                     artistNameStr = artistDirectoryPath.toString().substring(artistDirectoryPath.toString().lastIndexOf(File.separator) + 1);
 
-                    artistNameStr = artistNameStr.substring(artistNameStr.lastIndexOf(File.separator) + 1);
-                    artistNameObservableList.add(artistNameStr);
+                    if (Files.isDirectory(artistDirectoryPath)) {
+                        tempArtistArray.add(artistNameStr);
+
+                    } else {
+                        System.out.printf("%s is not a directory%n", artistDirectoryPath);
+                    }
 
                     if (Files.isDirectory(artistFolder)) {
                         DirectoryStream<Path> artistDir = Files.newDirectoryStream(artistDirectoryPath);
@@ -153,7 +163,7 @@ public class MusicLibrary {
 
                                         // Check for playable file container
                                         if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-                                            parseMetadata();
+                                            standardParse();
                                             progressBarData.increaseProgress(trackPathStr);
 
                                         } else {
@@ -177,7 +187,7 @@ public class MusicLibrary {
 
                                     // Check for playable file container
                                     if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-                                        parseMetadata();
+                                        standardParse();
                                         progressBarData.increaseProgress(trackPathStr);
 
                                     } else {
@@ -203,7 +213,8 @@ public class MusicLibrary {
             System.out.printf("%s does not exist%n", rootPath);
         }
 
-
+        // Add artist names to observable array after parsing is finished and thread safe
+        Platform.runLater(() -> artistNameObservableList.addAll(tempArtistArray));
     }
 
 
@@ -225,6 +236,7 @@ public class MusicLibrary {
      */
     public void recursiveInitialization(ProgressBarData progressBarData) throws IOException {
         System.out.println("Initializing observable list");
+        ArrayList<String> tempArtistArray = new ArrayList<>();
 
         Utils.clearSerializedFiles();
 
@@ -234,7 +246,7 @@ public class MusicLibrary {
             if (Files.isDirectory(rootPath)) {
                 File rootDirectory = new File(rootMusicDirectoryString);
 
-                trackMetadataObservableList.addAll(listFileTree(rootDirectory, progressBarData));
+                trackMetadataObservableList.addAll(listFileTree(rootDirectory, progressBarData, tempArtistArray));
 
             } else {
                 System.out.printf("%s is not a directory%n", rootPath);
@@ -243,11 +255,14 @@ public class MusicLibrary {
         } else {
             System.out.printf("%s does not exist%n", rootPath);
         }
+
+        // Add artist names to observable array after parsing is finished and thread safe
+        Platform.runLater(() -> artistNameObservableList.addAll(tempArtistArray));
     }
 
 
 
-    private Collection<TrackMetadata> listFileTree(File dir, ProgressBarData progressBarData) {
+    private Collection<TrackMetadata> listFileTree(File dir, ProgressBarData progressBarData, ArrayList<String> tempArtistArray) {
         Set<TrackMetadata> fileTree = new HashSet<>();
 
         if (dir == null || dir.listFiles() == null) {
@@ -273,15 +288,15 @@ public class MusicLibrary {
                 }
 
                 if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
-                    recursiveParse();
+                    recursiveParse(tempArtistArray);
                     progressBarData.increaseProgress(trackPathStr);
 
                 } else {
-                    System.out.printf("%s is not a compatible file type.", trackFileName);
+                    System.out.println(trackFileName + " is not a compatible file type.");
                 }
 
             } else {
-                fileTree.addAll(listFileTree(entry, progressBarData));
+                fileTree.addAll(listFileTree(entry, progressBarData, tempArtistArray));
             }
         }
 
@@ -347,7 +362,7 @@ public class MusicLibrary {
                             // Check for playable file container
                             if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
-                                parseMetadata();
+                                standardParse();
 
                             } else {
                                 System.out.printf("%s is not a compatible file type.", trackFileName);
@@ -466,7 +481,7 @@ public class MusicLibrary {
         // Check for playable file container
         if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
-            importTrackMetadata();
+            importParse();
 
             try {
                 // Check for slashes which could interfere with file creation
@@ -521,7 +536,7 @@ public class MusicLibrary {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     // For Standard Initialization
-    private void parseMetadata() {
+    private void standardParse() {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();
@@ -595,7 +610,7 @@ public class MusicLibrary {
     }
 
     // For Recursive Initialization
-    private void recursiveParse() {
+    private void recursiveParse(ArrayList<String> tempArtistArray) {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();
@@ -671,8 +686,8 @@ public class MusicLibrary {
 
             trackMetadataObservableList.add(trackMetadata);
 
-            if (!artistNameObservableList.contains(trackArtist)) {
-                artistNameObservableList.add(trackArtist);
+            if (!tempArtistArray.contains(trackArtist)) {
+                tempArtistArray.add(trackArtist);
             }
 
             System.out.println("Importing: " + trackFileName);
@@ -685,7 +700,7 @@ public class MusicLibrary {
     }
 
     // For Track/Album/Artist Importing
-    private void importTrackMetadata() {
+    private void importParse() {
         try {
             AudioFile audioFile = AudioFileIO.read(new File(trackPathStr));
             Tag tag = audioFile.getTag();

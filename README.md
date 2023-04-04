@@ -37,21 +37,24 @@ Report Bug:&ensp;Ctrl + B<br>
 ## License
 
 ## About the program and developer<br>
-<p>At roughly ~13500 lines of code and 450+ hours of work, this mp3 player is my first full 
-software release and largest project to date. I chose javaFX as the base style to develop 
-in after spotting the Media object in my java textbook.
-
-While the textbook called for making a small Video player with a single button I wanted
-to use it to create a mp3 player to handle the music on my PC, since after updating
-my OS 4 years ago I have been lazy and neglected to re-install iTunes or any other music player.
-
-What started as a music player project quickly developed into a file management system project.
-The actual music player and GUI only took a few weeks to put together and work properly. The real
-issue of reading, writing, and presenting audio file metadata within the javaFX GUI objects
-took about 2/3 of the project development time. I have no experience using winAmp however I
-wanted to design this program to be as lightweight, simple, and accessible as possible.
-
-The release of this program is subject to update based on user interest, feedback, and bug reports.
-If you enjoy using the App and would like to support in developing it further along with new applications,
-please consider subscribing to my Patrion at _______ or donating directly to my Paypal at ________.
-Any donation is greatly appreciate. Thanks for being a user!</p>
+<p>
+At roughly ~13500 lines of code and 450+ hours of work, this mp3 player is my first full<br> 
+software release and largest project to date. I chose javaFX as the base style to develop<br> 
+in after spotting the Media object in my java textbook.<br>
+<br>
+While the textbook called for making a small Video player with a single button I wanted<br>
+to use it to create a mp3 player to handle the music on my PC, since after updating<br>
+my OS 4 years ago I have been lazy and neglected to re-install iTunes or any other music player
+save VLC.<br>
+<br>
+What started as a music player project quickly developed into a file management system project.<br>
+The actual music player and GUI only took a few weeks to put together and work properly. The real<br>
+issue of reading, writing, and presenting audio file metadata within the javaFX GUI objects<br>
+took about 2/3 of the project development time. I have no experience using winAmp, however I<br>
+wanted to design this program similarly- to be as lightweight, simple, and accessible as possible.<br>
+<br>
+The release of this program is subject to update based on user interest, feedback, and bug reports.<br>
+If you enjoy using the App and would like to support in developing it further along with new applications,<br>
+please consider subscribing to my Patrion at _______ or donating directly to my Paypal at ________.<br>
+Any donation is greatly appreciate. Thanks for trying out ______!<br>
+</p>

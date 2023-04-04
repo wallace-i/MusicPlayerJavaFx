@@ -151,10 +151,10 @@ public class SettingsController extends AnchorPane {
                 musicLibrary, userSettings, directoryLabel, stage);
 
         // Set/Show Stage
-        stage.setAlwaysOnTop(true);
         stage.setTitle("Settings");
-        stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
         stage.show();
 
     }
@@ -168,13 +168,13 @@ public class SettingsController extends AnchorPane {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    public void rootDirectoryClicked(MouseEvent mouseClick) throws IOException {
+    public void musicFolderClicked(MouseEvent mouseClick) throws IOException {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
 
         // Standard or Recursive initialization chooser
         InitializeSelectionController initializeSelectionController = new InitializeSelectionController();
         initializeSelectionController.showInitializationWindow(musicLibrary, tableViewLibrary, listViewLibrary, userSettings,
-                artistListView, playlistListView, trackTableView,  rootDirectoryLabel);
+                artistListView, playlistListView, trackTableView,  rootDirectoryLabel, stage);
 
         // write files on close
         listViewLibrary.setOutputListsOnClose();
@@ -188,12 +188,12 @@ public class SettingsController extends AnchorPane {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setAlwaysOnTop(false);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Reset Library");
-        alert.setHeaderText("This will only reset the application data\n and will not affect your files or folders.");
-        alert.setContentText("Would you like to continue?");
+        Alert resetAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        resetAlert.setTitle("Reset Library");
+        resetAlert.setHeaderText("This will only reset the application data\n and will not affect your files or folders.");
+        resetAlert.setContentText("Would you like to continue?");
 
-        if (alert.showAndWait().get() == ButtonType.OK) {
+        if (resetAlert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Resetting Music Library.");
 
             // Clear current list file and observable list
@@ -264,6 +264,13 @@ public class SettingsController extends AnchorPane {
                 System.out.println("Initialization Failed.");
                 progressBarController.close();
                 stage.setAlwaysOnTop(true);
+
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.initOwner(stage);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Initialization Failed");
+                errorAlert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+                errorAlert.showAndWait();
             });
 
             // Start initializeMusicLibrary() thread

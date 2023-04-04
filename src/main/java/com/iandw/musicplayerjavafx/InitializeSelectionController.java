@@ -54,13 +54,15 @@ public class InitializeSelectionController {
     private ListView<String> artistListView;
     private ListView<String> playlistListView;
     private TableView<TrackMetadata> trackTableView;
+    private Stage settingsStage;
 
 
 
     public void initializeData(MusicLibrary musicLibrary, TableViewLibrary tableViewLibrary,
                                ListViewLibrary listViewLibrary, UserSettings userSettings,
                                ListView<String> artistListView, ListView<String> playlistListView,
-                               TableView<TrackMetadata> trackTableView,  Label rootDirectoryLabel)
+                               TableView<TrackMetadata> trackTableView,  Label rootDirectoryLabel,
+                               Stage settingsStage)
     {
         this.musicLibrary = musicLibrary;
         this.tableViewLibrary = tableViewLibrary;
@@ -70,6 +72,7 @@ public class InitializeSelectionController {
         this.playlistListView = playlistListView;
         this.trackTableView = trackTableView;
         this.rootDirectoryLabel = rootDirectoryLabel;
+        this.settingsStage = settingsStage;
 
         setLabelText();
     }
@@ -90,7 +93,8 @@ public class InitializeSelectionController {
     public void showInitializationWindow(MusicLibrary musicLibrary, TableViewLibrary tableViewLibrary,
                                          ListViewLibrary listViewLibrary, UserSettings userSettings,
                                          ListView<String> artistListView, ListView<String> playlistListView,
-                                         TableView<TrackMetadata> trackTableView, Label rootDirectoryLabel) throws IOException
+                                         TableView<TrackMetadata> trackTableView, Label rootDirectoryLabel,
+                                         Stage settingsStage) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("initializeselection.fxml"));
         Stage stage = new Stage();
@@ -98,13 +102,13 @@ public class InitializeSelectionController {
         InitializeSelectionController controller = loader.getController();
 
         controller.initializeData(musicLibrary, tableViewLibrary, listViewLibrary, userSettings,
-                artistListView, playlistListView, trackTableView, rootDirectoryLabel);
+                artistListView, playlistListView, trackTableView, rootDirectoryLabel, settingsStage);
 
         stage.setTitle("Initialize Library");
-        stage.setAlwaysOnTop(true);
-        stage.requestFocus();
-        stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.requestFocus();
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -113,7 +117,7 @@ public class InitializeSelectionController {
         textAreaStandard.setText("""
                 Best for organized music libraries that follow the file structure:
                 Music Folder -> Artist Folder -> Album Folder -> Track.mp3
-                -or-
+                _or_
                 Music Folder -> Artist Folder -> Track.mp3
                 Names and titles are obtained from folder and file names.""");
 
@@ -203,6 +207,14 @@ public class InitializeSelectionController {
                 task.setOnFailed(evt -> {
                     System.out.println("Initialization Failed.");
                     progressBarController.close();
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(settingsStage);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Initialization Failed");
+                    alert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+                    alert.showAndWait();
+
                 });
 
                 // Start initializeMusicLibrary() thread
@@ -298,6 +310,13 @@ public class InitializeSelectionController {
                 task.setOnFailed(evt -> {
                     System.out.println("Initialization Failed.");
                     progressBarController.close();
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(settingsStage);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Initialization Failed");
+                    alert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+                    alert.showAndWait();
                 });
 
                 // Start initializeMusicLibrary() thread

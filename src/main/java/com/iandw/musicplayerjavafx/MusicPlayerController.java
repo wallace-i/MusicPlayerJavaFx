@@ -141,6 +141,7 @@ public class MusicPlayerController {
     private MenuItem consoleLogMenuItem;
     @FXML
     private MenuItem reportBugMenuItem;
+
     private Image defaultAlbumImage;
     private ImageFileLogic imageFileLogic;
     private MediaPlayer mediaPlayer;
@@ -153,7 +154,6 @@ public class MusicPlayerController {
     private final UserSettings userSettings;
     private final ExecutorService executorService;
     private final ByteArrayOutputStream consoleOutput;
-
     private final Stage stage;
     private String artistNameString;
     private String playlistTitleString;

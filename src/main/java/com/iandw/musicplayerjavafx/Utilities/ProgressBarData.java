@@ -40,7 +40,12 @@ public class ProgressBarData implements java.io.Serializable {
     // Increments every time a file is processed in the innermost folder
     public void increaseProgress(String trackPathStr) {
         fileIndex++;
-        setProgressDouble(fileIndex / fileAmount);
+        double percent = fileIndex / fileAmount;
+
+        if (percent < 0.0) { percent = 0.0; }
+        if (percent > 1.0) { percent = 1.0; }
+
+        setProgressDouble(percent);
         setTrackPathStr(trackPathStr);
     }
 
