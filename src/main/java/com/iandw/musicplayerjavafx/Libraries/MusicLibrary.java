@@ -326,13 +326,6 @@ public class MusicLibrary {
                 // Album Folder
                 for (Path albumPath : artistDirectory) {
                     if (Files.isDirectory(albumPath)) {
-
-                        // Break on interruption
-                        if (Thread.currentThread().isInterrupted()) {
-                            System.out.println("Cancelling gracefully...");
-                            break;
-                        }
-
                         DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
                         albumDirectoryStr = albumPath.toString().substring(albumPath.toString().lastIndexOf(File.separator) + 1);
 

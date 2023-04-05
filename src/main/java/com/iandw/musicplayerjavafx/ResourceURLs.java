@@ -9,23 +9,24 @@ package com.iandw.musicplayerjavafx;
 
 import java.util.Objects;
 
+//TODO => Fix this for jar file
 public class ResourceURLs {
-    private static final String settingsURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String settingsURL = Objects.requireNonNull(App.class.getResource(
                     "settings.json")).toString().substring(6);
 
-    private static final String artistlistURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String artistlistURL = Objects.requireNonNull(App.class.getResource(
                     "artistlist.ser")).toString().substring(6);
 
-    private static final String tracklistURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String tracklistURL = Objects.requireNonNull(App.class.getResource(
                     "tracklist.ser")).toString().substring(6);
 
-    private static final String playlistsURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String playlistsURL = Objects.requireNonNull(App.class.getResource(
                     "playlists.ser")).toString().substring(6);
 
-    private static final String consolelogURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String consolelogURL = Objects.requireNonNull(App.class.getResource(
                     "consolelog.txt")).toString().substring(6);
 
-    private static final String autoplayiconURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String autoplayiconURL = Objects.requireNonNull(App.class.getResource(
                     "autoplay2.png")).toString().substring(6);
 
 
@@ -35,25 +36,25 @@ public class ResourceURLs {
      *
      */
 
-    private static final String musicnoteslightURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnoteslightURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-light.png")).toString().substring(6);
 
-    private static final String musicnotesdarkURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotesdarkURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-dark.png")).toString().substring(6);
 
-    private static final String musicnotesgreenURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotesgreenURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-green.png")).toString().substring(6);
 
-    private static final String musicnotesblueURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotesblueURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-blue.png")).toString().substring(6);
 
-    private static final String musicnotesredURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotesredURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-red.png")).toString().substring(6);
 
-    private static final String musicnotespinkURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotespinkURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-pink.png")).toString().substring(6);
 
-    private static final String musicnotesconsoleURL = Objects.requireNonNull(SettingsController.class.getResource(
+    private static final String musicnotesconsoleURL = Objects.requireNonNull(App.class.getResource(
                     "musicnotes-console.png")).toString().substring(6);
 
 
