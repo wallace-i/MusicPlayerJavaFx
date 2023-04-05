@@ -25,6 +25,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import javafx.application.HostServices;
@@ -1092,27 +1096,215 @@ public class MusicPlayerController {
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     @FXML
-    private void importArtistClicked() throws IOException {
-        musicLibrary.importArtist();
-        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
-        addArtistFromImport();
+    private void importArtistClicked() {
+        // Select Artist
+        DirectoryChooser artistChooser = new DirectoryChooser();
+        artistChooser.setTitle("Select Artist Folder");
+        artistChooser.setInitialDirectory((new File(".")));
+
+        // Set Stage, show artistChooser Dialog
+        Stage stage = new Stage();
+        File file = artistChooser.showDialog(stage);
+
+        // Execute import on new Thread for task interruptions/succeed/fail feedback
+        // and to get import off of Application thread
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    musicLibrary.importArtist(file);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        throw new InterruptedIOException();
+                    }
+
+                    Platform.runLater(() -> {
+                        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+                        addArtistFromImport();
+                    });
+
+                    System.out.printf("Finished importing %s.%n", file.toString());
+
+                } catch (InterruptedIOException consumed) {
+                    System.out.println("Import failed.");
+                }
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(evt -> {
+            System.out.println("Import succeeded.");
+
+            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
+
+            // Simulate mouse click to update tableview with imported metadata
+            if (musicLibrary.getArtistNameStr() != null) {
+                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                        false, false, false, false, true, false,
+                        false, true, false, false, null);
+
+                artistListView.fireEvent(mouseEvent);
+            }
+        });
+
+        task.setOnFailed(evt -> {
+            System.out.println("Import Failed.");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Initialization Failed");
+            alert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+            alert.showAndWait();
+        });
+
+        // Start initializeMusicLibrary() thread
+        Thread thread = new Thread(task);
+        thread.start();
+
+        // Write to File on close
+        Platform.runLater(tableViewLibrary::setOutputTrackListOnClose);
     }
 
     @FXML
-    private void importAlbumClicked() throws IOException {
-        musicLibrary.importAlbum();
-        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
-        addArtistFromImport();
+    private void importAlbumClicked() {
+        // Select album folder
+        DirectoryChooser albumChooser = new DirectoryChooser();
+        albumChooser.setTitle("Select Album Folder");
+        albumChooser.setInitialDirectory((new File(".")));
+
+        // Set Stage, show albumChooser Dialog
+        Stage stage = new Stage();
+        File file = albumChooser.showDialog(stage);
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    musicLibrary.importAlbum(file);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        throw new InterruptedIOException();
+                    }
+
+                    Platform.runLater(() -> {
+                        tableViewLibrary.setTrackObservableList(musicLibrary.getTrackObservableList());
+                        addArtistFromImport();
+                    });
+
+                    System.out.printf("Finished importing %s.%n", file.toString());
+
+                } catch (InterruptedIOException consumed) {
+                    System.out.println("Import failed.");
+                }
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(evt -> {
+            System.out.println("Import succeeded.");
+
+            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
+
+            // Simulate mouse click to update tableview with imported metadata
+            if (musicLibrary.getArtistNameStr() != null) {
+                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                        false, false, false, false, true, false,
+                        false, true, false, false, null);
+
+                artistListView.fireEvent(mouseEvent);
+            }
+        });
+
+        task.setOnFailed(evt -> {
+            System.out.println("Import Failed.");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Initialization Failed");
+            alert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+            alert.showAndWait();
+        });
+
+        // Start initializeMusicLibrary() thread
+        Thread thread = new Thread(task);
+        thread.start();
+
+        // Write to File on close
+        Platform.runLater(tableViewLibrary::setOutputTrackListOnClose);
     }
 
     @FXML
-    private void importTrackClicked() throws IOException {
-        musicLibrary.importTrack();
+    private void importTrackClicked() {
+        // Select track file
+        FileChooser trackChooser = new FileChooser();
+        trackChooser.setTitle("Select Track File");
+        trackChooser.setInitialDirectory((new File(".")));
 
-        if (!musicLibrary.getTrackObservableList().isEmpty()) {
-            tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
-            addArtistFromImport();
-        }
+        // Set Stage, show trackChooser Dialog
+        Stage stage = new Stage();
+        File file = trackChooser.showOpenDialog(stage);
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    musicLibrary.importTrack(file);
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        throw new InterruptedIOException();
+                    }
+
+                    Platform.runLater(() -> {
+                        if (!musicLibrary.getTrackObservableList().isEmpty()) {
+                            tableViewLibrary.addTrack(musicLibrary.getImportedTrack());
+                            addArtistFromImport();
+                        }
+                    });
+
+                    System.out.printf("Finished importing %s.%n", file.toString());
+
+                } catch (InterruptedIOException consumed) {
+                    System.out.println("Import failed.");
+                }
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(evt -> {
+            System.out.println("Import succeeded.");
+
+            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
+
+            // Simulate mouse click to update tableview with imported metadata
+            if (musicLibrary.getArtistNameStr() != null) {
+                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                        false, false, false, false, true, false,
+                        false, true, false, false, null);
+
+                artistListView.fireEvent(mouseEvent);
+            }
+        });
+
+        task.setOnFailed(evt -> {
+            System.out.println("Import Failed.");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Initialization Failed");
+            alert.setContentText("Invalid file type or folder hierarchy.\nCheck console log for details.");
+            alert.showAndWait();
+        });
+
+        // Start initializeMusicLibrary() thread
+        Thread thread = new Thread(task);
+        thread.start();
+
+        // Write to File on close
+        Platform.runLater(tableViewLibrary::setOutputTrackListOnClose);
+
     }
 
     // Add artist name to list view and save to file if not available
@@ -1123,9 +1315,6 @@ public class MusicPlayerController {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());
         }
-
-        // Write to File on close
-        tableViewLibrary.setOutputTrackListOnClose();
     }
 
     @FXML

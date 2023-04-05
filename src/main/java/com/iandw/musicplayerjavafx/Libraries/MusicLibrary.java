@@ -21,7 +21,7 @@
  *                  3. Track - imports a single track.
  *
  *              Import notes:
- *                  - All import modules use a strict file hierarchy, no recursive function.
+ *                  - All import methods use a strict file hierarchy, no recursive function.
  *                  - Imported files are all copied over into root directory (not moved).
  *                  - Imported files will create a new directory if Artist and/or Album does not
  *                    currently exist.
@@ -305,27 +305,21 @@ public class MusicLibrary {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          IMPORT MODULES
+     *                          IMPORT METHODS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    //
-    //      IMPORT ARTIST
-    //
-    public void importArtist() throws IOException {
+    /**
+     * importArtist() - Imports track data via Artist folder. File hierarchy includes:
+     *                  Artist -> Album -> Track.mp3 or
+     *                  Artist -> Track.mp3
+     * @throws IOException
+     */
+    public void importArtist(File file) throws IOException {
         importCategory = ImportCategory.ARTIST;
 
         // Clear list to write Artist's tracks
         trackMetadataObservableList.clear();
-
-        // Select Artist
-        DirectoryChooser artistChooser = new DirectoryChooser();
-        artistChooser.setTitle("Select Artist Folder");
-        artistChooser.setInitialDirectory((new File(".")));
-
-        // Set Stage, show artistChooser Dialog
-        Stage stage = new Stage();
-        File file = artistChooser.showDialog(stage);
 
         // Import Artist metadata into Music Library
         if (file != null) {
@@ -337,11 +331,20 @@ public class MusicLibrary {
 
                 index = 0;
 
+                // Album Folder
                 for (Path albumPath : artistDirectory) {
                     if (Files.isDirectory(albumPath)) {
+
+                        // Break on interruption
+                        if (Thread.currentThread().isInterrupted()) {
+                            System.out.println("Cancelling gracefully...");
+                            break;
+                        }
+
                         DirectoryStream<Path> albumDirectory = Files.newDirectoryStream(albumPath);
                         albumDirectoryStr = albumPath.toString().substring(albumPath.toString().lastIndexOf(File.separator) + 1);
 
+                        // Tracks in Album
                         for (Path trackPath : albumDirectory) {
                             if (Files.isRegularFile(trackPath)) {
                                 if (Files.exists(trackPath)) {
@@ -354,6 +357,7 @@ public class MusicLibrary {
                         }
 
                     } else {
+                        // No album folder, Tracks in Artist
                         if (Files.exists(albumPath)) {
                             trackPathStr = albumPath.toAbsolutePath().toString();
                             trackFileName = albumPath.getFileName().toString();
@@ -362,6 +366,7 @@ public class MusicLibrary {
                             // Check for playable file container
                             if (supportedFileTypes.contains(trackContainerType.toLowerCase())) {
 
+                                // Standard Parse ok here
                                 standardParse();
 
                             } else {
@@ -379,23 +384,16 @@ public class MusicLibrary {
         }
     }
 
-    //
-    //      IMPORT ALBUM
-    //
-    public void importAlbum() throws IOException {
+    /**
+     * importAlbum() - Imports Album metadata, simple file Hierarchy:
+     *                  Album Folder -> Track.mp3
+     * @throws IOException
+     */
+    public void importAlbum(File file) throws IOException {
         importCategory = ImportCategory.ALBUM;
 
         // Clear list to write album
         trackMetadataObservableList.clear();
-
-        // Select album folder
-        DirectoryChooser albumChooser = new DirectoryChooser();
-        albumChooser.setTitle("Select Album Folder");
-        albumChooser.setInitialDirectory((new File(".")));
-
-        // Set Stage, show albumChooser Dialog
-        Stage stage = new Stage();
-        File file = albumChooser.showDialog(stage);
 
         // Import Album metadata into Music Library
         if (file != null) {
@@ -430,23 +428,15 @@ public class MusicLibrary {
 
     }
 
-    //
-    //      IMPORT TRACK
-    //
-    public void importTrack() throws IOException {
+    /**
+     * importTrack() - imports a single audio file into the music library
+     * @throws IOException
+     */
+    public void importTrack(File file) throws IOException {
         importCategory = ImportCategory.TRACK;
 
         // Clear list to write track
         trackMetadataObservableList.clear();
-
-        // Select track file
-        FileChooser trackChooser = new FileChooser();
-        trackChooser.setTitle("Select Track File");
-        trackChooser.setInitialDirectory((new File(".")));
-
-        // Set Stage, show trackChooser Dialog
-        Stage stage = new Stage();
-        File file = trackChooser.showOpenDialog(stage);
 
         // Import Track metadata into Music Library
         if (file != null) {
@@ -531,7 +521,7 @@ public class MusicLibrary {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          PARSE METADATA MODULES
+     *                          PARSE METADATA METHODS
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

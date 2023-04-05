@@ -334,7 +334,7 @@ public class SettingsController extends AnchorPane {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          THEMES COMBOBOX
+     *                          THEMES COMBO BOX
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

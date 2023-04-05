@@ -67,7 +67,7 @@ public class ListViewLibrary implements Runnable {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          ADD / REMOVE MODULES
+     *                          ADD / REMOVE
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -75,7 +75,7 @@ public class ListViewLibrary implements Runnable {
         outputArtistOnClose = true;
 
         // If empty remove empty message
-        if (artistObservableList.contains(noPlaylists)) {
+        if (artistObservableList.contains(noArtists)) {
             artistObservableList.remove(0);
         }
 

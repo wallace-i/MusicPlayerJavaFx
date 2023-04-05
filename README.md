@@ -38,8 +38,8 @@ Report Bug:&ensp;Ctrl + B<br>
 
 ## About the program and developer<br>
 <p>
-At roughly ~13500 lines of code and 450+ hours of work, this mp3 player is my first full<br> 
-software release and largest project to date. I chose javaFX as the base style to develop<br> 
+At roughly ~15000 lines of code, this audio media player is my first full software <br> 
+release and largest project to date. I chose javaFX as the base style to develop<br> 
 in after spotting the Media object in my java textbook.<br>
 <br>
 While the textbook called for making a small Video player with a single button I wanted<br>

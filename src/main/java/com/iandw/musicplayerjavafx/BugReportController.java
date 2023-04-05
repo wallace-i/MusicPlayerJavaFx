@@ -65,7 +65,7 @@ public class BugReportController {
 
 
     /**
-     * showBugReportWindow() - entry point to bug report module
+     * showBugReportWindow() - entry point to bug report object
      *
      * @param consoleOutput => Allow user to 'attach' console log in bug report
      * @throws IOException

@@ -94,7 +94,7 @@ public class ListViewController {
      * @param trackTableView => Access Table View to edit all visible tracks related to List View selection
      * @param listViewLibrary => Access artist list and playlist data
      * @param tableViewLibrary => Access track metadata
-     * @param trackIndex => Get Table View table size for editing modules
+     * @param trackIndex => Get Table View table size for editing methods
      * @param windowTitle => Switch based on Context Menu Item selection
      * @param menuSelection => String from List View selection model (Artist name or Playlist)
      * @throws IOException
@@ -286,7 +286,7 @@ public class ListViewController {
 
     /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      *
-     *                          EDIT PLAYLIST / ARTIST MODULES
+     *                          EDIT PLAYLIST / ARTIST
      *
      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     private void editPlaylist() {

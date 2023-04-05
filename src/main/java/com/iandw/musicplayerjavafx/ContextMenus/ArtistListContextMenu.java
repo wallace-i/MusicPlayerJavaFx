@@ -46,10 +46,11 @@ public class ArtistListContextMenu {
 
         // Add to list
         MenuItem addArtist = new MenuItem("Add Artist");
+        SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
         // Edit list
-        MenuItem editArtist = new MenuItem("Edit");
-        SeparatorMenuItem divider1 = new SeparatorMenuItem();
+        MenuItem editArtist = new MenuItem("Edit Name");
+
 
         // Remove from list
         MenuItem removeArtist = new MenuItem("Remove");
@@ -83,7 +84,7 @@ public class ArtistListContextMenu {
             }
         });
 
-        contextMenu.getItems().addAll(addArtist, editArtist, divider1, removeArtist, divider2, openInExplorer);
+        contextMenu.getItems().addAll(addArtist, divider1, editArtist, removeArtist, divider2, openInExplorer);
 
         artistListView.setContextMenu(contextMenu);
     }

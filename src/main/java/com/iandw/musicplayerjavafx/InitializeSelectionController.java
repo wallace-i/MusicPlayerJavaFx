@@ -78,7 +78,7 @@ public class InitializeSelectionController {
     }
 
     /**
-     * showInitializationWindow() - entry point to Music Library initialization modules
+     * showInitializationWindow() - entry point to Music Library initialization methods
      *
      * @param musicLibrary => Accesses and processes user audio file data
      * @param tableViewLibrary => Access Observable List

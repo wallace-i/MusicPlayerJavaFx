@@ -38,7 +38,7 @@ public class TrackMetadata {
      *                     "C:/User/Music/AristName/AlbumTitle/TrackTitle.mp3")
      *
      * @param playlistStr => Name of playlist track is "saved" to. Track will be found based on search predicate
-     *                    modules in SearchTableView.java
+     *                    methods in SearchTableView.java
      */
     public TrackMetadata(String artistNameStr,    String trackFileNameStr, String trackContainerTypeStr,
                          String trackTitleStr,    String albumTitleStr,    String trackGenreStr,

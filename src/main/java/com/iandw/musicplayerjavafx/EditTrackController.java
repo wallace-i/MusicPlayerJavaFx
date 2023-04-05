@@ -65,7 +65,7 @@ public class EditTrackController {
     }
 
     /**
-     * showEditWindow() - entry point to track metadata editing popup module
+     * showEditWindow() - entry point to track metadata editing popup GUI
      *
      * @param columnName => Switch selection logic - how to edit track
      * @param mutableTrackData => Current Table View cell string data

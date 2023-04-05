@@ -46,10 +46,10 @@ public class PlaylistContextMenu {
 
         // Add to list
         MenuItem createPlaylist = new MenuItem("Create Playlist");
+        SeparatorMenuItem divider1 = new SeparatorMenuItem();
 
         // Edit List
-        MenuItem editPlaylist = new MenuItem("Edit");
-        SeparatorMenuItem divider1 = new SeparatorMenuItem();
+        MenuItem editPlaylist = new MenuItem("Edit Title");
 
         // Remove from list
         MenuItem removePlaylist = new MenuItem("Remove");
@@ -73,7 +73,7 @@ public class PlaylistContextMenu {
             removePlaylist(artistListView, playlistListView, trackTableView, listViewLibrary, tableViewLibrary, trackIndex);
         });
 
-        contextMenu.getItems().addAll(createPlaylist, editPlaylist, divider1, removePlaylist, divider2, openInExplorer);
+        contextMenu.getItems().addAll(createPlaylist, divider1, editPlaylist, removePlaylist, divider2, openInExplorer);
 
         playlistListView.setContextMenu(contextMenu);
 
