@@ -46,16 +46,8 @@ import java.util.*;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.FieldKey;
-
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.jaudiotagger.tag.TagException;
 
 public class MusicLibrary {
     private final ObservableList<TrackMetadata> trackMetadataObservableList;

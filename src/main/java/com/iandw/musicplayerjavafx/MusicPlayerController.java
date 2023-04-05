@@ -2,7 +2,8 @@
  *      Author: Ian Wallace, copyright 2022 all rights reserved.
  *      Application: MusicPlayer
  *      Class: MusicPlayerController.java
- *      Notes: Main app controller - controls MusicPlayer, TableView, and ListView GUI objects.
+ *      Notes: Main app controller - handles MusicPlayer, TableView, and ListView GUI objects
+ *              Media playback, and Menu Items.
  */
 
 package com.iandw.musicplayerjavafx;
@@ -255,7 +256,7 @@ public class MusicPlayerController {
             listViewLibrary.setOutputListsOnClose();
             tableViewLibrary.setOutputTrackListOnClose();
 
-        // Else initialize data normally from .ser files
+        // Else set List View objects with String data from .ser files
         } else {
             // Playlist and Artist List Data => artistPlaylistListView
             artistListView.setItems(listViewLibrary.getArtistObservableList());
@@ -1135,17 +1136,7 @@ public class MusicPlayerController {
 
         task.setOnSucceeded(evt -> {
             System.out.println("Import succeeded.");
-
-            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
-
-            // Simulate mouse click to update tableview with imported metadata
-            if (musicLibrary.getArtistNameStr() != null) {
-                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
-                        false, false, false, false, true, false,
-                        false, true, false, false, null);
-
-                artistListView.fireEvent(mouseEvent);
-            }
+            clickArtistNameAfterImport();
         });
 
         task.setOnFailed(evt -> {
@@ -1204,17 +1195,7 @@ public class MusicPlayerController {
 
         task.setOnSucceeded(evt -> {
             System.out.println("Import succeeded.");
-
-            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
-
-            // Simulate mouse click to update tableview with imported metadata
-            if (musicLibrary.getArtistNameStr() != null) {
-                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
-                        false, false, false, false, true, false,
-                        false, true, false, false, null);
-
-                artistListView.fireEvent(mouseEvent);
-            }
+            clickArtistNameAfterImport();
         });
 
         task.setOnFailed(evt -> {
@@ -1275,17 +1256,7 @@ public class MusicPlayerController {
 
         task.setOnSucceeded(evt -> {
             System.out.println("Import succeeded.");
-
-            artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
-
-            // Simulate mouse click to update tableview with imported metadata
-            if (musicLibrary.getArtistNameStr() != null) {
-                MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
-                        false, false, false, false, true, false,
-                        false, true, false, false, null);
-
-                artistListView.fireEvent(mouseEvent);
-            }
+            clickArtistNameAfterImport();
         });
 
         task.setOnFailed(evt -> {
@@ -1314,6 +1285,19 @@ public class MusicPlayerController {
         {
             listViewLibrary.addArtist(musicLibrary.getArtistNameStr());
             artistListView.setItems(listViewLibrary.getArtistObservableList());
+        }
+    }
+
+    // Simulate mouse click to update tableview with imported metadata
+    private void clickArtistNameAfterImport() {
+        artistListView.getSelectionModel().select(musicLibrary.getArtistNameStr());
+
+        if (musicLibrary.getArtistNameStr() != null) {
+            MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                    false, false, false, false, true, false,
+                    false, true, false, false, null);
+
+            artistListView.fireEvent(mouseEvent);
         }
     }
 
