@@ -51,7 +51,7 @@ public class Utils {
         PrintWriter clearArtistList = new PrintWriter(ResourceURLs.getArtistListURL());
         clearArtistList.close();
 
-        PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistsURL());
+        PrintWriter clearPlaylists = new PrintWriter(ResourceURLs.getPlaylistURL());
         clearPlaylists.close();
     }
 

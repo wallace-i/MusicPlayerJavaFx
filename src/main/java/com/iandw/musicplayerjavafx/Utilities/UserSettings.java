@@ -14,6 +14,8 @@ import com.iandw.musicplayerjavafx.FileIO.SettingsFileIO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.IOException;
+
 public class UserSettings implements Runnable {
     private String rootMusicDirectoryString;
     private String themeFileNameString;
@@ -24,7 +26,12 @@ public class UserSettings implements Runnable {
 
     @Override
     public void run() {
-        JSONArray jsonArray = SettingsFileIO.jsonFileInput();
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = SettingsFileIO.jsonFileInput();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         jsonArray.forEach( settings -> parseSettingsObject( (JSONObject) settings));
 
         System.out.println("Root Directory: " + rootMusicDirectoryString);

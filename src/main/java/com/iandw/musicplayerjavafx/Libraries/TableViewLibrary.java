@@ -38,19 +38,20 @@ public class TableViewLibrary implements Runnable {
     @Override
     public void run() {
         // Load trackTableView
-        try {
-            if (Files.size(Path.of(ResourceURLs.getTrackListURL())) > 0) {
+//        try {
+            File trackListFile = new File(String.valueOf(ListViewLibrary.class.getResource("tracklist.ser")));
+            if (trackListFile.length() > 0) {
                 trackMetadataObservableList = FXCollections.observableArrayList(TrackListFileIO.inputTrackObservableList());
 
             } else {
                 trackMetadataObservableList = FXCollections.observableArrayList();
 
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void createFilteredList() {

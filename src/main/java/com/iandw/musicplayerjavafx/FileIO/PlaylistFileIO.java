@@ -30,7 +30,7 @@ public class PlaylistFileIO implements Serializable {
         try {
             // Read from file
             System.out.println("Reading from playlists.ser");
-            InputStream in = Files.newInputStream(Path.of(ResourceURLs.getPlaylistsURL()));
+            InputStream in = Files.newInputStream(Path.of(ResourceURLs.getPlaylistURL()));
             ObjectInputStream ois = new ObjectInputStream(in);
             ArrayList<String> playlistArray = (ArrayList<String>) ois.readObject();
             ois.close();
@@ -58,7 +58,7 @@ public class PlaylistFileIO implements Serializable {
         try {
             // Write track objects to file
             System.out.println("Writing to playlists.ser");
-            OutputStream out = Files.newOutputStream(Path.of(ResourceURLs.getPlaylistsURL()));
+            OutputStream out = Files.newOutputStream(Path.of(ResourceURLs.getPlaylistURL()));
             ObjectOutputStream oos = new ObjectOutputStream(out);
             oos.writeObject(playlistsArrayList);
             oos.close();

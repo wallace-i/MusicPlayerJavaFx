@@ -8,14 +8,11 @@
 
 package com.iandw.musicplayerjavafx.FileIO;
 
+import com.iandw.musicplayerjavafx.Libraries.ListViewLibrary;
 import com.iandw.musicplayerjavafx.ResourceURLs;
 import com.iandw.musicplayerjavafx.Utilities.UserSettings;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,14 +29,17 @@ public class SettingsFileIO {
      *              2. Application Theme selection
      *              3. Music Library initialization type (Standard or Recursive)
      */
-    public static JSONArray jsonFileInput() {
+    public static JSONArray jsonFileInput() throws IOException {
 
         System.out.println("Reading user settings from JSON file.");
-        Path jsonURL = Paths.get(ResourceURLs.getSettingsURL());
+        File jsonFile = new File(ResourceURLs.getSettingsURL());
+//        final String jsonURL = jsonFile.getAbsolutePath();
         JSONParser jsonParser = new JSONParser();
         Object obj = new Object();
 
-        try (FileReader reader = new FileReader(String.valueOf(jsonURL))) {
+        InputStream is = ResourceURLs.class.getResourceAsStream("/com/iandw/musicplayerjavafx/settings.json");
+        //try (FileReader reader = new FileReader(jsonFile.getPath())) {
+        try (Reader reader = new InputStreamReader(is)) {
             obj = jsonParser.parse(reader);
 
         } catch (ParseException | IOException e) {

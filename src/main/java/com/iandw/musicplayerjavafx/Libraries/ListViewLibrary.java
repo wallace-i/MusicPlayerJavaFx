@@ -16,6 +16,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,34 +36,37 @@ public class ListViewLibrary implements Runnable {
     @Override
     public void run() {
         // Input artist data if file is not empty
-        try {
-            if (Files.size(Path.of(ResourceURLs.getArtistListURL())) > 0) {
+//        try {
+            File artistListFile = new File(String.valueOf(ListViewLibrary.class.getResource("artistlist.ser")));
+            if (artistListFile.length() > 0) {
                 artistObservableList = FXCollections.observableArrayList(ArtistListFileIO.inputArtistNameObservableList());
 
             } else {
                 artistObservableList = FXCollections.observableArrayList();
                 artistObservableList.add(noArtists);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException(e);
+//        }
 
         // Input playlist data if file is not empty
-        try {
-            if (Files.size(Path.of(ResourceURLs.getPlaylistsURL())) > 0) {
+//        try {
+//            if (Files.size(Path.of(ResourceURLs.getPlaylistURL())) > 0) {
+            File playlistFile = new File(String.valueOf(ListViewLibrary.class.getResource("playlist.ser")));
+            if (playlistFile.length() > 0) {
                 playlistObservableList = FXCollections.observableArrayList(PlaylistFileIO.inputPlaylistObservableList());
 
             } else {
                 playlistObservableList = FXCollections.observableArrayList();
                 playlistObservableList.add(noPlaylists);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException(e);
+//        }
 
     }
 
