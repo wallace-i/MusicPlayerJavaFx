@@ -5,6 +5,7 @@ module com.iandw.musicplayerjavafx {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires org.apache.maven.shared.artifact.transfer;
     requires javafx.media;
     requires java.desktop;
     requires json.simple;
@@ -14,6 +15,7 @@ module com.iandw.musicplayerjavafx {
     requires jakarta.mail;
     requires io.github.cdimascio.dotenv.java;
     requires org.eclipse.angus.activation;
+    requires org.kordamp.ikonli.bootstrapicons;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;
