@@ -40,7 +40,7 @@
         </SplitPane>
     </HBox>
     <HBox alignment="CENTER" layoutX="117.0" layoutY="419.0" prefHeight="25.0" prefWidth="524.0">
-        <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefWidth="55.0">
+        <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefHeight="15.0" prefWidth="55.0">
             <graphic>
                 <FontIcon iconLiteral="bi-skip-backward-fill" iconSize="13" styleClass="icon" />
             </graphic>
@@ -51,7 +51,7 @@
                 <Insets right="5.0" />
             </HBox.margin>
         </Button>
-        <Button fx:id="playPauseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#playPauseButtonPressed" prefWidth="55.0">
+        <Button fx:id="playPauseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#playPauseButtonPressed" prefHeight="15.0" prefWidth="55.0">
             <graphic>
                 <FontIcon fx:id="playIcon" iconLiteral="bi-play-fill" iconSize="13" styleClass="icon" />
             </graphic>
@@ -65,7 +65,7 @@
                 <Insets left="5.0" right="5.0" />
             </HBox.margin>
         </Button>
-        <Button fx:id="stopButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#stopButtonPressed" prefWidth="55.0">
+        <Button fx:id="stopButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#stopButtonPressed" prefHeight="15.0" prefWidth="55.0">
             <graphic>
                 <FontIcon iconLiteral="bi-stop-fill" iconSize="13" styleClass="icon" />
             </graphic>
@@ -76,7 +76,7 @@
                 <Insets left="5.0" right="5.0" />
             </HBox.margin>
         </Button>
-        <Button fx:id="nextButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#nextButtonPressed" prefHeight="17.0" prefWidth="62.0">
+        <Button fx:id="nextButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#nextButtonPressed" prefHeight="15.0" prefWidth="55.0">
             <graphic>
                 <FontIcon iconLiteral="bi-skip-forward-fill" iconSize="13" styleClass="icon" />
             </graphic>
@@ -89,10 +89,10 @@
         </Button>
         <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false">
             <padding>
-                <Insets left="40.0" right="5.0" />
+                <Insets right="5.0" />
             </padding>
             <HBox.margin>
-                <Insets />
+                <Insets left="45.0" />
             </HBox.margin>
         </RadioButton>
         <RadioButton fx:id="shuffleButton" mnemonicParsing="false">
@@ -118,17 +118,17 @@
     <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
         <Menu mnemonicParsing="false" text="File">
             <Menu mnemonicParsing="false" text="Import">
-                <MenuItem fx:id="importArtistMenuItem" mnemonicParsing="false" onAction="#importArtistClicked" text="Artist" >
+                <MenuItem fx:id="importArtistMenuItem" mnemonicParsing="false" onAction="#importArtistClicked" text="Artist">
                     <graphic>
                         <FontIcon iconLiteral="bi-person-fill" iconSize="12" styleClass="menu-icon" />
                     </graphic>
                 </MenuItem>
-                <MenuItem fx:id="importAlbumMenuItem" mnemonicParsing="false" onAction="#importAlbumClicked" text="Album" >
+                <MenuItem fx:id="importAlbumMenuItem" mnemonicParsing="false" onAction="#importAlbumClicked" text="Album">
                     <graphic>
                         <FontIcon iconLiteral="bi-disc" iconSize="12" styleClass="menu-icon" />
                     </graphic>
                 </MenuItem>
-                <MenuItem fx:id="importTrackMenuItem" mnemonicParsing="false" onAction="#importTrackClicked" text="Track" >
+                <MenuItem fx:id="importTrackMenuItem" mnemonicParsing="false" onAction="#importTrackClicked" text="Track">
                     <graphic>
                         <FontIcon iconLiteral="bi-music-note" iconSize="12" styleClass="menu-icon" />
                     </graphic>

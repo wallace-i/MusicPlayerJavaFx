@@ -4,7 +4,10 @@ A light-weight music player and library assistant by Ian Wallace. <br>
 <br>
 ## How To Install
 
+
 ## How To Use
+
+
 
 ## Keyboard Shortcuts:<br>
 ### Music Player Controls:<br>
@@ -57,4 +60,17 @@ The release of this program is subject to update based on user interest, feedbac
 If you enjoy using the App and would like to support in developing it further along with new applications,<br>
 please consider subscribing to my Patrion at _______ or donating directly to my Paypal at ________.<br>
 Any donation is greatly appreciate. Thanks for trying out ______!<br>
+</p>
+<br>
+<p>
+This software uses libraries from the following:<br>
+Oracle Java SDK version 18.0.1<br>
+JavaFX SDK 18.0.1<br>
+Apache<br>
+GoogleCode json-simple<br>
+JAudioTagger<br>
+jsoup<br>
+kordamp ikonli bootstrapicons<br>
+Tea cup by Karen Arnold at PublicDomainPictures.net
+<br>
 </p>
