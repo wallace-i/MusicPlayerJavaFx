@@ -33,7 +33,7 @@ mute box. In the center is the seeker slider with previous, play/pause, stop, an
 for 'auto play' which will play the next track in sequence, 'shuffle', and 'repeat'. The bottom right is reserved for album art<br>
 images contained within the audio file metadata (some tracks may not have album art).
 ### Bugs or Issues
-Contact the developer at bugreportsl@gmail.com for any issues you may encounter with the application or if you need assistance<br>
+Contact the developer at bugreportsldev@gmail.com for any issues you may encounter with the application or if you need assistance<br>
 setting it up.<br>
 ## Keyboard Shortcuts:<br>
 ### Music Player Controls:<br>
