@@ -89,7 +89,7 @@ issue of reading, writing, and presenting audio file metadata within the javaFX 
 took about 2/3 of the project development time. I have no experience using winAmp, however I<br>
 wanted to design this program similarly- to be as lightweight, simple, and accessible as possible.<br>
 </p>
-<br>
+
 ## BOM<br>
 <p>
 This software uses libraries from the following:<br>
