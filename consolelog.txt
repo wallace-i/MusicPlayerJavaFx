@@ -1,0 +1,3336 @@
+Reading user settings from JSON file.
+Root Directory: C:\dev\DemoMusic
+Theme File: style-light.css
+Initializing metadata
+Total Files: 443.0
+Initializing observable list
+Importing: 01 Orion.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000140 0000000000CF5E80 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000A70 00000AA1 000052B0 000057C7 00045D76 0001ED6D 00007FFF 00008000 0001CD7F 0001E4B7
+	©nam:Orion
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:1/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695730905
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000001
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>10734666</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 02 Death By Robot.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000003AF 0000000000996411 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 000011C1 00001203 00005C8F 00004D2D 0002D5A0 0002D5A0 00008000 00008000 00013978 0001D34D
+	©nam:Death By Robot
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:2/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695730906
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GBTDG1300529
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>8071923</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 03 Lonely Mountain.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 0000024E 0000000000E50972 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 000011C1 000011A9 0000513E 000056BD 000363D9 000363D9 00008000 00008000 0000B6DB 0000B6DB
+	©nam:Lonely Mountain
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:3/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695730907
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000002
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>11768127</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 04 Ebb & Flow.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 0000037F 0000000000CFA441 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 000011B8 000011F7 0000504B 00004446 0004094A 0004094A 00008920 0000877D 00021BDD 0001198B
+	©nam:Ebb & Flow
+	©ART:Feed Me & Tasha Baxter
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:4/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731069
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000003
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>10291104</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 05 Rat Trap.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000002DA 0000000000997CE6 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 0000080C 00000815 00003915 00003B53 00030FAC 0000EB1A 00007FFF 00007FFF 0000B10D 0000A571
+	©nam:Rat Trap
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:5/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731072
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000004
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>8047518</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 06 Dazed.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000003C6 00000000010E1BFA 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000651 000006E2 00004988 00004D17 00035555 0000BCAA 00008000 00008000 0003782A 0000343F
+	©nam:Dazed
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:6/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731073
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000005
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>13699306</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 07 Ophelia.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000054 0000000000AD576C 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 0000128D 00001344 000074F5 000072DF 0000EE01 0000EE01 00008000 00008000 00014AE2 00019659
+	©nam:Ophelia
+	©ART:Feed Me & Yadi
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:7/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731074
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000006
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>8864863</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 08 Chinchilla.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000001C6 0000000000C641FA 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000A93 000009CF 00006253 00005EA3 000110D6 000110D6 00007FFE 00007FFF 000110D6 00017953
+	©nam:Chinchilla
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:8/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731077
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000007
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>10262186</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 09 In the Bin.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000003C6 000000000082D3FA 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000865 00000911 000034CA 00002F4E 0000A571 0001E1D0 00007FFF 00008000 0000343F 0001DC02
+	©nam:In the Bin
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:9/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731078
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000008
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>6960292</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 10 Fiasco.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000003C6 00000000009D07FA 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000B4B 00000AC1 00003EBC 00003DA7 00013F46 00013F46 00008000 00008000 0001F33B 00013691
+	©nam:Fiasco
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:10/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731079
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000009
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>8272685</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 11 Love Is All I Got.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000080 00000000007D1B40 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000F82 00000E94 000051AF 000041DA 0001C1E3 00027E8C 00007FFF 00007FFF 0000829D 0000829D
+	©nam:Love Is All I Got
+	©ART:Feed Me & Crystal Fighters
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:11/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731080
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GBTDG1200510
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>6677851</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 12 Short Skirt.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000325 0000000000A1B89B 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000A6E 00000C84 00003DEE 000056C0 00038994 0000A858 00007FFF 00008000 0000886B 0000F0E8
+	©nam:Short Skirt
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:12/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731083
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000010
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>8491332</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 13 No Grip.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000003BA 0000000000C24006 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000B73 00000C7B 00003A87 00003EB4 00013691 0000C846 00008000 00008000 0000BCAA 0003BAEC
+	©nam:No Grip
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:13/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731084
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000011
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>10090730</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 14 Onstuh.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000000C6 0000000000F542FA 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 000011BC 0000112E 000057DC 00004F87 00053158 00046344 00008000 00008000 00001FED 00004890
+	©nam:Onstuh
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:14/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731085
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000012
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>12525108</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: 15 Last Requests.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000002C1 0000000001471CFF 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 0000076E 00000780 000045BE 00003554 0002CFD2 000369A7 00008000 00008000 00022779 000218F6
+	©nam:Last Requests
+	©ART:Feed Me & Jenna G
+	aART:Feed Me
+	©alb:Calamari Tuesday
+	gnre:Dance
+	trkn:15/15
+	disk:1/1
+	cpil:0
+	pgap:0
+	©day:2013-10-14T07:00:00Z
+	apID:iandanielwallace@gmail.com
+	cprt:? Sotto Voce
+	cnID:695731086
+	rtng:0
+	atID:294992333
+	plID:695730740
+	geID:17
+	sfID:143441
+	stik:1
+	purd:2013-10-14 17:51:56
+	xid :AnDPress:isrc:GB7LP0000013
+	----:com.apple.iTunes:iTunMOVI:<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>asset-info</key>
+	<dict>
+		<key>file-size</key>
+		<integer>16529605</integer>
+		<key>flavor</key>
+		<string>2:256</string>
+	</dict>
+</dict>
+</plist>
+
+	covr:COVERART_JPEG:101202bytes
+Importing: Chain Smoker (Original Mix).m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 000000C0 0000000000DA7300 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00000C10 00000CFB 00006BD2 0000768A 0002160F 0002160F 00008000 00008000 000005CE 000005CE
+	©nam:Chain Smoker (Original Mix)
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:To The Stars
+	cpil:0
+	apID:shorties@gmail.com
+	akID:0
+	stik:1
+	covr:COVERART_PNG:784741bytes
+Importing: Pink Lady (Original Mix).m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000200 0000000000CBA5C0 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00001162 00001174 00007F17 00007E70 0003EC43 0002E70A 00008000 00008000 000042C2 000042C2
+	©nam:Pink Lady (Original Mix)
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:To The Stars
+	©gen:Electro House
+	©day:2011
+	cpil:0
+	apID:shorties@gmail.com
+	akID:0
+	stik:1
+	covr:COVERART_PNG:784741bytes
+Importing: Strange Behaviour (Feat. Tasha Baxte.m4a
+Mpeg4 Tag content:
+	----:com.apple.iTunes:iTunSMPB: 00000000 00000840 00000076 0000000000C6734A 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+	----:com.apple.iTunes:iTunNORM: 00001383 00001199 000066A6 00007812 000130C3 000130C3 00008000 00008000 00010DEF 00010DEF
+	©nam:Strange Behaviour (Feat. Tasha Baxter) (Original Mix)
+	©ART:Feed Me
+	aART:Feed Me
+	©alb:To The Stars
+	©gen:Dubstep
+	©day:2011
+	cpil:0
+	apID:shorties@gmail.com
+	akID:0
+	stik:1
+	covr:COVERART_PNG:784741bytes
+Importing: Death Mountain.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Death Mountain "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000341 000002DC 000016C0 0000158C 0001FBE7 0001FBE7 000046E2 00004267 0001FBFE 0001FBD0 "; 
+
+Importing: Ganondorf.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Ganondorf "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000000A0 00000085 00000327 00000219 000067E1 000067F8 00001A07 00001BE6 000067E1 000067CA "; 
+
+Importing: Gerudo Valley.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Gerudo Valley "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000317 00000236 00001C8E 00001933 0003F7E5 0003F7E5 000058BE 000050EE 0003F7E5 0003F7E5 "; 
+
+Importing: Hyrule Castle.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Hyrule Castle "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000002B8 00000173 00000CF9 000005AB 000186B7 0001ADDE 00002D9F 00002BD3 0001ADDE 0001ADC7 "; 
+
+Importing: Hyrule Field.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Hyrule Field "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000000A5 00000061 00000476 00000267 00013897 000138AE 00001BAF 0000194E 0001FBFE 0001FBD0 "; 
+
+Importing: Kakariko Village.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Kakariko Village "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000002BB 0000020B 0000238E 00001BA0 000186B7 000186B7 00005396 00004954 000186B7 000186B7 "; 
+
+Importing: Kokiri Forest.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Kokiri Forest "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000384 0000021F 00001A98 000010D3 000186B7 000186B7 00003C46 00003502 000186B7 00009C85 "; 
+
+Importing: Lon Lon Ranch.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Lon Lon Ranch "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000066 00000059 0000017E 00000157 00022325 00022325 000017EC 00001579 0000EA8E 0000EA60 "; 
+
+Importing: Ocarina Medley.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Ocarina Medley "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000000EC 000000A7 0000068D 00000491 0000C350 0000C350 00002B18 000021A2 0000C350 0000C350 "; 
+
+Importing: Princess Zelda.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Princess Zelda "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 0000004C 00000063 000001A5 0000028B 00024A35 00022325 0000126E 00001328 000249F0 000249F0 "; 
+
+Importing: The Legend of Zelda Medley.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="The Legend of Zelda Medley "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 000002C7 00000161 00002B83 0000101A 0002E647 0002E65E 00005637 0000347A 0002E630 0002E630 "; 
+
+Importing: Title Theme.mp3
+Tag content:
+	TP1:Text="Hyrule Symphony "; 
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TT2:Text="Title Theme "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000177 0000013B 00000806 00000721 0003347E 00033495 0000432A 000041EB 00033450 00033467 "; 
+
+Importing: Zora's Domain.mp3
+Tag content:
+	TAL:Text="Legend of Zelda Ocarina of Time "; 
+	TP1:Text="Hyrule Symphony "; 
+	TT2:Text="Zora's Domain "; 
+	COM:Language="English"; Description="iTunNORM"; Text=" 00000246 0000012C 00000B72 0000047F 0002E647 0000273E 00003656 00002DD0 0000273E 0000273E "; 
+
+Importing: Connecting.mp3
+Tag content:
+	TYER:Text="2018"; 
+	COMM:Language="English"; 
+	TRCK:Text="1"; 
+	TPE2:Text="Ian Wallace"; 
+	TALB:Text="Miscellaneous"; 
+	TIT2:Text="Connecting"; 
+	TCON:Text="(52)"; 
+	TPE1:
+
+Importing: PolarVacation.mp3
+Tag content:
+	TIT2:Text="Polar Bear Vacation"; 
+	TRCK:Text="2"; 
+	TALB:Text="Miscellaneous"; 
+	TPE2:Text="Ian Wallace"; 
+	TCON:Text="(52)"; 
+
+Importing: Ded Server.mp3
+Tag content:
+	TALB:Text="Travelers of Storia"; 
+	TIT2:Text="Ded Server"; 
+	TPE2:Text="Ian Wallace"; 
+	TCON:Text="(36)"; 
+	TRCK:Text="1"; 
+
+Importing: Secret Fountain.mp3
+Tag content:
+	TALB:Text="Travelers of Storia"; 
+	TPE2:Text="Ian Wallace"; 
+	TCON:Text="(36)"; 
+	TIT2:Text="Secret Fountain"; 
+	TRCK:Text="2"; 
+
+Importing: 01 Liberi Fatali (FF8).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Theme of Love (FF4)"; 
+	TRCK:Text="2"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000279 000001A8 00002FD8 00002D6E 00015BAD 00015BAD 000060B8 0000619B 00015BC4 00015BAD "; 
+
+Importing: 02 Theme of Love (FF4).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC1"; 
+	TRCK:Text="3"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000163 000000FF 000013A7 00000D18 0000986B 00009854 00005746 0000360C 00006E38 00009854 "; 
+
+Importing: 03 Tidus & Yuna MC1.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="FF1-3 Medley"; 
+	TRCK:Text="4"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000266 0000024B 00001CB8 00001858 0006B1CF 0006B1CF 00005677 00005CDA 00063B8B 000613F8 "; 
+
+Importing: 04 FF1-3 Medley.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC2"; 
+	TRCK:Text="5"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000001E6 00000121 00001470 00001641 0000E50A 0000E50A 000064A1 0000675D 0002692E 0001AC51 "; 
+
+Importing: 05 Tidus & Yuna MC2.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Aeris' Theme (FF7)"; 
+	TRCK:Text="6"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000194 00000135 0000097E 00000894 0003F1DF 0003F1DF 000042FB 0000421C 0002E1C9 00043F44 "; 
+
+Importing: 06 Aeris' Theme (FF7).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Don't be Afraid (FF8)"; 
+	TRCK:Text="7"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000508 0000036A 00001F9B 00001C4F 000071BA 000071BA 000054BE 00005ED0 0001FB9A 000071BA "; 
+
+Importing: 07 Don't be Afraid (FF8).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tina's Theme (FF6)"; 
+	TRCK:Text="8"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000030A 00000250 00001406 0000155A 00041D34 00041D34 00006B20 00006814 00041D34 00041D34 "; 
+
+Importing: 08 Tina's Theme (FF6).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC3"; 
+	TRCK:Text="9"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000013E 00000101 00000B31 00000AF4 0000E7DD 00013864 000055BD 00005093 00013864 00013864 "; 
+
+Importing: 09 Tidus & Yuna MC3.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Dear Friends (FF5)"; 
+	TRCK:Text="10"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000005C 00000042 000003E7 000003B1 0003551E 0003551E 000030D3 00003821 0003551E 0003551E "; 
+
+Importing: 10 Dear Friends (FF5).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Vamo' Alla Flamenco (FF9)"; 
+	TRCK:Text="11"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000327 0000026F 000021BA 00001E9E 0003A153 0003A153 00008000 00008000 0003A153 0003A153 "; 
+
+Importing: 11 Vamo' Alla Flamenco (FF9).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="To Zanarkand (FF10)"; 
+	TRCK:Text="12"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000006F 0000005E 000004CB 000004C6 0001373E 0001373E 00001B5E 00001975 00002149 0001373E "; 
+
+Importing: 12 To Zanarkand (FF10).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Yuna's Decision (FF10)"; 
+	TRCK:Text="13"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000082 00000072 00000591 00000560 00013770 00013770 00003DA7 00003749 0000214E 00013770 "; 
+
+Importing: 13 Yuna's Decision (FF10).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC4"; 
+	TRCK:Text="14"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000002B 0000001D 00000115 000000B3 0001F7A8 0001F7A8 00002077 000017B2 00015B68 00015B3A "; 
+
+Importing: 14 Tidus & Yuna MC4.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Love Grows (FF8)"; 
+	TRCK:Text="15"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000002AD 00000167 00000CF6 00000DBC 0000C136 0000C136 00005CD6 00005D5B 0000C136 0000E34F "; 
+
+Importing: 15 Love Grows (FF8).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Suteki Da Ne (FF10)"; 
+	TRCK:Text="16"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000035B 000001B0 000015EA 00000E13 0005C8DF 0003714F 00004563 0000346E 0005C8C8 0003714F "; 
+
+Importing: 16 Suteki Da Ne (FF10).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC5"; 
+	TRCK:Text="17"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000014B 000000CD 00001EF6 0000132A 0002917C 0002917C 00006333 000062AB 0002917C 0002917C "; 
+
+Importing: 17 Tidus & Yuna MC5.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Melodies of Life (FF9)"; 
+	TRCK:Text="18"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000003DA 00000247 00002601 00002530 00045EB6 00045EB6 00008000 00008000 000217CE 00045EB6 "; 
+
+Importing: 18 Melodies of Life (FF9).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC6"; 
+	TRCK:Text="19"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000006F 00000072 00000A17 00000896 0004676F 0004676F 000028CE 00003356 0004676F 0004679D "; 
+
+Importing: 19 Tidus & Yuna MC6.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="One-Winged Angel (FF7)"; 
+	TRCK:Text="20"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000004D6 000002A3 00001E1B 00001C74 00015C42 00015C42 000070FC 0000692B 000093D5 00015C59 "; 
+
+Importing: 20 One-Winged Angel (FF7).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Tidus & Yuna MC7 (With Uematsu)"; 
+	TRCK:Text="21"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000028A 0000020D 0000223D 0000140D 000442C4 00006AF4 00006B44 000063DC 000442C4 000442AD "; 
+
+Importing: 21 Tidus & Yuna MC7 (With Uematsu).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Final Fantasy XI Opening Movie"; 
+	TRCK:Text="22"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000001FD 0000016D 00000D3A 00000937 0003565F 0003565F 00005B91 00003B5B 000022E4 0003565F "; 
+
+Importing: 22 Final Fantasy XI Opening Movie.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Man with the Machine Gun (FF8)"; 
+	TRCK:Text="23"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005E5 00000514 000012F0 000013E9 0001D498 0000E608 00008000 00007427 0003074E 0003074E "; 
+
+Importing: 23 Man with the Machine Gun (FF8).mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TALB:Text="20020220 - Music From Final Fantasy - Live audience recording"; 
+	TIT2:Text="Final Fantasy Theme"; 
+	TRCK:Text="24"; 
+	TYER:Text="2002"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Language="English"; Text="Recorded by Nathan Mallory - nathan@thegia.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005F3 00000437 00001772 0000121D 00026B68 00022060 00005E4C 00005194 00024962 00022060 "; 
+
+Importing: 24 Final Fantasy Theme.mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@6d1a008a
+Importing: Chocobo-Chocobo.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@5f4610b8
+Importing: Epilogue.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@523c806
+Importing: Golbeza Clad In The Dark.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@43ef7656
+Importing: Into The Darkness.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@7ecc20f1
+Importing: Main Theme.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@11602c40
+Importing: Melody Of Lute.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@a18a592
+Importing: Prologue.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@32fd2f41
+Importing: Rydia.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@2da94a47
+Importing: The Battle.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@3d3b719e
+Importing: The Prelude.mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@7240779e
+Importing: Theme Of Love Practice Track.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@291cd9b0
+Importing: Theme Of Love.mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@4e0045a6
+Importing: Troian Beauty.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@28517a79
+Importing: Welcome To Our Town!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@59dc146a
+Importing: 01 - A Presentiment.MP3
+Tag content:
+	TIT2:Text="01 - A Presentiment"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000000AE 0000007D 00000DA3 00000661 0002E65E 0002E65E 00003EA0 00002F7D 0002E65E 0000C350 "; 
+
+Importing: 02 - Tenderness in the Air.MP3
+Tag content:
+	TIT2:Text="02 - Tenderness in the Air"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000065 0000005F 000001E3 0000022D 0001FBE7 00013897 000020F9 00001CE6 0001FBD0 0001FBE7 "; 
+
+Importing: 03 - Harvest.MP3
+Tag content:
+	TIT2:Text="03 - Harvest"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000008F 00000064 0000035D 000001ED 0001ADF5 0001ADC7 0000276A 00001D2E 0001ADC7 0001ADC7 "; 
+
+Importing: 04 - Ahead on Our Way.MP3
+Tag content:
+	TIT2:Text="04 - Ahead on Our Way"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000006A 0000004D 000002B9 00000157 0001D4D7 0001D4EE 00002B4A 000023D4 0001D4C0 0001D4D7 "; 
+
+Importing: 05 - Critter Tripper Fritter.MP3
+Tag content:
+	TIT2:Text="05 - Critter Tripper Fritter"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000055 00000037 0000022F 000000C1 0001ADC7 000138C5 00002594 000017F7 0000273E 00002727 "; 
+
+Importing: 06 - My Home Sweet Home.MP3
+Tag content:
+	TIT2:Text="06 - My Home Sweet Home"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000006F 00000061 0000039C 0000029F 00027117 00027117 000027E8 000024F6 00027117 00027100 "; 
+
+Importing: 07 - Mambo De Chocobo.MP3
+Tag content:
+	TIT2:Text="07 - Mambo De Chocobo"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000009C 0000005E 000002C0 000002EB 0000EAA5 0000EAA5 00001E5A 000017F7 0001ADB0 00024A07 "; 
+
+Importing: 08 - Lenna's Theme.MP3
+Tag content:
+	TIT2:Text="08 - Lenna's Theme"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000003D 00000050 000000BE 000000FF 000186CE 0000EA77 000017EC 0000160D 000186E5 0000EA77 "; 
+
+Importing: 10 - Battle with Gilgamesh.MP3
+Tag content:
+	TIT2:Text="10 - Battle with Gilgamesh"; 
+	TPE1:Text="Nobou Uemetsu"; 
+	TALB:Text="Final Fantasy 5 Piano Collection"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000005D 00000073 000002B4 000004F1 0000EA8E 0000EA77 00001FA3 00002DF8 0000EAA5 0000EA8E "; 
+
+Importing: 11 - Waltz Clavier.MP3
+Tag content:
+
+Importing: 12 - Dear Friends.MP3
+Tag content:
+
+Importing: 13 - The New Origin.MP3
+Tag content:
+
+Importing: 01 - The Prelude.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@164287b8
+Importing: 02 - Crystal Cave.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@5a23cda3
+Importing: 03 - Battle 1 _ Fanfare.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@7982e62c
+Importing: 04 - Crystal Room.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@40c4c232
+Importing: 05 - Opening Theme.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@4239e2d5
+Importing: 06 - My Home Town.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@6b371e4
+Importing: 07 - Eternal Wind.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@68ee5498
+Importing: 08 - Jinn, The Fire.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@edddee5
+Importing: 09 - Dungeon.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@37faaa1
+Importing: 10 - Return Of The Warrior.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@1e5ec77b
+Importing: 11 - The Way To The Top.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@40e1abc
+Importing: 12 - Cute Little Tozas.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@6444c62e
+Importing: 13 - Shrine Of Nept.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@1a9042a5
+Importing: 14 - Sailing Enterprise.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@721d2b93
+Importing: 15 - Living Forest.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@6b20496
+Importing: 16 - Time Remains.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@4485c7d8
+Importing: 17 - Chocobos!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@5c182087
+Importing: 18 - Big Chocobo!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@47c2d924
+Importing: 19 - Tower of Owen.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@51c2e3fe
+Importing: 20 - Vegies of Geasal.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@3b135519
+Importing: 21 - Castle of Hain.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@269256e4
+Importing: 22 - Battle 2.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@7748b0eb
+Importing: 23 - The Requiem.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@31d370ef
+Importing: 24 - Go Above the Clouds!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@10c95051
+Importing: 25 - Boundless Ocean.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@24d811da
+Importing: 26 - Elia, The Maiden Of Water.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@16252242
+Importing: 27 - Town of Water.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@664af873
+Importing: 28 - Let's Play the Piano!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@27873a1
+Importing: 30 - Swift Twist.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@3df0669e
+Importing: 31 - Good Ol' Fellows.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@5aafbd25
+Importing: 32 - In the Covert Town.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@6b974f63
+Importing: 33 - Salonia.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@2a33dccb
+Importing: 34 - Deep Under The Water.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@14498b85
+Importing: 35 - Beneath The Horizon.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@33a84abc
+Importing: 36 - Let Me Know the Truth.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@6295f7fd
+Importing: 37 - Lute of Noah.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@56f4bae0
+Importing: 38 - Good Morning!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@e390618
+Importing: 39 - The Invincible.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@7fb540c9
+Importing: 40 - Forbidden Land.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@32d26add
+Importing: 41 - The Crystal Tower.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@4102e5dd
+Importing: 42 - The Dark Crystals.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@74d2223
+Importing: 43 - This Is the Last Battle.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@52ab990b
+Importing: 44 - The Everlasting World.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@730e9501
+Importing: Let's Play the Piano Again!.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@2574bab0
+Importing: 01 Brahne Appears ~ The Play Be...MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@42abd347
+Importing: 02 Steiner to the Rescue.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3f50adf5
+Importing: 03 Escape From Alexandria.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@21f857e1
+Importing: 04 Prima Vista Crash.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@31666de2
+Importing: 05 The Petrification of Blank.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2dcba162
+Importing: 06 Mage vs. Mage.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@17ce9e2b
+Importing: 07 Breaking Through South Gate.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@74ea846c
+Importing: 08 Arrival to Lindblum.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7661fe6e
+Importing: 09 Song ~ Zidane and Dagger.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6d19171
+Importing: 10 Kuja Leaving Burmecia.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@658d7846
+Importing: 11 Summoning to Destroy Cleyra.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@4564497f
+Importing: 12 Lindblum Under Attack.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3c0f4d33
+Importing: 13 Lindblum In Ruins.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@365f09da
+Importing: 14 The Disappearing Mist.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@389e081f
+Importing: 15 Dagger Remembers (Madain Sar...MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5f5681c2
+Importing: 16 Recalling Bahamut.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@197639ce
+Importing: 17 Annihilation of Brahne's Fleet.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@57a9f2e3
+Importing: 18 A New Queen Is Born.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1f3fc6f9
+Importing: 19 Bahamut Raid.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@748c1c4d
+Importing: 20 Eiko Descends.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5c9ce35b
+Importing: 21 Summoning Alexander.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@443a2cc1
+Importing: 22 Ghost Ship.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@255322b1
+Importing: 23 Rescuing Dagger.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@31293c22
+Importing: 24 Dagger Cuts Her Hair.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@a948767
+Importing: 25 Dagger Recalls the Ghost Ship.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1f5dfed0
+Importing: 26 The Fall of Neo-Kuja.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@23a70120
+Importing: 27 Escape From Terra.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5b17e15a
+Importing: 28 Zidane and Dagger Seperate.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7516fae0
+Importing: 29 The Origin of Kuja.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5cd31ec
+Importing: 30 Rufus' Welcoming Ceremony ~ ...MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1e788e74
+Importing: 31 Doga and Une.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7a81b1d0
+Importing: 32 Daughter of Madain Sari.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3802859a
+Importing: 33 Kuja's Theme ~ Millennium Ve...MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@54ac9127
+Importing: 34 Main.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@efdaee8
+Importing: 35 Walz.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@798581d6
+Importing: 36 Kogaku Motet 1.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5587e529
+Importing: 37 Organum.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@65127317
+Importing: 38 Mediteiranean.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6fb1bb3
+Importing: 39 Dokokade 3.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@53a5a18b
+Importing: 40 Weuber.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@39e1b87b
+Importing: 41 Kuja 5.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@4f9dfe9b
+Importing: 01 Eternal Harvest.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000003F5 000006F0 000027A2 00006D18 00027100 0000EA77 0000757F 00008000 0000C367 0000C350 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="1"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Eternal Harvest"; 
+
+Importing: 02 Secret Library Daguerreo.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000443 000001CB 0000D8F7 00001365 00033450 000222E0 00008000 00004BEE 00033450 000222E0 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="2"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Secret Library Daguerreo"; 
+
+Importing: 03 The Place I'll Return to Somed.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000289 000000B2 0000465E 00000888 00027100 000186B7 00008000 000022CC 00009C40 00009C57 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="3"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="The Place I'll Return to Somed"; 
+
+Importing: 04 Vamo' alla flamenco.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000062F 00000FB8 00005E9D 0001864D 0000C367 00027117 00008000 00008000 0000EA60 00015F90 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="4"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Vamo' alla flamenco"; 
+
+Importing: 05 Frontier Village Dali.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000317 00000260 00006748 000034F9 0003D0A7 0001ADC7 00008000 0000749E 0003D0A7 00035B60 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="5"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Frontier Village Dali"; 
+
+Importing: 06 Bran Bal, the Soulless Village.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000008C8 00000333 0002822F 00004F41 00027100 00029810 00008000 00008000 00027100 00029810 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="6"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Bran Bal, the Soulless Village"; 
+
+Importing: 07 Passing Sorrow.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000000BA 000000D8 00000A27 000010C9 000222E0 00015FA7 00006E36 00003E2B 000222E0 00029827 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="7"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Passing Sorrow"; 
+
+Importing: 08 You're Not Alone!.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000016D 000002D1 0000113D 000037F6 0001FBE7 00011170 000065A5 00008000 00030D40 00011170 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="8"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="You're Not Alone!"; 
+
+Importing: 09 Two Hearts Not Captured - Towards.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000066C 000004D1 000158E1 00007B64 00015FA7 00015F90 00008000 00008000 00015F90 00015F90 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="9"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Two Hearts Not Captured - Towards the Gate"; 
+
+Importing: 10 Loss of Me.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000428 000005ED 0000C265 00009BE2 0002E630 0002E630 00008000 00008000 0002E630 0002BF37 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="10"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Loss of Me"; 
+
+Importing: 11 Sleepless City Treno.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000026B 00000308 00001475 00001382 0001D4C0 0000EA60 00006FB8 00008000 00007547 000186A0 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="11"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Sleepless City Treno"; 
+
+Importing: 12 Unfathomed Reminiscence.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000000C4 00000110 00001BEA 00000DB2 0001D4D7 0001ADB0 00004C0B 00006627 0001FBD0 000222E0 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="12"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Unfathomed Reminiscence"; 
+
+Importing: 13 Final Battle.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000056F 00000444 00005390 000033B1 0001ADC7 000249F0 00008000 00008000 0001ADB0 0003D090 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="13"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Final Battle"; 
+
+Importing: 14 Melodies of Life.MP3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000009A0 00000152 0001D980 0000114B 0001FBD0 0001D4D7 00008000 000053A7 0001D4C0 0001D4D7 "; 
+	TCON:Text="(36)Game"; 
+	TRCK:Text="14"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy IX Piano Collections"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Melodies of Life"; 
+
+Importing: Melodies of Life (Acapella).MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@556917c6
+Importing: 01 Top Title.mp3
+Tag content:
+	TRCK:Text="01"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001076 00000DAC 00007D53 000050A6 00002058 00002058 00008000 00008000 00001773 00001EFF "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Top Title"; 
+
+Importing: 10 Silence.mp3
+Tag content:
+	TRCK:Text="10"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000002F6 0000068B 00001747 00007AA4 0000B9D5 0000B9BE 00008000 00008000 0000B9D5 0000B9BE "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Silence"; 
+
+Importing: 11 Following the Wind.mp3
+Tag content:
+	TRCK:Text="11"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000F14 0000106C 0000C48C 0000C4DB 0000DF13 0000DEFC 00008000 00008000 0000DF13 00001FDA "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Following the Wind"; 
+
+Importing: 14 Preview.mp3
+Tag content:
+	TRCK:Text="14"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001BA2 000020C8 0000C0E6 00015FC5 0000374B 00002978 00008000 00008000 00000DD2 00001BA5 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Preview"; 
+
+Importing: 18 Chocobo.mp3
+Tag content:
+	TRCK:Text="18"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001607 00000B98 00030C27 0000A32F 00004E37 00027100 00008000 00008000 00004E37 00002710 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Chocobo"; 
+
+Importing: 19 Ciel Chocobo.mp3
+Tag content:
+	TRCK:Text="19"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000DD4 000009A0 000074EB 000042D6 00002504 00010322 00008000 00008000 00002504 00004A09 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Ciel Chocobo"; 
+
+Importing: 24 Where the Chocobo Walks.mp3
+Tag content:
+	TRCK:Text="24"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000731 00000866 00001993 0000258F 0000C5BA 00003877 00006BE1 00008000 0000E1DF 00003877 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Where the Chocobo Walks"; 
+
+Importing: 25 Escape.mp3
+Tag content:
+	TRCK:Text="25"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000643 000006FE 00001B70 00001D42 0001004A 000071E8 00008000 00007880 00010061 0000AADC "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Escape"; 
+
+Importing: 31 Touch of the Heart.mp3
+Tag content:
+	TRCK:Text="31"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000007A1 00000557 00003E6B 00003ACA 00002484 00002484 00008000 00008000 00002484 00002484 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Touch of the Heart"; 
+
+Importing: 32 Lisa's Recollection.mp3
+Tag content:
+	TRCK:Text="32"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000C58 00000FC8 00011E5D 00013601 0000DBB4 0000DBB4 00008000 00008000 0000BC52 0000DBB4 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Lisa's Recollection"; 
+
+Importing: 35 Victory.mp3
+Tag content:
+	TRCK:Text="35"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Language="Winamp Format"; Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00002079 000016CD 000090BC 000050C4 00001E19 00000FD0 00008000 00008000 00000702 000006BD "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Victory"; 
+
+Importing: 01 Top Title.mp3
+Tag content:
+	TRCK:Text="10"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000002F6 0000068B 00001747 00007AA4 0000B9D5 0000B9BE 00008000 00008000 0000B9D5 0000B9BE "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Silence"; 
+
+Importing: 10 Silence.mp3
+Tag content:
+	TRCK:Text="11"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000F14 0000106C 0000C48C 0000C4DB 0000DF13 0000DEFC 00008000 00008000 0000DF13 00001FDA "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Following the Wind"; 
+
+Importing: 11 Following the Wind.mp3
+Tag content:
+	TRCK:Text="14"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001BA2 000020C8 0000C0E6 00015FC5 0000374B 00002978 00008000 00008000 00000DD2 00001BA5 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Preview"; 
+
+Importing: 14 Preview.mp3
+Tag content:
+	TRCK:Text="18"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001607 00000B98 00030C27 0000A32F 00004E37 00027100 00008000 00008000 00004E37 00002710 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Chocobo"; 
+
+Importing: 24 Where the Chocobo Walks.mp3
+Tag content:
+	TRCK:Text="25"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000643 000006FE 00001B70 00001D42 0001004A 000071E8 00008000 00007880 00010061 0000AADC "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Escape"; 
+
+Importing: 25 Escape.mp3
+Tag content:
+	TRCK:Text="31"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000007A1 00000557 00003E6B 00003ACA 00002484 00002484 00008000 00008000 00002484 00002484 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Touch of the Heart"; 
+
+Importing: 31 Touch of the Heart.mp3
+Tag content:
+	TRCK:Text="32"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000C58 00000FC8 00011E5D 00013601 0000DBB4 0000DBB4 00008000 00008000 0000BC52 0000DBB4 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Lisa's Recollection"; 
+
+Importing: 32 Lisa's Recollection.mp3
+Tag content:
+	TRCK:Text="35"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Language="Winamp Format"; Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00002079 000016CD 000090BC 000050C4 00001E19 00000FD0 00008000 00008000 00000702 000006BD "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Victory"; 
+
+Importing: 18 Chocobo.mp3
+Tag content:
+	TRCK:Text="19"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:Text="AVCA 14339"; 
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX
+irc.newnet.net  #FinalFantasy"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000DD4 000009A0 000074EB 000042D6 00002504 00010322 00008000 00008000 00002504 00004A09 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2002"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 2"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Ciel Chocobo"; 
+
+Importing: 19 Ciel Chocobo.mp3
+Tag content:
+	TRCK:Text="24"; 
+	TENC:Text="G-Savr|EQX"; 
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:
+	COMM:Text="FF EQX"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000731 00000866 00001993 0000258F 0000C5BA 00003877 00006BE1 00008000 0000E1DF 00003877 "; 
+	TCON:Text="(145)Anime"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy Unlimited Music Adventure Verse 1"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Where the Chocobo Walks"; 
+
+Importing: 35 Victory.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@759acff8
+Importing: 01 Ahead On Our Way.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@68d021aa
+Importing: 01 Exdeath's Castle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2d532bd6
+Importing: 02 A Presentiment.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5b071476
+Importing: 02 The Four Warrirors Of Dawn.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@78c1e5e1
+Importing: 03 Battle With Gilgamesh.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@11f55622
+Importing: 03 Four Valiant Hearts.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@254cc251
+Importing: 04 Hurry! Hurry!.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@460bd62a
+Importing: 04 Unknown Lands.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3112dde7
+Importing: 05 Critter Tripper Fritter!_.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@aedc9a1
+Importing: 05 Lenna's Theme.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4970dce7
+Importing: 06 Fate In Haze.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@51d2f965
+Importing: 06 The Castle Of Dawn.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7608fb5d
+Importing: 07 Beyond The Deep Blue Seas.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@12cc84fc
+Importing: 07 The Battle.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5d14e5a6
+Importing: 08 As I Feel, You Feel.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1b4b36b0
+Importing: 08 Victory's Fanfare.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@2a28e497
+Importing: 09 Requiem.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5c356e4a
+Importing: 09 Waltz Clavier.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@267699bf
+Importing: 10 Go Go Boco!.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@644ac577
+Importing: 11 Tenderness In The Air.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@92b9935
+Importing: 11 The Land Unknown.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7e1be164
+Importing: 12 Good Night!.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@6cb23479
+Importing: 12 The Book Of Sealings.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5ee125e5
+Importing: 13 Intension Of The Earth.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@b56fd3d
+Importing: 13 Sealed Away.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@2ae72df2
+Importing: 14 Cursed Earth.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@570bd52b
+Importing: 14 The Prelude Of Empty Skies.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@921c22
+Importing: 15 Deception.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@3c91b618
+Importing: 15 Searching The Light.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2f8a94c5
+Importing: 16 Harvest.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@2621be92
+Importing: 16 The Decisive Battle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@36c2c578
+Importing: 17 The Last Battle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7d284ce
+Importing: 17 Walking The Snowy Mountains.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@7c85044d
+Importing: 18 Danger!.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@577be061
+Importing: 18 The Silent Beyond.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@773216f3
+Importing: 19 Dear Friends.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@64d5182f
+Importing: 19 The Fierce Battle.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@30a6df94
+Importing: 20 Final Fantasy.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@38d65909
+Importing: 20 The Dragon Spreads Its Wings.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5fb4456e
+Importing: 21 Royal Palace.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@136c3ad7
+Importing: 21 The New Origin.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@15b00d51
+Importing: 22 The Fire-Powered Ship.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@1fa400ff
+Importing: 22 The Prelude.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@62c6a950
+Importing: 23 Fanfare 1.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@108e8d5d
+Importing: 23 Run!.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5c1d098
+Importing: 24 Fanfare 2.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3a5d9b27
+Importing: 24 Nostalgia.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@6d062915
+Importing: 25 I'm A Dancer.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@986a58d
+Importing: 25 The Ancient Library.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@248f135
+Importing: 26 Piano Lesson 1.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@549ac6f8
+Importing: 26 Reminiscence.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@88813ff
+Importing: 27 Musica Machina.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@341e65ae
+Importing: 27 Piano Lesson 2.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@711aeb41
+Importing: 28 Piano Lesson 3.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@73b54e9c
+Importing: 28 The Day Will Come.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@3b6abcfe
+Importing: 29 Piano Lesson 4.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7c1e8d28
+Importing: 29 What_.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5af83109
+Importing: 30 Mambo de Chocobo.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@3e05564
+Importing: 30 Piano Lesson 5.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6d8384aa
+Importing: 31 My Home, Sweet Home.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@65fc33ff
+Importing: 31 Piano Lesson 6.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7e173630
+Importing: 32 Music Box.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@7fdd17e3
+Importing: 32 Piano Lesson 7.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@e0a6a66
+Importing: 33 Piano Lesson 8.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@aedc393
+Importing: 33 The Airship.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4d0cc248
+Importing: 34 The Evil Lord Exdeath.Mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5af9b605
+Importing: Pirates Ahoy!.Mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@7fdbe66
+Importing: 01 New Continent.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@63e81451
+Importing: 01 Opening Theme.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@485d94e6
+Importing: 01 Terra.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5f834a76
+Importing: 02 Catastrophe.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3567d16e
+Importing: 02 Coin Song.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@168e010f
+Importing: 02 The Mines of Narshe.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@32d04d9c
+Importing: 03 Awakening.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@77c5614a
+Importing: 03 Techno de Chocobo.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7c22327d
+Importing: 03 The Fierce Battle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1a42d28f
+Importing: 04 Forever Rachel.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2a4ec0f6
+Importing: 04 Locke.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@765d2bc4
+Importing: 04 Rest in Peace.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1b014ea8
+Importing: 05 Battle Theme.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@17db21ed
+Importing: 05 Dark World.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@4b4e0a90
+Importing: 05 Slam Shuffle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@54d20b36
+Importing: 06 Fanfare.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@45376b0a
+Importing: 06 Spinach Rag.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@badfe08
+Importing: 06 The Day After.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@308c6f67
+Importing: 07 Edgar and Sabin.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@744359fb
+Importing: 07 Overture.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@ad20342
+Importing: 07 Searching for Friends.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6eebf1ae
+Importing: 08 Aria de Mezzo Carattere.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3d4f4c43
+Importing: 08 Gogo.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@53ad5690
+Importing: 08 Kefka.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@497f97b4
+Importing: 09 Epitaph.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@78a869b4
+Importing: 09 Mt. Koltz.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3f421fb6
+Importing: 09 The Wedding.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6e2c718
+Importing: 10 Grand Finale_.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@33153247
+Importing: 10 Returners.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@8cb1858
+Importing: 10 The Magic House.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@27db0958
+Importing: 11 Setzer.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3711c0bc
+Importing: 11 Shadow.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2d0c5b13
+Importing: 11 Umaro.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7d558f32
+Importing: 12 Fanatics.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2bbd809
+Importing: 12 Johnny C Bad.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3b96ecc2
+Importing: 12 Troops March On.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@740dfc60
+Importing: 13 Cyan.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@25f0c1cc
+Importing: 13 Last Dungeon.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@79573eeb
+Importing: 13 The Empire _Gestahl_.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@752b3dff
+Importing: 14 Dancing Mad.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6ede31c6
+Importing: 14 Devil's Lab.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@4d037370
+Importing: 14 The Unforgiven.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@d63ac5d
+Importing: 15 Blackjack.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@210baccb
+Importing: 15 The Phantom Forest.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3e44e92d
+Importing: 16 Phantom Train.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@680a9566
+Importing: 16 __.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@781bdd7e
+Importing: 17 Mog.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@48a4b42
+Importing: 17 Wild West.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@1d1ed77f
+Importing: 18 Gau.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2183d01f
+Importing: 18 Strago.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@7d5097c
+Importing: 19 Relm.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@51d3929f
+Importing: 19 The Serpent Trench.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@3a9d12f5
+Importing: 20 Another World of Beasts.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@5a12e91
+Importing: 20 Kids Run Through the City.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2a1049b0
+Importing: 21 Under Martial Law.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@679a7107
+Importing: 22 Celes.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@35c2cdbb
+Importing: 23 Save Them!.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@399bb834
+Importing: 24 The Decisive Battle.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@11ee3b7e
+Importing: 25 Metamorphosis.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@2548720d
+Importing: 15 Ending Theme.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@6c4cc0a
+Importing: 16 The Prelude.MP3
+org.jaudiotagger.tag.id3.ID3v11Tag@62fa8efe
+Importing: 01 Cosmo Canyon.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="216163"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="1"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Cosmo Canyon"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000AA9 000007A9 000059D6 0000D90A 00027117 00004E20 00008000 00008000 00013897 00004E20 "; 
+
+Importing: 04 Descendant of Shinobi.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="165616"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="4"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Descendant of Shinobi"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000007CC 000005D8 00006028 0000272B 0000C367 0001FBD0 00008000 000069BC 0000C367 0001FBE7 "; 
+
+Importing: 05 Those Chosen by the Planet.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="196597"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="5"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Those Chosen by the Planet"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000E3E 00000B3A 0000A53F 0000BFB4 0001D4C0 000222E0 00008000 00008000 00011170 00009C40 "; 
+
+Importing: 06 The Nightmare's Beginning.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="178494"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="6"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="The Nightmare's Beginning"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000185 00000132 00000897 00001260 0001D4C0 0001D4C0 00002DAC 00004BCB 0001ADC7 0001D4C0 "; 
+
+Importing: 07 Cid's Theme.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="191033"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="7"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Cid's Theme"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000CAA 00000D14 00006AC1 00006D7A 00024A07 00011187 00008000 00008000 00002710 00002710 "; 
+
+Importing: 08 Steal the Tiny Bronco!.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="76355"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="8"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Steal the Tiny Bronco!"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005BB 00000820 000017F7 000045EA 0000B2F2 0000774C 00006EFE 00008000 0000B309 0000774C "; 
+
+Importing: 09 Wutai.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="269923"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="9"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Wutai"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000A56 00000351 000048E4 00001813 0002E630 00027117 00008000 00008000 00015FA7 000186A0 "; 
+
+Importing: 10 Stolen Materia.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="96626"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="10"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Stolen Materia"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000008A 0000048E 0000020B 000039D8 00010848 00007139 00001C56 00004C9E 00010848 00007139 "; 
+
+Importing: 11 Racing Chocobos - Place Your Bets.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="110445"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="11"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Racing Chocobos - Place Your Bets"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000008B6 00000936 00003B97 0000558C 0000EA77 00011187 00008000 00008000 0000EA60 00004E20 "; 
+
+Importing: 12 Fiddle de Chocobo.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="170266"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="12"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Fiddle de Chocobo"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000E54 00000A74 0000EE29 0000806D 00015FA7 00015FA7 00008000 00008000 00009C57 00009C57 "; 
+
+Importing: 13 A Great Success.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="47621"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="13"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="A Great Success"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000374 0000031E 00000985 000007A1 00005D19 00006FB2 0000450D 00006B5B 000094E6 00005D02 "; 
+
+Importing: 14 Tango of Tears.mp3
+Tag content:
+	TMED:Text="DIG"; 
+	TLEN:Text="49528"; 
+	TCON:Text="soundtrack"; 
+	TRCK:Text="14"; 
+	TALB:Text="Final Fantasy VII Original SoundTrack, Disc 3"; 
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Tango of Tears"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000001E3 00000221 00000811 00000A48 00008795 00003A07 000035C7 00003AB2 00008795 00008767 "; 
+
+Importing: 01 Tifa's Theme.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000014A 00000066 00002026 0000016A 00030D40 0002230E 00008000 0000243B 00027100 00011187 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Tifa's Theme"; 
+	TYER:Text="2003"; 
+	TRCK:Text="1"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 02 The Main Theme of Final Fantasy V.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000004C 000000CF 0000024F 00001AB0 00009C40 0002E630 0000214A 00005287 00009C85 0002E630 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="The Main Theme of Final Fantasy VII"; 
+	TYER:Text="2003"; 
+	TRCK:Text="2"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 03 Cinco de Chocobo.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000044E 0000032A 000040E2 00002DB5 0001D4C0 000186A0 00008000 00008000 0001D4C0 000186A0 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Cinco de Chocobo"; 
+	TYER:Text="2003"; 
+	TRCK:Text="3"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 04 Ahead on Our Way.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000000EF 000000A3 000012AF 000010AD 0001D4C0 00038270 0000485E 00007C2F 0001D4C0 00038270 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Ahead on Our Way"; 
+	TYER:Text="2003"; 
+	TRCK:Text="4"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 05 Fighting.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000003A4 000003A4 000013BD 00002971 000222E0 00013880 00008000 00008000 000222E0 00013880 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Fighting"; 
+	TYER:Text="2003"; 
+	TRCK:Text="5"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 06 Cosmo Canyon.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000002A3 0000017E 000040D5 00001AA1 0000EA60 00035BA5 00008000 0000491D 0000EA60 00035BA5 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Cosmo Canyon"; 
+	TYER:Text="2003"; 
+	TRCK:Text="6"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 07 Gold Saucer.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000051E 000001BF 00009CB3 0000072C 00002710 0001119E 00008000 000035A7 00002710 0001119E "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Gold Saucer"; 
+	TYER:Text="2003"; 
+	TRCK:Text="7"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 08 Farm Boy.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000080 00000058 00000CFC 000001C8 00030D40 00029810 0000685D 00001DD9 00030D57 00029810 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Farm Boy"; 
+	TYER:Text="2003"; 
+	TRCK:Text="8"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 09 Rufus' Welcome Ceremony.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000595 000004E5 00003D8D 00001A4B 000186A0 00009C40 00008000 00008000 000186A0 00009C40 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Rufus' Welcome Ceremony"; 
+	TYER:Text="2003"; 
+	TRCK:Text="9"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 10 J-E-N-O-V-A.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000003AA 00000232 00001DDE 00000E29 0000EA60 0000C350 00007C33 000063DF 0000EA60 0000C350 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="J-E-N-O-V-A"; 
+	TYER:Text="2003"; 
+	TRCK:Text="10"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 11 Aeris's Theme.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000085 00000093 0000067D 00000E01 0002BF65 0002BF65 00003346 00003536 0002BF4E 0002BF4E "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Aeris's Theme"; 
+	TYER:Text="2003"; 
+	TRCK:Text="11"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 12 One Winged Angel.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:Language="Winamp Format"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000285 000002C1 00001137 0000260D 000222E0 00029810 00006781 0000779E 000222E0 00035B60 "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="One Winged Angel"; 
+	TYER:Text="2003"; 
+	TRCK:Text="12"; 
+	TCON:Text="(36)Game"; 
+
+Importing: 13 Descendent of Shinobi.mp3
+Tag content:
+	TENC:
+	WXXX:
+	TCOP:
+	TOPE:
+	TCOM:Text="Nobuo Uematsu"; 
+	COMM:
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000156 00000158 00002AAE 00000AB0 00027100 0002712E 00008000 00004990 00027100 0002712E "; 
+	TPE1:Text="Shiro Hamaguchi & Seiji Honda"; 
+	TALB:Text="Final Fantasy VII Piano Collections"; 
+	TIT2:Text="Descendent of Shinobi"; 
+	TYER:Text="2003"; 
+	TRCK:Text="13"; 
+	TCON:Text="(36)Game"; 
+
+Importing: One Winged Angel [karaoke version].mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="One Winged Angel [karaoke version]"; 
+	TALB:Text="Final Fantasy VII Reunion"; 
+	TRCK:Text="special hidden track"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000094C 000008F0 000048D3 000051B9 00011187 00011187 00008000 00008000 00002727 00002727 "; 
+
+Importing: Eyes On Me (Instrumental).mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@62921076
+Importing: Eyes On Me.mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@abdd1fc
+Importing: The Fruit Of Acasia.mp3
+org.jaudiotagger.tag.id3.ID3v1Tag@b98858a
+Importing: Ending Theme.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@432e7e20
+Importing: The Successor.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@314dd793
+Importing: Maybe I'm a Lion.mp3.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@551bc277
+Importing: The Legendary Beast.mp3.MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@1ae0b98b
+Importing: Al Bhed Tribe's Chi.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Al Bhed Tribe's Chi"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000004FD 000004BE 00001466 00002E60 00015FA7 000249F0 00007A71 00007972 00015FA7 0002983E "; 
+
+Importing: Bisaido Island.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Bisaido Island"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005EE 00000577 00004B95 000031ED 00027117 00027100 00008000 00008000 00007530 0001FBD0 "; 
+
+Importing: Blitz Ball Gamblers.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Blitz Ball Gamblers"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000F1A 00000D96 00007283 00006C86 00030D57 00030D40 00008000 00008000 00007547 0000C350 "; 
+
+Importing: Daughter of the Great Summoner Warri.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Daughter of the Great Summoner Warrior"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000028E 0000031B 00001DD2 0000115F 000249F0 000186A0 00008000 00008000 000249F0 00024A07 "; 
+
+Importing: Enemy Attack.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Enemy Attack"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000011F5 00001130 00004DA1 00005413 00015FA7 00015FA7 00008000 00008000 00004E20 00004E37 "; 
+
+Importing: Game Over.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Game Over"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000021F 00000336 00000943 00000A3D 00001AC9 00001AC9 0000457F 000044F2 00004FD3 00001AC9 "; 
+
+Importing: Good Night.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Good Night"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000029E 00000354 000007B4 00000C62 00000325 0000078C 00003807 00003FF6 00000633 000006D4 "; 
+
+Importing: Hopeless Desire.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Hopeless Desire"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000260 0000034E 00001064 000020D1 0000C367 0000EA77 00004D17 00006756 00002755 0000C367 "; 
+
+Importing: Hurry!.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Hurry!"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000A45 00000D14 00002CC0 0000251E 0001FBD0 0001ADC7 00008000 00008000 00011187 0001FBD0 "; 
+
+Importing: I Would Like to Say Everything.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="I Would Like to Say Everything"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000113 00000116 00000654 00000652 00000325 00000325 00003E46 00003E58 0000033C 0000033C "; 
+
+Importing: Illusion.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Illusion"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000401 0000060C 00000FE6 0000267D 0001FBD0 0000EA77 000060CF 00008000 000222F7 0000EA77 "; 
+
+Importing: Normal Battle.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Normal Battle"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000D9A 00001577 0000737F 0000D283 00029827 00029827 00008000 00008000 0000C367 0000EA60 "; 
+
+Importing: Ominous.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Ominous"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005A4 00000C09 00007045 0000E435 0001FBE7 0000C350 00008000 00008000 00004E20 00007530 "; 
+
+Importing: Other World.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Other World"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000389A 00003298 0001C32A 0000886F 0001FBE7 000222F7 00008000 00008000 00002727 00007547 "; 
+
+Importing: Place of Ordeals.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Place of Ordeals"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000BA0 00000925 00008105 00002295 0002BF20 00029810 00008000 00008000 00013897 000249F0 "; 
+
+Importing: Silence Before the Storm.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Silence Before the Storm"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000007A5 000006AC 000041E2 0000178D 00015F90 00004E37 0000539C 00006264 00015F90 0000EA60 "; 
+
+Importing: Song of Prayer.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Song of Prayer"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000809 00000814 00001D93 000038CB 00006650 00001101 00005FF3 00008000 0000441E 00001101 "; 
+
+Importing: Song of Prayer~Efreet.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Song of Prayer~Efreet"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000D6A 00000DFF 00004603 00004BD8 0000713E 00007127 000071AF 00008000 000040B3 00007110 "; 
+
+Importing: Song of Prayer~Valfor.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Song of Prayer~Valfor"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000002C0 000009CD 00001927 0000B08B 000041AB 000041AB 00002A8D 00008000 000041D9 000041AB "; 
+
+Importing: Sprouting.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Sprouting"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000937 00000567 00003734 0000202B 00027117 00013897 00008000 00007122 0001ADC7 00009C6E "; 
+
+Importing: Summoned.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Summoned"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000004F2 00000478 00000DB1 00000F17 00003CB2 00005B00 00004966 00005953 00006A27 00005B00 "; 
+
+Importing: The Prelude.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="The Prelude"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000013A 0000009C 00000B1C 0000049B 0001D4C0 0001ADB0 00007903 0000505E 0001D4C0 0001ADB0 "; 
+
+Importing: The Sight of Spira.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="The Sight of Spira"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000170 00000148 0000094B 00000957 00013897 0000EA77 0000527F 00004662 000249F0 0000EA77 "; 
+
+Importing: This Is Your Story.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="This Is Your Story"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000007E2 000005BE 000026B5 00001F04 0001119E 00013897 00007BA8 000073D7 0001119E 0001119E "; 
+
+Importing: Tidus' Theme.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Tidus' Theme"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000068A 000004BE 00005A2F 00001F0C 0001FBE7 00002727 00006D8E 000059AC 0001FBE7 00002727 "; 
+
+Importing: To Zanarkand.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="To Zanarkand"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000003B1 00000366 00001E45 0000169A 00029827 0001ADC7 000078C0 00006F89 00029827 0001D4D7 "; 
+
+Importing: Underground Activities.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Underground Activities"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000861 00000682 000040DB 00006E15 00004434 0000CC59 00008000 00008000 00004434 00004434 "; 
+
+Importing: Underwater Ruins.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Underwater Ruins"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000006C5 00000E7B 000065D9 000137E3 0002BF20 0000C367 00008000 00008000 00009C40 00004E20 "; 
+
+Importing: Victory Fanfare.MP3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Victory Fanfare"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001378 00000E01 000078DC 0000399F 00012A7F 00012A7F 00008000 00008000 00007006 0000BAD5 "; 
+
+Importing: Warping to a Different Dimension.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Warping to a Different Dimension"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000094B 00000819 00002614 00002262 00006D96 00012416 000064F7 00008000 0000DAFF 00012416 "; 
+
+Importing: Yuna's Theme.mp3
+Tag content:
+	TPE1:Text="Nobuo Uematsu"; 
+	TIT2:Text="Yuna's Theme"; 
+	TCON:Text="Soundtrack"; 
+	TYER:Text="2001"; 
+	TALB:Text="Final Fantasy X OST"; 
+	WXXX:URLLink="http://www.gamingforce.com/audio/"; 
+	COMM:Text="visit www.emusanet.com"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000445 00000602 0000130A 00001B49 0000EA77 00002727 00004984 000072CB 0000EAA5 0002E630 "; 
+
+Importing: 01 To Zanarkand.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@61110e03
+Importing: 02 Tidus's Theme.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@339092eb
+Importing: 03 Besaid Island.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4b49250d
+Importing: 04 Song of Prayer.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@23e64fed
+Importing: 05 Travelling Company.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4a6e3c84
+Importing: 06 Rikku's Theme.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@7ddee8e8
+Importing: 07 Guadosalam.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@7f3dcb13
+Importing: 08 Thunder Plains.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@6eb56a3e
+Importing: 09 Battle.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5584e170
+Importing: 10 Purgatorial Road.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@5f97da80
+Importing: 11 Isn't it Beautiful.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4ee3f732
+Importing: 12 Yuna's Determination.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@b42904a
+Importing: 13 Trap in the Extreme North.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@79bf6f33
+Importing: 14 The Final Battle.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@189de95e
+Importing: 15 Ending Theme.mp3
+org.jaudiotagger.tag.id3.ID3v11Tag@4916c718
+Importing: Melodies of Life [Ins].MP3
+org.jaudiotagger.tag.id3.ID3v1Tag@5649ceb0
+Importing: 01 Blessing It (Remix).mp3
+Tag content:
+	TIT2:Text="Blessing It (Remix)"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="1"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabesft. Substantial & Pase Rock from Five Deez"; 
+	TLEN:Text="203560"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000FB9 00000E0C 0000C134 0000BD39 0000EA60 0000EA60 00008000 00008000 00004E37 00009C57 "; 
+
+Importing: 02 Horn In The Middle.mp3
+Tag content:
+	TIT2:Text="Horn In The Middle"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="2"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="248773"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000121B 00000BBD 0000AEED 0000DAFD 0001ADC7 00007547 00008000 00008000 00007547 00007530 "; 
+
+Importing: 03 Lady Brown.mp3
+Tag content:
+	TIT2:Text="Lady Brown"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="3"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Cise Starr from CYNE"; 
+	TLEN:Text="198893"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000140C 0000112E 00009826 000089D0 00002710 0000EA60 00008000 00008000 00002710 00002727 "; 
+
+Importing: 04 Kumomi.mp3
+Tag content:
+	TIT2:Text="Kumomi"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="4"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="233733"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000930 00000BD2 00007D09 0000C941 0001D4D7 00002727 00008000 00008000 00002727 00002710 "; 
+
+Importing: 05 Highs 2 Lows.mp3
+Tag content:
+	TIT2:Text="Highs 2 Lows"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="5"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Cise Starr from CYNE"; 
+	TLEN:Text="278240"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000E41 00000CE9 0000697B 00002FF8 00011170 000222F7 00008000 00008000 00004E37 00007530 "; 
+
+Importing: 06 Beat Laments The World.mp3
+Tag content:
+	TIT2:Text="Beat Laments The World"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="6"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="262493"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000120E 00000EC8 00009870 00005D35 00015FA7 00011170 00008000 00008000 00007530 00007530 "; 
+
+Importing: 07 Letter From Yokosuka.mp3
+Tag content:
+	TIT2:Text="Letter From Yokosuka"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="7"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="190040"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000835 000006BC 00006171 00006AF4 0000EA77 0000EA60 00008000 00008000 0000EA60 00009C40 "; 
+
+Importing: 08 Think Different.mp3
+Tag content:
+	TIT2:Text="Think Different"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="8"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Substantial"; 
+	TLEN:Text="197160"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 0000195B 00001790 0000744F 00006B76 000138AE 000138AE 00008000 00008000 00007530 00007547 "; 
+
+Importing: 09 A Day By Atmosphere Supreme.mp3
+Tag content:
+	TIT2:Text="A Day By Atmosphere Supreme"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="9"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="239506"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000BF9 00000704 0000A9B0 00003ADB 0002E630 00009C6E 00008000 00008000 0000EA60 00002755 "; 
+
+Importing: 10 Next View.mp3
+Tag content:
+	TIT2:Text="Next View"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="10"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Uyama Hiroto"; 
+	TLEN:Text="275733"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001B26 000013EA 0000B5DC 00006791 0000EA77 0002BF4E 00008000 00008000 00009C40 0000EA60 "; 
+
+Importing: 11 Latitude Remix.mp3
+Tag content:
+	TIT2:Text="Latitude Remix"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="11"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Five Deez"; 
+	TLEN:Text="236666"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000ED5 0000083F 0000D3A9 00003676 00027117 00027117 00008000 00008000 0000C395 0000C395 "; 
+
+Importing: 12 F.I.L.O..mp3
+Tag content:
+	TIT2:Text="F.I.L.O."; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="12"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes ft. Shing02"; 
+	TLEN:Text="211133"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000018BD 0000168A 0000BB10 0000C88A 0000EA77 00013897 00008000 00008000 00009C57 00007530 "; 
+
+Importing: 13 Summer Gypsy.mp3
+Tag content:
+	TIT2:Text="Summer Gypsy"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="13"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="259626"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000013C9 00000F5B 0000B66F 0000CB3D 0000C350 0003A980 00008000 00008000 00002710 00009C57 "; 
+
+Importing: 14 The Final View.mp3
+Tag content:
+	TIT2:Text="The Final View"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="14"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="214933"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001F23 000005FB 00015FAC 00002EB5 00009C40 00027100 00008000 00008000 00004E20 00007547 "; 
+
+Importing: 15 Peaceland.mp3
+Tag content:
+	TIT2:Text="Peaceland"; 
+	PRIV:Owner="WM/MediaClassPrimaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/MediaClassSecondaryID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMContentID"; Data="16 bytes"; 
+	PRIV:Owner="WM/UniqueFileIdentifier"; Data="4 bytes"; 
+	PRIV:Owner="WM/WMCollectionID"; Data="16 bytes"; 
+	PRIV:Owner="WM/WMCollectionGroupID"; Data="16 bytes"; 
+	PRIV:Owner="WM/Provider"; Data="28 bytes"; 
+	TCON:Text="Unknown"; 
+	TALB:Text="Metaphorical Music"; 
+	TPE2:Text="Nujabes"; 
+	MCDI:Data="184 bytes"; 
+	TRCK:Text="15"; 
+	TCOM:Text="Nujabes"; 
+	TPE1:Text="Nujabes"; 
+	TLEN:Text="499373"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000019A4 0000116D 0000C1A1 00008438 0003D090 000222E0 00008000 00008000 00004E20 00004E20 "; 
+
+Importing: 01 To Impress The Empres.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="To Impress The Empres"; 
+	TPE1:Text="Scott Matelic"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="01"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000008FA 000008B9 0000F9EE 0000FA89 00027100 00027100 00008000 00008000 00007530 00007530 "; 
+
+Importing: 02 Ai-No-Kawa.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Ai-No-Kawa"; 
+	TPE1:Text="Sleepwalker"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="02"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000F15 00000FCC 000067C7 00006BE9 00030D85 00030D85 00008000 00008000 00029810 0001ADB0 "; 
+
+Importing: 03 Atoll Moao.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Atoll Moao"; 
+	TPE1:Text="Goldlix"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="03"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000006AE 000007DB 0000AB78 0000AD51 000249F0 000249F0 00008000 00008000 00009C40 0000EA8E "; 
+
+Importing: 04 Under the Hood.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Under the Hood"; 
+	TPE1:Text="Specifics"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="04"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000D2E 00000BD2 00007739 00006FAC 0001FBD0 00033450 00008000 00008000 00007530 00007530 "; 
+
+Importing: 05 Winter Lane.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Winter Lane"; 
+	TPE1:Text="DSK"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="05"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000B9E 0000093C 000037E6 00003B1D 0001ADF5 0001ADF5 00008000 00008000 0000C395 0000C395 "; 
+
+Importing: 06 Mourn, Sob & Cry.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Mourn, Sob & Cry"; 
+	TPE1:Text="Blue Asia"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="06"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000865 00000A75 00003B97 00003B70 000222E0 000222E0 00008000 00008000 00004E20 00004E20 "; 
+
+Importing: 07 Children.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Children"; 
+	TPE1:Text="Haki R Madhubuti"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="07"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000005FA 000007B9 00001DBD 00003C1F 00004E65 00009C40 00008000 00008000 0001D505 00050910 "; 
+
+Importing: 08 Sound Network.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Sound Network"; 
+	TPE1:Text="Unison"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="08"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000A6B 00000A95 0000E44E 0000DB20 0000C350 0000C350 00008000 00008000 00004E20 00004E20 "; 
+
+Importing: 09 Omnipresence.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Omnipresence"; 
+	TPE1:Text="Takero Ogata"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="09"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000494 00000409 000047BA 000021D4 00033450 00013897 00008000 00008000 00033450 00002710 "; 
+
+Importing: 10 A Dream Goes On Forever.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="A Dream Goes On Forever"; 
+	TPE1:Text="Todd Rundgren"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="10"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00001343 00000CED 00006CFD 00003AEF 0001ADB0 0001ADB0 00008000 00008000 00009C40 0001ADC7 "; 
+
+Importing: 11 Dionna.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Dionna"; 
+	TPE1:Text="Heprcam"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="11"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000835 0000096A 0000C2A4 0000C2EE 00011170 00011170 00008000 00008000 0000EA60 0000EA60 "; 
+
+Importing: 12 Folklore.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Folklore"; 
+	TPE1:Text="Clammbon"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="12"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000938 000008C3 00002ED7 00002EA6 00030D85 00030D85 00007F9F 00007D07 0002BF20 000222F7 "; 
+
+Importing: 13 Vem Para Ficar.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Vem Para Ficar"; 
+	TPE1:Text="LAVA"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="13"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 000010D6 00001169 000037E3 0000662B 0001FBFE 00007547 00008000 00008000 00009C40 00007547 "; 
+
+Importing: 14 Iyawo.mp3
+Tag content:
+	TPE2:Text="Nujabes"; 
+	TIT2:Text="Iyawo"; 
+	TPE1:Text="Omar Sosa"; 
+	TALB:Text="Modal Soul Classics"; 
+	TYER:Text="2008"; 
+	TCON:Text="J-Hip-Hop"; 
+	TRCK:Text="14"; 
+	APIC:MIMEType="image/jpeg"; PictureData="154433 bytes"; 
+	COMM:Language="English"; Description="iTunNORM"; Text=" 00000356 000003DE 0000849D 00004BAD 00046D15 0001D4C0 00008000 00008000 0002BF20 00013880 "; 
+
+Finished initializing.
+updated root directory: C:\dev\DemoMusic
+currentPath: C:\dev\DemoMusic\Nobuo Uematsu\FF Piano IV Collections\Troian Beauty.MP3
+Writing user settings to settings.json
+Writing to artistlist.ser
+Writing to playlists.ser
+Writing to tracklist.ser
