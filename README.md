@@ -7,9 +7,8 @@ Copyright 2023 MIT license.
 ## How To Install
 <p>
 While the v1.0 is in development, v0.5 will not have an installer. Instead,
-you can download the .rar file from this link ___ and run the application file from
-within the folder.
-Download at https://www.spectrallines.dev/html/projects.html.
+you can download the .rar file from <a href= "https://bucketeer-e731a2f7-3bfd-407d-a7fd-707383238d38.s3.amazonaws.com/public/mpTea_Player_Demo.rar"> here </a></li>  
+and run the executable from within the folder.
 </p>
 
 ## How To Use
@@ -56,33 +55,33 @@ setting it up.
 ## Keyboard Shortcuts:
 ### Music Player Controls:
 <p>
-Play/Pause:&ensp;Space
-Next Track:&ensp;.
-Prev. Track:&ensp;,
-Stop:&ensp;/
+Play/Pause:&ensp;Space<br>
+Next Track:&ensp;.<br>
+Prev. Track:&ensp;,<br>
+Stop:&ensp;/<br>
+<br>
+Vol. Up: = <br>
+Vol. Down: - <br>
+Mute: 0 <br>
 
-Vol. Up:&ensp;=
-Vol. Down:&ensp;-
-Mute:&ensp;0
-
-AutoPlay:&ensp;1
-Shuffle:&ensp;2
-Repeat:&ensp;3
+AutoPlay: 1 <br>
+Shuffle: 2 <br>
+Repeat: 3 <br>
 </p>
 
 ### Menu Bar:
 <p>
-Settings:&ensp;Ctrl + S
-Exit:&ensp;Ctrl + E
-Import Artist:&ensp;Ctrl + I
-Import Album:&ensp;Ctrl + L
-Import Track:&ensp;Ctrl + T
-Add Artist:&ensp;Ctrl + R
-Create Playlist:&ensp;Ctrl + P
-About:&ensp;Ctrl + O
-GitHub:&ensp;Ctrl + G
-Console Log:&ensp;Ctrl + C
-Report Bug:&ensp;Ctrl + B
+Settings:&ensp;Ctrl + S <br>
+Exit:&ensp;Ctrl + E <br>
+Import Artist:&ensp;Ctrl + I <br>
+Import Album:&ensp;Ctrl + L <br>
+Import Track:&ensp;Ctrl + T <br>
+Add Artist:&ensp;Ctrl + R <br>
+Create Playlist:&ensp;Ctrl + P <br>
+About:&ensp;Ctrl + O <br>
+GitHub:&ensp;Ctrl + G <br>
+Console Log:&ensp;Ctrl + C <br>
+Report Bug:&ensp;Ctrl + B <br>
 </p>
 
 ## License
@@ -95,33 +94,15 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </p>
 
-## About the program and developer
-<p>
-At roughly ~15000 lines of code, this audio media player is my first full software  
-release and largest project to date. I chose javaFX as the base style to develop 
-in after spotting the Media object in my java textbook.
-
-While the textbook called for making a small Video player with a single button I wanted
-to use it to create a mp3 player to handle the music on my PC, since after updating
-my OS 4 years ago I have been lazy and neglected to re-install iTunes or any other music player
-save VLC.
-
-What started as a music player project quickly developed into a file management system project.
-The actual music player and GUI only took a few weeks to put together and work properly. The real
-issue of reading, writing, and presenting audio file metadata within the javaFX GUI objects
-took about 2/3 of the project development time. I have no experience using winAmp, however I
-wanted to design this program similarly- to be as lightweight, simple, and accessible as possible.
-</p>
-
 ## BOM
 <p>
-This software uses libraries from the following:
-Oracle Java SDK version 18.0.1
-JavaFX SDK 18.0.1
-Apache
-GoogleCode json-simple
-JAudioTagger
-jsoup
-kordamp ikonli bootstrapicons
-Tea cup by Karen Arnold at PublicDomainPictures.net
+This software uses libraries and assets from the following:
+Oracle Java SDK version 18.0.1<br>
+JavaFX SDK 18.0.1<br>
+Apache<br>
+GoogleCode json-simple<br>
+JAudioTagger<br>
+jsoup<br>
+kordamp ikonli bootstrapicons<br>
+Tea cup by Karen Arnold at PublicDomainPictures.net<br>
 </p>
