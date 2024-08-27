@@ -225,7 +225,7 @@ public class MusicPlayerController {
         // hBoxMiddle
         AnchorPane.setLeftAnchor(hBoxMiddle,0.0);
         AnchorPane.setRightAnchor(hBoxMiddle, 0.0);
-        hBoxMiddle.maxWidth(anchorPane.getMaxWidth());
+        //hBoxMiddle.maxWidth(anchorPane.getMaxWidth());
 
 
         // Set TableView column widths
