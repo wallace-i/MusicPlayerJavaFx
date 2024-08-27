@@ -13,7 +13,7 @@ module com.iandw.musicplayerjavafx {
     requires org.jsoup;
     requires jakarta.mail;
     requires io.github.cdimascio.dotenv.java;
-    requires org.eclipse.angus.activation;
+    //requires org.eclipse.angus.activation;
 
     opens com.iandw.musicplayerjavafx to javafx.fxml;
     exports com.iandw.musicplayerjavafx;

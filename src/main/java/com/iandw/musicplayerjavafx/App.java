@@ -70,7 +70,7 @@ public class App extends Application {
 
             stage.setTitle("Music Player");
             stage.setScene(scene);
-            stage.setResizable(false);
+            stage.setResizable(true); //normally false
             stage.show();
 
             // Save user settings on close
