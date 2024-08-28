@@ -219,21 +219,11 @@ public class MusicPlayerController {
         artistNameString = "";
         playlistTitleString = "";
 
-        // Set javaFX Size Constraints
-        // AnchorPane
-
-        // hBoxMiddle
-        AnchorPane.setLeftAnchor(hBoxMiddle,0.0);
-        AnchorPane.setRightAnchor(hBoxMiddle, 0.0);
-        //hBoxMiddle.maxWidth(anchorPane.getMaxWidth());
-
-
         // Set TableView column widths
         colTrackTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 ); // 40% width
         colAlbumTitle.setMaxWidth( 1f * Integer.MAX_VALUE * 40 );
         colTrackLength.setMaxWidth( 1f * Integer.MAX_VALUE * 6 );
         colTrackGenre.setMaxWidth( 1f * Integer.MAX_VALUE * 14 );
-
 
         // Autoplay Icon (all other icons are from bootstrapicons -> musiclibrary.fxml)
         ImageView autoPlayIcon = new ImageView(ResourceURLs.getAutoplayiconURL());

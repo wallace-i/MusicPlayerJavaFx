@@ -70,7 +70,12 @@ public class App extends Application {
 
             stage.setTitle("Music Player");
             stage.setScene(scene);
-            stage.setResizable(true); //normally false
+            stage.setResizable(true); // false to remove window resizing
+            // Set Window size constraints
+            stage.setMinWidth(675);
+            stage.setMinHeight(452);
+            stage.setHeight(600);
+            stage.setWidth(900);
             stage.show();
 
             // Save user settings on close

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="452.0" minWidth="675.0" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
-    <HBox fx:id="hBoxMiddle" layoutY="87.0" prefHeight="302.0" prefWidth="675.0" styleClass="tables" HBox.hgrow="ALWAYS">
-        <SplitPane dividerPositions="0.21842496285289748" prefHeight="302.0" prefWidth="678.0" styleClass="split-pane">
-             <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="286.0" prefWidth="144.0">
+<AnchorPane fx:id="anchorPane" minHeight="452.0" minWidth="675.0" prefHeight="452.0" prefWidth="675.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iandw.musicplayerjavafx.MusicPlayerController">
+    <HBox fx:id="hBoxMiddle" layoutY="87.0" prefHeight="302.0" prefWidth="675.0" styleClass="tables" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0" HBox.hgrow="ALWAYS">
+        <SplitPane dividerPositions="0.25" prefHeight="302.0" prefWidth="678.0" styleClass="split-pane" HBox.hgrow="ALWAYS">
+             <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="286.0" prefWidth="144.0" SplitPane.resizableWithParent="false">
                   <ListView fx:id="artistListView" onMouseClicked="#handleArtistsListViewMouseClick" prefHeight="139.0" prefWidth="142.0">
                         </ListView>
                   <ListView fx:id="playlistListView" onMouseClicked="#handlePlaylistsListViewClick" prefHeight="146.0" prefWidth="142.0">
@@ -31,83 +32,90 @@
              </TableView>
         </SplitPane>
     </HBox>
-    <HBox fx:id="hBoxBottom" alignment="CENTER" layoutX="117.0" layoutY="419.0" prefHeight="25.0" prefWidth="524.0">
-        <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefHeight="15.0" prefWidth="55.0">
-            <graphic>
-                <FontIcon iconLiteral="bi-skip-backward-fill" iconSize="13" styleClass="icon" />
-            </graphic>
-            <padding>
-                <Insets left="5.0" right="5.0" />
-            </padding>
-            <HBox.margin>
-                <Insets right="5.0" />
-            </HBox.margin>
-        </Button>
-        <Button fx:id="playPauseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#playPauseButtonPressed" prefHeight="15.0" prefWidth="55.0">
-            <graphic>
-                <FontIcon fx:id="playIcon" iconLiteral="bi-play-fill" iconSize="13" styleClass="icon" />
-            </graphic>
-            <graphic>
-                <FontIcon fx:id="pauseIcon" iconLiteral="bi-pause" iconSize="13" styleClass="icon" />
-            </graphic>
-            <padding>
-                <Insets left="5.0" right="5.0" />
-            </padding>
-            <HBox.margin>
-                <Insets left="5.0" right="5.0" />
-            </HBox.margin>
-        </Button>
-        <Button fx:id="stopButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#stopButtonPressed" prefHeight="15.0" prefWidth="55.0">
-            <graphic>
-                <FontIcon iconLiteral="bi-stop-fill" iconSize="13" styleClass="icon" />
-            </graphic>
-            <padding>
-                <Insets left="5.0" right="5.0" />
-            </padding>
-            <HBox.margin>
-                <Insets left="5.0" right="5.0" />
-            </HBox.margin>
-        </Button>
-        <Button fx:id="nextButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#nextButtonPressed" prefHeight="15.0" prefWidth="55.0">
-            <graphic>
-                <FontIcon iconLiteral="bi-skip-forward-fill" iconSize="13" styleClass="icon" />
-            </graphic>
-            <padding>
-                <Insets left="5.0" right="5.0" />
-            </padding>
-            <HBox.margin>
-                <Insets left="5.0" right="5.0" />
-            </HBox.margin>
-        </Button>
-        <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false">
-            <padding>
-                <Insets right="5.0" />
-            </padding>
-            <HBox.margin>
-                <Insets left="45.0" />
-            </HBox.margin>
-        </RadioButton>
-        <RadioButton fx:id="shuffleButton" mnemonicParsing="false">
-            <graphic>
-                <FontIcon iconLiteral="bi-shuffle" iconSize="18" styleClass="icon" translateX="2.0" />
-            </graphic>
-            <HBox.margin>
-                <Insets left="5.0" right="5.0" />
-            </HBox.margin>
-            <padding>
-                <Insets right="5.0" />
-            </padding>
-        </RadioButton>
-        <RadioButton fx:id="repeatButton" mnemonicParsing="false">
-            <graphic>
-                <FontIcon iconLiteral="bi-arrow-counterclockwise" iconSize="19" styleClass="icon" translateX="2.0" translateY="1.0" />
-            </graphic>
-            <HBox.margin>
-                <Insets />
-            </HBox.margin>
-        </RadioButton>
-    </HBox>
-    <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0">
+   <Group layoutX="117.0" layoutY="399.0" AnchorPane.bottomAnchor="8.0">
+      <children>
+          <HBox fx:id="hBoxBottom" alignment="CENTER" layoutY="20.0" prefHeight="25.0" prefWidth="524.0">
+              <Button fx:id="previousButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#previousButtonPressed" prefHeight="15.0" prefWidth="55.0">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-skip-backward-fill" iconSize="13" styleClass="icon" />
+                  </graphic>
+                  <padding>
+                      <Insets left="5.0" right="5.0" />
+                  </padding>
+                  <HBox.margin>
+                      <Insets right="5.0" />
+                  </HBox.margin>
+              </Button>
+              <Button fx:id="playPauseButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#playPauseButtonPressed" prefHeight="15.0" prefWidth="55.0">
+                  <graphic>
+                      <FontIcon fx:id="playIcon" iconLiteral="bi-play-fill" iconSize="13" styleClass="icon" />
+                  </graphic>
+                  <graphic>
+                      <FontIcon fx:id="pauseIcon" iconLiteral="bi-pause" iconSize="13" styleClass="icon" />
+                  </graphic>
+                  <padding>
+                      <Insets left="5.0" right="5.0" />
+                  </padding>
+                  <HBox.margin>
+                      <Insets left="5.0" right="5.0" />
+                  </HBox.margin>
+              </Button>
+              <Button fx:id="stopButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#stopButtonPressed" prefHeight="15.0" prefWidth="55.0">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-stop-fill" iconSize="13" styleClass="icon" />
+                  </graphic>
+                  <padding>
+                      <Insets left="5.0" right="5.0" />
+                  </padding>
+                  <HBox.margin>
+                      <Insets left="5.0" right="5.0" />
+                  </HBox.margin>
+              </Button>
+              <Button fx:id="nextButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#nextButtonPressed" prefHeight="15.0" prefWidth="55.0">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-skip-forward-fill" iconSize="13" styleClass="icon" />
+                  </graphic>
+                  <padding>
+                      <Insets left="5.0" right="5.0" />
+                  </padding>
+                  <HBox.margin>
+                      <Insets left="5.0" right="5.0" />
+                  </HBox.margin>
+              </Button>
+              <RadioButton fx:id="autoButton" accessibleRole="COMBO_BOX" mnemonicParsing="false">
+                  <padding>
+                      <Insets right="5.0" />
+                  </padding>
+                  <HBox.margin>
+                      <Insets left="45.0" />
+                  </HBox.margin>
+              </RadioButton>
+              <RadioButton fx:id="shuffleButton" mnemonicParsing="false">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-shuffle" iconSize="18" styleClass="icon" translateX="2.0" />
+                  </graphic>
+                  <HBox.margin>
+                      <Insets left="5.0" right="5.0" />
+                  </HBox.margin>
+                  <padding>
+                      <Insets right="5.0" />
+                  </padding>
+              </RadioButton>
+              <RadioButton fx:id="repeatButton" mnemonicParsing="false">
+                  <graphic>
+                      <FontIcon iconLiteral="bi-arrow-counterclockwise" iconSize="19" styleClass="icon" translateX="2.0" translateY="1.0" />
+                  </graphic>
+                  <HBox.margin>
+                      <Insets />
+                  </HBox.margin>
+              </RadioButton>
+          </HBox>
+          <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="85.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="356.0" showTickMarks="true" />
+          <Label fx:id="trackDurationLabel" layoutX="446.0" text="00:00" />
+          <Label fx:id="trackCurrentTimeLabel" layoutX="51.0" text="00:00" />
+      </children>
+   </Group>
+    <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="675.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
         <Menu mnemonicParsing="false" text="File">
             <Menu mnemonicParsing="false" text="Import">
                 <MenuItem fx:id="importArtistMenuItem" mnemonicParsing="false" onAction="#importArtistClicked" text="Artist">
@@ -167,24 +175,23 @@
             </MenuItem>
         </Menu>
     </MenuBar>
-    <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="-">
+    <Label fx:id="playingLabel" layoutX="10.0" layoutY="29.0" text="-" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="29.0">
         <graphic>
             <FontIcon iconLiteral="bi-music-note-beamed" iconSize="15" styleClass="icon" />
         </graphic>
     </Label>
-    <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0">
+    <Label fx:id="albumLabel" layoutX="10.0" layoutY="48.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="48.0">
         <graphic>
             <FontIcon fx:id="albumIcon" iconLiteral="bi-disc" iconSize="15" styleClass="icon" />
         </graphic>
     </Label>
-    <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0">
+    <Label fx:id="byLabel" layoutX="10.0" layoutY="67.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="67.0">
         <graphic>
             <FontIcon fx:id="artistIcon" iconLiteral="bi-person-fill" iconSize="15" styleClass="icon" />
         </graphic>
     </Label>
-    <Slider fx:id="seekSlider" blockIncrement="0.25" layoutX="202.0" layoutY="400.0" onMouseClicked="#seekSliderPressed" prefHeight="24.0" prefWidth="356.0" showTickMarks="true" />
-    <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" />
-    <Label fx:id="volumeIconLabel" layoutX="92.0" layoutY="399.0">
+    <Slider fx:id="volumeSlider" blockIncrement="5.0" layoutX="7.0" layoutY="417.0" prefHeight="38.0" prefWidth="126.0" showTickMarks="true" value="50" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="7.0" />
+    <Label fx:id="volumeIconLabel" layoutX="92.0" layoutY="399.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="92.0">
         <graphic>
             <FontIcon fx:id="volumeUp" iconLiteral="bi-volume-up-fill" iconSize="15" styleClass="icon" />
         </graphic>
@@ -198,11 +205,9 @@
             <FontIcon fx:id="volumeMute" iconLiteral="bi-volume-mute-fill" iconSize="15" styleClass="icon" />
         </graphic>
     </Label>
-    <Label fx:id="trackDurationLabel" layoutX="563.0" layoutY="399.0" text="00:00" />
-    <Label fx:id="trackCurrentTimeLabel" layoutX="168.0" layoutY="399.0" text="00:00" />
-    <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" />
-    <Label fx:id="volumeLevelLabel" layoutX="110.0" layoutY="399.0" text="50" />
-    <StackPane layoutX="515.0" layoutY="23.0" prefHeight="38.0" prefWidth="157.0">
+    <CheckBox fx:id="mute" layoutX="12.0" layoutY="399.0" mnemonicParsing="false" text="Mute" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="12.0" />
+    <Label fx:id="volumeLevelLabel" layoutX="110.0" layoutY="399.0" text="50" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="110.0" />
+    <StackPane layoutX="515.0" layoutY="23.0" prefHeight="38.0" prefWidth="196.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="23.0">
         <TextField fx:id="searchField" prefHeight="25.0" prefWidth="197.0" promptText="search" styleClass="transparent">
             <padding>
                 <Insets bottom="2.0" left="25.0" right="22.0" top="2.0" />
@@ -237,6 +242,6 @@
             </padding>
         </Button>
     </StackPane>
-    <ImageView fx:id="imageView" fitHeight="55.0" fitWidth="55.0" layoutX="616.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="imageView" fitHeight="55.0" fitWidth="55.0" layoutX="616.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="4.0" />
 
 </AnchorPane>
